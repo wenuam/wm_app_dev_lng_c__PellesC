@@ -1,0 +1,51 @@
+#ifndef _APISETCCONV_H
+#define _APISETCCONV_H
+
+/* Win32 Calling Conventions for APISETs part of old legacy APIs */
+
+#ifndef WINADVAPI
+#define WINADVAPI  DECLSPEC_IMPORT
+#endif
+
+#ifndef WINBASEAPI
+#define WINBASEAPI  DECLSPEC_IMPORT
+#endif
+
+#ifndef ZAWPROXYAPI
+#define ZAWPROXYAPI  DECLSPEC_IMPORT
+#endif
+
+#ifndef WINUSERAPI
+#define WINUSERAPI  DECLSPEC_IMPORT
+#define WINABLEAPI  DECLSPEC_IMPORT
+#endif
+
+#ifndef WINABLEAPI
+#define WINABLEAPI  DECLSPEC_IMPORT
+#endif
+
+#ifndef WINCFGMGR32API
+#define WINCFGMGR32API  DECLSPEC_IMPORT
+#endif
+
+#ifndef WINDEVQUERYAPI
+#define WINDEVQUERYAPI  DECLSPEC_IMPORT
+#endif
+
+#ifndef WINSWDEVICEAPI
+#define WINSWDEVICEAPI  DECLSPEC_IMPORT
+#endif
+
+#ifndef CMAPI
+#define CMAPI  DECLSPEC_IMPORT
+#endif
+
+#ifndef WINPATHCCHAPI
+#define WINPATHCCHAPI  WINBASEAPI
+#endif
+
+#ifndef WINSTORAGEAPI
+#define WINSTORAGEAPI  DECLSPEC_IMPORT
+#endif
+
+#endif /* _APISETCCONV_H */

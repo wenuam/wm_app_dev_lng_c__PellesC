@@ -1,0 +1,153 @@
+
+MDIDialog2 - Tutorial
+---------------------
+
+I will try to explain how this program works and the
+pitfalls i've found while working with it...
+
+
+Thank you's 
+-----------
+Pelle Orinius For PellesC and everyone who contributed sample
+code I'm learning a lot from them.
+
+Disclaimer
+----------
+I've said I'm learning... so ...
+
+- There must be better solutions to aproachs I've taken
+- This code can contain memory leaks (I'm not sure if it
+has or has not...)
+
+
+Important Note
+--------------
+This example is a development from Pelle's original "mdidlg"
+sample.
+The "improvements" made are:
+
+- Use more than one Dialog as MDI Child
+- MDI Child windows preserve their buttons while maximized
+  (Close,Maximize, Minimize, Restore)
+- Hopefully, adding more dialogs will be easy...
+
+Some Background
+---------------
+This is not a MDI Tutorial, but to refresh memory I'll
+explain some things I've learned.
+
+MDI Applications consist of:
+
+- A Frame Window
+- A Child Area (This is another window, that "lives" inside 
+  the FrameWindow)
+- MDI Child Windows (These windows are childs of "Child Area"
+  not Frame Windows Child's)
+
+The MDI model assumes that every child will be the same class
+i.e. Microsoft Word every child is a Word Document.
+To use diferents Dialogs as MDI Childs the trick is
+to have several MDiChild Windows and each window will have
+just one "child" Control/Window, that child will be a Dialog
+Box.
+
+The dialog box has to have no caption, and no styles except:
+ 
+WS_CHILD|WS_VISIBLE
+
+(The best way to set these styles is to create the dialog
+and then, using the plugin that allows you to open the 
+resource file in the source editor... change them.
+If you don't have such plugin just go to PellesC site
+download it compile it and install the resulting DLL in
+Pelles C Plugins directory)
+
+This way the dialog will have neither borders nor title
+bar, the title bar and borders will be the MDI Child Windows
+ones.
+
+Now you have to resize the window to have the same size of
+your dialog Box, this way, the dialog box will fill MDI Child
+windows area giving the illusion of being "just a Dialog", this
+is done in MdiChildWnd_OnCreate function.
+
+
+Begginig to work
+----------------
+First of all I've used the MDI Application Wizard to get
+a fully functional MDI Application, and then start "mixing"
+the mdidlg example with it.
+
+How this thing works and some pitfalls I've found
+-------------------------------------------------
+
+Putting the dialog in the MDI window is performed in 
+FrameWnd_OnSize Function.
+I've needed a way to tell this function, wich is triggered
+by a Windows Message what dialog to use for "filling"
+and wath Procedure will be the dialog procedure, so
+I've declared two global vars:
+
+LPSTR g_DialogID;
+WNDPROC g_DialogProc;
+
+These var are setted in MdiChildWnd_New the function
+that adds new MDIChilds, this function is called from
+FrameWnd_OnCommand function, this function handles 
+Frame Window's messages, so...
+
+case IDM_DIALOG1:
+      
+			if(!MdiChildWnd_New(hwnd, "Dialogo 1",MAKEINTRESOURCE(IDD_DIALOG1),Dialog1_WndProc))
+				MessageBox(GetActiveWindow(), "Could not create Document window!", "Error!", MB_OK);
+			break;
+
+case IDM_DIALOG2:
+      //Note dialog2 has no dialog procedure (NULL), and therefore dialog2 will
+			//not respond to any user action, it must be supplied in a real application
+			if(!MdiChildWnd_New(hwnd, "Dialogo 2",MAKEINTRESOURCE(IDD_DIALOG2),NULL))
+				MessageBox(GetActiveWindow(), "Could not create Document window!", "Error!", MB_OK);
+			break;
+
+
+The parameter MAKEINTRESOURCE(IDD_DIALOG1) specifies wich dialog to create
+The parameter Dialog1_WndProc specifies the Dialog Procedure
+
+To add a new dialog, you must:
+
+- Create the new dialog using the resource editor (don't forget styles changing)
+- Add a new menu option
+- Add a new Entry in the switch statement in FrameWnd_OnCommand
+- Write the Dialog Procedure to attend the new dialog
+
+The first pitfall I've felt in was the dialog box was not
+responding to TAB to switch focus between controls...
+The following lines in main.c solved the problem...
+
+while (GetMessage(&msg, NULL, 0, 0))
+	{
+		 // Check for special MDI messages.
+        if (TranslateMDISysAccel(g_hWndClient, &msg))
+            ;
+==>        // Check for special dialog messages.
+==>        else if (g_hwndActiveMDIChild && IsDialogMessage(GetWindow(g_hwndActiveMDIChild, GW_CHILD), &msg))
+            ;
+        else
+        {
+            TranslateMessage(&msg);
+            DispatchMessage(&msg);
+        }
+
+Those Lines were "borrowed" from Pelle's original mdidlg example
+
+The second pitfall I've found was that once maximized, the dialogs
+lost their Minimize, Close and Restore Buttons, these lines off
+FrameWnd_WndProc solved the problem
+
+	// This deals with close/max/min buttons of a 
+	// child window when it is maximized
+		case WM_COMMAND: 
+			HANDLE_WM_COMMAND(hwnd, wParam, lParam, FrameWnd_OnCommand);
+
+I'Ve found some more but they were programming errors really ;-)
+

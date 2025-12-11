@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<settings version="1.0">
+	<category name="FindFile.c" />
+	<category name="Find.c">
+		<category name="Bookmarks">
+			<property name="Line1" type="integer">1183</property>
+		</category>
+	</category>
+	<category name="Debugger">
+		<category name="Watches">
+			<property name="Watch1" type="string">but</property>
+		</category>
+	</category>
+	<category name="Utils.c" />
+	<category name="Shell.c" />
+	<category name="IDragDrop.c" />
+	<category name="FindFileUni32.rc" />
+	<category name="idragdrop.h" />
+	<category name="Dialogs.c">
+		<category name="Bookmarks">
+			<property name="Line1" type="integer">534</property>
+			<property name="Line2" type="integer">625</property>
+		</category>
+	</category>
+	<category name="documents\FindFile_Changes.txt" />
+	<category name="ButtonEx.c" />
+	<category name="FindFileUni.rc" />
+</settings>

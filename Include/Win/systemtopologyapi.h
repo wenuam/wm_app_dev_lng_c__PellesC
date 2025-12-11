@@ -1,0 +1,35 @@
+#ifndef _SYSTEMTOPOLOGYAPI_H
+#define _SYSTEMTOPOLOGYAPI_H
+
+#if __POCC__ >= 500
+#pragma once
+#endif
+
+/* ApiSet contract for api-ms-win-core-systemtopology-l1 */
+
+#include <apiset.h>
+#include <apisetcconv.h>
+#include <minwindef.h>
+#include <minwinbase.h>
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
+WINBASEAPI BOOL WINAPI GetNumaHighestNodeNumber(PULONG HighestNodeNumber);
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM)
+
+#if _WIN32_WINNT >= 0x0601
+WINBASEAPI BOOL WINAPI GetNumaNodeProcessorMaskEx(USHORT Node, PGROUP_AFFINITY ProcessorMask);
+#endif /* _WIN32_WINNT >= 0x0601 */
+
+#if (_WIN32_WINNT >= _WIN32_WINNT_WIN10_FE)
+WINBASEAPI BOOL WINAPI GetNumaNodeProcessorMask2(USHORT NodeNumber, PGROUP_AFFINITY ProcessorMasks, USHORT ProcessorMaskCount, PUSHORT RequiredMaskCount);
+#endif /* (_WIN32_WINNT >= _WIN32_WINNT_WIN10_FE) */
+
+#if _WIN32_WINNT >= 0x0601
+WINBASEAPI BOOL WINAPI GetNumaProximityNodeEx(ULONG ProximityId, PUSHORT NodeNumber);
+#endif /* _WIN32_WINNT >= 0x0601 */
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM) */
+
+#endif /* _SYSTEMTOPOLOGYAPI_H */

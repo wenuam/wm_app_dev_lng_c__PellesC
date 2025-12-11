@@ -1,0 +1,6251 @@
+#include <winapifamily.h>
+
+#ifndef _WINBASE_H
+#define _WINBASE_H
+
+/* Windows Base API definitions */
+
+#if __POCC__ >= 500
+#pragma once
+#endif
+
+#if __POCC__ >= 290
+#pragma warn(push)
+#pragma warn(disable:2027)  /* Missing prototype */
+#pragma warn(disable:2198)  /* Nameless field is not standard */
+#endif
+
+#include <apisetcconv.h>
+#include <minwinbase.h>
+
+#include <apiquery2.h>
+#include <processenv.h>
+#include <fileapifromapp.h>
+#include <debugapi.h>
+#include <utilapiset.h>
+#include <handleapi.h>
+#include <errhandlingapi.h>
+#include <fibersapi.h>
+#include <namedpipeapi.h>
+#include <profileapi.h>
+#include <heapapi.h>
+#include <ioapiset.h>
+#include <synchapi.h>
+#include <interlockedapi.h>
+#include <processthreadsapi.h>
+#include <sysinfoapi.h>
+#include <memoryapi.h>
+#include <enclaveapi.h>
+#include <threadpoollegacyapiset.h>
+#include <threadpoolapiset.h>
+#include <jobapi.h>
+#include <jobapi2.h>
+#include <wow64apiset.h>
+#include <libloaderapi.h>
+#include <securitybaseapi.h>
+#include <namespaceapi.h>
+#include <systemtopologyapi.h>
+#include <processtopologyapi.h>
+#include <securityappcontainer.h>
+#include <realtimeapiset.h>
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP)
+
+#define DefineHandleTable(w)  ((w),TRUE)
+#define LimitEmsPages(dw)
+#define SetSwapAreaSize(w)    (w)
+#define LockSegment(w)        GlobalFix((HANDLE)(w))
+#define UnlockSegment(w)      GlobalUnfix((HANDLE)(w))
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)
+#define GetCurrentTime()  GetTickCount()
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
+
+#define Yield()
+
+#define FILE_BEGIN    0
+#define FILE_CURRENT  1
+#define FILE_END      2
+
+#define WAIT_FAILED     ((DWORD)0xFFFFFFFF)
+#define WAIT_OBJECT_0   ((STATUS_WAIT_0 ) + 0)
+
+#define WAIT_ABANDONED      ((STATUS_ABANDONED_WAIT_0 ) + 0)
+#define WAIT_ABANDONED_0    ((STATUS_ABANDONED_WAIT_0 ) + 0)
+
+#define WAIT_IO_COMPLETION  STATUS_USER_APC
+
+#define SecureZeroMemory  RtlSecureZeroMemory
+#define CaptureStackBackTrace  RtlCaptureStackBackTrace
+
+#define FILE_FLAG_WRITE_THROUGH         0x80000000
+#define FILE_FLAG_OVERLAPPED            0x40000000
+#define FILE_FLAG_NO_BUFFERING          0x20000000
+#define FILE_FLAG_RANDOM_ACCESS         0x10000000
+#define FILE_FLAG_SEQUENTIAL_SCAN       0x08000000
+#define FILE_FLAG_DELETE_ON_CLOSE       0x04000000
+#define FILE_FLAG_BACKUP_SEMANTICS      0x02000000
+#define FILE_FLAG_POSIX_SEMANTICS       0x01000000
+#define FILE_FLAG_SESSION_AWARE         0x00800000
+#define FILE_FLAG_OPEN_REPARSE_POINT    0x00200000
+#define FILE_FLAG_OPEN_NO_RECALL        0x00100000
+#define FILE_FLAG_FIRST_PIPE_INSTANCE   0x00080000
+
+#if (_WIN32_WINNT >= _WIN32_WINNT_WIN8)
+
+#define FILE_FLAG_OPEN_REQUIRING_OPLOCK 0x00040000
+
+#if defined(NTDDI_WIN10_NI) && (NTDDI_VERSION >= NTDDI_WIN10_NI)
+#define FILE_FLAG_IGNORE_IMPERSONATED_DEVICEMAP 0x00020000
+#endif
+
+#endif /* (_WIN32_WINNT >= _WIN32_WINNT_WIN8) */
+
+#if defined(NTDDI_WIN10_NI) && (NTDDI_VERSION >= NTDDI_WIN10_NI)
+
+typedef enum FILE_WRITE_FLAGS {
+    FILE_WRITE_FLAGS_NONE = 0,
+    FILE_WRITE_FLAGS_WRITE_THROUGH = 0x000000001,
+} FILE_WRITE_FLAGS;
+DEFINE_ENUM_FLAG_OPERATORS(FILE_WRITE_FLAGS)
+
+typedef enum FILE_FLUSH_MODE {
+    FILE_FLUSH_DEFAULT = 0,
+    FILE_FLUSH_DATA,
+    FILE_FLUSH_MIN_METADATA,
+    FILE_FLUSH_NO_SYNC,
+} FILE_FLUSH_MODE;
+
+#endif /* defined(NTDDI_WIN10_NI) && (NTDDI_VERSION >= NTDDI_WIN10_NI) */
+
+#if (_WIN32_WINNT >= 0x0400)
+
+#define PROGRESS_CONTINUE   0
+#define PROGRESS_CANCEL     1
+#define PROGRESS_STOP       2
+#define PROGRESS_QUIET      3
+
+#define CALLBACK_CHUNK_FINISHED     0x00000000
+#define CALLBACK_STREAM_SWITCH      0x00000001
+
+#define COPY_FILE_FAIL_IF_EXISTS                0x00000001
+#define COPY_FILE_RESTARTABLE                   0x00000002
+#define COPY_FILE_OPEN_SOURCE_FOR_WRITE         0x00000004
+#define COPY_FILE_ALLOW_DECRYPTED_DESTINATION   0x00000008
+#if (_WIN32_WINNT >= 0x0600)
+#define COPY_FILE_COPY_SYMLINK                  0x00000800
+#define COPY_FILE_NO_BUFFERING                  0x00001000
+#endif /* (_WIN32_WINNT >= 0x0600) */
+#if (_WIN32_WINNT >= _WIN32_WINNT_WIN8)
+#define COPY_FILE_REQUEST_SECURITY_PRIVILEGES   0x00002000
+#define COPY_FILE_RESUME_FROM_PAUSE             0x00004000
+#define COPY_FILE_NO_OFFLOAD                    0x00040000
+#endif /* (_WIN32_WINNT >= _WIN32_WINNT_WIN8) */
+#if (_WIN32_WINNT >= _WIN32_WINNT_WIN10)
+#define COPY_FILE_IGNORE_EDP_BLOCK              0x00400000
+#define COPY_FILE_IGNORE_SOURCE_ENCRYPTION      0x00800000
+#define COPY_FILE_DONT_REQUEST_DEST_WRITE_DAC   0x02000000
+#define COPY_FILE_REQUEST_COMPRESSED_TRAFFIC    0x10000000
+#endif /* (_WIN32_WINNT >= _WIN32_WINNT_WIN10) */
+#if (NTDDI_VERSION >= NTDDI_WIN10_VB)
+#define COPY_FILE_OPEN_AND_COPY_REPARSE_POINT   0x00200000
+#define COPY_FILE_DIRECTORY                     0x00000080
+#define COPY_FILE_SKIP_ALTERNATE_STREAMS        0x00008000
+#define COPY_FILE_DISABLE_PRE_ALLOCATION        0x04000000
+#define COPY_FILE_ENABLE_LOW_FREE_SPACE_MODE    0x08000000
+#endif /* (NTDDI_VERSION >= NTDDI_WIN10_VB) */
+#if (NTDDI_VERSION >= NTDDI_WIN10_NI)
+#define COPY_FILE_ENABLE_SPARSE_COPY            0x20000000
+#endif /* (NTDDI_VERSION >= NTDDI_WIN10_NI) */
+
+#endif /* _WIN32_WINNT >= 0x0400 */
+
+#if (_WIN32_WINNT >= 0x0500)
+#define REPLACEFILE_WRITE_THROUGH       0x00000001
+#define REPLACEFILE_IGNORE_MERGE_ERRORS 0x00000002
+#if (_WIN32_WINNT >= 0x0600)
+#define REPLACEFILE_IGNORE_ACL_ERRORS   0x00000004
+#endif /* (_WIN32_WINNT >= 0x0600) */
+#endif /* (_WIN32_WINNT >= 0x0500) */
+
+#define PIPE_ACCESS_INBOUND         0x00000001
+#define PIPE_ACCESS_OUTBOUND        0x00000002
+#define PIPE_ACCESS_DUPLEX          0x00000003
+
+#define PIPE_CLIENT_END             0x00000000
+#define PIPE_SERVER_END             0x00000001
+
+#define PIPE_WAIT                   0x00000000
+#define PIPE_NOWAIT                 0x00000001
+#define PIPE_READMODE_BYTE          0x00000000
+#define PIPE_READMODE_MESSAGE       0x00000002
+#define PIPE_TYPE_BYTE              0x00000000
+#define PIPE_TYPE_MESSAGE           0x00000004
+#define PIPE_ACCEPT_REMOTE_CLIENTS  0x00000000
+#define PIPE_REJECT_REMOTE_CLIENTS  0x00000008
+
+#define PIPE_UNLIMITED_INSTANCES    255
+
+#define SECURITY_ANONYMOUS          (SecurityAnonymous      << 16)
+#define SECURITY_IDENTIFICATION     (SecurityIdentification << 16)
+#define SECURITY_IMPERSONATION      (SecurityImpersonation  << 16)
+#define SECURITY_DELEGATION         (SecurityDelegation     << 16)
+
+#define SECURITY_CONTEXT_TRACKING   0x00040000
+#define SECURITY_EFFECTIVE_ONLY     0x00080000
+
+#define SECURITY_SQOS_PRESENT       0x00100000
+#define SECURITY_VALID_SQOS_FLAGS   0x001F0000
+
+#if (_WIN32_WINNT >= 0x0400)
+typedef void (WINAPI *PFIBER_START_ROUTINE)(LPVOID lpFiberParameter);
+typedef PFIBER_START_ROUTINE LPFIBER_START_ROUTINE;
+typedef LPVOID (WINAPI *PFIBER_CALLOUT_ROUTINE)(LPVOID lpParameter);
+#endif /* _WIN32_WINNT >= 0x0400 */
+
+#define FAIL_FAST_GENERATE_EXCEPTION_ADDRESS    0x1
+#define FAIL_FAST_NO_HARD_ERROR_DLG             0x2
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM)
+
+#ifdef _X86_
+typedef PLDT_ENTRY LPLDT_ENTRY;
+#else /* !_X86_ */
+typedef LPVOID LPLDT_ENTRY;
+#endif /* !_X86_ */
+
+#define SP_SERIALCOMM    ((DWORD)0x00000001)
+
+#define PST_UNSPECIFIED      ((DWORD)0x00000000)
+#define PST_RS232            ((DWORD)0x00000001)
+#define PST_PARALLELPORT     ((DWORD)0x00000002)
+#define PST_RS422            ((DWORD)0x00000003)
+#define PST_RS423            ((DWORD)0x00000004)
+#define PST_RS449            ((DWORD)0x00000005)
+#define PST_MODEM            ((DWORD)0x00000006)
+#define PST_FAX              ((DWORD)0x00000021)
+#define PST_SCANNER          ((DWORD)0x00000022)
+#define PST_NETWORK_BRIDGE   ((DWORD)0x00000100)
+#define PST_LAT              ((DWORD)0x00000101)
+#define PST_TCPIP_TELNET     ((DWORD)0x00000102)
+#define PST_X25              ((DWORD)0x00000103)
+
+#define PCF_DTRDSR        ((DWORD)0x0001)
+#define PCF_RTSCTS        ((DWORD)0x0002)
+#define PCF_RLSD          ((DWORD)0x0004)
+#define PCF_PARITY_CHECK  ((DWORD)0x0008)
+#define PCF_XONXOFF       ((DWORD)0x0010)
+#define PCF_SETXCHAR      ((DWORD)0x0020)
+#define PCF_TOTALTIMEOUTS ((DWORD)0x0040)
+#define PCF_INTTIMEOUTS   ((DWORD)0x0080)
+#define PCF_SPECIALCHARS  ((DWORD)0x0100)
+#define PCF_16BITMODE     ((DWORD)0x0200)
+
+#define SP_PARITY         ((DWORD)0x0001)
+#define SP_BAUD           ((DWORD)0x0002)
+#define SP_DATABITS       ((DWORD)0x0004)
+#define SP_STOPBITS       ((DWORD)0x0008)
+#define SP_HANDSHAKING    ((DWORD)0x0010)
+#define SP_PARITY_CHECK   ((DWORD)0x0020)
+#define SP_RLSD           ((DWORD)0x0040)
+
+#define BAUD_075          ((DWORD)0x00000001)
+#define BAUD_110          ((DWORD)0x00000002)
+#define BAUD_134_5        ((DWORD)0x00000004)
+#define BAUD_150          ((DWORD)0x00000008)
+#define BAUD_300          ((DWORD)0x00000010)
+#define BAUD_600          ((DWORD)0x00000020)
+#define BAUD_1200         ((DWORD)0x00000040)
+#define BAUD_1800         ((DWORD)0x00000080)
+#define BAUD_2400         ((DWORD)0x00000100)
+#define BAUD_4800         ((DWORD)0x00000200)
+#define BAUD_7200         ((DWORD)0x00000400)
+#define BAUD_9600         ((DWORD)0x00000800)
+#define BAUD_14400        ((DWORD)0x00001000)
+#define BAUD_19200        ((DWORD)0x00002000)
+#define BAUD_38400        ((DWORD)0x00004000)
+#define BAUD_56K          ((DWORD)0x00008000)
+#define BAUD_128K         ((DWORD)0x00010000)
+#define BAUD_115200       ((DWORD)0x00020000)
+#define BAUD_57600        ((DWORD)0x00040000)
+#define BAUD_USER         ((DWORD)0x10000000)
+
+#define DATABITS_5        ((WORD)0x0001)
+#define DATABITS_6        ((WORD)0x0002)
+#define DATABITS_7        ((WORD)0x0004)
+#define DATABITS_8        ((WORD)0x0008)
+#define DATABITS_16       ((WORD)0x0010)
+#define DATABITS_16X      ((WORD)0x0020)
+
+#define STOPBITS_10       ((WORD)0x0001)
+#define STOPBITS_15       ((WORD)0x0002)
+#define STOPBITS_20       ((WORD)0x0004)
+#define PARITY_NONE       ((WORD)0x0100)
+#define PARITY_ODD        ((WORD)0x0200)
+#define PARITY_EVEN       ((WORD)0x0400)
+#define PARITY_MARK       ((WORD)0x0800)
+#define PARITY_SPACE      ((WORD)0x1000)
+
+typedef struct _COMMPROP {
+    WORD wPacketLength;
+    WORD wPacketVersion;
+    DWORD dwServiceMask;
+    DWORD dwReserved1;
+    DWORD dwMaxTxQueue;
+    DWORD dwMaxRxQueue;
+    DWORD dwMaxBaud;
+    DWORD dwProvSubType;
+    DWORD dwProvCapabilities;
+    DWORD dwSettableParams;
+    DWORD dwSettableBaud;
+    WORD wSettableData;
+    WORD wSettableStopParity;
+    DWORD dwCurrentTxQueue;
+    DWORD dwCurrentRxQueue;
+    DWORD dwProvSpec1;
+    DWORD dwProvSpec2;
+    WCHAR wcProvChar[1];
+} COMMPROP, *LPCOMMPROP;
+
+#define COMMPROP_INITIALIZED ((DWORD)0xE73CF52E)
+
+typedef struct _COMSTAT {
+    DWORD fCtsHold: 1;
+    DWORD fDsrHold: 1;
+    DWORD fRlsdHold: 1;
+    DWORD fXoffHold: 1;
+    DWORD fXoffSent: 1;
+    DWORD fEof: 1;
+    DWORD fTxim: 1;
+    DWORD fReserved: 25;
+    DWORD cbInQue;
+    DWORD cbOutQue;
+} COMSTAT, *LPCOMSTAT;
+
+#define DTR_CONTROL_DISABLE    0x00
+#define DTR_CONTROL_ENABLE     0x01
+#define DTR_CONTROL_HANDSHAKE  0x02
+
+#define RTS_CONTROL_DISABLE    0x00
+#define RTS_CONTROL_ENABLE     0x01
+#define RTS_CONTROL_HANDSHAKE  0x02
+#define RTS_CONTROL_TOGGLE     0x03
+
+typedef struct _DCB {
+    DWORD DCBlength;
+    DWORD BaudRate;
+    DWORD fBinary: 1;
+    DWORD fParity: 1;
+    DWORD fOutxCtsFlow:1;
+    DWORD fOutxDsrFlow:1;
+    DWORD fDtrControl:2;
+    DWORD fDsrSensitivity:1;
+    DWORD fTXContinueOnXoff: 1;
+    DWORD fOutX: 1;
+    DWORD fInX: 1;
+    DWORD fErrorChar: 1;
+    DWORD fNull: 1;
+    DWORD fRtsControl:2;
+    DWORD fAbortOnError:1;
+    DWORD fDummy2:17;
+    WORD wReserved;
+    WORD XonLim;
+    WORD XoffLim;
+    BYTE ByteSize;
+    BYTE Parity;
+    BYTE StopBits;
+    char XonChar;
+    char XoffChar;
+    char ErrorChar;
+    char EofChar;
+    char EvtChar;
+    WORD wReserved1;
+} DCB, *LPDCB;
+
+typedef struct _COMMTIMEOUTS {
+    DWORD ReadIntervalTimeout;
+    DWORD ReadTotalTimeoutMultiplier;
+    DWORD ReadTotalTimeoutConstant;
+    DWORD WriteTotalTimeoutMultiplier;
+    DWORD WriteTotalTimeoutConstant;
+} COMMTIMEOUTS, *LPCOMMTIMEOUTS;
+
+typedef struct _COMMCONFIG {
+    DWORD dwSize;
+    WORD wVersion;
+    WORD wReserved;
+    DCB dcb;
+    DWORD dwProviderSubType;
+    DWORD dwProviderOffset;
+    DWORD dwProviderSize;
+    WCHAR wcProviderData[1];
+} COMMCONFIG, *LPCOMMCONFIG;
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
+
+#define FreeModule(hLibModule) FreeLibrary((hLibModule))
+#define MakeProcInstance(lpProc,hInstance) (lpProc)
+#define FreeProcInstance(lpProc) (lpProc)
+
+#define GMEM_FIXED          0x0000
+#define GMEM_MOVEABLE       0x0002
+#define GMEM_NOCOMPACT      0x0010
+#define GMEM_NODISCARD      0x0020
+#define GMEM_ZEROINIT       0x0040
+#define GMEM_MODIFY         0x0080
+#define GMEM_DISCARDABLE    0x0100
+#define GMEM_NOT_BANKED     0x1000
+#define GMEM_SHARE          0x2000
+#define GMEM_DDESHARE       0x2000
+#define GMEM_NOTIFY         0x4000
+#define GMEM_LOWER          GMEM_NOT_BANKED
+#define GMEM_VALID_FLAGS    0x7F72
+#define GMEM_INVALID_HANDLE 0x8000
+
+#define GHND                (GMEM_MOVEABLE | GMEM_ZEROINIT)
+#define GPTR                (GMEM_FIXED | GMEM_ZEROINIT)
+
+#define GlobalLRUNewest( h )  ((HANDLE)(h))
+#define GlobalLRUOldest( h )  ((HANDLE)(h))
+#define GlobalDiscard( h )    GlobalReAlloc( (h), 0, GMEM_MOVEABLE )
+
+#define GMEM_DISCARDED      0x4000
+#define GMEM_LOCKCOUNT      0x00FF
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM)
+
+typedef struct _MEMORYSTATUS {
+    DWORD dwLength;
+    DWORD dwMemoryLoad;
+    SIZE_T dwTotalPhys;
+    SIZE_T dwAvailPhys;
+    SIZE_T dwTotalPageFile;
+    SIZE_T dwAvailPageFile;
+    SIZE_T dwTotalVirtual;
+    SIZE_T dwAvailVirtual;
+} MEMORYSTATUS, *LPMEMORYSTATUS;
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
+
+#define DEBUG_PROCESS                     0x00000001
+#define DEBUG_ONLY_THIS_PROCESS           0x00000002
+#define CREATE_SUSPENDED                  0x00000004
+#define DETACHED_PROCESS                  0x00000008
+
+#define CREATE_NEW_CONSOLE                0x00000010
+#define NORMAL_PRIORITY_CLASS             0x00000020
+#define IDLE_PRIORITY_CLASS               0x00000040
+#define HIGH_PRIORITY_CLASS               0x00000080
+
+#define REALTIME_PRIORITY_CLASS           0x00000100
+#define CREATE_NEW_PROCESS_GROUP          0x00000200
+#define CREATE_UNICODE_ENVIRONMENT        0x00000400
+#define CREATE_SEPARATE_WOW_VDM           0x00000800
+
+#define CREATE_SHARED_WOW_VDM             0x00001000
+#define CREATE_FORCEDOS                   0x00002000
+#define BELOW_NORMAL_PRIORITY_CLASS       0x00004000
+#define ABOVE_NORMAL_PRIORITY_CLASS       0x00008000
+
+#define INHERIT_PARENT_AFFINITY           0x00010000
+#define INHERIT_CALLER_PRIORITY           0x00020000
+#define CREATE_PROTECTED_PROCESS          0x00040000
+#define EXTENDED_STARTUPINFO_PRESENT      0x00080000
+
+#define PROCESS_MODE_BACKGROUND_BEGIN     0x00100000
+#define PROCESS_MODE_BACKGROUND_END       0x00200000
+#define CREATE_SECURE_PROCESS             0x00400000
+
+#define CREATE_BREAKAWAY_FROM_JOB         0x01000000
+#define CREATE_PRESERVE_CODE_AUTHZ_LEVEL  0x02000000
+#define CREATE_DEFAULT_ERROR_MODE         0x04000000
+#define CREATE_NO_WINDOW                  0x08000000
+
+#define PROFILE_USER                      0x10000000
+#define PROFILE_KERNEL                    0x20000000
+#define PROFILE_SERVER                    0x40000000
+#define CREATE_IGNORE_SYSTEM_DEFAULT      0x80000000
+
+#define STACK_SIZE_PARAM_IS_A_RESERVATION   0x00010000
+
+#define THREAD_PRIORITY_LOWEST          THREAD_BASE_PRIORITY_MIN
+#define THREAD_PRIORITY_BELOW_NORMAL    (THREAD_PRIORITY_LOWEST+1)
+#define THREAD_PRIORITY_NORMAL          0
+#define THREAD_PRIORITY_HIGHEST         THREAD_BASE_PRIORITY_MAX
+#define THREAD_PRIORITY_ABOVE_NORMAL    (THREAD_PRIORITY_HIGHEST-1)
+#define THREAD_PRIORITY_ERROR_RETURN    (MAXLONG)
+
+#define THREAD_PRIORITY_TIME_CRITICAL   THREAD_BASE_PRIORITY_LOWRT
+#define THREAD_PRIORITY_IDLE            THREAD_BASE_PRIORITY_IDLE
+
+#define THREAD_MODE_BACKGROUND_BEGIN    0x00010000
+#define THREAD_MODE_BACKGROUND_END      0x00020000
+
+#define VOLUME_NAME_DOS  0x0
+#define VOLUME_NAME_GUID 0x1
+#define VOLUME_NAME_NT   0x2
+#define VOLUME_NAME_NONE 0x4
+
+#define FILE_NAME_NORMALIZED 0x0
+#define FILE_NAME_OPENED     0x8
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM)
+
+typedef struct _JIT_DEBUG_INFO {
+    DWORD dwSize;
+    DWORD dwProcessorArchitecture;
+    DWORD dwThreadID;
+    DWORD dwReserved0;
+    ULONG64 lpExceptionAddress;
+    ULONG64 lpExceptionRecord;
+    ULONG64 lpContextRecord;
+} JIT_DEBUG_INFO, *LPJIT_DEBUG_INFO;
+
+typedef JIT_DEBUG_INFO JIT_DEBUG_INFO32, *LPJIT_DEBUG_INFO32;
+typedef JIT_DEBUG_INFO JIT_DEBUG_INFO64, *LPJIT_DEBUG_INFO64;
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
+
+#ifndef MIDL_PASS
+typedef PEXCEPTION_RECORD LPEXCEPTION_RECORD;
+typedef PEXCEPTION_POINTERS LPEXCEPTION_POINTERS;
+#endif /* !MIDL_PASS */
+
+#define DRIVE_UNKNOWN     0
+#define DRIVE_NO_ROOT_DIR 1
+#define DRIVE_REMOVABLE   2
+#define DRIVE_FIXED       3
+#define DRIVE_REMOTE      4
+#define DRIVE_CDROM       5
+#define DRIVE_RAMDISK     6
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM)
+#define GetFreeSpace(w)   (0x100000L)
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
+
+#define FILE_TYPE_UNKNOWN   0x0000
+#define FILE_TYPE_DISK      0x0001
+#define FILE_TYPE_CHAR      0x0002
+#define FILE_TYPE_PIPE      0x0003
+#define FILE_TYPE_REMOTE    0x8000
+
+#define STD_INPUT_HANDLE    ((DWORD)-10)
+#define STD_OUTPUT_HANDLE   ((DWORD)-11)
+#define STD_ERROR_HANDLE    ((DWORD)-12)
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM)
+
+#define NOPARITY            0
+#define ODDPARITY           1
+#define EVENPARITY          2
+#define MARKPARITY          3
+#define SPACEPARITY         4
+
+#define ONESTOPBIT          0
+#define ONE5STOPBITS        1
+#define TWOSTOPBITS         2
+
+#define IGNORE              0
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
+#define INFINITE            0xFFFFFFFF
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM)
+
+#define CBR_110             110
+#define CBR_300             300
+#define CBR_600             600
+#define CBR_1200            1200
+#define CBR_2400            2400
+#define CBR_4800            4800
+#define CBR_9600            9600
+#define CBR_14400           14400
+#define CBR_19200           19200
+#define CBR_38400           38400
+#define CBR_56000           56000
+#define CBR_57600           57600
+#define CBR_115200          115200
+#define CBR_128000          128000
+#define CBR_256000          256000
+
+#define CE_RXOVER           0x0001
+#define CE_OVERRUN          0x0002
+#define CE_RXPARITY         0x0004
+#define CE_FRAME            0x0008
+#define CE_BREAK            0x0010
+#define CE_TXFULL           0x0100
+#define CE_PTO              0x0200
+#define CE_IOE              0x0400
+#define CE_DNS              0x0800
+#define CE_OOP              0x1000
+#define CE_MODE             0x8000
+
+#define IE_BADID            (-1)
+#define IE_OPEN             (-2)
+#define IE_NOPEN            (-3)
+#define IE_MEMORY           (-4)
+#define IE_DEFAULT          (-5)
+#define IE_HARDWARE         (-10)
+#define IE_BYTESIZE         (-11)
+#define IE_BAUDRATE         (-12)
+
+#define EV_RXCHAR           0x0001
+#define EV_RXFLAG           0x0002
+#define EV_TXEMPTY          0x0004
+#define EV_CTS              0x0008
+#define EV_DSR              0x0010
+#define EV_RLSD             0x0020
+#define EV_BREAK            0x0040
+#define EV_ERR              0x0080
+#define EV_RING             0x0100
+#define EV_PERR             0x0200
+#define EV_RX80FULL         0x0400
+#define EV_EVENT1           0x0800
+#define EV_EVENT2           0x1000
+
+#define SETXOFF             1
+#define SETXON              2
+#define SETRTS              3
+#define CLRRTS              4
+#define SETDTR              5
+#define CLRDTR              6
+#define RESETDEV            7
+#define SETBREAK            8
+#define CLRBREAK            9
+
+#define PURGE_TXABORT       0x0001
+#define PURGE_RXABORT       0x0002
+#define PURGE_TXCLEAR       0x0004
+#define PURGE_RXCLEAR       0x0008
+
+#define LPTx                0x80
+
+#define MS_CTS_ON           ((DWORD)0x0010)
+#define MS_DSR_ON           ((DWORD)0x0020)
+#define MS_RING_ON          ((DWORD)0x0040)
+#define MS_RLSD_ON          ((DWORD)0x0080)
+
+#define S_QUEUEEMPTY        0
+#define S_THRESHOLD         1
+#define S_ALLTHRESHOLD      2
+
+#define S_NORMAL      0
+#define S_LEGATO      1
+#define S_STACCATO    2
+
+#define S_PERIOD512   0
+#define S_PERIOD1024  1
+#define S_PERIOD2048  2
+#define S_PERIODVOICE 3
+#define S_WHITE512    4
+#define S_WHITE1024   5
+#define S_WHITE2048   6
+#define S_WHITEVOICE  7
+
+#define S_SERDVNA     (-1)
+#define S_SEROFM      (-2)
+#define S_SERMACT     (-3)
+#define S_SERQFUL     (-4)
+#define S_SERBDNT     (-5)
+#define S_SERDLN      (-6)
+#define S_SERDCC      (-7)
+#define S_SERDTP      (-8)
+#define S_SERDVL      (-9)
+#define S_SERDMD      (-10)
+#define S_SERDSH      (-11)
+#define S_SERDPT      (-12)
+#define S_SERDFQ      (-13)
+#define S_SERDDR      (-14)
+#define S_SERDSR      (-15)
+#define S_SERDST      (-16)
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
+
+#define NMPWAIT_WAIT_FOREVER            0xffffffff
+#define NMPWAIT_NOWAIT                  0x00000001
+#define NMPWAIT_USE_DEFAULT_WAIT        0x00000000
+
+#define FS_CASE_IS_PRESERVED            FILE_CASE_PRESERVED_NAMES
+#define FS_CASE_SENSITIVE               FILE_CASE_SENSITIVE_SEARCH
+#define FS_UNICODE_STORED_ON_DISK       FILE_UNICODE_ON_DISK
+#define FS_PERSISTENT_ACLS              FILE_PERSISTENT_ACLS
+#define FS_VOL_IS_COMPRESSED            FILE_VOLUME_IS_COMPRESSED
+#define FS_FILE_COMPRESSION             FILE_FILE_COMPRESSION
+#define FS_FILE_ENCRYPTION              FILE_SUPPORTS_ENCRYPTION
+
+#define OF_READ             0x00000000
+#define OF_WRITE            0x00000001
+#define OF_READWRITE        0x00000002
+#define OF_SHARE_COMPAT     0x00000000
+#define OF_SHARE_EXCLUSIVE  0x00000010
+#define OF_SHARE_DENY_WRITE 0x00000020
+#define OF_SHARE_DENY_READ  0x00000030
+#define OF_SHARE_DENY_NONE  0x00000040
+#define OF_PARSE            0x00000100
+#define OF_DELETE           0x00000200
+#define OF_VERIFY           0x00000400
+#define OF_CANCEL           0x00000800
+#define OF_CREATE           0x00001000
+#define OF_PROMPT           0x00002000
+#define OF_EXIST            0x00004000
+#define OF_REOPEN           0x00008000
+
+#define OFS_MAXPATHNAME 128
+typedef struct _OFSTRUCT {
+    BYTE cBytes;
+    BYTE fFixedDisk;
+    WORD nErrCode;
+    WORD Reserved1;
+    WORD Reserved2;
+    CHAR szPathName[OFS_MAXPATHNAME];
+} OFSTRUCT, *LPOFSTRUCT, *POFSTRUCT;
+
+#define UnlockResource(hResData) ((hResData), 0)
+#define MAXINTATOM 0xC000
+#define MAKEINTATOM(i)  (LPTSTR)((ULONG_PTR)((WORD)(i)))
+#define INVALID_ATOM ((ATOM)0)
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)
+
+int WINAPI WinMain(
+    HINSTANCE hInstance,
+    HINSTANCE hPrevInstance,
+    LPSTR lpCmdLine,
+    int nShowCmd
+);
+
+int WINAPI wWinMain(
+    HINSTANCE hInstance,
+    HINSTANCE hPrevInstance,
+    LPWSTR lpCmdLine,
+    int nShowCmd
+);
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
+WINBASEAPI DECLSPEC_ALLOCATOR HGLOBAL WINAPI GlobalAlloc(UINT uFlags, SIZE_T dwBytes);
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_GAMES)
+WINBASEAPI DECLSPEC_ALLOCATOR HGLOBAL WINAPI GlobalReAlloc(HGLOBAL hMem, SIZE_T dwBytes, UINT uFlags);
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_GAMES) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
+WINBASEAPI SIZE_T WINAPI GlobalSize(HGLOBAL hMem);
+WINBASEAPI BOOL WINAPI GlobalUnlock(HGLOBAL hMem);
+WINBASEAPI LPVOID WINAPI GlobalLock(HGLOBAL hMem);
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)
+WINBASEAPI UINT WINAPI GlobalFlags(HGLOBAL hMem);
+WINBASEAPI HGLOBAL WINAPI GlobalHandle(LPCVOID pMem);
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
+WINBASEAPI HGLOBAL WINAPI GlobalFree(HGLOBAL hMem);
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)
+WINBASEAPI SIZE_T WINAPI GlobalCompact(DWORD dwMinFree);
+WINBASEAPI void WINAPI GlobalFix(HGLOBAL hMem);
+WINBASEAPI void WINAPI GlobalUnfix(HGLOBAL hMem);
+WINBASEAPI LPVOID WINAPI GlobalWire(HGLOBAL hMem);
+WINBASEAPI BOOL WINAPI GlobalUnWire(HGLOBAL hMem);
+WINBASEAPI void WINAPI GlobalMemoryStatus(LPMEMORYSTATUS lpBuffer);
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
+WINBASEAPI DECLSPEC_ALLOCATOR HLOCAL WINAPI LocalAlloc(UINT uFlags, SIZE_T uBytes);
+WINBASEAPI DECLSPEC_ALLOCATOR HLOCAL WINAPI LocalReAlloc(HLOCAL hMem, SIZE_T uBytes, UINT uFlags);
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)*/
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
+WINBASEAPI LPVOID WINAPI LocalLock(HLOCAL hMem);
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)
+WINBASEAPI HLOCAL WINAPI LocalHandle(LPCVOID pMem);
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
+WINBASEAPI BOOL WINAPI LocalUnlock(HLOCAL hMem);
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_GAMES)
+WINBASEAPI SIZE_T WINAPI LocalSize(HLOCAL hMem);
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_GAMES) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)
+WINBASEAPI UINT WINAPI LocalFlags(HLOCAL hMem);
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
+WINBASEAPI HLOCAL WINAPI LocalFree(HLOCAL hMem);
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)
+
+WINBASEAPI SIZE_T WINAPI LocalShrink(HLOCAL hMem, UINT cbNewSize);
+WINBASEAPI SIZE_T WINAPI LocalCompact(UINT uMinFree);
+
+#define SCS_32BIT_BINARY    0
+#define SCS_DOS_BINARY      1
+#define SCS_WOW_BINARY      2
+#define SCS_PIF_BINARY      3
+#define SCS_POSIX_BINARY    4
+#define SCS_OS216_BINARY    5
+#define SCS_64BIT_BINARY    6
+
+#ifdef _WIN64
+#define SCS_THIS_PLATFORM_BINARY  SCS_64BIT_BINARY
+#else /* !_WIN64 */
+#define SCS_THIS_PLATFORM_BINARY  SCS_32BIT_BINARY
+#endif /* !_WIN64 */
+
+WINBASEAPI BOOL WINAPI GetBinaryTypeA(
+    LPCSTR lpApplicationName,
+    LPDWORD lpBinaryType
+);
+WINBASEAPI BOOL WINAPI GetBinaryTypeW(
+    LPCWSTR lpApplicationName,
+    LPDWORD lpBinaryType
+);
+#ifdef UNICODE
+#define GetBinaryType  GetBinaryTypeW
+#else /* !UNICODE */
+#define GetBinaryType  GetBinaryTypeA
+#endif /* !UNICODE */
+
+WINBASEAPI DWORD WINAPI GetShortPathNameA(
+    LPCSTR lpszLongPath,
+    LPSTR lpszShortPath,
+    DWORD cchBuffer
+);
+#ifndef UNICODE
+#define GetShortPathName  GetShortPathNameA
+#endif /* UNICODE */
+
+#if _WIN32_WINNT >= 0x0600
+
+WINBASEAPI DWORD WINAPI GetLongPathNameTransactedA(
+    LPCSTR lpszShortPath,
+    LPSTR lpszLongPath,
+    DWORD cchBuffer,
+    HANDLE hTransaction
+);
+WINBASEAPI DWORD WINAPI GetLongPathNameTransactedW(
+    LPCWSTR lpszShortPath,
+    LPWSTR lpszLongPath,
+    DWORD cchBuffer,
+    HANDLE hTransaction
+);
+#ifdef UNICODE
+#define GetLongPathNameTransacted  GetLongPathNameTransactedW
+#else /* !UNICODE */
+#define GetLongPathNameTransacted  GetLongPathNameTransactedA
+#endif /* !UNICODE */
+
+#endif /* _WIN32_WINNT >= 0x0600 */
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
+
+WINBASEAPI BOOL WINAPI GetProcessAffinityMask(
+    HANDLE hProcess,
+    PDWORD_PTR lpProcessAffinityMask,
+    PDWORD_PTR lpSystemAffinityMask
+);
+
+WINBASEAPI BOOL WINAPI
+SetProcessAffinityMask(
+    HANDLE hProcess,
+    DWORD_PTR dwProcessAffinityMask
+);
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)
+
+WINBASEAPI BOOL WINAPI GetProcessIoCounters(
+    HANDLE hProcess,
+    PIO_COUNTERS lpIoCounters
+);
+
+WINBASEAPI void WINAPI FatalExit(
+    int ExitCode
+);
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
+
+WINBASEAPI BOOL WINAPI SetEnvironmentStringsA(
+    LPCH NewEnvironment
+);
+#ifndef UNICODE
+#define SetEnvironmentStrings  SetEnvironmentStringsA
+#endif /* !UNICODE */
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES) */
+
+#if (_WIN32_WINNT >= 0x0400)
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
+
+#define FIBER_FLAG_FLOAT_SWITCH  0x1
+
+WINBASEAPI void WINAPI SwitchToFiber(
+    LPVOID lpFiber
+);
+
+WINBASEAPI void WINAPI DeleteFiber(
+    LPVOID lpFiber
+);
+
+#if (_WIN32_WINNT >= 0x0501)
+WINBASEAPI BOOL WINAPI ConvertFiberToThread(void);
+#endif /* (_WIN32_WINNT >= 0x0501) */
+
+WINBASEAPI LPVOID WINAPI CreateFiberEx(
+    SIZE_T dwStackCommitSize,
+    SIZE_T dwStackReserveSize,
+    DWORD dwFlags,
+    LPFIBER_START_ROUTINE lpStartAddress,
+    LPVOID lpParameter
+);
+
+WINBASEAPI LPVOID WINAPI ConvertThreadToFiberEx(
+    LPVOID lpParameter,
+    DWORD dwFlags
+);
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
+
+WINBASEAPI LPVOID WINAPI CreateFiber(
+    SIZE_T dwStackSize,
+    LPFIBER_START_ROUTINE lpStartAddress,
+    LPVOID lpParameter
+);
+
+WINBASEAPI LPVOID WINAPI ConvertThreadToFiber(
+    LPVOID lpParameter
+);
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)
+
+#if (_WIN32_WINNT >= 0x0601) && !defined(MIDL_PASS)
+
+#define UMS_VERSION RTL_UMS_VERSION
+
+typedef void *PUMS_CONTEXT;
+typedef void *PUMS_COMPLETION_LIST;
+typedef enum _RTL_UMS_THREAD_INFO_CLASS UMS_THREAD_INFO_CLASS, *PUMS_THREAD_INFO_CLASS;
+typedef enum _RTL_UMS_SCHEDULER_REASON UMS_SCHEDULER_REASON;
+
+typedef PRTL_UMS_SCHEDULER_ENTRY_POINT PUMS_SCHEDULER_ENTRY_POINT;
+
+typedef struct _UMS_SCHEDULER_STARTUP_INFO {
+    ULONG UmsVersion;
+    PUMS_COMPLETION_LIST CompletionList;
+    PUMS_SCHEDULER_ENTRY_POINT SchedulerProc;
+    PVOID SchedulerParam;
+} UMS_SCHEDULER_STARTUP_INFO, *PUMS_SCHEDULER_STARTUP_INFO;
+
+typedef struct _UMS_SYSTEM_THREAD_INFORMATION {
+    ULONG UmsVersion;
+    union {
+        struct {
+            ULONG IsUmsSchedulerThread : 1;
+            ULONG IsUmsWorkerThread : 1;
+        } DUMMYSTRUCTNAME;
+        ULONG ThreadUmsFlags;
+    } DUMMYUNIONNAME;
+} UMS_SYSTEM_THREAD_INFORMATION, *PUMS_SYSTEM_THREAD_INFORMATION;
+
+WINBASEAPI BOOL WINAPI CreateUmsCompletionList(
+    PUMS_COMPLETION_LIST *UmsCompletionList
+);
+
+WINBASEAPI BOOL WINAPI DequeueUmsCompletionListItems(
+    PUMS_COMPLETION_LIST UmsCompletionList,
+    DWORD WaitTimeOut,
+    PUMS_CONTEXT *UmsThreadList
+);
+
+WINBASEAPI BOOL WINAPI GetUmsCompletionListEvent(
+    PUMS_COMPLETION_LIST UmsCompletionList,
+    PHANDLE UmsCompletionEvent
+);
+
+WINBASEAPI BOOL WINAPI ExecuteUmsThread(
+    PUMS_CONTEXT UmsThread
+);
+
+WINBASEAPI BOOL WINAPI UmsThreadYield(
+    PVOID SchedulerParam
+);
+
+WINBASEAPI BOOL WINAPI DeleteUmsCompletionList(
+    PUMS_COMPLETION_LIST UmsCompletionList
+);
+
+WINBASEAPI PUMS_CONTEXT WINAPI GetCurrentUmsThread(
+    void
+);
+
+WINBASEAPI PUMS_CONTEXT WINAPI GetNextUmsListItem(
+    PUMS_CONTEXT UmsContext
+);
+
+WINBASEAPI BOOL WINAPI QueryUmsThreadInformation(
+    PUMS_CONTEXT UmsThread,
+    UMS_THREAD_INFO_CLASS UmsThreadInfoClass,
+    PVOID UmsThreadInformation,
+    ULONG UmsThreadInformationLength,
+    PULONG ReturnLength
+);
+
+WINBASEAPI BOOL WINAPI SetUmsThreadInformation(
+    PUMS_CONTEXT UmsThread,
+    UMS_THREAD_INFO_CLASS UmsThreadInfoClass,
+    PVOID UmsThreadInformation,
+    ULONG UmsThreadInformationLength
+);
+
+WINBASEAPI BOOL WINAPI DeleteUmsThreadContext(
+    PUMS_CONTEXT UmsThread
+);
+
+WINBASEAPI BOOL WINAPI CreateUmsThreadContext(
+    PUMS_CONTEXT *lpUmsThread
+);
+
+WINBASEAPI BOOL WINAPI EnterUmsSchedulingMode(
+    PUMS_SCHEDULER_STARTUP_INFO SchedulerStartupInfo
+);
+
+WINBASEAPI BOOL WINAPI GetUmsSystemThreadInformation(
+    HANDLE ThreadHandle,
+    PUMS_SYSTEM_THREAD_INFORMATION SystemThreadInfo
+);
+
+#endif /* (_WIN32_WINNT >= 0x0601) && !defined(MIDL_PASS) */
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP) */
+
+#endif /* _WIN32_WINNT >= 0x0400 */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
+
+WINBASEAPI DWORD_PTR WINAPI SetThreadAffinityMask(
+    HANDLE hThread,
+    DWORD_PTR dwThreadAffinityMask
+);
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)
+
+#if (_WIN32_WINNT >= 0x0600)
+
+#define PROCESS_DEP_ENABLE                          0x00000001
+#define PROCESS_DEP_DISABLE_ATL_THUNK_EMULATION     0x00000002
+
+WINBASEAPI BOOL WINAPI SetProcessDEPPolicy(
+    DWORD dwFlags
+);
+
+WINBASEAPI BOOL WINAPI GetProcessDEPPolicy(
+    HANDLE hProcess,
+    LPDWORD lpFlags,
+    PBOOL lpPermanent
+);
+
+#endif /* _WIN32_WINNT >= 0x0600 */
+
+WINBASEAPI BOOL WINAPI RequestWakeupLatency(
+    LATENCY_TIME latency
+);
+
+WINBASEAPI BOOL WINAPI IsSystemResumeAutomatic(
+    void
+);
+
+WINBASEAPI BOOL WINAPI GetThreadSelectorEntry(
+    HANDLE hThread,
+    DWORD dwSelector,
+    LPLDT_ENTRY lpSelectorEntry
+);
+
+WINBASEAPI EXECUTION_STATE WINAPI SetThreadExecutionState(
+    EXECUTION_STATE esFlags
+);
+
+#if (_WIN32_WINNT >= _WIN32_WINNT_WIN7)
+
+typedef REASON_CONTEXT POWER_REQUEST_CONTEXT, *PPOWER_REQUEST_CONTEXT, *LPPOWER_REQUEST_CONTEXT;
+
+WINBASEAPI HANDLE WINAPI PowerCreateRequest(
+    PREASON_CONTEXT Context
+);
+
+WINBASEAPI BOOL WINAPI PowerSetRequest(
+    HANDLE PowerRequest,
+    POWER_REQUEST_TYPE RequestType
+);
+
+WINBASEAPI BOOL WINAPI PowerClearRequest(
+    HANDLE PowerRequest,
+    POWER_REQUEST_TYPE RequestType
+);
+
+#endif /* (_WIN32_WINNT >= _WIN32_WINNT_WIN7) */
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_GAMES)
+
+#if defined(WINBASE_DECLARE_RESTORE_LAST_ERROR)
+WINBASEAPI void WINAPI RestoreLastError(DWORD dwErrCode);
+typedef void (WINAPI *PRESTORE_LAST_ERROR)(DWORD);
+#define RESTORE_LAST_ERROR_NAME_A  "RestoreLastError"
+#define RESTORE_LAST_ERROR_NAME_W  L"RestoreLastError"
+#define RESTORE_LAST_ERROR_NAME    TEXT("RestoreLastError")
+#endif /* defined(WINBASE_DECLARE_RESTORE_LAST_ERROR) */
+
+#define HasOverlappedIoCompleted(lpOverlapped) (((DWORD)(lpOverlapped)->Internal) != STATUS_PENDING)
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_GAMES) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
+
+#if (_WIN32_WINNT >= 0x0600)
+
+#define FILE_SKIP_COMPLETION_PORT_ON_SUCCESS    0x1
+#define FILE_SKIP_SET_EVENT_ON_HANDLE           0x2
+
+WINBASEAPI BOOL WINAPI SetFileCompletionNotificationModes(
+    HANDLE FileHandle,
+    UCHAR Flags
+);
+
+#endif /* (_WIN32_WINNT >= 0x0600) */
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)
+
+#define SEM_FAILCRITICALERRORS      0x0001
+#define SEM_NOGPFAULTERRORBOX       0x0002
+#define SEM_NOALIGNMENTFAULTEXCEPT  0x0004
+#define SEM_NOOPENFILEERRORBOX      0x8000
+
+#if (_WIN32_WINNT >= 0x0601) && !defined(MIDL_PASS)
+WINBASEAPI BOOL WINAPI Wow64GetThreadSelectorEntry(
+    HANDLE hThread,
+    DWORD dwSelector,
+    PWOW64_LDT_ENTRY lpSelectorEntry
+);
+#endif /* (_WIN32_WINNT >= 0x0601) && !defined(MIDL_PASS) */
+
+WINBASEAPI BOOL WINAPI DebugSetProcessKillOnExit(
+    BOOL KillOnExit
+);
+
+WINBASEAPI BOOL WINAPI DebugBreakProcess(
+    HANDLE Process
+);
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_GAMES)
+
+#if (_WIN32_WINNT >= 0x0403)
+#define CRITICAL_SECTION_NO_DEBUG_INFO  RTL_CRITICAL_SECTION_FLAG_NO_DEBUG_INFO
+#endif /* (_WIN32_WINNT >= 0x0403) */
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_GAMES) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)
+
+WINBASEAPI BOOL WINAPI PulseEvent(HANDLE hEvent);
+
+WINBASEAPI ATOM WINAPI GlobalDeleteAtom(ATOM nAtom);
+WINBASEAPI BOOL WINAPI InitAtomTable(DWORD nSize);
+WINBASEAPI ATOM WINAPI DeleteAtom(ATOM nAtom);
+
+WINBASEAPI UINT WINAPI SetHandleCount(UINT uNumber);
+
+WINBASEAPI BOOL WINAPI RequestDeviceWakeup(HANDLE hDevice);
+WINBASEAPI BOOL WINAPI CancelDeviceWakeupRequest(HANDLE hDevice);
+
+WINBASEAPI BOOL WINAPI GetDevicePowerState(
+    HANDLE hDevice,
+    BOOL *pfOn
+);
+
+WINBASEAPI BOOL WINAPI SetMessageWaitingIndicator(
+    HANDLE hMsgIndicator,
+    ULONG ulMsgCount
+);
+
+WINBASEAPI BOOL WINAPI SetFileShortNameA(
+    HANDLE hFile,
+    LPCSTR lpShortName
+);
+WINBASEAPI BOOL WINAPI SetFileShortNameW(
+    HANDLE hFile,
+    LPCWSTR lpShortName
+);
+#ifdef UNICODE
+#define SetFileShortName  SetFileShortNameW
+#else /* !UNICODE */
+#define SetFileShortName  SetFileShortNameA
+#endif /* !UNICODE */
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_GAMES)
+
+#define HANDLE_FLAG_INHERIT             0x00000001
+#define HANDLE_FLAG_PROTECT_FROM_CLOSE  0x00000002
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_GAMES) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)
+
+#define HINSTANCE_ERROR  32
+
+WINBASEAPI DWORD WINAPI LoadModule(
+    LPCSTR lpModuleName,
+    LPVOID lpParameterBlock
+);
+
+WINBASEAPI UINT WINAPI WinExec(
+    LPCSTR lpCmdLine,
+    UINT uCmdShow
+);
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_APP)
+
+WINBASEAPI BOOL WINAPI ClearCommBreak(
+    HANDLE hFile
+);
+
+WINBASEAPI BOOL WINAPI ClearCommError(
+    HANDLE hFile,
+    LPDWORD lpErrors,
+    LPCOMSTAT lpStat
+);
+
+WINBASEAPI BOOL WINAPI SetupComm(
+    HANDLE hFile,
+    DWORD dwInQueue,
+    DWORD dwOutQueue
+);
+
+WINBASEAPI BOOL WINAPI EscapeCommFunction(
+    HANDLE hFile,
+    DWORD dwFunc
+);
+
+WINBASEAPI BOOL WINAPI GetCommConfig(
+    HANDLE hCommDev,
+    LPCOMMCONFIG lpCC,
+    LPDWORD lpdwSize
+);
+
+WINBASEAPI BOOL WINAPI GetCommMask(
+    HANDLE hFile,
+    LPDWORD lpEvtMask
+);
+
+WINBASEAPI BOOL WINAPI GetCommProperties(
+    HANDLE hFile,
+    LPCOMMPROP lpCommProp
+);
+
+WINBASEAPI BOOL WINAPI GetCommModemStatus(
+    HANDLE hFile,
+    LPDWORD lpModemStat
+);
+
+WINBASEAPI BOOL WINAPI GetCommState(
+    HANDLE hFile,
+    LPDCB lpDCB
+);
+
+WINBASEAPI BOOL WINAPI GetCommTimeouts(
+    HANDLE hFile,
+    LPCOMMTIMEOUTS lpCommTimeouts
+);
+
+WINBASEAPI BOOL WINAPI PurgeComm(
+    HANDLE hFile,
+    DWORD dwFlags
+);
+
+WINBASEAPI BOOL WINAPI SetCommBreak(
+    HANDLE hFile
+);
+
+WINBASEAPI BOOL WINAPI SetCommConfig(
+    HANDLE hCommDev,
+    LPCOMMCONFIG lpCC,
+    DWORD dwSize
+);
+
+WINBASEAPI BOOL WINAPI SetCommMask(
+    HANDLE hFile,
+    DWORD dwEvtMask
+);
+
+WINBASEAPI BOOL WINAPI SetCommState(
+    HANDLE hFile,
+    LPDCB lpDCB
+);
+
+WINBASEAPI BOOL WINAPI SetCommTimeouts(
+    HANDLE hFile,
+    LPCOMMTIMEOUTS lpCommTimeouts
+);
+
+WINBASEAPI BOOL WINAPI TransmitCommChar(
+    HANDLE hFile,
+    char cChar
+);
+
+WINBASEAPI BOOL WINAPI WaitCommEvent(
+    HANDLE hFile,
+    LPDWORD lpEvtMask,
+    LPOVERLAPPED lpOverlapped
+);
+
+#if (NTDDI_VERSION >= NTDDI_WIN10_RS3)
+WINBASEAPI HANDLE WINAPI OpenCommPort(
+    ULONG uPortNumber,
+    DWORD dwDesiredAccess,
+    DWORD dwFlagsAndAttributes
+);
+#endif /* (NTDDI_VERSION >= NTDDI_WIN10_RS3) */
+
+#if (NTDDI_VERSION >= NTDDI_WIN10_RS3)
+WINBASEAPI ULONG WINAPI GetCommPorts(
+    PULONG lpPortNumbers,
+    ULONG uPortNumbersCount,
+    PULONG puPortNumbersFound
+);
+#endif /* (NTDDI_VERSION >= NTDDI_WIN10_RS3) */
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_APP) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)
+
+WINBASEAPI DWORD WINAPI SetTapePosition(
+    HANDLE hDevice,
+    DWORD dwPositionMethod,
+    DWORD dwPartition,
+    DWORD dwOffsetLow,
+    DWORD dwOffsetHigh,
+    BOOL bImmediate
+);
+
+WINBASEAPI DWORD WINAPI GetTapePosition(
+    HANDLE hDevice,
+    DWORD dwPositionType,
+    LPDWORD lpdwPartition,
+    LPDWORD lpdwOffsetLow,
+    LPDWORD lpdwOffsetHigh
+);
+
+WINBASEAPI DWORD WINAPI PrepareTape(
+    HANDLE hDevice,
+    DWORD dwOperation,
+    BOOL bImmediate
+);
+
+WINBASEAPI DWORD WINAPI EraseTape(
+    HANDLE hDevice,
+    DWORD dwEraseType,
+    BOOL bImmediate
+);
+
+WINBASEAPI DWORD WINAPI CreateTapePartition(
+    HANDLE hDevice,
+    DWORD dwPartitionMethod,
+    DWORD dwCount,
+    DWORD dwSize
+);
+
+WINBASEAPI DWORD WINAPI WriteTapemark(
+    HANDLE hDevice,
+    DWORD dwTapemarkType,
+    DWORD dwTapemarkCount,
+    BOOL bImmediate
+);
+
+WINBASEAPI DWORD WINAPI GetTapeStatus(
+    HANDLE hDevice
+);
+
+WINBASEAPI DWORD WINAPI GetTapeParameters(
+    HANDLE hDevice,
+    DWORD dwOperation,
+    LPDWORD lpdwSize,
+    LPVOID lpTapeInformation
+);
+
+#define GET_TAPE_MEDIA_INFORMATION 0
+#define GET_TAPE_DRIVE_INFORMATION 1
+
+WINBASEAPI DWORD WINAPI SetTapeParameters(
+    HANDLE hDevice,
+    DWORD dwOperation,
+    LPVOID lpTapeInformation
+);
+
+#define SET_TAPE_MEDIA_INFORMATION 0
+#define SET_TAPE_DRIVE_INFORMATION 1
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
+
+WINBASEAPI int WINAPI MulDiv(
+    int nNumber,
+    int nNumerator,
+    int nDenominator
+);
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)
+
+typedef enum _DEP_SYSTEM_POLICY_TYPE {
+    DEPPolicyAlwaysOff = 0,
+    DEPPolicyAlwaysOn,
+    DEPPolicyOptIn,
+    DEPPolicyOptOut,
+    DEPTotalPolicyCount
+} DEP_SYSTEM_POLICY_TYPE;
+
+#if (NTDDI_VERSION >= NTDDI_WINXPSP3)
+WINBASEAPI DEP_SYSTEM_POLICY_TYPE WINAPI GetSystemDEPPolicy(void);
+#endif /* (NTDDI_VERSION >= NTDDI_WINXPSP3) */
+
+#if _WIN32_WINNT >= 0x0501
+WINBASEAPI BOOL WINAPI GetSystemRegistryQuota(
+    PDWORD pdwQuotaAllowed,
+    PDWORD pdwQuotaUsed
+);
+#endif /* (_WIN32_WINNT >= 0x0501) */
+
+WINBASEAPI BOOL WINAPI FileTimeToDosDateTime(
+    CONST FILETIME *lpFileTime,
+    LPWORD lpFatDate,
+    LPWORD lpFatTime
+);
+
+WINBASEAPI BOOL WINAPI DosDateTimeToFileTime(
+    WORD wFatDate,
+    WORD wFatTime,
+    LPFILETIME lpFileTime
+);
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
+
+#define FORMAT_MESSAGE_ALLOCATE_BUFFER 0x00000100
+
+#ifndef MIDL_PASS
+WINBASEAPI DWORD WINAPI FormatMessageA(
+    DWORD dwFlags,
+    LPCVOID lpSource,
+    DWORD dwMessageId,
+    DWORD dwLanguageId,
+    LPSTR lpBuffer,
+    DWORD nSize,
+    va_list *Arguments
+);
+WINBASEAPI DWORD WINAPI FormatMessageW(
+    DWORD dwFlags,
+    LPCVOID lpSource,
+    DWORD dwMessageId,
+    DWORD dwLanguageId,
+    LPWSTR lpBuffer,
+    DWORD nSize,
+    va_list *Arguments
+);
+#ifdef UNICODE
+#define FormatMessage  FormatMessageW
+#else /* !UNICODE */
+#define FormatMessage  FormatMessageA
+#endif /* !UNICODE */
+#endif /* !MIDL_PASS */
+
+#define FORMAT_MESSAGE_IGNORE_INSERTS  0x00000200
+#define FORMAT_MESSAGE_FROM_STRING     0x00000400
+#define FORMAT_MESSAGE_FROM_HMODULE    0x00000800
+#define FORMAT_MESSAGE_FROM_SYSTEM     0x00001000
+#define FORMAT_MESSAGE_ARGUMENT_ARRAY  0x00002000
+#define FORMAT_MESSAGE_MAX_WIDTH_MASK  0x000000FF
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)
+
+WINBASEAPI HANDLE WINAPI CreateMailslotA(
+    LPCSTR lpName,
+    DWORD nMaxMessageSize,
+    DWORD lReadTimeout,
+    LPSECURITY_ATTRIBUTES lpSecurityAttributes
+);
+WINBASEAPI HANDLE WINAPI CreateMailslotW(
+    LPCWSTR lpName,
+    DWORD nMaxMessageSize,
+    DWORD lReadTimeout,
+    LPSECURITY_ATTRIBUTES lpSecurityAttributes
+);
+#ifdef UNICODE
+#define CreateMailslot  CreateMailslotW
+#else /* !UNICODE */
+#define CreateMailslot  CreateMailslotA
+#endif /* !UNICODE */
+
+WINBASEAPI BOOL WINAPI GetMailslotInfo(
+    HANDLE hMailslot,
+    LPDWORD lpMaxMessageSize,
+    LPDWORD lpNextSize,
+    LPDWORD lpMessageCount,
+    LPDWORD lpReadTimeout
+);
+
+WINBASEAPI BOOL WINAPI SetMailslotInfo(
+    HANDLE hMailslot,
+    DWORD lReadTimeout
+);
+
+WINADVAPI BOOL WINAPI EncryptFileA(
+    LPCSTR lpFileName
+);
+WINADVAPI BOOL WINAPI EncryptFileW(
+    LPCWSTR lpFileName
+);
+#ifdef UNICODE
+#define EncryptFile  EncryptFileW
+#else /* !UNICODE */
+#define EncryptFile  EncryptFileA
+#endif /* !UNICODE */
+
+WINADVAPI BOOL WINAPI DecryptFileA(
+    LPCSTR lpFileName,
+    DWORD dwReserved
+);
+WINADVAPI BOOL WINAPI DecryptFileW(
+    LPCWSTR lpFileName,
+    DWORD dwReserved
+);
+#ifdef UNICODE
+#define DecryptFile  DecryptFileW
+#else /* !UNICODE */
+#define DecryptFile  DecryptFileA
+#endif /* !UNICODE */
+
+#define FILE_ENCRYPTABLE                0
+#define FILE_IS_ENCRYPTED               1
+#define FILE_SYSTEM_ATTR                2
+#define FILE_ROOT_DIR                   3
+#define FILE_SYSTEM_DIR                 4
+#define FILE_UNKNOWN                    5
+#define FILE_SYSTEM_NOT_SUPPORT         6
+#define FILE_USER_DISALLOWED            7
+#define FILE_READ_ONLY                  8
+#define FILE_DIR_DISALLOWED             9
+
+WINADVAPI BOOL WINAPI FileEncryptionStatusA(
+    LPCSTR lpFileName,
+    LPDWORD lpStatus
+);
+WINADVAPI BOOL WINAPI FileEncryptionStatusW(
+    LPCWSTR lpFileName,
+    LPDWORD lpStatus
+);
+#ifdef UNICODE
+#define FileEncryptionStatus  FileEncryptionStatusW
+#else /* !UNICODE */
+#define FileEncryptionStatus  FileEncryptionStatusA
+#endif /* !UNICODE */
+
+#define EFS_USE_RECOVERY_KEYS  (0x1)
+
+typedef DWORD (WINAPI *PFE_EXPORT_FUNC)(
+    PBYTE pbData,
+    PVOID pvCallbackContext,
+    ULONG ulLength
+);
+
+typedef DWORD (WINAPI *PFE_IMPORT_FUNC)(
+    PBYTE pbData,
+    PVOID pvCallbackContext,
+    PULONG ulLength
+);
+
+#define CREATE_FOR_IMPORT               (1)
+#define CREATE_FOR_DIR                  (2)
+#define OVERWRITE_HIDDEN                (4)
+#define EFSRPC_SECURE_ONLY              (8)
+#define EFS_DROP_ALTERNATE_STREAMS      (0x10)
+
+WINADVAPI DWORD WINAPI OpenEncryptedFileRawA(
+    LPCSTR lpFileName,
+    ULONG ulFlags,
+    PVOID *pvContext
+);
+WINADVAPI DWORD WINAPI OpenEncryptedFileRawW(
+    LPCWSTR lpFileName,
+    ULONG ulFlags,
+    PVOID *pvContext
+);
+#ifdef UNICODE
+#define OpenEncryptedFileRaw  OpenEncryptedFileRawW
+#else /* !UNICODE */
+#define OpenEncryptedFileRaw  OpenEncryptedFileRawA
+#endif /* !UNICODE */
+
+WINADVAPI DWORD WINAPI ReadEncryptedFileRaw(
+    PFE_EXPORT_FUNC pfExportCallback,
+    PVOID pvCallbackContext,
+    PVOID pvContext
+);
+
+WINADVAPI DWORD WINAPI WriteEncryptedFileRaw(
+    PFE_IMPORT_FUNC pfImportCallback,
+    PVOID pvCallbackContext,
+    PVOID pvContext
+);
+
+WINADVAPI void WINAPI CloseEncryptedFileRaw(
+    PVOID pvContext
+);
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
+
+WINBASEAPI int WINAPI lstrcmpA(
+    LPCSTR lpString1,
+    LPCSTR lpString2
+);
+WINBASEAPI int WINAPI lstrcmpW(
+    LPCWSTR lpString1,
+    LPCWSTR lpString2
+);
+#ifdef UNICODE
+#define lstrcmp  lstrcmpW
+#else /* !UNICODE */
+#define lstrcmp  lstrcmpA
+#endif /* !UNICODE */
+
+WINBASEAPI int WINAPI lstrcmpiA(
+    LPCSTR lpString1,
+    LPCSTR lpString2
+);
+WINBASEAPI int WINAPI lstrcmpiW(
+    LPCWSTR lpString1,
+    LPCWSTR lpString2
+);
+#ifdef UNICODE
+#define lstrcmpi  lstrcmpiW
+#else /* !UNICODE */
+#define lstrcmpi  lstrcmpiA
+#endif /* !UNICODE */
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM)
+
+WINBASEAPI LPSTR WINAPI lstrcpynA(
+    LPSTR lpString1,
+    LPCSTR lpString2,
+    int iMaxLength
+);
+WINBASEAPI LPWSTR WINAPI lstrcpynW(
+    LPWSTR lpString1,
+    LPCWSTR lpString2,
+    int iMaxLength
+);
+#ifdef UNICODE
+#define lstrcpyn  lstrcpynW
+#else /* !UNICODE */
+#define lstrcpyn  lstrcpynA
+#endif /* !UNICODE */
+
+WINBASEAPI LPSTR WINAPI lstrcpyA(
+    LPSTR lpString1,
+    LPCSTR lpString2
+);
+WINBASEAPI LPWSTR WINAPI lstrcpyW(
+    LPWSTR lpString1,
+    LPCWSTR lpString2
+);
+#ifdef UNICODE
+#define lstrcpy  lstrcpyW
+#else /* !UNICODE */
+#define lstrcpy  lstrcpyA
+#endif /* !UNICODE */
+
+WINBASEAPI LPSTR WINAPI lstrcatA(
+    LPSTR lpString1,
+    LPCSTR lpString2
+);
+WINBASEAPI LPWSTR WINAPI lstrcatW(
+    LPWSTR lpString1,
+    LPCWSTR lpString2
+);
+#ifdef UNICODE
+#define lstrcat  lstrcatW
+#else /* !UNICODE */
+#define lstrcat  lstrcatA
+#endif /* !UNICODE */
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
+
+WINBASEAPI int WINAPI lstrlenA(
+    LPCSTR lpString
+);
+WINBASEAPI int WINAPI lstrlenW(
+    LPCWSTR lpString
+);
+#ifdef UNICODE
+#define lstrlen  lstrlenW
+#else /* !UNICODE */
+#define lstrlen  lstrlenA
+#endif /* !UNICODE */
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)
+
+WINBASEAPI HFILE WINAPI OpenFile(
+    LPCSTR lpFileName,
+    LPOFSTRUCT lpReOpenBuff,
+    UINT uStyle
+);
+
+WINBASEAPI HFILE WINAPI _lopen(
+    LPCSTR lpPathName,
+    int iReadWrite
+);
+
+WINBASEAPI HFILE WINAPI _lcreat(
+    LPCSTR lpPathName,
+    int iAttribute
+);
+
+WINBASEAPI UINT WINAPI _lread(
+    HFILE hFile,
+    LPVOID lpBuffer,
+    UINT uBytes
+);
+
+WINBASEAPI UINT WINAPI _lwrite(
+    HFILE hFile,
+    LPCCH lpBuffer,
+    UINT uBytes
+);
+
+WINBASEAPI long WINAPI _hread(
+    HFILE hFile,
+    LPVOID lpBuffer,
+    long lBytes
+);
+
+WINBASEAPI long WINAPI _hwrite(
+    HFILE hFile,
+    LPCCH lpBuffer,
+    long lBytes
+);
+
+WINBASEAPI HFILE WINAPI _lclose(
+    HFILE hFile
+);
+
+WINBASEAPI LONG WINAPI _llseek(
+    HFILE hFile,
+    LONG lOffset,
+    int iOrigin
+);
+
+WINADVAPI BOOL WINAPI IsTextUnicode(
+    CONST VOID *lpv,
+    int iSize,
+    LPINT lpiResult
+);
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
+
+#if (_WIN32_WINNT >= 0x0400)
+WINBASEAPI DWORD WINAPI SignalObjectAndWait(
+    HANDLE hObjectToSignal,
+    HANDLE hObjectToWaitOn,
+    DWORD dwMilliseconds,
+    BOOL bAlertable
+);
+#endif /* _WIN32_WINNT >= 0x0400 */
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)
+
+WINBASEAPI BOOL  WINAPI BackupRead(
+    HANDLE hFile,
+    LPBYTE lpBuffer,
+    DWORD nNumberOfBytesToRead,
+    LPDWORD lpNumberOfBytesRead,
+    BOOL bAbort,
+    BOOL bProcessSecurity,
+    LPVOID *lpContext
+);
+
+WINBASEAPI BOOL WINAPI BackupSeek(
+    HANDLE hFile,
+    DWORD dwLowBytesToSeek,
+    DWORD dwHighBytesToSeek,
+    LPDWORD lpdwLowByteSeeked,
+    LPDWORD lpdwHighByteSeeked,
+    LPVOID *lpContext
+);
+
+WINBASEAPI BOOL WINAPI BackupWrite(
+    HANDLE hFile,
+    LPBYTE lpBuffer,
+    DWORD nNumberOfBytesToWrite,
+    LPDWORD lpNumberOfBytesWritten,
+    BOOL bAbort,
+    BOOL bProcessSecurity,
+    LPVOID *lpContext
+);
+
+typedef struct _WIN32_STREAM_ID {
+    DWORD dwStreamId ;
+    DWORD dwStreamAttributes ;
+    LARGE_INTEGER Size ;
+    DWORD dwStreamNameSize ;
+    WCHAR cStreamName[ ANYSIZE_ARRAY ] ;
+} WIN32_STREAM_ID, *LPWIN32_STREAM_ID ;
+
+#define BACKUP_INVALID          0x00000000
+#define BACKUP_DATA             0x00000001
+#define BACKUP_EA_DATA          0x00000002
+#define BACKUP_SECURITY_DATA    0x00000003
+#define BACKUP_ALTERNATE_DATA   0x00000004
+#define BACKUP_LINK             0x00000005
+#define BACKUP_PROPERTY_DATA    0x00000006
+#define BACKUP_OBJECT_ID        0x00000007
+#define BACKUP_REPARSE_DATA     0x00000008
+#define BACKUP_SPARSE_BLOCK     0x00000009
+#define BACKUP_TXFS_DATA        0x0000000a
+#define BACKUP_GHOSTED_FILE_EXTENTS 0x0000000b
+
+#define STREAM_NORMAL_ATTRIBUTE         0x00000000
+#define STREAM_MODIFIED_WHEN_READ       0x00000001
+#define STREAM_CONTAINS_SECURITY        0x00000002
+#define STREAM_CONTAINS_PROPERTIES      0x00000004
+#define STREAM_SPARSE_ATTRIBUTE         0x00000008
+#define STREAM_CONTAINS_GHOSTED_FILE_EXTENTS 0x00000010
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_GAMES)
+
+#define STARTF_USESHOWWINDOW       0x00000001
+#define STARTF_USESIZE             0x00000002
+#define STARTF_USEPOSITION         0x00000004
+#define STARTF_USECOUNTCHARS       0x00000008
+#define STARTF_USEFILLATTRIBUTE    0x00000010
+#define STARTF_RUNFULLSCREEN       0x00000020
+#define STARTF_FORCEONFEEDBACK     0x00000040
+#define STARTF_FORCEOFFFEEDBACK    0x00000080
+#define STARTF_USESTDHANDLES       0x00000100
+#define STARTF_USEHOTKEY           0x00000200
+#define STARTF_TITLEISLINKNAME     0x00000800
+#define STARTF_TITLEISAPPID        0x00001000
+#define STARTF_PREVENTPINNING      0x00002000
+
+#if (WINVER >= 0x0600)
+#define STARTF_UNTRUSTEDSOURCE     0x00008000
+#endif /* WINVER >= 0x0600 */
+
+#if (NTDDI_VERSION >= NTDDI_WIN10_FE)
+#define STARTF_HOLOGRAPHIC         0x00040000
+#endif /* (NTDDI_VERSION >= NTDDI_WIN10_FE) */
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_GAMES) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
+
+#if (_WIN32_WINNT >= 0x0600)
+
+typedef struct _STARTUPINFOEXA {
+    STARTUPINFOA StartupInfo;
+    LPPROC_THREAD_ATTRIBUTE_LIST lpAttributeList;
+} STARTUPINFOEXA, *LPSTARTUPINFOEXA;
+typedef struct _STARTUPINFOEXW {
+    STARTUPINFOW StartupInfo;
+    LPPROC_THREAD_ATTRIBUTE_LIST lpAttributeList;
+} STARTUPINFOEXW, *LPSTARTUPINFOEXW;
+#ifdef UNICODE
+typedef STARTUPINFOEXW STARTUPINFOEX;
+typedef LPSTARTUPINFOEXW LPSTARTUPINFOEX;
+#else /* !UNICODE */
+typedef STARTUPINFOEXA STARTUPINFOEX;
+typedef LPSTARTUPINFOEXA LPSTARTUPINFOEX;
+#endif /* !UNICODE */
+
+#endif /* (_WIN32_WINNT >= 0x0600) */
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)
+
+#define SHUTDOWN_NORETRY                0x00000001
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
+
+WINBASEAPI HANDLE WINAPI OpenMutexA(
+    DWORD dwDesiredAccess,
+    BOOL bInheritHandle,
+    LPCSTR lpName
+);
+#ifndef UNICODE
+#define OpenMutex  OpenMutexA
+#endif /* !UNICODE */
+
+WINBASEAPI HANDLE WINAPI CreateSemaphoreA(
+    LPSECURITY_ATTRIBUTES lpSemaphoreAttributes,
+    LONG lInitialCount,
+    LONG lMaximumCount,
+    LPCSTR lpName
+);
+#ifndef UNICODE
+#define CreateSemaphore  CreateSemaphoreA
+#endif /* !UNICODE */
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
+
+WINBASEAPI HANDLE WINAPI OpenSemaphoreA(
+    DWORD dwDesiredAccess,
+    BOOL bInheritHandle,
+    LPCSTR lpName
+);
+#ifndef UNICODE
+#define OpenSemaphore  OpenSemaphoreA
+#endif /* !UNICODE */
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES) */
+
+#if (_WIN32_WINNT >= 0x0400) || (_WIN32_WINDOWS > 0x0400)
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
+
+WINBASEAPI HANDLE WINAPI CreateWaitableTimerA(
+    LPSECURITY_ATTRIBUTES lpTimerAttributes,
+    BOOL bManualReset,
+    LPCSTR lpTimerName
+);
+#ifndef UNICODE
+#define CreateWaitableTimer  CreateWaitableTimerA
+#endif /* !UNICODE */
+
+WINBASEAPI HANDLE WINAPI OpenWaitableTimerA(
+    DWORD dwDesiredAccess,
+    BOOL bInheritHandle,
+    LPCSTR lpTimerName
+);
+#ifndef UNICODE
+#define OpenWaitableTimer  OpenWaitableTimerA
+#endif /* !UNICODE */
+
+#if (_WIN32_WINNT >= 0x0600)
+
+WINBASEAPI HANDLE WINAPI CreateSemaphoreExA(
+    LPSECURITY_ATTRIBUTES lpSemaphoreAttributes,
+    LONG lInitialCount,
+    LONG lMaximumCount,
+    LPCSTR lpName,
+    DWORD dwFlags,
+    DWORD dwDesiredAccess
+);
+#ifndef UNICODE
+#define CreateSemaphoreEx  CreateSemaphoreExA
+#endif /* !UNICODE */
+
+WINBASEAPI HANDLE WINAPI CreateWaitableTimerExA(
+    LPSECURITY_ATTRIBUTES lpTimerAttributes,
+    LPCSTR lpTimerName,
+    DWORD dwFlags,
+    DWORD dwDesiredAccess
+);
+#ifndef UNICODE
+#define CreateWaitableTimerEx  CreateWaitableTimerExA
+#endif /* !UNICODE */
+
+#endif /* (_WIN32_WINNT >= 0x0600) */
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES) */
+
+#endif /* (_WIN32_WINNT >= 0x0400) || (_WIN32_WINDOWS > 0x0400) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_GAMES)
+
+WINBASEAPI HANDLE WINAPI CreateFileMappingA(
+    HANDLE hFile,
+    LPSECURITY_ATTRIBUTES lpFileMappingAttributes,
+    DWORD flProtect,
+    DWORD dwMaximumSizeHigh,
+    DWORD dwMaximumSizeLow,
+    LPCSTR lpName
+);
+#ifndef UNICODE
+#define CreateFileMapping  CreateFileMappingA
+#endif /* !UNICODE */
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_GAMES) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)
+
+#if _WIN32_WINNT >= 0x0600
+WINBASEAPI HANDLE WINAPI CreateFileMappingNumaA(
+    HANDLE hFile,
+    LPSECURITY_ATTRIBUTES lpFileMappingAttributes,
+    DWORD flProtect,
+    DWORD dwMaximumSizeHigh,
+    DWORD dwMaximumSizeLow,
+    LPCSTR lpName,
+    DWORD nndPreferred
+);
+#endif /* _WIN32_WINNT >= 0x0600 */
+
+#ifndef UNICODE
+#define CreateFileMappingNuma  CreateFileMappingNumaA
+#endif /* !UNICODE */
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_GAMES)
+
+WINBASEAPI HANDLE WINAPI OpenFileMappingA(
+    DWORD dwDesiredAccess,
+    BOOL bInheritHandle,
+    LPCSTR lpName
+);
+#ifndef UNICODE
+#define OpenFileMapping  OpenFileMappingA
+#endif /* !UNICODE */
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_GAMES) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM)
+
+WINBASEAPI DWORD WINAPI GetLogicalDriveStringsA(
+    DWORD nBufferLength,
+    LPSTR lpBuffer
+);
+#ifndef UNICODE
+#define GetLogicalDriveStrings  GetLogicalDriveStringsA
+#endif
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
+
+#if (_WIN32_WINNT >= 0x0602)
+WINBASEAPI HMODULE WINAPI LoadPackagedLibrary(
+    LPCWSTR lpwLibFileName,
+    DWORD Reserved
+);
+#endif /* (_WIN32_WINNT >= 0x0602) */
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES) */
+
+#if (_WIN32_WINNT >= 0x0600)
+
+#define PROTECTION_LEVEL_WINTCB_LIGHT       0x00000000
+#define PROTECTION_LEVEL_WINDOWS            0x00000001
+#define PROTECTION_LEVEL_WINDOWS_LIGHT      0x00000002
+#define PROTECTION_LEVEL_ANTIMALWARE_LIGHT  0x00000003
+#define PROTECTION_LEVEL_LSA_LIGHT          0x00000004
+
+#define PROTECTION_LEVEL_WINTCB             0x00000005
+#define PROTECTION_LEVEL_CODEGEN_LIGHT      0x00000006
+#define PROTECTION_LEVEL_AUTHENTICODE       0x00000007
+#define PROTECTION_LEVEL_PPL_APP            0x00000008
+
+#define PROTECTION_LEVEL_SAME               0xFFFFFFFF
+
+#define PROTECTION_LEVEL_NONE               0xFFFFFFFE
+
+#endif /* (_WIN32_WINNT >= 0x0600) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
+
+#if (_WIN32_WINNT >= 0x0600)
+
+#define PROCESS_NAME_NATIVE     0x00000001
+
+WINBASEAPI BOOL WINAPI QueryFullProcessImageNameA(
+    HANDLE hProcess,
+    DWORD dwFlags,
+    LPSTR lpExeName,
+    PDWORD lpdwSize
+);
+WINBASEAPI BOOL WINAPI QueryFullProcessImageNameW(
+    HANDLE hProcess,
+    DWORD dwFlags,
+    LPWSTR lpExeName,
+    PDWORD lpdwSize
+);
+#ifdef UNICODE
+#define QueryFullProcessImageName  QueryFullProcessImageNameW
+#else /* !UNICODE */
+#define QueryFullProcessImageName  QueryFullProcessImageNameA
+#endif /* !UNICODE */
+
+#endif /* (_WIN32_WINNT >= 0x0600) */
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_GAMES) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
+
+#if (_WIN32_WINNT >= 0x0600)
+
+#define PROC_THREAD_ATTRIBUTE_NUMBER    0x0000FFFF
+#define PROC_THREAD_ATTRIBUTE_THREAD    0x00010000
+#define PROC_THREAD_ATTRIBUTE_INPUT     0x00020000
+#define PROC_THREAD_ATTRIBUTE_ADDITIVE  0x00040000
+
+#ifndef _USE_FULL_PROC_THREAD_ATTRIBUTE
+typedef enum _PROC_THREAD_ATTRIBUTE_NUM {
+    ProcThreadAttributeParentProcess = 0,
+    ProcThreadAttributeHandleList = 2,
+#if (_WIN32_WINNT >= _WIN32_WINNT_WIN7)
+    ProcThreadAttributeGroupAffinity = 3,
+    ProcThreadAttributePreferredNode = 4,
+    ProcThreadAttributeIdealProcessor = 5,
+    ProcThreadAttributeUmsThread = 6,
+    ProcThreadAttributeMitigationPolicy = 7,
+#endif /* (_WIN32_WINNT >= _WIN32_WINNT_WIN7) */
+#if (_WIN32_WINNT >= _WIN32_WINNT_WIN8)
+    ProcThreadAttributeSecurityCapabilities = 9,
+#endif /* (_WIN32_WINNT >= _WIN32_WINNT_WIN8) */
+    ProcThreadAttributeProtectionLevel = 11,
+#if (_WIN32_WINNT >= _WIN32_WINNT_WINTHRESHOLD)
+    ProcThreadAttributeJobList = 13,
+    ProcThreadAttributeChildProcessPolicy = 14,
+    ProcThreadAttributeAllApplicationPackagesPolicy = 15,
+    ProcThreadAttributeWin32kFilter = 16,
+#endif /* (_WIN32_WINNT >= _WIN32_WINNT_WINTHRESHOLD) */
+#if (NTDDI_VERSION >= NTDDI_WIN10_RS1)
+    ProcThreadAttributeSafeOpenPromptOriginClaim = 17,
+#endif /* (NTDDI_VERSION >= NTDDI_WIN10_RS1) */
+#if (NTDDI_VERSION >= NTDDI_WIN10_RS2)
+    ProcThreadAttributeDesktopAppPolicy = 18,
+#endif /* (NTDDI_VERSION >= NTDDI_WIN10_RS2) */
+#if (NTDDI_VERSION >= NTDDI_WIN10_RS5)
+    ProcThreadAttributePseudoConsole = 22,
+#endif /* (NTDDI_VERSION >= NTDDI_WIN10_RS5) */
+#if (NTDDI_VERSION >= NTDDI_WIN10_MN)
+    ProcThreadAttributeMitigationAuditPolicy = 24,
+    ProcThreadAttributeMachineType = 25,
+    ProcThreadAttributeComponentFilter = 26,
+#endif /* (NTDDI_VERSION >= NTDDI_WIN10_MN) */
+#if (NTDDI_VERSION >= NTDDI_WIN10_FE)
+    ProcThreadAttributeEnableOptionalXStateFeatures = 27,
+#endif /* (NTDDI_VERSION >= NTDDI_WIN10_FE) */
+#if (NTDDI_VERSION >= NTDDI_WIN10_NI)
+    ProcThreadAttributeTrustedApp = 29,
+#endif /* (NTDDI_VERSION >= NTDDI_WIN10_NI) */
+} PROC_THREAD_ATTRIBUTE_NUM;
+#endif /* !_USE_FULL_PROC_THREAD_ATTRIBUTE */
+
+#define ProcThreadAttributeValue(Number, Thread, Input, Additive) \
+    (((Number) & PROC_THREAD_ATTRIBUTE_NUMBER) | \
+     ((Thread != FALSE) ? PROC_THREAD_ATTRIBUTE_THREAD : 0) | \
+     ((Input != FALSE) ? PROC_THREAD_ATTRIBUTE_INPUT : 0) | \
+     ((Additive != FALSE) ? PROC_THREAD_ATTRIBUTE_ADDITIVE : 0))
+
+#define PROC_THREAD_ATTRIBUTE_PARENT_PROCESS \
+    ProcThreadAttributeValue (ProcThreadAttributeParentProcess, FALSE, TRUE, FALSE)
+#define PROC_THREAD_ATTRIBUTE_HANDLE_LIST \
+    ProcThreadAttributeValue (ProcThreadAttributeHandleList, FALSE, TRUE, FALSE)
+
+#endif /* (_WIN32_WINNT >= 0x0600) */
+
+#if (_WIN32_WINNT >= _WIN32_WINNT_WIN7)
+#define PROC_THREAD_ATTRIBUTE_GROUP_AFFINITY \
+    ProcThreadAttributeValue (ProcThreadAttributeGroupAffinity, TRUE, TRUE, FALSE)
+#define PROC_THREAD_ATTRIBUTE_PREFERRED_NODE \
+    ProcThreadAttributeValue (ProcThreadAttributePreferredNode, FALSE, TRUE, FALSE)
+#define PROC_THREAD_ATTRIBUTE_IDEAL_PROCESSOR \
+    ProcThreadAttributeValue (ProcThreadAttributeIdealProcessor, TRUE, TRUE, FALSE)
+#define PROC_THREAD_ATTRIBUTE_UMS_THREAD \
+    ProcThreadAttributeValue (ProcThreadAttributeUmsThread, TRUE, TRUE, FALSE)
+#define PROC_THREAD_ATTRIBUTE_MITIGATION_POLICY \
+    ProcThreadAttributeValue (ProcThreadAttributeMitigationPolicy, FALSE, TRUE, FALSE)
+#endif
+
+#if (_WIN32_WINNT >= _WIN32_WINNT_WIN8)
+#define PROC_THREAD_ATTRIBUTE_SECURITY_CAPABILITIES \
+    ProcThreadAttributeValue (ProcThreadAttributeSecurityCapabilities, FALSE, TRUE, FALSE)
+#endif /* (_WIN32_WINNT >= _WIN32_WINNT_WIN8) */
+
+#define PROC_THREAD_ATTRIBUTE_PROTECTION_LEVEL \
+    ProcThreadAttributeValue (ProcThreadAttributeProtectionLevel, FALSE, TRUE, FALSE)
+
+#if (NTDDI_VERSION >= NTDDI_WIN10_RS5)
+#define PROC_THREAD_ATTRIBUTE_PSEUDOCONSOLE \
+    ProcThreadAttributeValue (ProcThreadAttributePseudoConsole, FALSE, TRUE, FALSE)
+#endif /* (NTDDI_VERSION >= NTDDI_WIN10_RS5) */
+
+#if (NTDDI_VERSION >= NTDDI_WIN10_MN)
+#define PROC_THREAD_ATTRIBUTE_MACHINE_TYPE \
+    ProcThreadAttributeValue (ProcThreadAttributeMachineType, FALSE, TRUE, FALSE)
+#endif /* (NTDDI_VERSION >= NTDDI_WIN10_MN) */
+
+#if (NTDDI_VERSION >= NTDDI_WIN10_FE)
+#define PROC_THREAD_ATTRIBUTE_ENABLE_OPTIONAL_XSTATE_FEATURES \
+    ProcThreadAttributeValue (ProcThreadAttributeEnableOptionalXStateFeatures, TRUE, TRUE, FALSE)
+#endif /* (NTDDI_VERSION >= NTDDI_WIN10_FE) */
+
+#if (_WIN32_WINNT >= _WIN32_WINNT_WIN7)
+#define PROCESS_CREATION_MITIGATION_POLICY_DEP_ENABLE            0x01
+#define PROCESS_CREATION_MITIGATION_POLICY_DEP_ATL_THUNK_ENABLE  0x02
+#define PROCESS_CREATION_MITIGATION_POLICY_SEHOP_ENABLE          0x04
+#endif /* (_WIN32_WINNT >= _WIN32_WINNT_WIN7) */
+
+#if (_WIN32_WINNT >= _WIN32_WINNT_WIN8)
+
+#define PROCESS_CREATION_MITIGATION_POLICY_FORCE_RELOCATE_IMAGES_MASK                     (0x00000003 <<  8)
+#define PROCESS_CREATION_MITIGATION_POLICY_FORCE_RELOCATE_IMAGES_DEFER                    (0x00000000 <<  8)
+#define PROCESS_CREATION_MITIGATION_POLICY_FORCE_RELOCATE_IMAGES_ALWAYS_ON                (0x00000001 <<  8)
+#define PROCESS_CREATION_MITIGATION_POLICY_FORCE_RELOCATE_IMAGES_ALWAYS_OFF               (0x00000002 <<  8)
+#define PROCESS_CREATION_MITIGATION_POLICY_FORCE_RELOCATE_IMAGES_ALWAYS_ON_REQ_RELOCS     (0x00000003 <<  8)
+
+#define PROCESS_CREATION_MITIGATION_POLICY_HEAP_TERMINATE_MASK                            (0x00000003 << 12)
+#define PROCESS_CREATION_MITIGATION_POLICY_HEAP_TERMINATE_DEFER                           (0x00000000 << 12)
+#define PROCESS_CREATION_MITIGATION_POLICY_HEAP_TERMINATE_ALWAYS_ON                       (0x00000001 << 12)
+#define PROCESS_CREATION_MITIGATION_POLICY_HEAP_TERMINATE_ALWAYS_OFF                      (0x00000002 << 12)
+#define PROCESS_CREATION_MITIGATION_POLICY_HEAP_TERMINATE_RESERVED                        (0x00000003 << 12)
+
+#define PROCESS_CREATION_MITIGATION_POLICY_BOTTOM_UP_ASLR_MASK                            (0x00000003 << 16)
+#define PROCESS_CREATION_MITIGATION_POLICY_BOTTOM_UP_ASLR_DEFER                           (0x00000000 << 16)
+#define PROCESS_CREATION_MITIGATION_POLICY_BOTTOM_UP_ASLR_ALWAYS_ON                       (0x00000001 << 16)
+#define PROCESS_CREATION_MITIGATION_POLICY_BOTTOM_UP_ASLR_ALWAYS_OFF                      (0x00000002 << 16)
+#define PROCESS_CREATION_MITIGATION_POLICY_BOTTOM_UP_ASLR_RESERVED                        (0x00000003 << 16)
+
+#define PROCESS_CREATION_MITIGATION_POLICY_HIGH_ENTROPY_ASLR_MASK                         (0x00000003 << 20)
+#define PROCESS_CREATION_MITIGATION_POLICY_HIGH_ENTROPY_ASLR_DEFER                        (0x00000000 << 20)
+#define PROCESS_CREATION_MITIGATION_POLICY_HIGH_ENTROPY_ASLR_ALWAYS_ON                    (0x00000001 << 20)
+#define PROCESS_CREATION_MITIGATION_POLICY_HIGH_ENTROPY_ASLR_ALWAYS_OFF                   (0x00000002 << 20)
+#define PROCESS_CREATION_MITIGATION_POLICY_HIGH_ENTROPY_ASLR_RESERVED                     (0x00000003 << 20)
+
+#define PROCESS_CREATION_MITIGATION_POLICY_STRICT_HANDLE_CHECKS_MASK                      (0x00000003 << 24)
+#define PROCESS_CREATION_MITIGATION_POLICY_STRICT_HANDLE_CHECKS_DEFER                     (0x00000000 << 24)
+#define PROCESS_CREATION_MITIGATION_POLICY_STRICT_HANDLE_CHECKS_ALWAYS_ON                 (0x00000001 << 24)
+#define PROCESS_CREATION_MITIGATION_POLICY_STRICT_HANDLE_CHECKS_ALWAYS_OFF                (0x00000002 << 24)
+#define PROCESS_CREATION_MITIGATION_POLICY_STRICT_HANDLE_CHECKS_RESERVED                  (0x00000003 << 24)
+
+#define PROCESS_CREATION_MITIGATION_POLICY_WIN32K_SYSTEM_CALL_DISABLE_MASK                (0x00000003 << 28)
+#define PROCESS_CREATION_MITIGATION_POLICY_WIN32K_SYSTEM_CALL_DISABLE_DEFER               (0x00000000 << 28)
+#define PROCESS_CREATION_MITIGATION_POLICY_WIN32K_SYSTEM_CALL_DISABLE_ALWAYS_ON           (0x00000001 << 28)
+#define PROCESS_CREATION_MITIGATION_POLICY_WIN32K_SYSTEM_CALL_DISABLE_ALWAYS_OFF          (0x00000002 << 28)
+#define PROCESS_CREATION_MITIGATION_POLICY_WIN32K_SYSTEM_CALL_DISABLE_RESERVED            (0x00000003 << 28)
+
+#define PROCESS_CREATION_MITIGATION_POLICY_EXTENSION_POINT_DISABLE_MASK                   (0x00000003ui64 << 32)
+#define PROCESS_CREATION_MITIGATION_POLICY_EXTENSION_POINT_DISABLE_DEFER                  (0x00000000ui64 << 32)
+#define PROCESS_CREATION_MITIGATION_POLICY_EXTENSION_POINT_DISABLE_ALWAYS_ON              (0x00000001ui64 << 32)
+#define PROCESS_CREATION_MITIGATION_POLICY_EXTENSION_POINT_DISABLE_ALWAYS_OFF             (0x00000002ui64 << 32)
+#define PROCESS_CREATION_MITIGATION_POLICY_EXTENSION_POINT_DISABLE_RESERVED               (0x00000003ui64 << 32)
+
+#if (_WIN32_WINNT >= _WIN32_WINNT_WINBLUE)
+
+#define PROCESS_CREATION_MITIGATION_POLICY_PROHIBIT_DYNAMIC_CODE_MASK                     (0x00000003ui64 << 36)
+#define PROCESS_CREATION_MITIGATION_POLICY_PROHIBIT_DYNAMIC_CODE_DEFER                    (0x00000000ui64 << 36)
+#define PROCESS_CREATION_MITIGATION_POLICY_PROHIBIT_DYNAMIC_CODE_ALWAYS_ON                (0x00000001ui64 << 36)
+#define PROCESS_CREATION_MITIGATION_POLICY_PROHIBIT_DYNAMIC_CODE_ALWAYS_OFF               (0x00000002ui64 << 36)
+#define PROCESS_CREATION_MITIGATION_POLICY_PROHIBIT_DYNAMIC_CODE_ALWAYS_ON_ALLOW_OPT_OUT  (0x00000003ui64 << 36)
+
+#define PROCESS_CREATION_MITIGATION_POLICY_CONTROL_FLOW_GUARD_MASK                        (0x00000003ui64 << 40)
+#define PROCESS_CREATION_MITIGATION_POLICY_CONTROL_FLOW_GUARD_DEFER                       (0x00000000ui64 << 40)
+#define PROCESS_CREATION_MITIGATION_POLICY_CONTROL_FLOW_GUARD_ALWAYS_ON                   (0x00000001ui64 << 40)
+#define PROCESS_CREATION_MITIGATION_POLICY_CONTROL_FLOW_GUARD_ALWAYS_OFF                  (0x00000002ui64 << 40)
+#define PROCESS_CREATION_MITIGATION_POLICY_CONTROL_FLOW_GUARD_EXPORT_SUPPRESSION          (0x00000003ui64 << 40)
+
+#define PROCESS_CREATION_MITIGATION_POLICY_BLOCK_NON_MICROSOFT_BINARIES_MASK              (0x00000003ui64 << 44)
+#define PROCESS_CREATION_MITIGATION_POLICY_BLOCK_NON_MICROSOFT_BINARIES_DEFER             (0x00000000ui64 << 44)
+#define PROCESS_CREATION_MITIGATION_POLICY_BLOCK_NON_MICROSOFT_BINARIES_ALWAYS_ON         (0x00000001ui64 << 44)
+#define PROCESS_CREATION_MITIGATION_POLICY_BLOCK_NON_MICROSOFT_BINARIES_ALWAYS_OFF        (0x00000002ui64 << 44)
+#define PROCESS_CREATION_MITIGATION_POLICY_BLOCK_NON_MICROSOFT_BINARIES_ALLOW_STORE       (0x00000003ui64 << 44)
+
+#if (_WIN32_WINNT >= _WIN32_WINNT_WINTHRESHOLD)
+
+#define PROCESS_CREATION_MITIGATION_POLICY_FONT_DISABLE_MASK                              (0x00000003ui64 << 48)
+#define PROCESS_CREATION_MITIGATION_POLICY_FONT_DISABLE_DEFER                             (0x00000000ui64 << 48)
+#define PROCESS_CREATION_MITIGATION_POLICY_FONT_DISABLE_ALWAYS_ON                         (0x00000001ui64 << 48)
+#define PROCESS_CREATION_MITIGATION_POLICY_FONT_DISABLE_ALWAYS_OFF                        (0x00000002ui64 << 48)
+#define PROCESS_CREATION_MITIGATION_POLICY_AUDIT_NONSYSTEM_FONTS                          (0x00000003ui64 << 48)
+
+#define PROCESS_CREATION_MITIGATION_POLICY_IMAGE_LOAD_NO_REMOTE_MASK                      (0x00000003ui64 << 52)
+#define PROCESS_CREATION_MITIGATION_POLICY_IMAGE_LOAD_NO_REMOTE_DEFER                     (0x00000000ui64 << 52)
+#define PROCESS_CREATION_MITIGATION_POLICY_IMAGE_LOAD_NO_REMOTE_ALWAYS_ON                 (0x00000001ui64 << 52)
+#define PROCESS_CREATION_MITIGATION_POLICY_IMAGE_LOAD_NO_REMOTE_ALWAYS_OFF                (0x00000002ui64 << 52)
+#define PROCESS_CREATION_MITIGATION_POLICY_IMAGE_LOAD_NO_REMOTE_RESERVED                  (0x00000003ui64 << 52)
+
+#define PROCESS_CREATION_MITIGATION_POLICY_IMAGE_LOAD_NO_LOW_LABEL_MASK                   (0x00000003ui64 << 56)
+#define PROCESS_CREATION_MITIGATION_POLICY_IMAGE_LOAD_NO_LOW_LABEL_DEFER                  (0x00000000ui64 << 56)
+#define PROCESS_CREATION_MITIGATION_POLICY_IMAGE_LOAD_NO_LOW_LABEL_ALWAYS_ON              (0x00000001ui64 << 56)
+#define PROCESS_CREATION_MITIGATION_POLICY_IMAGE_LOAD_NO_LOW_LABEL_ALWAYS_OFF             (0x00000002ui64 << 56)
+#define PROCESS_CREATION_MITIGATION_POLICY_IMAGE_LOAD_NO_LOW_LABEL_RESERVED               (0x00000003ui64 << 56)
+
+#define PROCESS_CREATION_MITIGATION_POLICY_IMAGE_LOAD_PREFER_SYSTEM32_MASK                (0x00000003ui64 << 60)
+#define PROCESS_CREATION_MITIGATION_POLICY_IMAGE_LOAD_PREFER_SYSTEM32_DEFER               (0x00000000ui64 << 60)
+#define PROCESS_CREATION_MITIGATION_POLICY_IMAGE_LOAD_PREFER_SYSTEM32_ALWAYS_ON           (0x00000001ui64 << 60)
+#define PROCESS_CREATION_MITIGATION_POLICY_IMAGE_LOAD_PREFER_SYSTEM32_ALWAYS_OFF          (0x00000002ui64 << 60)
+#define PROCESS_CREATION_MITIGATION_POLICY_IMAGE_LOAD_PREFER_SYSTEM32_RESERVED            (0x00000003ui64 << 60)
+
+#define PROCESS_CREATION_MITIGATION_POLICY2_LOADER_INTEGRITY_CONTINUITY_MASK              (0x00000003ui64 << 4)
+#define PROCESS_CREATION_MITIGATION_POLICY2_LOADER_INTEGRITY_CONTINUITY_DEFER             (0x00000000ui64 << 4)
+#define PROCESS_CREATION_MITIGATION_POLICY2_LOADER_INTEGRITY_CONTINUITY_ALWAYS_ON         (0x00000001ui64 << 4)
+#define PROCESS_CREATION_MITIGATION_POLICY2_LOADER_INTEGRITY_CONTINUITY_ALWAYS_OFF        (0x00000002ui64 << 4)
+#define PROCESS_CREATION_MITIGATION_POLICY2_LOADER_INTEGRITY_CONTINUITY_AUDIT             (0x00000003ui64 << 4)
+
+#define PROCESS_CREATION_MITIGATION_POLICY2_STRICT_CONTROL_FLOW_GUARD_MASK                (0x00000003ui64 << 8)
+#define PROCESS_CREATION_MITIGATION_POLICY2_STRICT_CONTROL_FLOW_GUARD_DEFER               (0x00000000ui64 << 8)
+#define PROCESS_CREATION_MITIGATION_POLICY2_STRICT_CONTROL_FLOW_GUARD_ALWAYS_ON           (0x00000001ui64 << 8)
+#define PROCESS_CREATION_MITIGATION_POLICY2_STRICT_CONTROL_FLOW_GUARD_ALWAYS_OFF          (0x00000002ui64 << 8)
+#define PROCESS_CREATION_MITIGATION_POLICY2_STRICT_CONTROL_FLOW_GUARD_RESERVED            (0x00000003ui64 << 8)
+
+#define PROCESS_CREATION_MITIGATION_POLICY2_MODULE_TAMPERING_PROTECTION_MASK              (0x00000003ui64 << 12)
+#define PROCESS_CREATION_MITIGATION_POLICY2_MODULE_TAMPERING_PROTECTION_DEFER             (0x00000000ui64 << 12)
+#define PROCESS_CREATION_MITIGATION_POLICY2_MODULE_TAMPERING_PROTECTION_ALWAYS_ON         (0x00000001ui64 << 12)
+#define PROCESS_CREATION_MITIGATION_POLICY2_MODULE_TAMPERING_PROTECTION_ALWAYS_OFF        (0x00000002ui64 << 12)
+#define PROCESS_CREATION_MITIGATION_POLICY2_MODULE_TAMPERING_PROTECTION_NOINHERIT         (0x00000003ui64 << 12)
+
+#define PROCESS_CREATION_MITIGATION_POLICY2_RESTRICT_INDIRECT_BRANCH_PREDICTION_MASK        (0x00000003ui64 << 16)
+#define PROCESS_CREATION_MITIGATION_POLICY2_RESTRICT_INDIRECT_BRANCH_PREDICTION_DEFER       (0x00000000ui64 << 16)
+#define PROCESS_CREATION_MITIGATION_POLICY2_RESTRICT_INDIRECT_BRANCH_PREDICTION_ALWAYS_ON   (0x00000001ui64 << 16)
+#define PROCESS_CREATION_MITIGATION_POLICY2_RESTRICT_INDIRECT_BRANCH_PREDICTION_ALWAYS_OFF  (0x00000002ui64 << 16)
+#define PROCESS_CREATION_MITIGATION_POLICY2_RESTRICT_INDIRECT_BRANCH_PREDICTION_RESERVED    (0x00000003ui64 << 16)
+
+#define PROCESS_CREATION_MITIGATION_POLICY2_ALLOW_DOWNGRADE_DYNAMIC_CODE_POLICY_MASK       (0x00000003ui64 << 20)
+#define PROCESS_CREATION_MITIGATION_POLICY2_ALLOW_DOWNGRADE_DYNAMIC_CODE_POLICY_DEFER      (0x00000000ui64 << 20)
+#define PROCESS_CREATION_MITIGATION_POLICY2_ALLOW_DOWNGRADE_DYNAMIC_CODE_POLICY_ALWAYS_ON  (0x00000001ui64 << 20)
+#define PROCESS_CREATION_MITIGATION_POLICY2_ALLOW_DOWNGRADE_DYNAMIC_CODE_POLICY_ALWAYS_OFF (0x00000002ui64 << 20)
+#define PROCESS_CREATION_MITIGATION_POLICY2_ALLOW_DOWNGRADE_DYNAMIC_CODE_POLICY_RESERVED   (0x00000003ui64 << 20)
+
+#define PROCESS_CREATION_MITIGATION_POLICY2_SPECULATIVE_STORE_BYPASS_DISABLE_MASK          (0x00000003ui64 << 24)
+#define PROCESS_CREATION_MITIGATION_POLICY2_SPECULATIVE_STORE_BYPASS_DISABLE_DEFER         (0x00000000ui64 << 24)
+#define PROCESS_CREATION_MITIGATION_POLICY2_SPECULATIVE_STORE_BYPASS_DISABLE_ALWAYS_ON     (0x00000001ui64 << 24)
+#define PROCESS_CREATION_MITIGATION_POLICY2_SPECULATIVE_STORE_BYPASS_DISABLE_ALWAYS_OFF    (0x00000002ui64 << 24)
+#define PROCESS_CREATION_MITIGATION_POLICY2_SPECULATIVE_STORE_BYPASS_DISABLE_RESERVED      (0x00000003ui64 << 24)
+
+#define PROCESS_CREATION_MITIGATION_POLICY2_CET_USER_SHADOW_STACKS_MASK                    (0x00000003ui64 << 28)
+#define PROCESS_CREATION_MITIGATION_POLICY2_CET_USER_SHADOW_STACKS_DEFER                   (0x00000000ui64 << 28)
+#define PROCESS_CREATION_MITIGATION_POLICY2_CET_USER_SHADOW_STACKS_ALWAYS_ON               (0x00000001ui64 << 28)
+#define PROCESS_CREATION_MITIGATION_POLICY2_CET_USER_SHADOW_STACKS_ALWAYS_OFF              (0x00000002ui64 << 28)
+#define PROCESS_CREATION_MITIGATION_POLICY2_CET_USER_SHADOW_STACKS_STRICT_MODE             (0x00000003ui64 << 28)
+
+#define PROCESS_CREATION_MITIGATION_POLICY2_USER_CET_SET_CONTEXT_IP_VALIDATION_MASK         (0x00000003ui64 << 32)
+#define PROCESS_CREATION_MITIGATION_POLICY2_USER_CET_SET_CONTEXT_IP_VALIDATION_DEFER        (0x00000000ui64 << 32)
+#define PROCESS_CREATION_MITIGATION_POLICY2_USER_CET_SET_CONTEXT_IP_VALIDATION_ALWAYS_ON    (0x00000001ui64 << 32)
+#define PROCESS_CREATION_MITIGATION_POLICY2_USER_CET_SET_CONTEXT_IP_VALIDATION_ALWAYS_OFF   (0x00000002ui64 << 32)
+#define PROCESS_CREATION_MITIGATION_POLICY2_USER_CET_SET_CONTEXT_IP_VALIDATION_RELAXED_MODE (0x00000003ui64 << 32)
+
+#define PROCESS_CREATION_MITIGATION_POLICY2_BLOCK_NON_CET_BINARIES_MASK                    (0x00000003ui64 << 36)
+#define PROCESS_CREATION_MITIGATION_POLICY2_BLOCK_NON_CET_BINARIES_DEFER                   (0x00000000ui64 << 36)
+#define PROCESS_CREATION_MITIGATION_POLICY2_BLOCK_NON_CET_BINARIES_ALWAYS_ON               (0x00000001ui64 << 36)
+#define PROCESS_CREATION_MITIGATION_POLICY2_BLOCK_NON_CET_BINARIES_ALWAYS_OFF              (0x00000002ui64 << 36)
+#define PROCESS_CREATION_MITIGATION_POLICY2_BLOCK_NON_CET_BINARIES_NON_EHCONT              (0x00000003ui64 << 36)
+
+#define PROCESS_CREATION_MITIGATION_POLICY2_XTENDED_CONTROL_FLOW_GUARD_MASK                (0x00000003ui64 << 40)
+#define PROCESS_CREATION_MITIGATION_POLICY2_XTENDED_CONTROL_FLOW_GUARD_DEFER               (0x00000000ui64 << 40)
+#define PROCESS_CREATION_MITIGATION_POLICY2_XTENDED_CONTROL_FLOW_GUARD_ALWAYS_ON           (0x00000001ui64 << 40)
+#define PROCESS_CREATION_MITIGATION_POLICY2_XTENDED_CONTROL_FLOW_GUARD_ALWAYS_OFF          (0x00000002ui64 << 40)
+#define PROCESS_CREATION_MITIGATION_POLICY2_XTENDED_CONTROL_FLOW_GUARD_RESERVED            (0x00000003ui64 << 40)
+
+#define PROCESS_CREATION_MITIGATION_POLICY2_POINTER_AUTH_USER_IP_MASK                      (0x00000003ui64 << 44)
+#define PROCESS_CREATION_MITIGATION_POLICY2_POINTER_AUTH_USER_IP_DEFER                     (0x00000000ui64 << 44)
+#define PROCESS_CREATION_MITIGATION_POLICY2_POINTER_AUTH_USER_IP_ALWAYS_ON                 (0x00000001ui64 << 44)
+#define PROCESS_CREATION_MITIGATION_POLICY2_POINTER_AUTH_USER_IP_ALWAYS_OFF                (0x00000002ui64 << 44)
+#define PROCESS_CREATION_MITIGATION_POLICY2_POINTER_AUTH_USER_IP_RESERVED                  (0x00000003ui64 << 44)
+
+#define PROCESS_CREATION_MITIGATION_POLICY2_CET_DYNAMIC_APIS_OUT_OF_PROC_ONLY_MASK         (0x00000003ui64 << 48)
+#define PROCESS_CREATION_MITIGATION_POLICY2_CET_DYNAMIC_APIS_OUT_OF_PROC_ONLY_DEFER        (0x00000000ui64 << 48)
+#define PROCESS_CREATION_MITIGATION_POLICY2_CET_DYNAMIC_APIS_OUT_OF_PROC_ONLY_ALWAYS_ON    (0x00000001ui64 << 48)
+#define PROCESS_CREATION_MITIGATION_POLICY2_CET_DYNAMIC_APIS_OUT_OF_PROC_ONLY_ALWAYS_OFF   (0x00000002ui64 << 48)
+#define PROCESS_CREATION_MITIGATION_POLICY2_CET_DYNAMIC_APIS_OUT_OF_PROC_ONLY_RESERVED     (0x00000003ui64 << 48)
+
+#define PROCESS_CREATION_MITIGATION_POLICY2_RESTRICT_CORE_SHARING_MASK                     (0x00000003ui64 << 52)
+#define PROCESS_CREATION_MITIGATION_POLICY2_RESTRICT_CORE_SHARING_DEFER                    (0x00000000ui64 << 52)
+#define PROCESS_CREATION_MITIGATION_POLICY2_RESTRICT_CORE_SHARING_ALWAYS_ON                (0x00000001ui64 << 52)
+#define PROCESS_CREATION_MITIGATION_POLICY2_RESTRICT_CORE_SHARING_ALWAYS_OFF               (0x00000002ui64 << 52)
+#define PROCESS_CREATION_MITIGATION_POLICY2_RESTRICT_CORE_SHARING_RESERVED                 (0x00000003ui64 << 52)
+
+#define PROCESS_CREATION_MITIGATION_POLICY2_FSCTL_SYSTEM_CALL_DISABLE_MASK                 (0x00000003ui64 << 56)
+#define PROCESS_CREATION_MITIGATION_POLICY2_FSCTL_SYSTEM_CALL_DISABLE_DEFER                (0x00000000ui64 << 56)
+#define PROCESS_CREATION_MITIGATION_POLICY2_FSCTL_SYSTEM_CALL_DISABLE_ALWAYS_ON            (0x00000001ui64 << 56)
+#define PROCESS_CREATION_MITIGATION_POLICY2_FSCTL_SYSTEM_CALL_DISABLE_ALWAYS_OFF           (0x00000002ui64 << 56)
+#define PROCESS_CREATION_MITIGATION_POLICY2_FSCTL_SYSTEM_CALL_DISABLE_RESERVED             (0x00000003ui64 << 56)
+
+#endif /* (_WIN32_WINNT >= _WIN32_WINNT_WINTHRESHOLD) */
+#endif /* (_WIN32_WINNT >= _WIN32_WINNT_WINBLUE) */
+#endif /* (_WIN32_WINNT >= _WIN32_WINNT_WIN8) */
+
+#if (_WIN32_WINNT >= _WIN32_WINNT_WINTHRESHOLD)
+
+#define PROC_THREAD_ATTRIBUTE_JOB_LIST \
+    ProcThreadAttributeValue (ProcThreadAttributeJobList, FALSE, TRUE, FALSE)
+
+#define PROCESS_CREATION_CHILD_PROCESS_RESTRICTED                                         0x01
+#define PROCESS_CREATION_CHILD_PROCESS_OVERRIDE                                           0x02
+#define PROCESS_CREATION_CHILD_PROCESS_RESTRICTED_UNLESS_SECURE                           0x04
+
+#define PROC_THREAD_ATTRIBUTE_CHILD_PROCESS_POLICY \
+    ProcThreadAttributeValue (ProcThreadAttributeChildProcessPolicy, FALSE, TRUE, FALSE)
+
+#define PROCESS_CREATION_ALL_APPLICATION_PACKAGES_OPT_OUT                                 0x01
+
+#define PROC_THREAD_ATTRIBUTE_ALL_APPLICATION_PACKAGES_POLICY \
+    ProcThreadAttributeValue (ProcThreadAttributeAllApplicationPackagesPolicy, FALSE, TRUE, FALSE)
+
+#define PROC_THREAD_ATTRIBUTE_WIN32K_FILTER \
+    ProcThreadAttributeValue (ProcThreadAttributeWin32kFilter, FALSE, TRUE, FALSE)
+
+#endif /* (_WIN32_WINNT >= _WIN32_WINNT_WINTHRESHOLD) */
+
+#if (NTDDI_VERSION >= NTDDI_WIN10_RS2)
+
+#define PROCESS_CREATION_DESKTOP_APP_BREAKAWAY_ENABLE_PROCESS_TREE                        0x01
+#define PROCESS_CREATION_DESKTOP_APP_BREAKAWAY_DISABLE_PROCESS_TREE                       0x02
+#define PROCESS_CREATION_DESKTOP_APP_BREAKAWAY_OVERRIDE                                   0x04
+
+#define PROC_THREAD_ATTRIBUTE_DESKTOP_APP_POLICY \
+    ProcThreadAttributeValue (ProcThreadAttributeDesktopAppPolicy, FALSE, TRUE, FALSE)
+
+#endif /* (NTDDI_VERSION >= NTDDI_WIN10_RS2) */
+
+#if (NTDDI_VERSION >= NTDDI_WIN10_MN)
+
+#define PROC_THREAD_ATTRIBUTE_MITIGATION_AUDIT_POLICY \
+    ProcThreadAttributeValue (ProcThreadAttributeMitigationAuditPolicy, FALSE, TRUE, FALSE)
+
+#define PROC_THREAD_ATTRIBUTE_COMPONENT_FILTER \
+    ProcThreadAttributeValue (ProcThreadAttributeComponentFilter, FALSE, TRUE, FALSE)
+
+#define PROCESS_CREATION_MITIGATION_AUDIT_POLICY2_CET_USER_SHADOW_STACKS_MASK                    (0x00000003ui64 << 28)
+#define PROCESS_CREATION_MITIGATION_AUDIT_POLICY2_CET_USER_SHADOW_STACKS_DEFER                   (0x00000000ui64 << 28)
+#define PROCESS_CREATION_MITIGATION_AUDIT_POLICY2_CET_USER_SHADOW_STACKS_ALWAYS_ON               (0x00000001ui64 << 28)
+#define PROCESS_CREATION_MITIGATION_AUDIT_POLICY2_CET_USER_SHADOW_STACKS_ALWAYS_OFF              (0x00000002ui64 << 28)
+#define PROCESS_CREATION_MITIGATION_AUDIT_POLICY2_CET_USER_SHADOW_STACKS_RESERVED                (0x00000003ui64 << 28)
+
+#define PROCESS_CREATION_MITIGATION_AUDIT_POLICY2_USER_CET_SET_CONTEXT_IP_VALIDATION_MASK        (0x00000003ui64 << 32)
+#define PROCESS_CREATION_MITIGATION_AUDIT_POLICY2_USER_CET_SET_CONTEXT_IP_VALIDATION_DEFER       (0x00000000ui64 << 32)
+#define PROCESS_CREATION_MITIGATION_AUDIT_POLICY2_USER_CET_SET_CONTEXT_IP_VALIDATION_ALWAYS_ON   (0x00000001ui64 << 32)
+#define PROCESS_CREATION_MITIGATION_AUDIT_POLICY2_USER_CET_SET_CONTEXT_IP_VALIDATION_ALWAYS_OFF  (0x00000002ui64 << 32)
+#define PROCESS_CREATION_MITIGATION_AUDIT_POLICY2_USER_CET_SET_CONTEXT_IP_VALIDATION_RESERVED    (0x00000003ui64 << 32)
+
+#define PROCESS_CREATION_MITIGATION_AUDIT_POLICY2_BLOCK_NON_CET_BINARIES_MASK                    (0x00000003ui64 << 36)
+#define PROCESS_CREATION_MITIGATION_AUDIT_POLICY2_BLOCK_NON_CET_BINARIES_DEFER                   (0x00000000ui64 << 36)
+#define PROCESS_CREATION_MITIGATION_AUDIT_POLICY2_BLOCK_NON_CET_BINARIES_ALWAYS_ON               (0x00000001ui64 << 36)
+#define PROCESS_CREATION_MITIGATION_AUDIT_POLICY2_BLOCK_NON_CET_BINARIES_ALWAYS_OFF              (0x00000002ui64 << 36)
+#define PROCESS_CREATION_MITIGATION_AUDIT_POLICY2_BLOCK_NON_CET_BINARIES_RESERVED                (0x00000003ui64 << 36)
+
+#define PROCESS_CREATION_MITIGATION_AUDIT_POLICY2_XTENDED_CONTROL_FLOW_GUARD_MASK                (0x00000003ui64 << 40)
+#define PROCESS_CREATION_MITIGATION_AUDIT_POLICY2_XTENDED_CONTROL_FLOW_GUARD_DEFER               (0x00000000ui64 << 40)
+#define PROCESS_CREATION_MITIGATION_AUDIT_POLICY2_XTENDED_CONTROL_FLOW_GUARD_ALWAYS_ON           (0x00000001ui64 << 40)
+#define PROCESS_CREATION_MITIGATION_AUDIT_POLICY2_XTENDED_CONTROL_FLOW_GUARD_ALWAYS_OFF          (0x00000002ui64 << 40)
+#define PROCESS_CREATION_MITIGATION_AUDIT_POLICY2_XTENDED_CONTROL_FLOW_GUARD_RESERVED            (0x00000003ui64 << 40)
+
+#endif /* (NTDDI_VERSION >= NTDDI_WIN10_MN) */
+
+#if (NTDDI_VERSION >= NTDDI_WIN10_NI)
+#define PROC_THREAD_ATTRIBUTE_TRUSTED_APP \
+    ProcThreadAttributeValue (ProcThreadAttributeTrustedApp, FALSE, TRUE, FALSE)
+#endif /* (NTDDI_VERSION >= NTDDI_WIN10_NI) */
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_GAMES)
+
+WINBASEAPI void WINAPI GetStartupInfoA(
+    LPSTARTUPINFOA lpStartupInfo
+);
+#ifndef UNICODE
+#define GetStartupInfo  GetStartupInfoA
+#endif
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_GAMES) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_APP)
+
+WINBASEAPI DWORD WINAPI GetFirmwareEnvironmentVariableA(
+    LPCSTR lpName,
+    LPCSTR lpGuid,
+    PVOID pBuffer,
+    DWORD nSize
+);
+WINBASEAPI DWORD WINAPI GetFirmwareEnvironmentVariableW(
+    LPCWSTR lpName,
+    LPCWSTR lpGuid,
+    PVOID pBuffer,
+    DWORD nSize
+);
+#ifdef UNICODE
+#define GetFirmwareEnvironmentVariable  GetFirmwareEnvironmentVariableW
+#else /* !UNICODE */
+#define GetFirmwareEnvironmentVariable  GetFirmwareEnvironmentVariableA
+#endif /* !UNICODE */
+
+#if (_WIN32_WINNT >= _WIN32_WINNT_WIN8)
+
+WINBASEAPI DWORD WINAPI GetFirmwareEnvironmentVariableExA(
+    LPCSTR lpName,
+    LPCSTR lpGuid,
+    PVOID pBuffer,
+    DWORD nSize,
+    PDWORD pdwAttribubutes
+);
+WINBASEAPI DWORD WINAPI GetFirmwareEnvironmentVariableExW(
+    LPCWSTR lpName,
+    LPCWSTR lpGuid,
+    PVOID pBuffer,
+    DWORD nSize,
+    PDWORD pdwAttribubutes
+);
+#ifdef UNICODE
+#define GetFirmwareEnvironmentVariableEx  GetFirmwareEnvironmentVariableExW
+#else /* !UNICODE */
+#define GetFirmwareEnvironmentVariableEx  GetFirmwareEnvironmentVariableExA
+#endif /* !UNICODE */
+
+#endif /* (_WIN32_WINNT >= _WIN32_WINNT_WIN8) */
+
+WINBASEAPI BOOL WINAPI SetFirmwareEnvironmentVariableA(
+    LPCSTR lpName,
+    LPCSTR lpGuid,
+    PVOID pValue,
+    DWORD nSize
+);
+WINBASEAPI BOOL WINAPI SetFirmwareEnvironmentVariableW(
+    LPCWSTR lpName,
+    LPCWSTR lpGuid,
+    PVOID pValue,
+    DWORD nSize
+);
+#ifdef UNICODE
+#define SetFirmwareEnvironmentVariable  SetFirmwareEnvironmentVariableW
+#else /* !UNICODE */
+#define SetFirmwareEnvironmentVariable  SetFirmwareEnvironmentVariableA
+#endif /* !UNICODE */
+
+#if (_WIN32_WINNT >= _WIN32_WINNT_WIN8)
+
+WINBASEAPI BOOL WINAPI SetFirmwareEnvironmentVariableExA(
+    LPCSTR lpName,
+    LPCSTR lpGuid,
+    PVOID pValue,
+    DWORD nSize,
+    DWORD dwAttributes
+);
+WINBASEAPI BOOL WINAPI SetFirmwareEnvironmentVariableExW(
+    LPCWSTR lpName,
+    LPCWSTR lpGuid,
+    PVOID pValue,
+    DWORD nSize,
+    DWORD dwAttributes
+);
+#ifdef UNICODE
+#define SetFirmwareEnvironmentVariableEx  SetFirmwareEnvironmentVariableExW
+#else /* !UNICODE */
+#define SetFirmwareEnvironmentVariableEx  SetFirmwareEnvironmentVariableExA
+#endif /* !UNICODE */
+
+#endif /* (_WIN32_WINNT >= _WIN32_WINNT_WIN8) */
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_APP) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)
+
+#if (_WIN32_WINNT >= _WIN32_WINNT_WIN8)
+
+WINBASEAPI BOOL WINAPI GetFirmwareType(
+    PFIRMWARE_TYPE FirmwareType
+);
+
+WINBASEAPI BOOL WINAPI IsNativeVhdBoot(
+    PBOOL NativeVhdBoot
+);
+
+#endif /* (_WIN32_WINNT >= _WIN32_WINNT_WIN8) */
+
+WINBASEAPI HRSRC WINAPI FindResourceA(
+    HMODULE hModule,
+    LPCSTR lpName,
+    LPCSTR lpType
+);
+#ifndef UNICODE
+#define FindResource  FindResourceA
+#endif
+
+WINBASEAPI HRSRC WINAPI FindResourceExA(
+    HMODULE hModule,
+    LPCSTR lpType,
+    LPCSTR lpName,
+    WORD wLanguage
+);
+#ifndef UNICODE
+#define FindResourceEx  FindResourceExA
+#endif
+
+WINBASEAPI BOOL WINAPI EnumResourceTypesA(
+    HMODULE hModule,
+    ENUMRESTYPEPROCA lpEnumFunc,
+    LONG_PTR lParam
+);
+WINBASEAPI BOOL WINAPI EnumResourceTypesW(
+    HMODULE hModule,
+    ENUMRESTYPEPROCW lpEnumFunc,
+    LONG_PTR lParam
+);
+#ifdef UNICODE
+#define EnumResourceTypes  EnumResourceTypesW
+#else /* !UNICODE */
+#define EnumResourceTypes  EnumResourceTypesA
+#endif /* !UNICODE */
+
+WINBASEAPI BOOL WINAPI EnumResourceLanguagesA(
+    HMODULE hModule,
+    LPCSTR lpType,
+    LPCSTR lpName,
+    ENUMRESLANGPROCA lpEnumFunc,
+    LONG_PTR lParam
+);
+WINBASEAPI BOOL WINAPI EnumResourceLanguagesW(
+    HMODULE hModule,
+    LPCWSTR lpType,
+    LPCWSTR lpName,
+    ENUMRESLANGPROCW lpEnumFunc,
+    LONG_PTR lParam
+);
+#ifdef UNICODE
+#define EnumResourceLanguages  EnumResourceLanguagesW
+#else /* !UNICODE */
+#define EnumResourceLanguages  EnumResourceLanguagesA
+#endif /* !UNICODE */
+
+WINBASEAPI HANDLE WINAPI BeginUpdateResourceA(
+    LPCSTR pFileName,
+    BOOL bDeleteExistingResources
+);
+WINBASEAPI HANDLE WINAPI BeginUpdateResourceW(
+    LPCWSTR pFileName,
+    BOOL bDeleteExistingResources
+);
+#ifdef UNICODE
+#define BeginUpdateResource  BeginUpdateResourceW
+#else /* !UNICODE */
+#define BeginUpdateResource  BeginUpdateResourceA
+#endif /* !UNICODE */
+
+WINBASEAPI BOOL WINAPI UpdateResourceA(
+    HANDLE hUpdate,
+    LPCSTR lpType,
+    LPCSTR lpName,
+    WORD wLanguage,
+    LPVOID lpData,
+    DWORD cb
+);
+WINBASEAPI BOOL WINAPI UpdateResourceW(
+    HANDLE hUpdate,
+    LPCWSTR lpType,
+    LPCWSTR lpName,
+    WORD wLanguage,
+    LPVOID lpData,
+    DWORD cb
+);
+#ifdef UNICODE
+#define UpdateResource  UpdateResourceW
+#else /* !UNICODE */
+#define UpdateResource  UpdateResourceA
+#endif /* !UNICODE */
+
+WINBASEAPI BOOL WINAPI EndUpdateResourceA(
+    HANDLE hUpdate,
+    BOOL fDiscard
+);
+WINBASEAPI BOOL WINAPI EndUpdateResourceW(
+    HANDLE hUpdate,
+    BOOL fDiscard
+);
+#ifdef UNICODE
+#define EndUpdateResource  EndUpdateResourceW
+#else /* !UNICODE */
+#define EndUpdateResource  EndUpdateResourceA
+#endif /* !UNICODE */
+
+#define ATOM_FLAG_GLOBAL 0x2
+
+WINBASEAPI ATOM WINAPI GlobalAddAtomA(
+    LPCSTR lpString
+);
+WINBASEAPI ATOM WINAPI GlobalAddAtomW(
+    LPCWSTR lpString
+);
+#ifdef UNICODE
+#define GlobalAddAtom  GlobalAddAtomW
+#else /* !UNICODE */
+#define GlobalAddAtom  GlobalAddAtomA
+#endif /* !UNICODE */
+
+WINBASEAPI ATOM WINAPI GlobalAddAtomExA(
+    LPCSTR lpString,
+    DWORD Flags
+);
+WINBASEAPI ATOM WINAPI GlobalAddAtomExW(
+    LPCWSTR lpString,
+    DWORD Flags
+);
+#ifdef UNICODE
+#define GlobalAddAtomEx  GlobalAddAtomExW
+#else /* !UNICODE */
+#define GlobalAddAtomEx  GlobalAddAtomExA
+#endif /* !UNICODE */
+
+WINBASEAPI ATOM WINAPI GlobalFindAtomA(
+    LPCSTR lpString
+);
+WINBASEAPI ATOM WINAPI GlobalFindAtomW(
+    LPCWSTR lpString
+);
+#ifdef UNICODE
+#define GlobalFindAtom  GlobalFindAtomW
+#else /* !UNICODE */
+#define GlobalFindAtom  GlobalFindAtomA
+#endif /* !UNICODE */
+
+WINBASEAPI UINT WINAPI GlobalGetAtomNameA(
+    ATOM nAtom,
+    LPSTR lpBuffer,
+    int nSize
+);
+WINBASEAPI UINT WINAPI GlobalGetAtomNameW(
+    ATOM nAtom,
+    LPWSTR lpBuffer,
+    int nSize
+);
+#ifdef UNICODE
+#define GlobalGetAtomName  GlobalGetAtomNameW
+#else /* !UNICODE */
+#define GlobalGetAtomName  GlobalGetAtomNameA
+#endif /* !UNICODE */
+
+WINBASEAPI ATOM WINAPI AddAtomA(
+    LPCSTR lpString
+);
+WINBASEAPI ATOM WINAPI AddAtomW(
+    LPCWSTR lpString
+);
+#ifdef UNICODE
+#define AddAtom  AddAtomW
+#else /* !UNICODE */
+#define AddAtom  AddAtomA
+#endif /* !UNICODE */
+
+WINBASEAPI ATOM WINAPI FindAtomA(
+    LPCSTR lpString
+);
+WINBASEAPI ATOM WINAPI FindAtomW(
+    LPCWSTR lpString
+);
+#ifdef UNICODE
+#define FindAtom  FindAtomW
+#else /* !UNICODE */
+#define FindAtom  FindAtomA
+#endif /* !UNICODE */
+
+WINBASEAPI UINT WINAPI GetAtomNameA(
+    ATOM nAtom,
+    LPSTR lpBuffer,
+    int nSize
+);
+WINBASEAPI UINT WINAPI GetAtomNameW(
+    ATOM nAtom,
+    LPWSTR lpBuffer,
+    int nSize
+);
+#ifdef UNICODE
+#define GetAtomName  GetAtomNameW
+#else /* !UNICODE */
+#define GetAtomName  GetAtomNameA
+#endif /* !UNICODE */
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM)
+
+WINBASEAPI UINT WINAPI GetProfileIntA(
+    LPCSTR lpAppName,
+    LPCSTR lpKeyName,
+    INT nDefault
+);
+WINBASEAPI UINT WINAPI GetProfileIntW(
+    LPCWSTR lpAppName,
+    LPCWSTR lpKeyName,
+    INT nDefault
+);
+#ifdef UNICODE
+#define GetProfileInt  GetProfileIntW
+#else /* !UNICODE */
+#define GetProfileInt  GetProfileIntA
+#endif /* !UNICODE */
+
+WINBASEAPI DWORD WINAPI GetProfileStringA(
+    LPCSTR lpAppName,
+    LPCSTR lpKeyName,
+    LPCSTR lpDefault,
+    LPSTR lpReturnedString,
+    DWORD nSize
+);
+WINBASEAPI DWORD WINAPI GetProfileStringW(
+    LPCWSTR lpAppName,
+    LPCWSTR lpKeyName,
+    LPCWSTR lpDefault,
+    LPWSTR lpReturnedString,
+    DWORD nSize
+);
+#ifdef UNICODE
+#define GetProfileString  GetProfileStringW
+#else /* !UNICODE */
+#define GetProfileString  GetProfileStringA
+#endif /* !UNICODE */
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)
+
+WINBASEAPI BOOL WINAPI WriteProfileStringA(
+    LPCSTR lpAppName,
+    LPCSTR lpKeyName,
+    LPCSTR lpString
+);
+WINBASEAPI BOOL WINAPI WriteProfileStringW(
+    LPCWSTR lpAppName,
+    LPCWSTR lpKeyName,
+    LPCWSTR lpString
+);
+#ifdef UNICODE
+#define WriteProfileString  WriteProfileStringW
+#else /* !UNICODE */
+#define WriteProfileString  WriteProfileStringA
+#endif /* !UNICODE */
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM)
+
+WINBASEAPI DWORD WINAPI GetProfileSectionA(
+    LPCSTR lpAppName,
+    LPSTR lpReturnedString,
+    DWORD nSize
+);
+WINBASEAPI DWORD WINAPI GetProfileSectionW(
+    LPCWSTR lpAppName,
+    LPWSTR lpReturnedString,
+    DWORD nSize
+);
+#ifdef UNICODE
+#define GetProfileSection  GetProfileSectionW
+#else /* !UNICODE */
+#define GetProfileSection  GetProfileSectionA
+#endif /* !UNICODE */
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)
+
+WINBASEAPI BOOL WINAPI WriteProfileSectionA(
+    LPCSTR lpAppName,
+    LPCSTR lpString
+);
+WINBASEAPI BOOL WINAPI WriteProfileSectionW(
+    LPCWSTR lpAppName,
+    LPCWSTR lpString
+);
+#ifdef UNICODE
+#define WriteProfileSection  WriteProfileSectionW
+#else /* !UNICODE */
+#define WriteProfileSection  WriteProfileSectionA
+#endif /* !UNICODE */
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM)
+
+WINBASEAPI UINT WINAPI GetPrivateProfileIntA(
+    LPCSTR lpAppName,
+    LPCSTR lpKeyName,
+    INT nDefault,
+    LPCSTR lpFileName
+);
+WINBASEAPI UINT WINAPI GetPrivateProfileIntW(
+    LPCWSTR lpAppName,
+    LPCWSTR lpKeyName,
+    INT nDefault,
+    LPCWSTR lpFileName
+);
+#ifdef UNICODE
+#define GetPrivateProfileInt  GetPrivateProfileIntW
+#else /* !UNICODE */
+#define GetPrivateProfileInt  GetPrivateProfileIntA
+#endif /* !UNICODE */
+
+WINBASEAPI DWORD WINAPI GetPrivateProfileStringA(
+    LPCSTR lpAppName,
+    LPCSTR lpKeyName,
+    LPCSTR lpDefault,
+    LPSTR lpReturnedString,
+    DWORD nSize,
+    LPCSTR lpFileName
+);
+WINBASEAPI DWORD WINAPI GetPrivateProfileStringW(
+    LPCWSTR lpAppName,
+    LPCWSTR lpKeyName,
+    LPCWSTR lpDefault,
+    LPWSTR lpReturnedString,
+    DWORD nSize,
+    LPCWSTR lpFileName
+);
+#ifdef UNICODE
+#define GetPrivateProfileString  GetPrivateProfileStringW
+#else /* !UNICODE */
+#define GetPrivateProfileString  GetPrivateProfileStringA
+#endif /* !UNICODE */
+
+WINBASEAPI BOOL WINAPI WritePrivateProfileStringA(
+    LPCSTR lpAppName,
+    LPCSTR lpKeyName,
+    LPCSTR lpString,
+    LPCSTR lpFileName
+);
+WINBASEAPI BOOL WINAPI WritePrivateProfileStringW(
+    LPCWSTR lpAppName,
+    LPCWSTR lpKeyName,
+    LPCWSTR lpString,
+    LPCWSTR lpFileName
+);
+#ifdef UNICODE
+#define WritePrivateProfileString  WritePrivateProfileStringW
+#else /* !UNICODE */
+#define WritePrivateProfileString  WritePrivateProfileStringA
+#endif /* !UNICODE */
+
+WINBASEAPI DWORD WINAPI GetPrivateProfileSectionA(
+    LPCSTR lpAppName,
+    LPSTR lpReturnedString,
+    DWORD nSize,
+    LPCSTR lpFileName
+);
+WINBASEAPI DWORD WINAPI GetPrivateProfileSectionW(
+    LPCWSTR lpAppName,
+    LPWSTR lpReturnedString,
+    DWORD nSize,
+    LPCWSTR lpFileName
+);
+#ifdef UNICODE
+#define GetPrivateProfileSection  GetPrivateProfileSectionW
+#else /* !UNICODE */
+#define GetPrivateProfileSection  GetPrivateProfileSectionA
+#endif /* !UNICODE */
+
+WINBASEAPI BOOL WINAPI WritePrivateProfileSectionA(
+    LPCSTR lpAppName,
+    LPCSTR lpString,
+    LPCSTR lpFileName
+);
+WINBASEAPI BOOL WINAPI WritePrivateProfileSectionW(
+    LPCWSTR lpAppName,
+    LPCWSTR lpString,
+    LPCWSTR lpFileName
+);
+#ifdef UNICODE
+#define WritePrivateProfileSection  WritePrivateProfileSectionW
+#else /* !UNICODE */
+#define WritePrivateProfileSection  WritePrivateProfileSectionA
+#endif /* !UNICODE */
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)
+
+WINBASEAPI DWORD WINAPI GetPrivateProfileSectionNamesA(
+    LPSTR lpszReturnBuffer,
+    DWORD nSize,
+    LPCSTR lpFileName
+);
+WINBASEAPI DWORD WINAPI GetPrivateProfileSectionNamesW(
+    LPWSTR lpszReturnBuffer,
+    DWORD nSize,
+    LPCWSTR lpFileName
+);
+#ifdef UNICODE
+#define GetPrivateProfileSectionNames  GetPrivateProfileSectionNamesW
+#else /* !UNICODE */
+#define GetPrivateProfileSectionNames  GetPrivateProfileSectionNamesA
+#endif /* !UNICODE */
+
+WINBASEAPI BOOL WINAPI GetPrivateProfileStructA(
+    LPCSTR lpszSection,
+    LPCSTR lpszKey,
+    LPVOID lpStruct,
+    UINT uSizeStruct,
+    LPCSTR szFile
+);
+WINBASEAPI BOOL WINAPI GetPrivateProfileStructW(
+    LPCWSTR lpszSection,
+    LPCWSTR lpszKey,
+    LPVOID lpStruct,
+    UINT uSizeStruct,
+    LPCWSTR szFile
+);
+#ifdef UNICODE
+#define GetPrivateProfileStruct  GetPrivateProfileStructW
+#else /* !UNICODE */
+#define GetPrivateProfileStruct  GetPrivateProfileStructA
+#endif /* !UNICODE */
+
+WINBASEAPI BOOL WINAPI WritePrivateProfileStructA(
+    LPCSTR lpszSection,
+    LPCSTR lpszKey,
+    LPVOID lpStruct,
+    UINT uSizeStruct,
+    LPCSTR szFile
+);
+WINBASEAPI BOOL WINAPI WritePrivateProfileStructW(
+    LPCWSTR lpszSection,
+    LPCWSTR lpszKey,
+    LPVOID lpStruct,
+    UINT uSizeStruct,
+    LPCWSTR szFile
+);
+#ifdef UNICODE
+#define WritePrivateProfileStruct  WritePrivateProfileStructW
+#else /* !UNICODE */
+#define WritePrivateProfileStruct  WritePrivateProfileStructA
+#endif /* !UNICODE */
+
+#if _WIN32_WINNT >= 0x0501 || defined(WINBASE_DECLARE_GET_SYSTEM_WOW64_DIRECTORY)
+
+typedef UINT (WINAPI *PGET_SYSTEM_WOW64_DIRECTORY_A)(LPSTR lpBuffer, UINT uSize);
+typedef UINT (WINAPI *PGET_SYSTEM_WOW64_DIRECTORY_W)(LPWSTR lpBuffer, UINT uSize);
+
+#define GET_SYSTEM_WOW64_DIRECTORY_NAME_A_A  "GetSystemWow64DirectoryA"
+#define GET_SYSTEM_WOW64_DIRECTORY_NAME_A_W  L"GetSystemWow64DirectoryA"
+#define GET_SYSTEM_WOW64_DIRECTORY_NAME_A_T  TEXT("GetSystemWow64DirectoryA")
+#define GET_SYSTEM_WOW64_DIRECTORY_NAME_W_A  "GetSystemWow64DirectoryW"
+#define GET_SYSTEM_WOW64_DIRECTORY_NAME_W_W  L"GetSystemWow64DirectoryW"
+#define GET_SYSTEM_WOW64_DIRECTORY_NAME_W_T  TEXT("GetSystemWow64DirectoryW")
+
+#ifdef UNICODE
+#define GET_SYSTEM_WOW64_DIRECTORY_NAME_T_A  GET_SYSTEM_WOW64_DIRECTORY_NAME_W_A
+#define GET_SYSTEM_WOW64_DIRECTORY_NAME_T_W  GET_SYSTEM_WOW64_DIRECTORY_NAME_W_W
+#define GET_SYSTEM_WOW64_DIRECTORY_NAME_T_T  GET_SYSTEM_WOW64_DIRECTORY_NAME_W_T
+#else /* !UNICODE */
+#define GET_SYSTEM_WOW64_DIRECTORY_NAME_T_A  GET_SYSTEM_WOW64_DIRECTORY_NAME_A_A
+#define GET_SYSTEM_WOW64_DIRECTORY_NAME_T_W  GET_SYSTEM_WOW64_DIRECTORY_NAME_A_W
+#define GET_SYSTEM_WOW64_DIRECTORY_NAME_T_T  GET_SYSTEM_WOW64_DIRECTORY_NAME_A_T
+#endif /* !UNICODE */
+
+#endif /* _WIN32_WINNT >= 0x0501 || defined(WINBASE_DECLARE_GET_SYSTEM_WOW64_DIRECTORY) */
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_GAMES)
+
+#if _WIN32_WINNT >= 0x0502
+WINBASEAPI BOOL WINAPI SetDllDirectoryA(
+    LPCSTR lpPathName
+);
+WINBASEAPI BOOL WINAPI SetDllDirectoryW(
+    LPCWSTR lpPathName
+);
+#ifdef UNICODE
+#define SetDllDirectory  SetDllDirectoryW
+#else /* !UNICODE */
+#define SetDllDirectory  SetDllDirectoryA
+#endif /* !UNICODE */
+#endif /* _WIN32_WINNT >= 0x0502 */
+
+#if _WIN32_WINNT >= 0x0502
+WINBASEAPI DWORD WINAPI GetDllDirectoryA(
+    DWORD nBufferLength,
+    LPSTR lpBuffer
+);
+WINBASEAPI DWORD WINAPI GetDllDirectoryW(
+    DWORD nBufferLength,
+    LPWSTR lpBuffer
+);
+#ifdef UNICODE
+#define GetDllDirectory  GetDllDirectoryW
+#else /* !UNICODE */
+#define GetDllDirectory  GetDllDirectoryA
+#endif /* !UNICODE */
+#endif /* _WIN32_WINNT >= 0x0502 */
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_GAMES) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)
+
+#define BASE_SEARCH_PATH_ENABLE_SAFE_SEARCHMODE 0x1
+#define BASE_SEARCH_PATH_DISABLE_SAFE_SEARCHMODE 0x10000
+#define BASE_SEARCH_PATH_PERMANENT 0x8000
+#define BASE_SEARCH_PATH_INVALID_FLAGS ~0x18001
+
+WINBASEAPI BOOL WINAPI SetSearchPathMode(
+    DWORD Flags
+);
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
+
+WINBASEAPI BOOL WINAPI CreateDirectoryExA(
+    LPCSTR lpTemplateDirectory,
+    LPCSTR lpNewDirectory,
+    LPSECURITY_ATTRIBUTES lpSecurityAttributes
+);
+WINBASEAPI BOOL WINAPI CreateDirectoryExW(
+    LPCWSTR lpTemplateDirectory,
+    LPCWSTR lpNewDirectory,
+    LPSECURITY_ATTRIBUTES lpSecurityAttributes
+);
+#ifdef UNICODE
+#define CreateDirectoryEx  CreateDirectoryExW
+#else /* !UNICODE */
+#define CreateDirectoryEx  CreateDirectoryExA
+#endif /* !UNICODE */
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)
+
+#if _WIN32_WINNT >= 0x0600
+
+WINBASEAPI BOOL WINAPI CreateDirectoryTransactedA(
+    LPCSTR lpTemplateDirectory,
+    LPCSTR lpNewDirectory,
+    LPSECURITY_ATTRIBUTES lpSecurityAttributes,
+    HANDLE hTransaction
+);
+WINBASEAPI BOOL WINAPI CreateDirectoryTransactedW(
+    LPCWSTR lpTemplateDirectory,
+    LPCWSTR lpNewDirectory,
+    LPSECURITY_ATTRIBUTES lpSecurityAttributes,
+    HANDLE hTransaction
+);
+#ifdef UNICODE
+#define CreateDirectoryTransacted  CreateDirectoryTransactedW
+#else /* !UNICODE */
+#define CreateDirectoryTransacted  CreateDirectoryTransactedA
+#endif /* !UNICODE */
+
+WINBASEAPI BOOL WINAPI RemoveDirectoryTransactedA(
+    LPCSTR lpPathName,
+    HANDLE hTransaction
+);
+WINBASEAPI BOOL WINAPI RemoveDirectoryTransactedW(
+    LPCWSTR lpPathName,
+    HANDLE hTransaction
+);
+#ifdef UNICODE
+#define RemoveDirectoryTransacted  RemoveDirectoryTransactedW
+#else /* !UNICODE */
+#define RemoveDirectoryTransacted  RemoveDirectoryTransactedA
+#endif /* !UNICODE */
+
+WINBASEAPI DWORD WINAPI GetFullPathNameTransactedA(
+    LPCSTR lpFileName,
+    DWORD nBufferLength,
+    LPSTR lpBuffer,
+    LPSTR *lpFilePart,
+    HANDLE hTransaction
+);
+WINBASEAPI DWORD WINAPI GetFullPathNameTransactedW(
+    LPCWSTR lpFileName,
+    DWORD nBufferLength,
+    LPWSTR lpBuffer,
+    LPWSTR *lpFilePart,
+    HANDLE hTransaction
+);
+#ifdef UNICODE
+#define GetFullPathNameTransacted  GetFullPathNameTransactedW
+#else /* !UNICODE */
+#define GetFullPathNameTransacted  GetFullPathNameTransactedA
+#endif /* !UNICODE */
+
+#endif /* _WIN32_WINNT >= 0x0600 */
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM)
+
+#define DDD_RAW_TARGET_PATH         0x00000001
+#define DDD_REMOVE_DEFINITION       0x00000002
+#define DDD_EXACT_MATCH_ON_REMOVE   0x00000004
+#define DDD_NO_BROADCAST_SYSTEM     0x00000008
+#define DDD_LUID_BROADCAST_DRIVE    0x00000010
+
+WINBASEAPI BOOL WINAPI DefineDosDeviceA(
+    DWORD dwFlags,
+    LPCSTR lpDeviceName,
+    LPCSTR lpTargetPath
+);
+#ifndef UNICODE
+#define DefineDosDevice  DefineDosDeviceA
+#endif
+
+WINBASEAPI DWORD WINAPI QueryDosDeviceA(
+    LPCSTR lpDeviceName,
+    LPSTR lpTargetPath,
+    DWORD ucchMax
+);
+#ifndef UNICODE
+#define QueryDosDevice  QueryDosDeviceA
+#endif
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)
+
+#define EXPAND_LOCAL_DRIVES
+
+#if _WIN32_WINNT >= 0x0600
+WINBASEAPI HANDLE WINAPI CreateFileTransactedA(
+    LPCSTR lpFileName,
+    DWORD dwDesiredAccess,
+    DWORD dwShareMode,
+    LPSECURITY_ATTRIBUTES lpSecurityAttributes,
+    DWORD dwCreationDisposition,
+    DWORD dwFlagsAndAttributes,
+    HANDLE hTemplateFile,
+    HANDLE hTransaction,
+    PUSHORT pusMiniVersion,
+    PVOID lpExtendedParameter
+);
+WINBASEAPI HANDLE WINAPI CreateFileTransactedW(
+    LPCWSTR lpFileName,
+    DWORD dwDesiredAccess,
+    DWORD dwShareMode,
+    LPSECURITY_ATTRIBUTES lpSecurityAttributes,
+    DWORD dwCreationDisposition,
+    DWORD dwFlagsAndAttributes,
+    HANDLE hTemplateFile,
+    HANDLE hTransaction,
+    PUSHORT pusMiniVersion,
+    PVOID lpExtendedParameter
+);
+#ifdef UNICODE
+#define CreateFileTransacted  CreateFileTransactedW
+#else /* !UNICODE */
+#define CreateFileTransacted  CreateFileTransactedA
+#endif /* !UNICODE */
+#endif /* _WIN32_WINNT >= 0x0600 */
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM)
+
+#if _WIN32_WINNT >= 0x0502
+WINBASEAPI HANDLE WINAPI ReOpenFile(
+    HANDLE hOriginalFile,
+    DWORD dwDesiredAccess,
+    DWORD dwShareMode,
+    DWORD dwFlagsAndAttributes
+);
+#endif /* _WIN32_WINNT >= 0x0502 */
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)
+
+#if _WIN32_WINNT >= 0x0600
+
+WINBASEAPI BOOL WINAPI SetFileAttributesTransactedA(
+    LPCSTR lpFileName,
+    DWORD dwFileAttributes,
+    HANDLE hTransaction
+);
+WINBASEAPI BOOL WINAPI SetFileAttributesTransactedW(
+    LPCWSTR lpFileName,
+    DWORD dwFileAttributes,
+    HANDLE hTransaction
+);
+#ifdef UNICODE
+#define SetFileAttributesTransacted  SetFileAttributesTransactedW
+#else /* !UNICODE */
+#define SetFileAttributesTransacted  SetFileAttributesTransactedA
+#endif /* !UNICODE */
+
+WINBASEAPI BOOL WINAPI GetFileAttributesTransactedA(
+    LPCSTR lpFileName,
+    GET_FILEEX_INFO_LEVELS fInfoLevelId,
+    LPVOID lpFileInformation,
+    HANDLE hTransaction
+);
+WINBASEAPI BOOL WINAPI GetFileAttributesTransactedW(
+    LPCWSTR lpFileName,
+    GET_FILEEX_INFO_LEVELS fInfoLevelId,
+    LPVOID lpFileInformation,
+    HANDLE hTransaction
+);
+#ifdef UNICODE
+#define GetFileAttributesTransacted  GetFileAttributesTransactedW
+#else /* !UNICODE */
+#define GetFileAttributesTransacted  GetFileAttributesTransactedA
+#endif /* !UNICODE */
+
+WINBASEAPI DWORD WINAPI GetCompressedFileSizeTransactedA(
+    LPCSTR lpFileName,
+    LPDWORD lpFileSizeHigh,
+    HANDLE hTransaction
+);
+WINBASEAPI DWORD WINAPI GetCompressedFileSizeTransactedW(
+    LPCWSTR lpFileName,
+    LPDWORD lpFileSizeHigh,
+    HANDLE hTransaction
+);
+#ifdef UNICODE
+#define GetCompressedFileSizeTransacted  GetCompressedFileSizeTransactedW
+#else /* !UNICODE */
+#define GetCompressedFileSizeTransacted  GetCompressedFileSizeTransactedA
+#endif /* !UNICODE */
+
+WINBASEAPI BOOL WINAPI DeleteFileTransactedA(
+    LPCSTR lpFileName,
+    HANDLE hTransaction
+);
+WINBASEAPI BOOL WINAPI DeleteFileTransactedW(
+    LPCWSTR lpFileName,
+    HANDLE hTransaction
+);
+#ifdef UNICODE
+#define DeleteFileTransacted  DeleteFileTransactedW
+#else /* !UNICODE */
+#define DeleteFileTransacted  DeleteFileTransactedA
+#endif /* !UNICODE */
+
+#endif /* _WIN32_WINNT >= 0x0600 */
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)
+
+#if _WIN32_WINNT >= 0x0501
+
+WINBASEAPI BOOL WINAPI CheckNameLegalDOS8Dot3A(
+    LPCSTR lpName,
+    LPSTR lpOemName,
+    DWORD OemNameSize,
+    PBOOL pbNameContainsSpaces,
+    PBOOL pbNameLegal
+);
+WINBASEAPI BOOL WINAPI CheckNameLegalDOS8Dot3W(
+    LPCWSTR lpName,
+    LPSTR lpOemName,
+    DWORD OemNameSize,
+    PBOOL pbNameContainsSpaces,
+    PBOOL pbNameLegal
+);
+#ifdef UNICODE
+#define CheckNameLegalDOS8Dot3  CheckNameLegalDOS8Dot3W
+#else /* !UNICODE */
+#define CheckNameLegalDOS8Dot3  CheckNameLegalDOS8Dot3A
+#endif /* !UNICODE */
+
+#endif /* _WIN32_WINNT >= 0x0501 */
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP) */
+
+#if (_WIN32_WINNT >= 0x0400)
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)
+
+#if _WIN32_WINNT >= 0x0600
+
+WINBASEAPI HANDLE WINAPI FindFirstFileTransactedA(
+    LPCSTR lpFileName,
+    FINDEX_INFO_LEVELS fInfoLevelId,
+    LPVOID lpFindFileData,
+    FINDEX_SEARCH_OPS fSearchOp,
+    LPVOID lpSearchFilter,
+    DWORD dwAdditionalFlags,
+    HANDLE hTransaction
+);
+WINBASEAPI HANDLE WINAPI FindFirstFileTransactedW(
+    LPCWSTR lpFileName,
+    FINDEX_INFO_LEVELS fInfoLevelId,
+    LPVOID lpFindFileData,
+    FINDEX_SEARCH_OPS fSearchOp,
+    LPVOID lpSearchFilter,
+    DWORD dwAdditionalFlags,
+    HANDLE hTransaction
+);
+#ifdef UNICODE
+#define FindFirstFileTransacted  FindFirstFileTransactedW
+#else /* !UNICODE */
+#define FindFirstFileTransacted  FindFirstFileTransactedA
+#endif /* !UNICODE */
+
+#endif /* _WIN32_WINNT >= 0x0600 */
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP) */
+
+#endif /* _WIN32_WINNT >= 0x0400 */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
+
+WINBASEAPI BOOL WINAPI CopyFileA(
+    LPCSTR lpExistingFileName,
+    LPCSTR lpNewFileName,
+    BOOL bFailIfExists
+);
+WINBASEAPI BOOL WINAPI CopyFileW(
+    LPCWSTR lpExistingFileName,
+    LPCWSTR lpNewFileName,
+    BOOL bFailIfExists
+);
+#ifdef UNICODE
+#define CopyFile  CopyFileW
+#else /* !UNICODE */
+#define CopyFile  CopyFileA
+#endif /* !UNICODE */
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES) */
+
+#if (_WIN32_WINNT >= 0x0400)
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
+
+typedef DWORD (WINAPI *LPPROGRESS_ROUTINE)(
+    LARGE_INTEGER TotalFileSize,
+    LARGE_INTEGER TotalBytesTransferred,
+    LARGE_INTEGER StreamSize,
+    LARGE_INTEGER StreamBytesTransferred,
+    DWORD dwStreamNumber,
+    DWORD dwCallbackReason,
+    HANDLE hSourceFile,
+    HANDLE hDestinationFile,
+    LPVOID lpData
+);
+
+WINBASEAPI BOOL WINAPI CopyFileExA(
+    LPCSTR lpExistingFileName,
+    LPCSTR lpNewFileName,
+    LPPROGRESS_ROUTINE lpProgressRoutine,
+    LPVOID lpData,
+    LPBOOL pbCancel,
+    DWORD dwCopyFlags
+);
+WINBASEAPI BOOL WINAPI CopyFileExW(
+    LPCWSTR lpExistingFileName,
+    LPCWSTR lpNewFileName,
+    LPPROGRESS_ROUTINE lpProgressRoutine,
+    LPVOID lpData,
+    LPBOOL pbCancel,
+    DWORD dwCopyFlags
+);
+#ifdef UNICODE
+#define CopyFileEx  CopyFileExW
+#else /* !UNICODE */
+#define CopyFileEx  CopyFileExA
+#endif /* !UNICODE */
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)
+
+#if _WIN32_WINNT >= 0x0600
+WINBASEAPI BOOL WINAPI CopyFileTransactedA(
+    LPCSTR lpExistingFileName,
+    LPCSTR lpNewFileName,
+    LPPROGRESS_ROUTINE lpProgressRoutine,
+    LPVOID lpData,
+    LPBOOL pbCancel,
+    DWORD dwCopyFlags,
+    HANDLE hTransaction
+);
+WINBASEAPI BOOL WINAPI CopyFileTransactedW(
+    LPCWSTR lpExistingFileName,
+    LPCWSTR lpNewFileName,
+    LPPROGRESS_ROUTINE lpProgressRoutine,
+    LPVOID lpData,
+    LPBOOL pbCancel,
+    DWORD dwCopyFlags,
+    HANDLE hTransaction
+);
+#ifdef UNICODE
+#define CopyFileTransacted  CopyFileTransactedW
+#else /* !UNICODE */
+#define CopyFileTransacted  CopyFileTransactedA
+#endif /* !UNICODE */
+#endif /* _WIN32_WINNT >= 0x0600 */
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
+
+#if _WIN32_WINNT >= 0x0601
+
+typedef enum _COPYFILE2_MESSAGE_TYPE {
+    COPYFILE2_CALLBACK_NONE = 0,
+    COPYFILE2_CALLBACK_CHUNK_STARTED,
+    COPYFILE2_CALLBACK_CHUNK_FINISHED,
+    COPYFILE2_CALLBACK_STREAM_STARTED,
+    COPYFILE2_CALLBACK_STREAM_FINISHED,
+    COPYFILE2_CALLBACK_POLL_CONTINUE,
+    COPYFILE2_CALLBACK_ERROR,
+    COPYFILE2_CALLBACK_MAX,
+} COPYFILE2_MESSAGE_TYPE;
+
+typedef enum _COPYFILE2_MESSAGE_ACTION {
+    COPYFILE2_PROGRESS_CONTINUE = 0,
+    COPYFILE2_PROGRESS_CANCEL,
+    COPYFILE2_PROGRESS_STOP,
+    COPYFILE2_PROGRESS_QUIET,
+    COPYFILE2_PROGRESS_PAUSE,
+} COPYFILE2_MESSAGE_ACTION;
+
+typedef enum _COPYFILE2_COPY_PHASE {
+    COPYFILE2_PHASE_NONE = 0,
+    COPYFILE2_PHASE_PREPARE_SOURCE,
+    COPYFILE2_PHASE_PREPARE_DEST,
+    COPYFILE2_PHASE_READ_SOURCE,
+    COPYFILE2_PHASE_WRITE_DESTINATION,
+    COPYFILE2_PHASE_SERVER_COPY,
+    COPYFILE2_PHASE_NAMEGRAFT_COPY,
+    COPYFILE2_PHASE_MAX,
+} COPYFILE2_COPY_PHASE;
+
+#define COPYFILE2_MESSAGE_COPY_OFFLOAD     (0x00000001L)
+
+typedef struct COPYFILE2_MESSAGE {
+    COPYFILE2_MESSAGE_TYPE Type;
+    DWORD dwPadding;
+    union {
+        struct {
+            DWORD dwStreamNumber;
+            DWORD dwReserved;
+            HANDLE hSourceFile;
+            HANDLE hDestinationFile;
+            ULARGE_INTEGER uliChunkNumber;
+            ULARGE_INTEGER uliChunkSize;
+            ULARGE_INTEGER uliStreamSize;
+            ULARGE_INTEGER uliTotalFileSize;
+        } ChunkStarted;
+        struct {
+            DWORD dwStreamNumber;
+            DWORD dwFlags;
+            HANDLE hSourceFile;
+            HANDLE hDestinationFile;
+            ULARGE_INTEGER uliChunkNumber;
+            ULARGE_INTEGER uliChunkSize;
+            ULARGE_INTEGER uliStreamSize;
+            ULARGE_INTEGER uliStreamBytesTransferred;
+            ULARGE_INTEGER uliTotalFileSize;
+            ULARGE_INTEGER uliTotalBytesTransferred;
+        } ChunkFinished;
+        struct {
+            DWORD dwStreamNumber;
+            DWORD dwReserved;
+            HANDLE hSourceFile;
+            HANDLE hDestinationFile;
+            ULARGE_INTEGER uliStreamSize;
+            ULARGE_INTEGER uliTotalFileSize;
+        } StreamStarted;
+        struct {
+            DWORD dwStreamNumber;
+            DWORD dwReserved;
+            HANDLE hSourceFile;
+            HANDLE hDestinationFile;
+            ULARGE_INTEGER uliStreamSize;
+            ULARGE_INTEGER uliStreamBytesTransferred;
+            ULARGE_INTEGER uliTotalFileSize;
+            ULARGE_INTEGER uliTotalBytesTransferred;
+        } StreamFinished;
+        struct {
+            DWORD dwReserved;
+        } PollContinue;
+        struct {
+            COPYFILE2_COPY_PHASE CopyPhase;
+            DWORD dwStreamNumber;
+            HRESULT hrFailure;
+            DWORD dwReserved;
+            ULARGE_INTEGER uliChunkNumber;
+            ULARGE_INTEGER uliStreamSize;
+            ULARGE_INTEGER uliStreamBytesTransferred;
+            ULARGE_INTEGER uliTotalFileSize;
+            ULARGE_INTEGER uliTotalBytesTransferred;
+        } Error;
+    } Info;
+} COPYFILE2_MESSAGE;
+
+typedef COPYFILE2_MESSAGE_ACTION (CALLBACK *PCOPYFILE2_PROGRESS_ROUTINE)(
+    const COPYFILE2_MESSAGE *pMessage,
+    PVOID pvCallbackContext
+);
+
+typedef struct COPYFILE2_EXTENDED_PARAMETERS {
+    DWORD dwSize;
+    DWORD dwCopyFlags;
+    BOOL *pfCancel;
+    PCOPYFILE2_PROGRESS_ROUTINE pProgressRoutine;
+    PVOID pvCallbackContext;
+} COPYFILE2_EXTENDED_PARAMETERS;
+
+#if (NTDDI_VERSION >= NTDDI_WIN10_FE)
+
+#define COPYFILE2_IO_CYCLE_SIZE_MIN   4096
+#define COPYFILE2_IO_CYCLE_SIZE_MAX   0x40000000
+#define COPYFILE2_IO_RATE_MIN   512
+
+typedef struct COPYFILE2_EXTENDED_PARAMETERS_V2 {
+    DWORD dwSize;
+    DWORD dwCopyFlags;
+    BOOL *pfCancel;
+    PCOPYFILE2_PROGRESS_ROUTINE pProgressRoutine;
+    PVOID pvCallbackContext;
+    DWORD dwCopyFlagsV2;
+    ULONG ioDesiredSize;
+    ULONG ioDesiredRate;
+    PVOID reserved[8];
+} COPYFILE2_EXTENDED_PARAMETERS_V2;
+
+#if (NTDDI_VERSION >= NTDDI_WIN10_NI)
+#define COPY_FILE2_V2_DONT_COPY_JUNCTIONS   0x00000001
+#define COPY_FILE2_V2_VALID_FLAGS   (COPY_FILE2_V2_DONT_COPY_JUNCTIONS)
+#endif /* (NTDDI_VERSION >= NTDDI_WIN10_NI) */
+
+#endif /* (NTDDI_VERSION >= NTDDI_WIN10_FE) */
+
+WINBASEAPI HRESULT WINAPI CopyFile2(
+    PCWSTR pwszExistingFileName,
+    PCWSTR pwszNewFileName,
+    COPYFILE2_EXTENDED_PARAMETERS *pExtendedParameters
+);
+
+#endif /* _WIN32_WINNT >= 0x0601 */
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES) */
+
+#endif /* _WIN32_WINNT >= 0x0400 */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_GAMES)
+
+WINBASEAPI BOOL WINAPI MoveFileA(
+    LPCSTR lpExistingFileName,
+    LPCSTR lpNewFileName
+);
+WINBASEAPI BOOL WINAPI MoveFileW(
+    LPCWSTR lpExistingFileName,
+    LPCWSTR lpNewFileName
+);
+#ifdef UNICODE
+#define MoveFile  MoveFileW
+#else /* !UNICODE */
+#define MoveFile  MoveFileA
+#endif /* !UNICODE */
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_GAMES) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
+
+WINBASEAPI BOOL WINAPI MoveFileExA(
+    LPCSTR lpExistingFileName,
+    LPCSTR lpNewFileName,
+    DWORD dwFlags
+);
+WINBASEAPI BOOL WINAPI MoveFileExW(
+    LPCWSTR lpExistingFileName,
+    LPCWSTR lpNewFileName,
+    DWORD dwFlags
+);
+#ifdef UNICODE
+#define MoveFileEx  MoveFileExW
+#else /* !UNICODE */
+#define MoveFileEx  MoveFileExA
+#endif /* !UNICODE */
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM)
+
+#if (_WIN32_WINNT >= 0x0500)
+WINBASEAPI BOOL WINAPI MoveFileWithProgressA(
+    LPCSTR lpExistingFileName,
+    LPCSTR lpNewFileName,
+    LPPROGRESS_ROUTINE lpProgressRoutine,
+    LPVOID lpData,
+    DWORD dwFlags
+);
+WINBASEAPI BOOL WINAPI MoveFileWithProgressW(
+    LPCWSTR lpExistingFileName,
+    LPCWSTR lpNewFileName,
+    LPPROGRESS_ROUTINE lpProgressRoutine,
+    LPVOID lpData,
+    DWORD dwFlags
+);
+#ifdef UNICODE
+#define MoveFileWithProgress  MoveFileWithProgressW
+#else /* !UNICODE */
+#define MoveFileWithProgress  MoveFileWithProgressA
+#endif /* !UNICODE */
+#endif /* (_WIN32_WINNT >= 0x0500) */
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)
+
+#if (_WIN32_WINNT >= 0x0600)
+WINBASEAPI BOOL WINAPI MoveFileTransactedA(
+    LPCSTR lpExistingFileName,
+    LPCSTR lpNewFileName,
+    LPPROGRESS_ROUTINE lpProgressRoutine,
+    LPVOID lpData,
+    DWORD dwFlags,
+    HANDLE hTransaction
+);
+WINBASEAPI BOOL WINAPI MoveFileTransactedW(
+    LPCWSTR lpExistingFileName,
+    LPCWSTR lpNewFileName,
+    LPPROGRESS_ROUTINE lpProgressRoutine,
+    LPVOID lpData,
+    DWORD dwFlags,
+    HANDLE hTransaction
+);
+#ifdef UNICODE
+#define MoveFileTransacted  MoveFileTransactedW
+#else /* !UNICODE */
+#define MoveFileTransacted  MoveFileTransactedA
+#endif /* !UNICODE */
+#endif /* (_WIN32_WINNT >= 0x0600) */
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_GAMES)
+
+#define MOVEFILE_REPLACE_EXISTING       0x00000001
+#define MOVEFILE_COPY_ALLOWED           0x00000002
+#define MOVEFILE_DELAY_UNTIL_REBOOT     0x00000004
+#define MOVEFILE_WRITE_THROUGH          0x00000008
+#if (_WIN32_WINNT >= 0x0500)
+#define MOVEFILE_CREATE_HARDLINK        0x00000010
+#define MOVEFILE_FAIL_IF_NOT_TRACKABLE  0x00000020
+#endif /* (_WIN32_WINNT >= 0x0500) */
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_GAMES) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
+
+#if (_WIN32_WINNT >= 0x0500)
+WINBASEAPI BOOL WINAPI ReplaceFileA(
+    LPCSTR lpReplacedFileName,
+    LPCSTR lpReplacementFileName,
+    LPCSTR lpBackupFileName,
+    DWORD dwReplaceFlags,
+    LPVOID lpExclude,
+    LPVOID lpReserved
+);
+WINBASEAPI BOOL WINAPI ReplaceFileW(
+    LPCWSTR lpReplacedFileName,
+    LPCWSTR lpReplacementFileName,
+    LPCWSTR lpBackupFileName,
+    DWORD dwReplaceFlags,
+    LPVOID lpExclude,
+    LPVOID lpReserved
+);
+#ifdef UNICODE
+#define ReplaceFile  ReplaceFileW
+#else /* !UNICODE */
+#define ReplaceFile  ReplaceFileA
+#endif /* !UNICODE */
+#endif /* (_WIN32_WINNT >= 0x0500) */
+
+#if (_WIN32_WINNT >= 0x0500)
+WINBASEAPI BOOL WINAPI CreateHardLinkA(
+    LPCSTR lpFileName,
+    LPCSTR lpExistingFileName,
+    LPSECURITY_ATTRIBUTES lpSecurityAttributes
+);
+WINBASEAPI BOOL WINAPI CreateHardLinkW(
+    LPCWSTR lpFileName,
+    LPCWSTR lpExistingFileName,
+    LPSECURITY_ATTRIBUTES lpSecurityAttributes
+);
+#ifdef UNICODE
+#define CreateHardLink  CreateHardLinkW
+#else /* !UNICODE */
+#define CreateHardLink  CreateHardLinkA
+#endif /* !UNICODE */
+#endif /* (_WIN32_WINNT >= 0x0500) */
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)
+
+#if (_WIN32_WINNT >= 0x0600)
+WINBASEAPI BOOL WINAPI CreateHardLinkTransactedA(
+    LPCSTR lpFileName,
+    LPCSTR lpExistingFileName,
+    LPSECURITY_ATTRIBUTES lpSecurityAttributes,
+    HANDLE hTransaction
+);
+WINBASEAPI BOOL WINAPI CreateHardLinkTransactedW(
+    LPCWSTR lpFileName,
+    LPCWSTR lpExistingFileName,
+    LPSECURITY_ATTRIBUTES lpSecurityAttributes,
+    HANDLE hTransaction
+);
+#ifdef UNICODE
+#define CreateHardLinkTransacted  CreateHardLinkTransactedW
+#else /* !UNICODE */
+#define CreateHardLinkTransacted  CreateHardLinkTransactedA
+#endif /* !UNICODE */
+#endif /* (_WIN32_WINNT >= 0x0600) */
+
+#if (_WIN32_WINNT >= 0x0600)
+
+WINBASEAPI HANDLE WINAPI FindFirstStreamTransactedW(
+    LPCWSTR lpFileName,
+    STREAM_INFO_LEVELS InfoLevel,
+    LPVOID lpFindStreamData,
+    DWORD dwFlags,
+    HANDLE hTransaction
+);
+
+WINBASEAPI HANDLE WINAPI FindFirstFileNameTransactedW(
+    LPCWSTR lpFileName,
+    DWORD dwFlags,
+    LPDWORD StringLength,
+    PWSTR LinkName,
+    HANDLE hTransaction
+);
+
+#endif /* (_WIN32_WINNT >= 0x0600) */
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
+
+WINBASEAPI HANDLE WINAPI CreateNamedPipeA(
+    LPCSTR lpName,
+    DWORD dwOpenMode,
+    DWORD dwPipeMode,
+    DWORD nMaxInstances,
+    DWORD nOutBufferSize,
+    DWORD nInBufferSize,
+    DWORD nDefaultTimeOut,
+    LPSECURITY_ATTRIBUTES lpSecurityAttributes
+);
+#ifndef UNICODE
+#define CreateNamedPipe  CreateNamedPipeA
+#endif
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM)
+
+WINBASEAPI BOOL WINAPI GetNamedPipeHandleStateA(
+    HANDLE hNamedPipe,
+    LPDWORD lpState,
+    LPDWORD lpCurInstances,
+    LPDWORD lpMaxCollectionCount,
+    LPDWORD lpCollectDataTimeout,
+    LPSTR lpUserName,
+    DWORD nMaxUserNameSize
+);
+#ifndef UNICODE
+#define GetNamedPipeHandleState  GetNamedPipeHandleStateA
+#endif
+
+WINBASEAPI BOOL WINAPI CallNamedPipeA(
+    LPCSTR lpNamedPipeName,
+    LPVOID lpInBuffer,
+    DWORD nInBufferSize,
+    LPVOID lpOutBuffer,
+    DWORD nOutBufferSize,
+    LPDWORD lpBytesRead,
+    DWORD nTimeOut
+);
+
+#ifndef UNICODE
+#define CallNamedPipe  CallNamedPipeA
+#endif
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
+
+WINBASEAPI BOOL WINAPI WaitNamedPipeA(
+    LPCSTR lpNamedPipeName,
+    DWORD nTimeOut
+);
+#ifndef UNICODE
+#define WaitNamedPipe  WaitNamedPipeA
+#endif
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES) */
+
+#if (_WIN32_WINNT >= 0x0600)
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM)
+
+WINBASEAPI BOOL WINAPI GetNamedPipeClientComputerNameA(
+    HANDLE Pipe,
+    LPSTR ClientComputerName,
+    ULONG ClientComputerNameLength
+);
+
+#ifndef UNICODE
+#define GetNamedPipeClientComputerName  GetNamedPipeClientComputerNameA
+#endif
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)
+
+WINBASEAPI BOOL WINAPI GetNamedPipeClientProcessId(
+    HANDLE Pipe,
+    PULONG ClientProcessId
+);
+
+WINBASEAPI BOOL WINAPI GetNamedPipeClientSessionId(
+    HANDLE Pipe,
+    PULONG ClientSessionId
+);
+
+WINBASEAPI BOOL WINAPI GetNamedPipeServerProcessId(
+    HANDLE Pipe,
+    PULONG ServerProcessId
+);
+
+WINBASEAPI BOOL WINAPI GetNamedPipeServerSessionId(
+    HANDLE Pipe,
+    PULONG ServerSessionId
+);
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP) */
+
+#endif /* (_WIN32_WINNT >= 0x0600) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP)
+
+WINBASEAPI BOOL WINAPI SetVolumeLabelA(
+    LPCSTR lpRootPathName,
+    LPCSTR lpVolumeName
+);
+WINBASEAPI BOOL WINAPI SetVolumeLabelW(
+    LPCWSTR lpRootPathName,
+    LPCWSTR lpVolumeName
+);
+#ifdef UNICODE
+#define SetVolumeLabel  SetVolumeLabelW
+#else /* !UNICODE */
+#define SetVolumeLabel  SetVolumeLabelA
+#endif /* !UNICODE */
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)
+
+#if (_WIN32_WINNT >= 0x0600)
+
+WINBASEAPI BOOL WINAPI SetFileBandwidthReservation(
+    HANDLE hFile,
+    DWORD nPeriodMilliseconds,
+    DWORD nBytesPerPeriod,
+    BOOL bDiscardable,
+    LPDWORD lpTransferSize,
+    LPDWORD lpNumOutstandingRequests
+);
+
+WINBASEAPI BOOL WINAPI GetFileBandwidthReservation(
+    HANDLE hFile,
+    LPDWORD lpPeriodMilliseconds,
+    LPDWORD lpBytesPerPeriod,
+    LPBOOL pDiscardable,
+    LPDWORD lpTransferSize,
+    LPDWORD lpNumOutstandingRequests
+);
+
+#endif /* (_WIN32_WINNT >= 0x0600) */
+
+WINADVAPI BOOL WINAPI ClearEventLogA(
+    HANDLE hEventLog,
+    LPCSTR lpBackupFileName
+);
+WINADVAPI BOOL WINAPI ClearEventLogW(
+    HANDLE hEventLog,
+    LPCWSTR lpBackupFileName
+);
+#ifdef UNICODE
+#define ClearEventLog  ClearEventLogW
+#else /* !UNICODE */
+#define ClearEventLog  ClearEventLogA
+#endif /* !UNICODE */
+
+WINADVAPI BOOL WINAPI BackupEventLogA(
+    HANDLE hEventLog,
+    LPCSTR lpBackupFileName
+);
+WINADVAPI BOOL WINAPI BackupEventLogW(
+    HANDLE hEventLog,
+    LPCWSTR lpBackupFileName
+);
+#ifdef UNICODE
+#define BackupEventLog  BackupEventLogW
+#else /* !UNICODE */
+#define BackupEventLog  BackupEventLogA
+#endif /* !UNICODE */
+
+WINADVAPI BOOL WINAPI CloseEventLog(
+    HANDLE hEventLog
+);
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP)
+
+WINADVAPI BOOL WINAPI DeregisterEventSource(
+    HANDLE hEventLog
+);
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)
+
+WINADVAPI BOOL WINAPI NotifyChangeEventLog(
+    HANDLE hEventLog,
+    HANDLE hEvent
+);
+
+WINADVAPI BOOL WINAPI GetNumberOfEventLogRecords(
+    HANDLE hEventLog,
+    PDWORD NumberOfRecords
+);
+
+WINADVAPI BOOL WINAPI GetOldestEventLogRecord(
+    HANDLE hEventLog,
+    PDWORD OldestRecord
+);
+
+WINADVAPI HANDLE WINAPI OpenEventLogA(
+    LPCSTR lpUNCServerName,
+    LPCSTR lpSourceName
+);
+WINADVAPI HANDLE WINAPI OpenEventLogW(
+    LPCWSTR lpUNCServerName,
+    LPCWSTR lpSourceName
+);
+#ifdef UNICODE
+#define OpenEventLog  OpenEventLogW
+#else /* !UNICODE */
+#define OpenEventLog  OpenEventLogA
+#endif /* !UNICODE */
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP)
+
+WINADVAPI HANDLE WINAPI RegisterEventSourceA(
+    LPCSTR lpUNCServerName,
+    LPCSTR lpSourceName
+);
+WINADVAPI HANDLE WINAPI RegisterEventSourceW(
+    LPCWSTR lpUNCServerName,
+    LPCWSTR lpSourceName
+);
+#ifdef UNICODE
+#define RegisterEventSource  RegisterEventSourceW
+#else /* !UNICODE */
+#define RegisterEventSource  RegisterEventSourceA
+#endif /* !UNICODE */
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)
+WINADVAPI HANDLE WINAPI OpenBackupEventLogA(
+    LPCSTR lpUNCServerName,
+    LPCSTR lpFileName
+);
+WINADVAPI HANDLE WINAPI OpenBackupEventLogW(
+    LPCWSTR lpUNCServerName,
+    LPCWSTR lpFileName
+);
+#ifdef UNICODE
+#define OpenBackupEventLog  OpenBackupEventLogW
+#else /* !UNICODE */
+#define OpenBackupEventLog  OpenBackupEventLogA
+#endif /* !UNICODE */
+
+WINADVAPI BOOL WINAPI ReadEventLogA(
+    HANDLE hEventLog,
+    DWORD dwReadFlags,
+    DWORD dwRecordOffset,
+    LPVOID lpBuffer,
+    DWORD nNumberOfBytesToRead,
+    DWORD *pnBytesRead,
+    DWORD *pnMinNumberOfBytesNeeded
+);
+WINADVAPI BOOL WINAPI ReadEventLogW(
+    HANDLE hEventLog,
+    DWORD dwReadFlags,
+    DWORD dwRecordOffset,
+    LPVOID lpBuffer,
+    DWORD nNumberOfBytesToRead,
+    DWORD *pnBytesRead,
+    DWORD *pnMinNumberOfBytesNeeded
+);
+#ifdef UNICODE
+#define ReadEventLog  ReadEventLogW
+#else /* !UNICODE */
+#define ReadEventLog  ReadEventLogA
+#endif /* !UNICODE */
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP)
+
+WINADVAPI BOOL WINAPI ReportEventA(
+    HANDLE hEventLog,
+    WORD wType,
+    WORD wCategory,
+    DWORD dwEventID,
+    PSID lpUserSid,
+    WORD wNumStrings,
+    DWORD dwDataSize,
+    LPCSTR *lpStrings,
+    LPVOID lpRawData
+);
+WINADVAPI BOOL WINAPI ReportEventW(
+    HANDLE hEventLog,
+    WORD wType,
+    WORD wCategory,
+    DWORD dwEventID,
+    PSID lpUserSid,
+    WORD wNumStrings,
+    DWORD dwDataSize,
+    LPCWSTR *lpStrings,
+    LPVOID lpRawData
+);
+#ifdef UNICODE
+#define ReportEvent  ReportEventW
+#else /* !UNICODE */
+#define ReportEvent  ReportEventA
+#endif /* !UNICODE */
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)
+
+#define EVENTLOG_FULL_INFO      0
+
+typedef struct _EVENTLOG_FULL_INFORMATION {
+    DWORD dwFull;
+} EVENTLOG_FULL_INFORMATION, *LPEVENTLOG_FULL_INFORMATION;
+
+WINADVAPI BOOL WINAPI GetEventLogInformation(
+    HANDLE hEventLog,
+    DWORD dwInfoLevel,
+    LPVOID lpBuffer,
+    DWORD cbBufSize,
+    LPDWORD pcbBytesNeeded
+);
+
+#if (_WIN32_WINNT >= 0x0602)
+
+#define OPERATION_API_VERSION                   1
+typedef ULONG OPERATION_ID;
+
+typedef struct _OPERATION_START_PARAMETERS {
+    ULONG Version;
+    OPERATION_ID OperationId;
+    ULONG Flags;
+} OPERATION_START_PARAMETERS, *POPERATION_START_PARAMETERS;
+
+#define OPERATION_START_TRACE_CURRENT_THREAD    0x1
+
+typedef struct _OPERATION_END_PARAMETERS {
+    ULONG Version;
+    OPERATION_ID OperationId;
+    ULONG Flags;
+} OPERATION_END_PARAMETERS, *POPERATION_END_PARAMETERS;
+
+#define OPERATION_END_DISCARD                   0x1
+
+WINADVAPI BOOL WINAPI OperationStart(
+    OPERATION_START_PARAMETERS *OperationStartParams
+);
+
+WINADVAPI BOOL WINAPI OperationEnd(
+    OPERATION_END_PARAMETERS *OperationEndParams
+);
+
+#endif /* _WIN32_WINNT >= 0x0602 */
+
+WINADVAPI BOOL WINAPI AccessCheckAndAuditAlarmA(
+    LPCSTR SubsystemName,
+    LPVOID HandleId,
+    LPSTR ObjectTypeName,
+    LPSTR ObjectName,
+    PSECURITY_DESCRIPTOR SecurityDescriptor,
+    DWORD DesiredAccess,
+    PGENERIC_MAPPING GenericMapping,
+    BOOL ObjectCreation,
+    LPDWORD GrantedAccess,
+    LPBOOL AccessStatus,
+    LPBOOL pfGenerateOnClose
+);
+#ifndef UNICODE
+#define AccessCheckAndAuditAlarm  AccessCheckAndAuditAlarmA
+#endif
+
+#if (_WIN32_WINNT >= 0x0500)
+
+WINADVAPI BOOL WINAPI AccessCheckByTypeAndAuditAlarmA(
+    LPCSTR SubsystemName,
+    LPVOID HandleId,
+    LPCSTR ObjectTypeName,
+    LPCSTR ObjectName,
+    PSECURITY_DESCRIPTOR SecurityDescriptor,
+    PSID PrincipalSelfSid,
+    DWORD DesiredAccess,
+    AUDIT_EVENT_TYPE AuditType,
+    DWORD Flags,
+    POBJECT_TYPE_LIST ObjectTypeList,
+    DWORD ObjectTypeListLength,
+    PGENERIC_MAPPING GenericMapping,
+    BOOL ObjectCreation,
+    LPDWORD GrantedAccess,
+    LPBOOL AccessStatus,
+    LPBOOL pfGenerateOnClose
+);
+#ifndef UNICODE
+#define AccessCheckByTypeAndAuditAlarm  AccessCheckByTypeAndAuditAlarmA
+#endif
+
+WINADVAPI BOOL WINAPI AccessCheckByTypeResultListAndAuditAlarmA(
+    LPCSTR SubsystemName,
+    LPVOID HandleId,
+    LPCSTR ObjectTypeName,
+    LPCSTR ObjectName,
+    PSECURITY_DESCRIPTOR SecurityDescriptor,
+    PSID PrincipalSelfSid,
+    DWORD DesiredAccess,
+    AUDIT_EVENT_TYPE AuditType,
+    DWORD Flags,
+    POBJECT_TYPE_LIST ObjectTypeList,
+    DWORD ObjectTypeListLength,
+    PGENERIC_MAPPING GenericMapping,
+    BOOL ObjectCreation,
+    LPDWORD GrantedAccess,
+    LPDWORD AccessStatusList,
+    LPBOOL pfGenerateOnClose
+);
+#ifndef UNICODE
+#define AccessCheckByTypeResultListAndAuditAlarm  AccessCheckByTypeResultListAndAuditAlarmA
+#endif
+
+WINADVAPI BOOL WINAPI AccessCheckByTypeResultListAndAuditAlarmByHandleA(
+    LPCSTR SubsystemName,
+    LPVOID HandleId,
+    HANDLE ClientToken,
+    LPCSTR ObjectTypeName,
+    LPCSTR ObjectName,
+    PSECURITY_DESCRIPTOR SecurityDescriptor,
+    PSID PrincipalSelfSid,
+    DWORD DesiredAccess,
+    AUDIT_EVENT_TYPE AuditType,
+    DWORD Flags,
+    POBJECT_TYPE_LIST ObjectTypeList,
+    DWORD ObjectTypeListLength,
+    PGENERIC_MAPPING GenericMapping,
+    BOOL ObjectCreation,
+    LPDWORD GrantedAccess,
+    LPDWORD AccessStatusList,
+    LPBOOL pfGenerateOnClose
+);
+#ifndef UNICODE
+#define AccessCheckByTypeResultListAndAuditAlarmByHandle  AccessCheckByTypeResultListAndAuditAlarmByHandleA
+#endif
+
+#endif /* (_WIN32_WINNT >= 0x0500) */
+
+WINADVAPI BOOL WINAPI ObjectOpenAuditAlarmA(
+    LPCSTR SubsystemName,
+    LPVOID HandleId,
+    LPSTR ObjectTypeName,
+    LPSTR ObjectName,
+    PSECURITY_DESCRIPTOR pSecurityDescriptor,
+    HANDLE ClientToken,
+    DWORD DesiredAccess,
+    DWORD GrantedAccess,
+    PPRIVILEGE_SET Privileges,
+    BOOL ObjectCreation,
+    BOOL AccessGranted,
+    LPBOOL GenerateOnClose
+);
+#ifndef UNICODE
+#define ObjectOpenAuditAlarm  ObjectOpenAuditAlarmA
+#endif
+
+WINADVAPI BOOL WINAPI ObjectPrivilegeAuditAlarmA(
+    LPCSTR SubsystemName,
+    LPVOID HandleId,
+    HANDLE ClientToken,
+    DWORD DesiredAccess,
+    PPRIVILEGE_SET Privileges,
+    BOOL AccessGranted
+);
+#ifndef UNICODE
+#define ObjectPrivilegeAuditAlarm  ObjectPrivilegeAuditAlarmA
+#endif
+
+WINADVAPI BOOL WINAPI ObjectCloseAuditAlarmA(
+    LPCSTR SubsystemName,
+    LPVOID HandleId,
+    BOOL GenerateOnClose
+);
+#ifndef UNICODE
+#define ObjectCloseAuditAlarm  ObjectCloseAuditAlarmA
+#endif
+
+WINADVAPI BOOL WINAPI ObjectDeleteAuditAlarmA(
+    LPCSTR SubsystemName,
+    LPVOID HandleId,
+    BOOL GenerateOnClose
+);
+#ifndef UNICODE
+#define ObjectDeleteAuditAlarm  ObjectDeleteAuditAlarmA
+#endif
+
+WINADVAPI BOOL WINAPI PrivilegedServiceAuditAlarmA(
+    LPCSTR SubsystemName,
+    LPCSTR ServiceName,
+    HANDLE ClientToken,
+    PPRIVILEGE_SET Privileges,
+    BOOL AccessGranted
+);
+#ifndef UNICODE
+#define PrivilegedServiceAuditAlarm  PrivilegedServiceAuditAlarmA
+#endif
+
+#if (_WIN32_WINNT >= 0x0601)
+WINADVAPI BOOL WINAPI AddConditionalAce(
+    PACL pAcl,
+    DWORD dwAceRevision,
+    DWORD AceFlags,
+    UCHAR AceType,
+    DWORD AccessMask,
+    PSID pSid,
+    PWCHAR ConditionStr,
+    DWORD *ReturnLength
+);
+#endif /* _WIN32_WINNT >=  0x0601 */
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM)
+
+WINADVAPI BOOL WINAPI SetFileSecurityA(
+    LPCSTR lpFileName,
+    SECURITY_INFORMATION SecurityInformation,
+    PSECURITY_DESCRIPTOR pSecurityDescriptor
+);
+#ifndef UNICODE
+#define SetFileSecurity  SetFileSecurityA
+#endif
+
+WINADVAPI BOOL WINAPI GetFileSecurityA(
+    LPCSTR lpFileName,
+    SECURITY_INFORMATION RequestedInformation,
+    PSECURITY_DESCRIPTOR pSecurityDescriptor,
+    DWORD nLength,
+    LPDWORD lpnLengthNeeded
+);
+#ifndef UNICODE
+#define GetFileSecurity  GetFileSecurityA
+#endif
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
+
+#if (_WIN32_WINNT >= 0x0400)
+
+WINBASEAPI BOOL WINAPI ReadDirectoryChangesW(
+    HANDLE hDirectory,
+    LPVOID lpBuffer,
+    DWORD nBufferLength,
+    BOOL bWatchSubtree,
+    DWORD dwNotifyFilter,
+    LPDWORD lpBytesReturned,
+    LPOVERLAPPED lpOverlapped,
+    LPOVERLAPPED_COMPLETION_ROUTINE lpCompletionRoutine
+);
+
+#if (NTDDI_VERSION >= NTDDI_WIN10_RS3)
+WINBASEAPI BOOL WINAPI ReadDirectoryChangesExW(
+    HANDLE hDirectory,
+    LPVOID lpBuffer,
+    DWORD nBufferLength,
+    BOOL bWatchSubtree,
+    DWORD dwNotifyFilter,
+    LPDWORD lpBytesReturned,
+    LPOVERLAPPED lpOverlapped,
+    LPOVERLAPPED_COMPLETION_ROUTINE lpCompletionRoutine,
+    READ_DIRECTORY_NOTIFY_INFORMATION_CLASS ReadDirectoryNotifyInformationClass
+);
+#endif /* (NTDDI_VERSION >= NTDDI_WIN10_RS3) */
+
+#endif /* _WIN32_WINNT >= 0x0400 */
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)
+
+#if _WIN32_WINNT >= 0x0600
+WINBASEAPI LPVOID WINAPI MapViewOfFileExNuma(
+    HANDLE hFileMappingObject,
+    DWORD dwDesiredAccess,
+    DWORD dwFileOffsetHigh,
+    DWORD dwFileOffsetLow,
+    SIZE_T dwNumberOfBytesToMap,
+    LPVOID lpBaseAddress,
+    DWORD nndPreferred
+);
+#endif /* _WIN32_WINNT >= 0x0600 */
+
+WINBASEAPI BOOL WINAPI IsBadReadPtr(
+    CONST VOID *lp,
+    UINT_PTR ucb
+);
+
+WINBASEAPI BOOL WINAPI IsBadWritePtr(
+    LPVOID lp,
+    UINT_PTR ucb
+);
+
+WINBASEAPI BOOL WINAPI IsBadHugeReadPtr(
+    CONST VOID *lp,
+    UINT_PTR ucb
+);
+
+WINBASEAPI BOOL WINAPI IsBadHugeWritePtr(
+    LPVOID lp,
+    UINT_PTR ucb
+);
+
+WINBASEAPI BOOL WINAPI IsBadCodePtr(
+    FARPROC lpfn
+);
+
+WINBASEAPI BOOL WINAPI IsBadStringPtrA(
+    LPCSTR lpsz,
+    UINT_PTR ucchMax
+);
+WINBASEAPI BOOL WINAPI IsBadStringPtrW(
+    LPCWSTR lpsz,
+    UINT_PTR ucchMax
+);
+#ifdef UNICODE
+#define IsBadStringPtr  IsBadStringPtrW
+#else /* !UNICODE */
+#define IsBadStringPtr  IsBadStringPtrA
+#endif /* !UNICODE */
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM)
+
+WINADVAPI BOOL WINAPI LookupAccountSidA(
+    LPCSTR lpSystemName,
+    PSID Sid,
+    LPSTR Name,
+    LPDWORD cchName,
+    LPSTR ReferencedDomainName,
+    LPDWORD cchReferencedDomainName,
+    PSID_NAME_USE peUse
+);
+WINADVAPI BOOL WINAPI LookupAccountSidW(
+    LPCWSTR lpSystemName,
+    PSID Sid,
+    LPWSTR Name,
+    LPDWORD cchName,
+    LPWSTR ReferencedDomainName,
+    LPDWORD cchReferencedDomainName,
+    PSID_NAME_USE peUse
+);
+#ifdef UNICODE
+#define LookupAccountSid  LookupAccountSidW
+#else /* !UNICODE */
+#define LookupAccountSid  LookupAccountSidA
+#endif /* !UNICODE */
+
+WINADVAPI BOOL WINAPI LookupAccountNameA(
+    LPCSTR lpSystemName,
+    LPCSTR lpAccountName,
+    PSID Sid,
+    LPDWORD cbSid,
+    LPSTR ReferencedDomainName,
+    LPDWORD cchReferencedDomainName,
+    PSID_NAME_USE peUse
+);
+WINADVAPI BOOL WINAPI LookupAccountNameW(
+    LPCWSTR lpSystemName,
+    LPCWSTR lpAccountName,
+    PSID Sid,
+    LPDWORD cbSid,
+    LPWSTR ReferencedDomainName,
+    LPDWORD cchReferencedDomainName,
+    PSID_NAME_USE peUse
+);
+#ifdef UNICODE
+#define LookupAccountName  LookupAccountNameW
+#else /* !UNICODE */
+#define LookupAccountName  LookupAccountNameA
+#endif /* !UNICODE */
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)
+
+#if _WIN32_WINNT >= 0x0601
+
+WINADVAPI BOOL WINAPI LookupAccountNameLocalA(
+    LPCSTR lpAccountName,
+    PSID Sid,
+    LPDWORD cbSid,
+    LPSTR ReferencedDomainName,
+    LPDWORD cchReferencedDomainName,
+    PSID_NAME_USE peUse
+);
+WINADVAPI BOOL WINAPI LookupAccountNameLocalW(
+    LPCWSTR lpAccountName,
+    PSID Sid,
+    LPDWORD cbSid,
+    LPWSTR ReferencedDomainName,
+    LPDWORD cchReferencedDomainName,
+    PSID_NAME_USE peUse
+);
+#ifdef UNICODE
+#define LookupAccountNameLocal  LookupAccountNameLocalW
+#else /* !UNICODE */
+#define LookupAccountNameLocal  LookupAccountNameLocalA
+#endif /* !UNICODE */
+
+WINADVAPI BOOL WINAPI LookupAccountSidLocalA(
+    PSID Sid,
+    LPSTR Name,
+    LPDWORD cchName,
+    LPSTR ReferencedDomainName,
+    LPDWORD cchReferencedDomainName,
+    PSID_NAME_USE peUse
+);
+WINADVAPI BOOL WINAPI LookupAccountSidLocalW(
+    PSID Sid,
+    LPWSTR Name,
+    LPDWORD cchName,
+    LPWSTR ReferencedDomainName,
+    LPDWORD cchReferencedDomainName,
+    PSID_NAME_USE peUse
+);
+#ifdef UNICODE
+#define LookupAccountSidLocal  LookupAccountSidLocalW
+#else /* !UNICODE */
+#define LookupAccountSidLocal  LookupAccountSidLocalA
+#endif /* !UNICODE */
+
+#else /* _WIN32_WINNT < 0x0601 */
+
+#define LookupAccountNameLocalA(n, s, cs, d, cd, u) \
+    LookupAccountNameA(NULL, n, s, cs, d, cd, u)
+#define LookupAccountNameLocalW(n, s, cs, d, cd, u) \
+    LookupAccountNameW(NULL, n, s, cs, d, cd, u)
+#ifdef UNICODE
+#define LookupAccountNameLocal  LookupAccountNameLocalW
+#else /* !UNICODE */
+#define LookupAccountNameLocal  LookupAccountNameLocalA
+#endif /* !UNICODE */
+
+#define LookupAccountSidLocalA(s, n, cn, d, cd, u)  \
+    LookupAccountSidA(NULL, s, n, cn, d, cd, u)
+#define LookupAccountSidLocalW(s, n, cn, d, cd, u)  \
+    LookupAccountSidW(NULL, s, n, cn, d, cd, u)
+#ifdef UNICODE
+#define LookupAccountSidLocal  LookupAccountSidLocalW
+#else /* !UNICODE */
+#define LookupAccountSidLocal  LookupAccountSidLocalA
+#endif /* !UNICODE */
+
+#endif /* _WIN32_WINNT < 0x0601 */
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
+
+WINADVAPI BOOL WINAPI LookupPrivilegeValueA(
+    LPCSTR lpSystemName,
+    LPCSTR lpName,
+    PLUID lpLuid
+);
+WINADVAPI BOOL WINAPI LookupPrivilegeValueW(
+    LPCWSTR lpSystemName,
+    LPCWSTR lpName,
+    PLUID lpLuid
+);
+#ifdef UNICODE
+#define LookupPrivilegeValue  LookupPrivilegeValueW
+#else /* !UNICODE */
+#define LookupPrivilegeValue  LookupPrivilegeValueA
+#endif /* !UNICODE */
+
+WINADVAPI BOOL WINAPI LookupPrivilegeNameA(
+    LPCSTR lpSystemName,
+    PLUID lpLuid,
+    LPSTR lpName,
+    LPDWORD cchName
+);
+WINADVAPI BOOL WINAPI LookupPrivilegeNameW(
+    LPCWSTR lpSystemName,
+    PLUID lpLuid,
+    LPWSTR lpName,
+    LPDWORD cchName
+);
+#ifdef UNICODE
+#define LookupPrivilegeName  LookupPrivilegeNameW
+#else /* !UNICODE */
+#define LookupPrivilegeName  LookupPrivilegeNameA
+#endif /* !UNICODE */
+
+WINADVAPI BOOL WINAPI LookupPrivilegeDisplayNameA(
+    LPCSTR lpSystemName,
+    LPCSTR lpName,
+    LPSTR lpDisplayName,
+    LPDWORD cchDisplayName,
+    LPDWORD lpLanguageId
+);
+WINADVAPI BOOL WINAPI LookupPrivilegeDisplayNameW(
+    LPCWSTR lpSystemName,
+    LPCWSTR lpName,
+    LPWSTR lpDisplayName,
+    LPDWORD cchDisplayName,
+    LPDWORD lpLanguageId
+);
+#ifdef UNICODE
+#define LookupPrivilegeDisplayName  LookupPrivilegeDisplayNameW
+#else /* !UNICODE */
+#define LookupPrivilegeDisplayName  LookupPrivilegeDisplayNameA
+#endif /* !UNICODE */
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)
+
+WINBASEAPI BOOL WINAPI BuildCommDCBA(
+    LPCSTR lpDef,
+    LPDCB lpDCB
+);
+WINBASEAPI BOOL WINAPI BuildCommDCBW(
+    LPCWSTR lpDef,
+    LPDCB lpDCB
+);
+#ifdef UNICODE
+#define BuildCommDCB  BuildCommDCBW
+#else /* !UNICODE */
+#define BuildCommDCB  BuildCommDCBA
+#endif /* !UNICODE */
+
+WINBASEAPI BOOL WINAPI BuildCommDCBAndTimeoutsA(
+    LPCSTR lpDef,
+    LPDCB lpDCB,
+    LPCOMMTIMEOUTS lpCommTimeouts
+);
+WINBASEAPI BOOL WINAPI BuildCommDCBAndTimeoutsW(
+    LPCWSTR lpDef,
+    LPDCB lpDCB,
+    LPCOMMTIMEOUTS lpCommTimeouts
+);
+#ifdef UNICODE
+#define BuildCommDCBAndTimeouts  BuildCommDCBAndTimeoutsW
+#else /* !UNICODE */
+#define BuildCommDCBAndTimeouts  BuildCommDCBAndTimeoutsA
+#endif /* !UNICODE */
+
+WINBASEAPI BOOL WINAPI CommConfigDialogA(
+    LPCSTR lpszName,
+    HWND hWnd,
+    LPCOMMCONFIG lpCC
+);
+WINBASEAPI BOOL WINAPI CommConfigDialogW(
+    LPCWSTR lpszName,
+    HWND hWnd,
+    LPCOMMCONFIG lpCC
+);
+#ifdef UNICODE
+#define CommConfigDialog  CommConfigDialogW
+#else /* !UNICODE */
+#define CommConfigDialog  CommConfigDialogA
+#endif /* !UNICODE */
+
+WINBASEAPI BOOL WINAPI GetDefaultCommConfigA(
+    LPCSTR lpszName,
+    LPCOMMCONFIG lpCC,
+    LPDWORD lpdwSize
+);
+WINBASEAPI BOOL WINAPI GetDefaultCommConfigW(
+    LPCWSTR lpszName,
+    LPCOMMCONFIG lpCC,
+    LPDWORD lpdwSize
+);
+#ifdef UNICODE
+#define GetDefaultCommConfig  GetDefaultCommConfigW
+#else /* !UNICODE */
+#define GetDefaultCommConfig  GetDefaultCommConfigA
+#endif /* !UNICODE */
+
+WINBASEAPI BOOL WINAPI SetDefaultCommConfigA(
+    LPCSTR lpszName,
+    LPCOMMCONFIG lpCC,
+    DWORD dwSize
+);
+WINBASEAPI BOOL WINAPI SetDefaultCommConfigW(
+    LPCWSTR lpszName,
+    LPCOMMCONFIG lpCC,
+    DWORD dwSize
+);
+#ifdef UNICODE
+#define SetDefaultCommConfig  SetDefaultCommConfigW
+#else /* !UNICODE */
+#define SetDefaultCommConfig  SetDefaultCommConfigA
+#endif /* !UNICODE */
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
+
+#define MAX_COMPUTERNAME_LENGTH  15
+
+WINBASEAPI BOOL WINAPI GetComputerNameA(
+    LPSTR lpBuffer,
+    LPDWORD nSize
+);
+WINBASEAPI BOOL WINAPI GetComputerNameW(
+    LPWSTR lpBuffer,
+    LPDWORD nSize
+);
+#ifdef UNICODE
+#define GetComputerName  GetComputerNameW
+#else /* !UNICODE */
+#define GetComputerName  GetComputerNameA
+#endif /* !UNICODE */
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)
+
+#if (_WIN32_WINNT >= 0x0500)
+
+WINBASEAPI BOOL WINAPI DnsHostnameToComputerNameA(
+    LPCSTR Hostname,
+    LPSTR ComputerName,
+    LPDWORD nSize
+);
+WINBASEAPI BOOL WINAPI DnsHostnameToComputerNameW(
+    LPCWSTR Hostname,
+    LPWSTR ComputerName,
+    LPDWORD nSize
+);
+#ifdef UNICODE
+#define DnsHostnameToComputerName  DnsHostnameToComputerNameW
+#else /* !UNICODE */
+#define DnsHostnameToComputerName  DnsHostnameToComputerNameA
+#endif /* !UNICODE */
+
+#endif /* (_WIN32_WINNT >= 0x0500) */
+
+WINADVAPI BOOL WINAPI GetUserNameA(
+    LPSTR lpBuffer,
+    LPDWORD pcbBuffer
+);
+WINADVAPI BOOL WINAPI GetUserNameW(
+    LPWSTR lpBuffer,
+    LPDWORD pcbBuffer
+);
+#ifdef UNICODE
+#define GetUserName  GetUserNameW
+#else /* !UNICODE */
+#define GetUserName  GetUserNameA
+#endif /* !UNICODE */
+
+#define LOGON32_LOGON_INTERACTIVE       2
+#define LOGON32_LOGON_NETWORK           3
+#define LOGON32_LOGON_BATCH             4
+#define LOGON32_LOGON_SERVICE           5
+#define LOGON32_LOGON_UNLOCK            7
+#if (_WIN32_WINNT >= 0x0500)
+#define LOGON32_LOGON_NETWORK_CLEARTEXT 8
+#define LOGON32_LOGON_NEW_CREDENTIALS   9
+#endif /* (_WIN32_WINNT >= 0x0500) */
+
+#define LOGON32_PROVIDER_DEFAULT    0
+#define LOGON32_PROVIDER_WINNT35    1
+#if (_WIN32_WINNT >= 0x0400)
+#define LOGON32_PROVIDER_WINNT40    2
+#endif /* _WIN32_WINNT >= 0x0400 */
+#if (_WIN32_WINNT >= 0x0500)
+#define LOGON32_PROVIDER_WINNT50    3
+#endif /* (_WIN32_WINNT >= 0x0500) */
+#if (_WIN32_WINNT >= 0x0600)
+#define LOGON32_PROVIDER_VIRTUAL    4
+#endif /* (_WIN32_WINNT >= 0x0600) */
+
+WINADVAPI BOOL WINAPI LogonUserA(
+    LPCSTR lpszUsername,
+    LPCSTR lpszDomain,
+    LPCSTR lpszPassword,
+    DWORD dwLogonType,
+    DWORD dwLogonProvider,
+    PHANDLE phToken
+);
+WINADVAPI BOOL WINAPI LogonUserW(
+    LPCWSTR lpszUsername,
+    LPCWSTR lpszDomain,
+    LPCWSTR lpszPassword,
+    DWORD dwLogonType,
+    DWORD dwLogonProvider,
+    PHANDLE phToken
+);
+#ifdef UNICODE
+#define LogonUser  LogonUserW
+#else /* !UNICODE */
+#define LogonUser  LogonUserA
+#endif /* !UNICODE */
+
+WINADVAPI BOOL WINAPI LogonUserExA(
+    LPCSTR lpszUsername,
+    LPCSTR lpszDomain,
+    LPCSTR lpszPassword,
+    DWORD dwLogonType,
+    DWORD dwLogonProvider,
+    PHANDLE phToken,
+    PSID *ppLogonSid,
+    PVOID *ppProfileBuffer,
+    LPDWORD pdwProfileLength,
+    PQUOTA_LIMITS pQuotaLimits
+);
+WINADVAPI BOOL WINAPI LogonUserExW(
+    LPCWSTR lpszUsername,
+    LPCWSTR lpszDomain,
+    LPCWSTR lpszPassword,
+    DWORD dwLogonType,
+    DWORD dwLogonProvider,
+    PHANDLE phToken,
+    PSID *ppLogonSid,
+    PVOID *ppProfileBuffer,
+    LPDWORD pdwProfileLength,
+    PQUOTA_LIMITS pQuotaLimits
+);
+#ifdef UNICODE
+#define LogonUserEx  LogonUserExW
+#else /* !UNICODE */
+#define LogonUserEx  LogonUserExA
+#endif /* !UNICODE */
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)
+
+#if (_WIN32_WINNT >= 0x0500)
+
+#define LOGON_WITH_PROFILE              0x00000001
+#define LOGON_NETCREDENTIALS_ONLY       0x00000002
+#define LOGON_ZERO_PASSWORD_BUFFER      0x80000000
+
+WINADVAPI BOOL WINAPI CreateProcessWithLogonW(
+    LPCWSTR lpUsername,
+    LPCWSTR lpDomain,
+    LPCWSTR lpPassword,
+    DWORD dwLogonFlags,
+    LPCWSTR lpApplicationName,
+    LPWSTR lpCommandLine,
+    DWORD dwCreationFlags,
+    LPVOID lpEnvironment,
+    LPCWSTR lpCurrentDirectory,
+    LPSTARTUPINFOW lpStartupInfo,
+    LPPROCESS_INFORMATION lpProcessInformation
+);
+
+WINADVAPI BOOL WINAPI CreateProcessWithTokenW(
+    HANDLE hToken,
+    DWORD dwLogonFlags,
+    LPCWSTR lpApplicationName,
+    LPWSTR lpCommandLine,
+    DWORD dwCreationFlags,
+    LPVOID lpEnvironment,
+    LPCWSTR lpCurrentDirectory,
+    LPSTARTUPINFOW lpStartupInfo,
+    LPPROCESS_INFORMATION lpProcessInformation
+);
+
+#endif /* (_WIN32_WINNT >= 0x0500) */
+
+WINADVAPI BOOL WINAPI IsTokenUntrusted(
+    HANDLE TokenHandle
+);
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_GAMES)
+
+#if (_WIN32_WINNT >= 0x0500)
+
+WINBASEAPI BOOL WINAPI RegisterWaitForSingleObject(
+    PHANDLE phNewWaitObject,
+    HANDLE hObject,
+    WAITORTIMERCALLBACK Callback,
+    PVOID Context,
+    ULONG dwMilliseconds,
+    ULONG dwFlags
+);
+
+WINBASEAPI BOOL WINAPI UnregisterWait(
+    HANDLE WaitHandle
+);
+
+WINBASEAPI BOOL WINAPI BindIoCompletionCallback(
+    HANDLE FileHandle,
+    LPOVERLAPPED_COMPLETION_ROUTINE Function,
+    ULONG Flags
+);
+
+WINBASEAPI HANDLE WINAPI SetTimerQueueTimer(
+    HANDLE TimerQueue,
+    WAITORTIMERCALLBACK Callback,
+    PVOID Parameter,
+    DWORD DueTime,
+    DWORD Period,
+    BOOL PreferIo
+);
+
+WINBASEAPI BOOL WINAPI CancelTimerQueueTimer(
+    HANDLE TimerQueue,
+    HANDLE Timer
+);
+
+#endif /* _WIN32_WINNT >= 0x0500 */
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_GAMES) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP)
+
+#if (_WIN32_WINNT >= 0x0600) && !defined(MIDL_PASS)
+FORCEINLINE void InitializeThreadpoolEnvironment(PTP_CALLBACK_ENVIRON pcbe) {
+    TpInitializeCallbackEnviron(pcbe);
+}
+
+FORCEINLINE void SetThreadpoolCallbackPool(PTP_CALLBACK_ENVIRON pcbe, PTP_POOL ptpp) {
+    TpSetCallbackThreadpool(pcbe, ptpp);
+}
+
+FORCEINLINE void SetThreadpoolCallbackCleanupGroup(PTP_CALLBACK_ENVIRON pcbe,
+    PTP_CLEANUP_GROUP ptpcg, PTP_CLEANUP_GROUP_CANCEL_CALLBACK pfng) {
+    TpSetCallbackCleanupGroup(pcbe, ptpcg, pfng);
+}
+
+FORCEINLINE void SetThreadpoolCallbackRunsLong(PTP_CALLBACK_ENVIRON pcbe) {
+    TpSetCallbackLongFunction(pcbe);
+}
+
+FORCEINLINE void SetThreadpoolCallbackLibrary(PTP_CALLBACK_ENVIRON pcbe, PVOID mod) {
+    TpSetCallbackRaceWithDll(pcbe, mod);
+}
+
+#if (_WIN32_WINNT >= _WIN32_WINNT_WIN7)
+FORCEINLINE void SetThreadpoolCallbackPriority(PTP_CALLBACK_ENVIRON pcbe,
+    TP_CALLBACK_PRIORITY Priority) {
+    TpSetCallbackPriority(pcbe, Priority);
+}
+#endif /* (_WIN32_WINNT >= _WIN32_WINNT_WIN7) */
+
+FORCEINLINE void DestroyThreadpoolEnvironment(PTP_CALLBACK_ENVIRON pcbe) {
+    TpDestroyCallbackEnviron(pcbe);
+}
+
+#endif /* (_WIN32_WINNT >= 0x0600) && !defined(MIDL_PASS) */
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP) */
+
+#if (_WIN32_WINNT >= 0x0600)
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)
+
+#ifndef MIDL_PASS
+FORCEINLINE void SetThreadpoolCallbackPersistent(PTP_CALLBACK_ENVIRON pcbe) {
+    TpSetCallbackPersistent(pcbe);
+}
+#endif /* !MIDL_PASS */
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM)
+
+WINBASEAPI HANDLE WINAPI CreatePrivateNamespaceA(
+    LPSECURITY_ATTRIBUTES lpPrivateNamespaceAttributes,
+    LPVOID lpBoundaryDescriptor,
+    LPCSTR lpAliasPrefix
+);
+
+#ifndef UNICODE
+#define CreatePrivateNamespace CreatePrivateNamespaceA
+#else /* !UNICODE */
+#define CreatePrivateNamespace CreatePrivateNamespaceW
+#endif /* !UNICODE */
+
+WINBASEAPI HANDLE WINAPI OpenPrivateNamespaceA(
+    LPVOID lpBoundaryDescriptor,
+    LPCSTR lpAliasPrefix
+);
+
+#ifndef UNICODE
+#define OpenPrivateNamespace OpenPrivateNamespaceA
+#else /* !UNICODE */
+#define OpenPrivateNamespace OpenPrivateNamespaceW
+#endif /* !UNICODE */
+
+WINBASEAPI HANDLE APIENTRY CreateBoundaryDescriptorA(
+    LPCSTR Name,
+    ULONG Flags
+);
+
+#ifndef UNICODE
+#define CreateBoundaryDescriptor CreateBoundaryDescriptorA
+#else /* !UNICODE */
+#define CreateBoundaryDescriptor CreateBoundaryDescriptorW
+#endif /* !UNICODE */
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)
+
+WINBASEAPI BOOL WINAPI AddIntegrityLabelToBoundaryDescriptor(
+    HANDLE *BoundaryDescriptor,
+    PSID IntegrityLabel
+);
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP) */
+
+#endif /* _WIN32_WINNT >= 0x0600 */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)
+
+#if (_WIN32_WINNT >= 0x0400)
+
+#define HW_PROFILE_GUIDLEN         39
+#define MAX_PROFILE_LEN            80
+
+#define DOCKINFO_UNDOCKED          (0x1)
+#define DOCKINFO_DOCKED            (0x2)
+#define DOCKINFO_USER_SUPPLIED     (0x4)
+#define DOCKINFO_USER_UNDOCKED     (DOCKINFO_USER_SUPPLIED | DOCKINFO_UNDOCKED)
+#define DOCKINFO_USER_DOCKED       (DOCKINFO_USER_SUPPLIED | DOCKINFO_DOCKED)
+
+typedef struct tagHW_PROFILE_INFOA {
+    DWORD dwDockInfo;
+    CHAR szHwProfileGuid[HW_PROFILE_GUIDLEN];
+    CHAR szHwProfileName[MAX_PROFILE_LEN];
+} HW_PROFILE_INFOA, *LPHW_PROFILE_INFOA;
+typedef struct tagHW_PROFILE_INFOW {
+    DWORD dwDockInfo;
+    WCHAR szHwProfileGuid[HW_PROFILE_GUIDLEN];
+    WCHAR szHwProfileName[MAX_PROFILE_LEN];
+} HW_PROFILE_INFOW, *LPHW_PROFILE_INFOW;
+#ifdef UNICODE
+typedef HW_PROFILE_INFOW HW_PROFILE_INFO;
+typedef LPHW_PROFILE_INFOW LPHW_PROFILE_INFO;
+#else /* !UNICODE */
+typedef HW_PROFILE_INFOA HW_PROFILE_INFO;
+typedef LPHW_PROFILE_INFOA LPHW_PROFILE_INFO;
+#endif /* !UNICODE */
+
+WINADVAPI BOOL WINAPI GetCurrentHwProfileA(
+    LPHW_PROFILE_INFOA lpHwProfileInfo
+);
+WINADVAPI BOOL WINAPI GetCurrentHwProfileW(
+    LPHW_PROFILE_INFOW lpHwProfileInfo
+);
+#ifdef UNICODE
+#define GetCurrentHwProfile  GetCurrentHwProfileW
+#else /* !UNICODE */
+#define GetCurrentHwProfile  GetCurrentHwProfileA
+#endif /* !UNICODE */
+#endif /* _WIN32_WINNT >= 0x0400 */
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_GAMES)
+
+WINBASEAPI BOOL WINAPI VerifyVersionInfoA(
+    LPOSVERSIONINFOEXA lpVersionInformation,
+    DWORD dwTypeMask,
+    DWORDLONG dwlConditionMask
+);
+WINBASEAPI BOOL WINAPI VerifyVersionInfoW(
+    LPOSVERSIONINFOEXW lpVersionInformation,
+    DWORD dwTypeMask,
+    DWORDLONG dwlConditionMask
+);
+#ifdef UNICODE
+#define VerifyVersionInfo  VerifyVersionInfoW
+#else /* !UNICODE */
+#define VerifyVersionInfo  VerifyVersionInfoA
+#endif /* !UNICODE */
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_GAMES) */
+
+#include <winerror.h>
+#include <timezoneapi.h>
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)
+
+#define TC_NORMAL       0
+#define TC_HARDERR      1
+#define TC_GP_TRAP      2
+#define TC_SIGNAL       3
+
+WINBASEAPI BOOL WINAPI SetSystemPowerState(
+    BOOL fSuspend,
+    BOOL fForce
+);
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_PC_APP)
+
+#define AC_LINE_OFFLINE                 0x00
+#define AC_LINE_ONLINE                  0x01
+#define AC_LINE_BACKUP_POWER            0x02
+#define AC_LINE_UNKNOWN                 0xFF
+
+#define BATTERY_FLAG_HIGH               0x01
+#define BATTERY_FLAG_LOW                0x02
+#define BATTERY_FLAG_CRITICAL           0x04
+#define BATTERY_FLAG_CHARGING           0x08
+#define BATTERY_FLAG_NO_BATTERY         0x80
+#define BATTERY_FLAG_UNKNOWN            0xFF
+
+#define BATTERY_PERCENTAGE_UNKNOWN      0xFF
+
+#define SYSTEM_STATUS_FLAG_POWER_SAVING_ON      0x01
+
+#define BATTERY_LIFE_UNKNOWN        0xFFFFFFFF
+
+typedef struct _SYSTEM_POWER_STATUS {
+    BYTE ACLineStatus;
+    BYTE BatteryFlag;
+    BYTE BatteryLifePercent;
+    BYTE SystemStatusFlag;
+    DWORD BatteryLifeTime;
+    DWORD BatteryFullLifeTime;
+} SYSTEM_POWER_STATUS, *LPSYSTEM_POWER_STATUS;
+
+WINBASEAPI BOOL WINAPI GetSystemPowerStatus(
+    LPSYSTEM_POWER_STATUS lpSystemPowerStatus
+);
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_PC_APP) */
+
+#if (_WIN32_WINNT >= 0x0500)
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)
+
+WINBASEAPI BOOL WINAPI MapUserPhysicalPagesScatter(
+    PVOID *VirtualAddresses,
+    ULONG_PTR NumberOfPages,
+    PULONG_PTR PageArray
+);
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)
+
+WINBASEAPI HANDLE WINAPI CreateJobObjectA(
+    LPSECURITY_ATTRIBUTES lpJobAttributes,
+    LPCSTR lpName
+);
+
+#ifdef UNICODE
+#define CreateJobObject  CreateJobObjectW
+#else /* !UNICODE */
+#define CreateJobObject  CreateJobObjectA
+#endif /* !UNICODE */
+
+WINBASEAPI HANDLE WINAPI OpenJobObjectA(
+    DWORD dwDesiredAccess,
+    BOOL bInheritHandle,
+    LPCSTR lpName
+);
+
+#ifdef UNICODE
+#define OpenJobObject  OpenJobObjectW
+#else /* !UNICODE */
+#define OpenJobObject  OpenJobObjectA
+#endif /* !UNICODE */
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)
+
+WINBASEAPI BOOL WINAPI CreateJobSet(
+    ULONG NumJob,
+    PJOB_SET_ARRAY UserJobSet,
+    ULONG Flags);
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM)
+
+WINBASEAPI HANDLE WINAPI FindFirstVolumeA(
+    LPSTR lpszVolumeName,
+    DWORD cchBufferLength
+);
+#ifndef UNICODE
+#define FindFirstVolume FindFirstVolumeA
+#endif
+
+WINBASEAPI BOOL WINAPI FindNextVolumeA(
+    HANDLE hFindVolume,
+    LPSTR lpszVolumeName,
+    DWORD cchBufferLength
+);
+#ifndef UNICODE
+#define FindNextVolume FindNextVolumeA
+#endif
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)
+
+WINBASEAPI HANDLE WINAPI FindFirstVolumeMountPointA(
+    LPCSTR lpszRootPathName,
+    LPSTR lpszVolumeMountPoint,
+    DWORD cchBufferLength
+);
+WINBASEAPI HANDLE WINAPI FindFirstVolumeMountPointW(
+    LPCWSTR lpszRootPathName,
+    LPWSTR lpszVolumeMountPoint,
+    DWORD cchBufferLength
+);
+#ifdef UNICODE
+#define FindFirstVolumeMountPoint FindFirstVolumeMountPointW
+#else /* !UNICODE */
+#define FindFirstVolumeMountPoint FindFirstVolumeMountPointA
+#endif /* !UNICODE */
+
+WINBASEAPI BOOL WINAPI FindNextVolumeMountPointA(
+    HANDLE hFindVolumeMountPoint,
+    LPSTR lpszVolumeMountPoint,
+    DWORD cchBufferLength
+);
+WINBASEAPI BOOL WINAPI FindNextVolumeMountPointW(
+    HANDLE hFindVolumeMountPoint,
+    LPWSTR lpszVolumeMountPoint,
+    DWORD cchBufferLength
+);
+#ifdef UNICODE
+#define FindNextVolumeMountPoint FindNextVolumeMountPointW
+#else /* !UNICODE */
+#define FindNextVolumeMountPoint FindNextVolumeMountPointA
+#endif /* !UNICODE */
+
+WINBASEAPI BOOL WINAPI FindVolumeMountPointClose(
+    HANDLE hFindVolumeMountPoint
+);
+
+WINBASEAPI BOOL WINAPI SetVolumeMountPointA(
+    LPCSTR lpszVolumeMountPoint,
+    LPCSTR lpszVolumeName
+);
+WINBASEAPI BOOL WINAPI SetVolumeMountPointW(
+    LPCWSTR lpszVolumeMountPoint,
+    LPCWSTR lpszVolumeName
+);
+#ifdef UNICODE
+#define SetVolumeMountPoint  SetVolumeMountPointW
+#else /* !UNICODE */
+#define SetVolumeMountPoint  SetVolumeMountPointA
+#endif /* !UNICODE */
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM)
+
+WINBASEAPI BOOL WINAPI DeleteVolumeMountPointA(
+    LPCSTR lpszVolumeMountPoint
+);
+#ifndef UNICODE
+#define DeleteVolumeMountPoint  DeleteVolumeMountPointA
+#endif
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM)
+
+#ifndef UNICODE
+#define GetVolumeNameForVolumeMountPoint  GetVolumeNameForVolumeMountPointA
+#endif
+
+WINBASEAPI BOOL WINAPI GetVolumeNameForVolumeMountPointA(
+    LPCSTR lpszVolumeMountPoint,
+    LPSTR lpszVolumeName,
+    DWORD cchBufferLength
+);
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
+
+WINBASEAPI BOOL WINAPI GetVolumePathNameA(
+    LPCSTR lpszFileName,
+    LPSTR lpszVolumePathName,
+    DWORD cchBufferLength
+);
+#ifndef UNICODE
+#define GetVolumePathName  GetVolumePathNameA
+#endif
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES) */
+
+#endif /* (_WIN32_WINNT >= 0x0500) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM)
+
+#if (_WIN32_WINNT >= 0x0501)
+
+WINBASEAPI BOOL WINAPI GetVolumePathNamesForVolumeNameA(
+    LPCSTR lpszVolumeName,
+    LPCH lpszVolumePathNames,
+    DWORD cchBufferLength,
+    PDWORD lpcchReturnLength
+);
+
+#ifndef UNICODE
+#define GetVolumePathNamesForVolumeName  GetVolumePathNamesForVolumeNameA
+#endif
+
+#endif /* (_WIN32_WINNT >= 0x0501) */
+
+#if (_WIN32_WINNT >= 0x0500) || (_WIN32_FUSION >= 0x0100) || ISOLATION_AWARE_ENABLED
+
+#define ACTCTX_FLAG_PROCESSOR_ARCHITECTURE_VALID    (0x00000001)
+#define ACTCTX_FLAG_LANGID_VALID                    (0x00000002)
+#define ACTCTX_FLAG_ASSEMBLY_DIRECTORY_VALID        (0x00000004)
+#define ACTCTX_FLAG_RESOURCE_NAME_VALID             (0x00000008)
+#define ACTCTX_FLAG_SET_PROCESS_DEFAULT             (0x00000010)
+#define ACTCTX_FLAG_APPLICATION_NAME_VALID          (0x00000020)
+#define ACTCTX_FLAG_SOURCE_IS_ASSEMBLYREF           (0x00000040)
+#define ACTCTX_FLAG_HMODULE_VALID                   (0x00000080)
+
+typedef struct tagACTCTXA {
+    ULONG cbSize;
+    DWORD dwFlags;
+    LPCSTR lpSource;
+    USHORT wProcessorArchitecture;
+    LANGID wLangId;
+    LPCSTR lpAssemblyDirectory;
+    LPCSTR lpResourceName;
+    LPCSTR lpApplicationName;
+    HMODULE hModule;
+} ACTCTXA, *PACTCTXA;
+typedef struct tagACTCTXW {
+    ULONG cbSize;
+    DWORD dwFlags;
+    LPCWSTR lpSource;
+    USHORT wProcessorArchitecture;
+    LANGID wLangId;
+    LPCWSTR lpAssemblyDirectory;
+    LPCWSTR lpResourceName;
+    LPCWSTR lpApplicationName;
+    HMODULE hModule;
+} ACTCTXW, *PACTCTXW;
+#ifdef UNICODE
+typedef ACTCTXW ACTCTX;
+typedef PACTCTXW PACTCTX;
+#else /* !UNICODE */
+typedef ACTCTXA ACTCTX;
+typedef PACTCTXA PACTCTX;
+#endif /* !UNICODE */
+
+typedef const ACTCTXA *PCACTCTXA;
+typedef const ACTCTXW *PCACTCTXW;
+#ifdef UNICODE
+typedef PCACTCTXW PCACTCTX;
+#else /* !UNICODE */
+typedef PCACTCTXA PCACTCTX;
+#endif /* !UNICODE */
+
+WINBASEAPI HANDLE WINAPI CreateActCtxA(
+    PCACTCTXA pActCtx
+);
+WINBASEAPI HANDLE WINAPI CreateActCtxW(
+    PCACTCTXW pActCtx
+);
+#ifdef UNICODE
+#define CreateActCtx  CreateActCtxW
+#else /* !UNICODE */
+#define CreateActCtx  CreateActCtxA
+#endif /* !UNICODE */
+
+WINBASEAPI void WINAPI AddRefActCtx(
+    HANDLE hActCtx
+);
+
+WINBASEAPI void WINAPI ReleaseActCtx(
+    HANDLE hActCtx
+);
+
+WINBASEAPI BOOL WINAPI ZombifyActCtx(
+    HANDLE hActCtx
+);
+
+WINBASEAPI BOOL WINAPI ActivateActCtx(
+    HANDLE hActCtx,
+    ULONG_PTR *lpCookie
+);
+
+#define DEACTIVATE_ACTCTX_FLAG_FORCE_EARLY_DEACTIVATION (0x00000001)
+
+WINBASEAPI BOOL WINAPI DeactivateActCtx(
+    DWORD dwFlags,
+    ULONG_PTR ulCookie
+);
+
+WINBASEAPI BOOL WINAPI GetCurrentActCtx(
+    HANDLE *lphActCtx);
+
+typedef struct tagACTCTX_SECTION_KEYED_DATA_2600 {
+    ULONG cbSize;
+    ULONG ulDataFormatVersion;
+    PVOID lpData;
+    ULONG ulLength;
+    PVOID lpSectionGlobalData;
+    ULONG ulSectionGlobalDataLength;
+    PVOID lpSectionBase;
+    ULONG ulSectionTotalLength;
+    HANDLE hActCtx;
+    ULONG ulAssemblyRosterIndex;
+} ACTCTX_SECTION_KEYED_DATA_2600, *PACTCTX_SECTION_KEYED_DATA_2600;
+typedef const ACTCTX_SECTION_KEYED_DATA_2600 *PCACTCTX_SECTION_KEYED_DATA_2600;
+
+typedef struct tagACTCTX_SECTION_KEYED_DATA_ASSEMBLY_METADATA {
+    PVOID lpInformation;
+    PVOID lpSectionBase;
+    ULONG ulSectionLength;
+    PVOID lpSectionGlobalDataBase;
+    ULONG ulSectionGlobalDataLength;
+} ACTCTX_SECTION_KEYED_DATA_ASSEMBLY_METADATA, *PACTCTX_SECTION_KEYED_DATA_ASSEMBLY_METADATA;
+typedef const ACTCTX_SECTION_KEYED_DATA_ASSEMBLY_METADATA *PCACTCTX_SECTION_KEYED_DATA_ASSEMBLY_METADATA;
+
+typedef struct tagACTCTX_SECTION_KEYED_DATA {
+    ULONG cbSize;
+    ULONG ulDataFormatVersion;
+    PVOID lpData;
+    ULONG ulLength;
+    PVOID lpSectionGlobalData;
+    ULONG ulSectionGlobalDataLength;
+    PVOID lpSectionBase;
+    ULONG ulSectionTotalLength;
+    HANDLE hActCtx;
+    ULONG ulAssemblyRosterIndex;
+    ULONG ulFlags;
+    ACTCTX_SECTION_KEYED_DATA_ASSEMBLY_METADATA AssemblyMetadata;
+} ACTCTX_SECTION_KEYED_DATA, *PACTCTX_SECTION_KEYED_DATA;
+typedef const ACTCTX_SECTION_KEYED_DATA *PCACTCTX_SECTION_KEYED_DATA;
+
+#define FIND_ACTCTX_SECTION_KEY_RETURN_HACTCTX (0x00000001)
+#define FIND_ACTCTX_SECTION_KEY_RETURN_FLAGS   (0x00000002)
+#define FIND_ACTCTX_SECTION_KEY_RETURN_ASSEMBLY_METADATA (0x00000004)
+
+WINBASEAPI BOOL WINAPI FindActCtxSectionStringA(
+    DWORD dwFlags,
+    const GUID *lpExtensionGuid,
+    ULONG ulSectionId,
+    LPCSTR lpStringToFind,
+    PACTCTX_SECTION_KEYED_DATA ReturnedData
+);
+WINBASEAPI BOOL WINAPI FindActCtxSectionStringW(
+    DWORD dwFlags,
+    const GUID *lpExtensionGuid,
+    ULONG ulSectionId,
+    LPCWSTR lpStringToFind,
+    PACTCTX_SECTION_KEYED_DATA ReturnedData
+);
+#ifdef UNICODE
+#define FindActCtxSectionString  FindActCtxSectionStringW
+#else /* !UNICODE */
+#define FindActCtxSectionString  FindActCtxSectionStringA
+#endif /* !UNICODE */
+
+WINBASEAPI BOOL WINAPI FindActCtxSectionGuid(
+    DWORD dwFlags,
+    const GUID *lpExtensionGuid,
+    ULONG ulSectionId,
+    const GUID *lpGuidToFind,
+    PACTCTX_SECTION_KEYED_DATA ReturnedData
+);
+
+#if !defined(RC_INVOKED) /* ??? RC complains about long symbols in #ifs */
+#if !defined(ACTIVATION_CONTEXT_BASIC_INFORMATION_DEFINED)
+
+typedef struct _ACTIVATION_CONTEXT_BASIC_INFORMATION {
+    HANDLE hActCtx;
+    DWORD dwFlags;
+} ACTIVATION_CONTEXT_BASIC_INFORMATION, *PACTIVATION_CONTEXT_BASIC_INFORMATION;
+
+typedef const struct _ACTIVATION_CONTEXT_BASIC_INFORMATION *PCACTIVATION_CONTEXT_BASIC_INFORMATION;
+
+#define ACTIVATION_CONTEXT_BASIC_INFORMATION_DEFINED 1
+
+#endif /* !defined(ACTIVATION_CONTEXT_BASIC_INFORMATION_DEFINED) */
+#endif /* !RC_INVOKED */
+
+#define QUERY_ACTCTX_FLAG_USE_ACTIVE_ACTCTX (0x00000004)
+#define QUERY_ACTCTX_FLAG_ACTCTX_IS_HMODULE (0x00000008)
+#define QUERY_ACTCTX_FLAG_ACTCTX_IS_ADDRESS (0x00000010)
+#define QUERY_ACTCTX_FLAG_NO_ADDREF         (0x80000000)
+
+WINBASEAPI BOOL WINAPI QueryActCtxW(
+    DWORD dwFlags,
+    HANDLE hActCtx,
+    PVOID pvSubInstance,
+    ULONG ulInfoClass,
+    PVOID pvBuffer,
+    SIZE_T cbBuffer,
+    SIZE_T *pcbWrittenOrRequired
+);
+
+typedef BOOL (WINAPI *PQUERYACTCTXW_FUNC)(
+    DWORD dwFlags,
+    HANDLE hActCtx,
+    PVOID pvSubInstance,
+    ULONG ulInfoClass,
+    PVOID pvBuffer,
+    SIZE_T cbBuffer,
+    SIZE_T *pcbWrittenOrRequired
+);
+
+#endif /* (_WIN32_WINNT > 0x0500) || (_WIN32_FUSION >= 0x0100) || ISOLATION_AWARE_ENABLED */
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)
+
+#if _WIN32_WINNT >= 0x0501
+WINBASEAPI DWORD WINAPI WTSGetActiveConsoleSessionId(void);
+#endif /* (_WIN32_WINNT >= 0x0501) */
+
+#if (_WIN32_WINNT >= _WIN32_WINNT_WINTHRESHOLD)
+WINBASEAPI DWORD WINAPI WTSGetServiceSessionId(void);
+WINBASEAPI BOOLEAN WINAPI WTSIsServerContainer(void);
+#endif /* (_WIN32_WINNT >= _WIN32_WINNT_WINTHRESHOLD) */
+
+#if _WIN32_WINNT >= 0x0601
+WINBASEAPI WORD WINAPI GetActiveProcessorGroupCount(void);
+WINBASEAPI WORD WINAPI GetMaximumProcessorGroupCount(void);
+WINBASEAPI DWORD WINAPI GetActiveProcessorCount(WORD GroupNumber);
+WINBASEAPI DWORD WINAPI GetMaximumProcessorCount(WORD GroupNumber);
+#endif /* (_WIN32_WINNT >=0x0601) */
+
+WINBASEAPI BOOL WINAPI GetNumaProcessorNode(
+    UCHAR Processor,
+    PUCHAR NodeNumber
+);
+
+#if _WIN32_WINNT >= 0x0601
+WINBASEAPI BOOL WINAPI GetNumaNodeNumberFromHandle(
+    HANDLE hFile,
+    PUSHORT NodeNumber
+);
+#endif /* (_WIN32_WINNT >=0x0601) */
+
+#if _WIN32_WINNT >= 0x0601
+WINBASEAPI BOOL WINAPI GetNumaProcessorNodeEx(
+    PPROCESSOR_NUMBER Processor,
+    PUSHORT NodeNumber
+);
+#endif /* (_WIN32_WINNT >=0x0601) */
+
+WINBASEAPI BOOL WINAPI GetNumaNodeProcessorMask(
+    UCHAR Node,
+    PULONGLONG ProcessorMask
+);
+
+WINBASEAPI BOOL WINAPI GetNumaAvailableMemoryNode(
+    UCHAR Node,
+    PULONGLONG AvailableBytes
+);
+
+#if _WIN32_WINNT >= 0x0601
+WINBASEAPI BOOL WINAPI GetNumaAvailableMemoryNodeEx(
+    USHORT Node,
+    PULONGLONG AvailableBytes
+);
+#endif /* (_WIN32_WINNT >=0x0601) */
+
+#if (_WIN32_WINNT >= 0x0600)
+WINBASEAPI BOOL WINAPI GetNumaProximityNode(
+    ULONG ProximityId,
+    PUCHAR NodeNumber
+);
+#endif /* (_WIN32_WINNT >= 0x0600) */
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM)
+
+typedef DWORD (WINAPI *APPLICATION_RECOVERY_CALLBACK)(PVOID pvParameter);
+
+#define RESTART_MAX_CMD_LINE    1024
+
+#define RESTART_NO_CRASH        1
+#define RESTART_NO_HANG         2
+#define RESTART_NO_PATCH        4
+#define RESTART_NO_REBOOT       8
+
+#define RECOVERY_DEFAULT_PING_INTERVAL  5000
+#define RECOVERY_MAX_PING_INTERVAL      (5 * 60 * 1000)
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)
+
+#if (_WIN32_WINNT >= 0x0600)
+
+WINBASEAPI HRESULT WINAPI RegisterApplicationRecoveryCallback(
+    APPLICATION_RECOVERY_CALLBACK pRecoveyCallback,
+    PVOID pvParameter,
+    DWORD dwPingInterval,
+    DWORD dwFlags
+);
+
+WINBASEAPI HRESULT WINAPI UnregisterApplicationRecoveryCallback(void);
+
+WINBASEAPI HRESULT WINAPI RegisterApplicationRestart(
+    PCWSTR pwzCommandline,
+    DWORD dwFlags
+);
+
+WINBASEAPI HRESULT WINAPI UnregisterApplicationRestart(void);
+
+#endif /* _WIN32_WINNT >= 0x0600 */
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM)
+
+#if (_WIN32_WINNT >= 0x0600)
+
+WINBASEAPI HRESULT WINAPI GetApplicationRecoveryCallback(
+    HANDLE hProcess,
+    APPLICATION_RECOVERY_CALLBACK *pRecoveryCallback,
+    PVOID *ppvParameter,
+    PDWORD pdwPingInterval,
+    PDWORD pdwFlags
+);
+
+WINBASEAPI HRESULT WINAPI GetApplicationRestartSettings(
+    HANDLE hProcess,
+    PWSTR pwzCommandline,
+    PDWORD pcchSize,
+    PDWORD pdwFlags
+);
+
+#endif /* _WIN32_WINNT >= 0x0600 */
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)
+
+#if (_WIN32_WINNT >= 0x0600)
+
+WINBASEAPI HRESULT WINAPI ApplicationRecoveryInProgress(
+    PBOOL pbCancelled
+);
+
+WINBASEAPI void WINAPI ApplicationRecoveryFinished(
+    BOOL bSuccess
+);
+
+#endif /* _WIN32_WINNT >= 0x0600 */
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP) */
+
+#if (_WIN32_WINNT >= 0x0600)
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
+
+typedef struct _FILE_BASIC_INFO {
+    LARGE_INTEGER CreationTime;
+    LARGE_INTEGER LastAccessTime;
+    LARGE_INTEGER LastWriteTime;
+    LARGE_INTEGER ChangeTime;
+    DWORD FileAttributes;
+} FILE_BASIC_INFO, *PFILE_BASIC_INFO;
+
+typedef struct _FILE_STANDARD_INFO {
+    LARGE_INTEGER AllocationSize;
+    LARGE_INTEGER EndOfFile;
+    DWORD NumberOfLinks;
+    BOOLEAN DeletePending;
+    BOOLEAN Directory;
+} FILE_STANDARD_INFO, *PFILE_STANDARD_INFO;
+
+typedef struct _FILE_NAME_INFO {
+    DWORD FileNameLength;
+    WCHAR FileName[1];
+} FILE_NAME_INFO, *PFILE_NAME_INFO;
+
+typedef struct _FILE_CASE_SENSITIVE_INFO {
+    ULONG Flags;
+} FILE_CASE_SENSITIVE_INFO, *PFILE_CASE_SENSITIVE_INFO;
+
+#if (_WIN32_WINNT >= _WIN32_WINNT_WIN10_RS1)
+#define FILE_RENAME_FLAG_REPLACE_IF_EXISTS                  0x00000001
+#define FILE_RENAME_FLAG_POSIX_SEMANTICS                    0x00000002
+#endif /* (_WIN32_WINNT >= _WIN32_WINNT_WIN10_RS1) */
+
+#if (_WIN32_WINNT >= _WIN32_WINNT_WIN10_RS3)
+#define FILE_RENAME_FLAG_SUPPRESS_PIN_STATE_INHERITANCE     0x00000004
+#endif /* (_WIN32_WINNT >= _WIN32_WINNT_WIN10_RS3) */
+
+typedef struct _FILE_RENAME_INFO {
+#if (_WIN32_WINNT >= _WIN32_WINNT_WIN10_RS1)
+    union {
+        BOOLEAN ReplaceIfExists;
+        DWORD Flags;
+    } DUMMYUNIONNAME;
+#else /* (_WIN32_WINNT < _WIN32_WINNT_WIN10_RS1) */
+    BOOLEAN ReplaceIfExists;
+#endif /* (_WIN32_WINNT < _WIN32_WINNT_WIN10_RS1) */
+    HANDLE RootDirectory;
+    DWORD FileNameLength;
+    WCHAR FileName[1];
+} FILE_RENAME_INFO, *PFILE_RENAME_INFO;
+
+typedef struct _FILE_ALLOCATION_INFO {
+    LARGE_INTEGER AllocationSize;
+} FILE_ALLOCATION_INFO, *PFILE_ALLOCATION_INFO;
+
+typedef struct _FILE_END_OF_FILE_INFO {
+    LARGE_INTEGER EndOfFile;
+} FILE_END_OF_FILE_INFO, *PFILE_END_OF_FILE_INFO;
+
+typedef struct _FILE_STREAM_INFO {
+    DWORD NextEntryOffset;
+    DWORD StreamNameLength;
+    LARGE_INTEGER StreamSize;
+    LARGE_INTEGER StreamAllocationSize;
+    WCHAR StreamName[1];
+} FILE_STREAM_INFO, *PFILE_STREAM_INFO;
+
+typedef struct _FILE_COMPRESSION_INFO {
+    LARGE_INTEGER CompressedFileSize;
+    WORD CompressionFormat;
+    UCHAR CompressionUnitShift;
+    UCHAR ChunkShift;
+    UCHAR ClusterShift;
+    UCHAR Reserved[3];
+} FILE_COMPRESSION_INFO, *PFILE_COMPRESSION_INFO;
+
+typedef struct _FILE_ATTRIBUTE_TAG_INFO {
+    DWORD FileAttributes;
+    DWORD ReparseTag;
+} FILE_ATTRIBUTE_TAG_INFO, *PFILE_ATTRIBUTE_TAG_INFO;
+
+typedef struct _FILE_DISPOSITION_INFO {
+    BOOLEAN DeleteFile;
+} FILE_DISPOSITION_INFO, *PFILE_DISPOSITION_INFO;
+
+#if (_WIN32_WINNT >= _WIN32_WINNT_WIN10_RS1)
+
+#define FILE_DISPOSITION_FLAG_DO_NOT_DELETE              0x00000000
+#define FILE_DISPOSITION_FLAG_DELETE                     0x00000001
+#define FILE_DISPOSITION_FLAG_POSIX_SEMANTICS            0x00000002
+#define FILE_DISPOSITION_FLAG_FORCE_IMAGE_SECTION_CHECK  0x00000004
+#define FILE_DISPOSITION_FLAG_ON_CLOSE                   0x00000008
+#if (_WIN32_WINNT >= _WIN32_WINNT_WIN10_RS5)
+#define FILE_DISPOSITION_FLAG_IGNORE_READONLY_ATTRIBUTE  0x00000010
+#endif /* (_WIN32_WINNT >= _WIN32_WINNT_WIN10_RS5) */
+
+typedef struct _FILE_DISPOSITION_INFO_EX {
+    DWORD Flags;
+} FILE_DISPOSITION_INFO_EX, *PFILE_DISPOSITION_INFO_EX;
+
+#endif /* (_WIN32_WINNT >= _WIN32_WINNT_WIN10_RS1) */
+
+typedef struct _FILE_ID_BOTH_DIR_INFO {
+    DWORD NextEntryOffset;
+    DWORD FileIndex;
+    LARGE_INTEGER CreationTime;
+    LARGE_INTEGER LastAccessTime;
+    LARGE_INTEGER LastWriteTime;
+    LARGE_INTEGER ChangeTime;
+    LARGE_INTEGER EndOfFile;
+    LARGE_INTEGER AllocationSize;
+    DWORD FileAttributes;
+    DWORD FileNameLength;
+    DWORD EaSize;
+    CCHAR ShortNameLength;
+    WCHAR ShortName[12];
+    LARGE_INTEGER FileId;
+    WCHAR FileName[1];
+} FILE_ID_BOTH_DIR_INFO, *PFILE_ID_BOTH_DIR_INFO;
+
+typedef struct _FILE_FULL_DIR_INFO {
+    ULONG NextEntryOffset;
+    ULONG FileIndex;
+    LARGE_INTEGER CreationTime;
+    LARGE_INTEGER LastAccessTime;
+    LARGE_INTEGER LastWriteTime;
+    LARGE_INTEGER ChangeTime;
+    LARGE_INTEGER EndOfFile;
+    LARGE_INTEGER AllocationSize;
+    ULONG FileAttributes;
+    ULONG FileNameLength;
+    ULONG EaSize;
+    WCHAR FileName[1];
+} FILE_FULL_DIR_INFO, *PFILE_FULL_DIR_INFO;
+
+typedef enum _PRIORITY_HINT {
+    IoPriorityHintVeryLow = 0,
+    IoPriorityHintLow,
+    IoPriorityHintNormal,
+    MaximumIoPriorityHintType
+} PRIORITY_HINT;
+
+typedef struct _FILE_IO_PRIORITY_HINT_INFO {
+    PRIORITY_HINT PriorityHint;
+} FILE_IO_PRIORITY_HINT_INFO, *PFILE_IO_PRIORITY_HINT_INFO;
+
+#if (_WIN32_WINNT >= _WIN32_WINNT_WIN8)
+
+typedef struct _FILE_ALIGNMENT_INFO {
+    ULONG AlignmentRequirement;
+} FILE_ALIGNMENT_INFO, *PFILE_ALIGNMENT_INFO;
+
+#define STORAGE_INFO_FLAGS_ALIGNED_DEVICE                 0x00000001
+#define STORAGE_INFO_FLAGS_PARTITION_ALIGNED_ON_DEVICE    0x00000002
+
+#define STORAGE_INFO_OFFSET_UNKNOWN  (0xffffffff)
+
+typedef struct _FILE_STORAGE_INFO {
+    ULONG LogicalBytesPerSector;
+    ULONG PhysicalBytesPerSectorForAtomicity;
+    ULONG PhysicalBytesPerSectorForPerformance;
+    ULONG FileSystemEffectivePhysicalBytesPerSectorForAtomicity;
+    ULONG Flags;
+    ULONG ByteOffsetForSectorAlignment;
+    ULONG ByteOffsetForPartitionAlignment;
+} FILE_STORAGE_INFO, *PFILE_STORAGE_INFO;
+
+typedef struct _FILE_ID_INFO {
+    ULONGLONG VolumeSerialNumber;
+    FILE_ID_128 FileId;
+} FILE_ID_INFO, *PFILE_ID_INFO;
+
+typedef struct _FILE_ID_EXTD_DIR_INFO {
+    ULONG NextEntryOffset;
+    ULONG FileIndex;
+    LARGE_INTEGER CreationTime;
+    LARGE_INTEGER LastAccessTime;
+    LARGE_INTEGER LastWriteTime;
+    LARGE_INTEGER ChangeTime;
+    LARGE_INTEGER EndOfFile;
+    LARGE_INTEGER AllocationSize;
+    ULONG FileAttributes;
+    ULONG FileNameLength;
+    ULONG EaSize;
+    ULONG ReparsePointTag;
+    FILE_ID_128 FileId;
+    WCHAR FileName[1];
+} FILE_ID_EXTD_DIR_INFO, *PFILE_ID_EXTD_DIR_INFO;
+
+#endif /* (_WIN32_WINNT >= _WIN32_WINNT_WIN8) */
+
+#define REMOTE_PROTOCOL_INFO_FLAG_LOOPBACK              0x00000001
+#define REMOTE_PROTOCOL_INFO_FLAG_OFFLINE               0x00000002
+#if (_WIN32_WINNT >= _WIN32_WINNT_WIN8)
+#define REMOTE_PROTOCOL_INFO_FLAG_PERSISTENT_HANDLE     0x00000004
+#endif /* (_WIN32_WINNT >= _WIN32_WINNT_WIN8) */
+#if (_WIN32_WINNT >= _WIN32_WINNT_WIN8)
+#define RPI_FLAG_SMB2_SHARECAP_TIMEWARP                0x00000002
+#define RPI_FLAG_SMB2_SHARECAP_DFS                     0x00000008
+#define RPI_FLAG_SMB2_SHARECAP_CONTINUOUS_AVAILABILITY 0x00000010
+#define RPI_FLAG_SMB2_SHARECAP_SCALEOUT                0x00000020
+#define RPI_FLAG_SMB2_SHARECAP_CLUSTER                 0x00000040
+#endif /* (_WIN32_WINNT >= _WIN32_WINNT_WIN8) */
+
+#define RPI_SMB2_SHAREFLAG_ENCRYPT_DATA                0x00000001
+#define RPI_SMB2_SHAREFLAG_COMPRESS_DATA               0x00000002
+#if (_WIN32_WINNT >= _WIN32_WINNT_WIN8)
+#define RPI_SMB2_FLAG_SERVERCAP_DFS                    0x00000001
+#define RPI_SMB2_FLAG_SERVERCAP_LEASING                0x00000002
+#define RPI_SMB2_FLAG_SERVERCAP_LARGEMTU               0x00000004
+#define RPI_SMB2_FLAG_SERVERCAP_MULTICHANNEL           0x00000008
+#define RPI_SMB2_FLAG_SERVERCAP_PERSISTENT_HANDLES     0x00000010
+#define RPI_SMB2_FLAG_SERVERCAP_DIRECTORY_LEASING      0x00000020
+#endif /* (_WIN32_WINNT >= _WIN32_WINNT_WIN8) */
+
+typedef struct _FILE_REMOTE_PROTOCOL_INFO {
+    USHORT StructureVersion;
+    USHORT StructureSize;
+    ULONG Protocol;
+    USHORT ProtocolMajorVersion;
+    USHORT ProtocolMinorVersion;
+    USHORT ProtocolRevision;
+    USHORT Reserved;
+    ULONG Flags;
+    struct {
+        ULONG Reserved[8];
+    } GenericReserved;
+#if (_WIN32_WINNT < _WIN32_WINNT_WIN8)
+    struct {
+        ULONG Reserved[16];
+    } ProtocolSpecificReserved;
+#endif /* (_WIN32_WINNT < _WIN32_WINNT_WIN8) */
+#if (_WIN32_WINNT >= _WIN32_WINNT_WIN8)
+    union {
+        struct {
+            struct {
+                ULONG Capabilities;
+            } Server;
+            struct {
+                ULONG Capabilities;
+#if (NTDDI_VERSION >= NTDDI_WIN10_NI)
+                ULONG ShareFlags;
+#else /* (NTDDI_VERSION < NTDDI_WIN10_NI) */
+                ULONG CachingFlags;
+#endif /* (NTDDI_VERSION < NTDDI_WIN10_NI) */
+            } Share;
+        } Smb2;
+        ULONG Reserved[16];
+    } ProtocolSpecific;
+#endif /* (_WIN32_WINNT >= _WIN32_WINNT_WIN8) */
+
+} FILE_REMOTE_PROTOCOL_INFO, *PFILE_REMOTE_PROTOCOL_INFO;
+
+WINBASEAPI BOOL WINAPI GetFileInformationByHandleEx(
+    HANDLE hFile,
+    FILE_INFO_BY_HANDLE_CLASS FileInformationClass,
+    LPVOID lpFileInformation,
+    DWORD dwBufferSize
+);
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM)
+
+typedef enum _FILE_ID_TYPE {
+    FileIdType,
+    ObjectIdType,
+    ExtendedFileIdType,
+    MaximumFileIdType
+} FILE_ID_TYPE, *PFILE_ID_TYPE;
+
+typedef struct FILE_ID_DESCRIPTOR {
+    DWORD dwSize;
+    FILE_ID_TYPE Type;
+    union {
+        LARGE_INTEGER FileId;
+        GUID ObjectId;
+#if (_WIN32_WINNT >= _WIN32_WINNT_WIN8)
+        FILE_ID_128 ExtendedFileId;
+#endif /* (_WIN32_WINNT >= _WIN32_WINNT_WIN8) */
+    } DUMMYUNIONNAME;
+} FILE_ID_DESCRIPTOR, *LPFILE_ID_DESCRIPTOR;
+
+WINBASEAPI HANDLE WINAPI OpenFileById(
+    HANDLE hVolumeHint,
+    LPFILE_ID_DESCRIPTOR lpFileId,
+    DWORD dwDesiredAccess,
+    DWORD dwShareMode,
+    LPSECURITY_ATTRIBUTES lpSecurityAttributes,
+    DWORD dwFlagsAndAttributes
+);
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM) */
+
+#endif /* (_WIN32_WINNT >= 0x0600) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM)
+
+#if (_WIN32_WINNT >= 0x0600)
+
+#define SYMBOLIC_LINK_FLAG_DIRECTORY                    (0x1)
+#define SYMBOLIC_LINK_FLAG_ALLOW_UNPRIVILEGED_CREATE    (0x2)
+
+WINBASEAPI BOOLEAN APIENTRY CreateSymbolicLinkA(
+    LPCSTR lpSymlinkFileName,
+    LPCSTR lpTargetFileName,
+    DWORD dwFlags
+);
+WINBASEAPI BOOLEAN APIENTRY CreateSymbolicLinkW(
+    LPCWSTR lpSymlinkFileName,
+    LPCWSTR lpTargetFileName,
+    DWORD dwFlags
+);
+#ifdef UNICODE
+#define CreateSymbolicLink  CreateSymbolicLinkW
+#else /* !UNICODE */
+#define CreateSymbolicLink  CreateSymbolicLinkA
+#endif /* !UNICODE */
+
+#endif /* (_WIN32_WINNT >= 0x0600) */
+
+#if (_WIN32_WINNT >= 0x0600)
+
+WINBASEAPI BOOL WINAPI QueryActCtxSettingsW(
+    DWORD dwFlags,
+    HANDLE hActCtx,
+    PCWSTR settingsNameSpace,
+    PCWSTR settingName,
+    PWSTR pvBuffer,
+    SIZE_T dwBuffer,
+    SIZE_T *pdwWrittenOrRequired
+);
+
+#endif /* (_WIN32_WINNT >= 0x0600) */
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)
+
+#if (_WIN32_WINNT >= 0x0600)
+
+WINBASEAPI BOOLEAN APIENTRY CreateSymbolicLinkTransactedA(
+    LPCSTR lpSymlinkFileName,
+    LPCSTR lpTargetFileName,
+    DWORD dwFlags,
+    HANDLE hTransaction
+);
+WINBASEAPI BOOLEAN APIENTRY CreateSymbolicLinkTransactedW(
+    LPCWSTR lpSymlinkFileName,
+    LPCWSTR lpTargetFileName,
+    DWORD dwFlags,
+    HANDLE hTransaction
+);
+#ifdef UNICODE
+#define CreateSymbolicLinkTransacted  CreateSymbolicLinkTransactedW
+#else /* !UNICODE */
+#define CreateSymbolicLinkTransacted  CreateSymbolicLinkTransactedA
+#endif /* !UNICODE */
+
+#endif /* (_WIN32_WINNT >= 0x0600) */
+
+#if (_WIN32_WINNT >= 0x0600)
+WINBASEAPI BOOL WINAPI ReplacePartitionUnit(
+    PWSTR TargetPartition,
+    PWSTR SparePartition,
+    ULONG Flags
+);
+#endif /* (_WIN32_WINNT >= 0x0600) */
+
+#if (_WIN32_WINNT >= 0x0600)
+WINBASEAPI BOOL WINAPI AddSecureMemoryCacheCallback(
+    PSECURE_MEMORY_CACHE_CALLBACK pfnCallBack
+);
+
+WINBASEAPI BOOL WINAPI RemoveSecureMemoryCacheCallback(
+    PSECURE_MEMORY_CACHE_CALLBACK pfnCallBack
+);
+#endif /* (_WIN32_WINNT >= 0x0600) */
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP) */
+
+#if (NTDDI_VERSION >= NTDDI_WIN7SP1)
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
+
+WINBASEAPI BOOL WINAPI CopyContext(
+    PCONTEXT Destination,
+    DWORD ContextFlags,
+    PCONTEXT Source
+);
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
+
+WINBASEAPI BOOL WINAPI InitializeContext(
+    PVOID Buffer,
+    DWORD ContextFlags,
+    PCONTEXT *Context,
+    PDWORD ContextLength
+);
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
+
+#if (NTDDI_VERSION >= NTDDI_WIN10_RS5)
+
+WINBASEAPI BOOL WINAPI InitializeContext2(
+    PVOID Buffer,
+    DWORD ContextFlags,
+    PCONTEXT *Context,
+    PDWORD ContextLength,
+    ULONG64 XStateCompactionMask
+);
+
+#endif /* (NTDDI_VERSION >= NTDDI_WIN10_RS5) */
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES) */
+
+#if defined(_AMD64_) || defined(_X86_)
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
+
+WINBASEAPI DWORD64 WINAPI GetEnabledXStateFeatures(void);
+
+WINBASEAPI BOOL WINAPI GetXStateFeaturesMask(
+    PCONTEXT Context,
+    PDWORD64 FeatureMask
+);
+
+WINBASEAPI PVOID WINAPI LocateXStateFeature(
+    PCONTEXT Context,
+    DWORD FeatureId,
+    PDWORD Length
+);
+
+WINBASEAPI BOOL WINAPI SetXStateFeaturesMask(
+    PCONTEXT Context,
+    DWORD64 FeatureMask
+);
+
+#if (NTDDI_VERSION >= NTDDI_WIN10_FE)
+WINBASEAPI DWORD64 WINAPI GetThreadEnabledXStateFeatures(void);
+WINBASEAPI BOOL WINAPI EnableProcessOptionalXStateFeatures(DWORD64 Features);
+#endif /* NTDDI_VERSION >= NTDDI_WIN10_FE */
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES) */
+
+#endif /* defined(_AMD64_) || defined(_X86_) */
+
+#endif /* (NTDDI_VERSION >= NTDDI_WIN7SP1) */
+
+#if (_WIN32_WINNT >= 0x0601)
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)
+
+WINBASEAPI DWORD APIENTRY EnableThreadProfiling(
+    HANDLE ThreadHandle,
+    DWORD Flags,
+    DWORD64 HardwareCounters,
+    HANDLE *PerformanceDataHandle
+);
+
+WINBASEAPI DWORD APIENTRY DisableThreadProfiling(
+    HANDLE PerformanceDataHandle
+);
+
+WINBASEAPI DWORD APIENTRY QueryThreadProfiling(
+    HANDLE ThreadHandle,
+    PBOOLEAN Enabled
+);
+
+WINBASEAPI DWORD APIENTRY ReadThreadProfilingData(
+    HANDLE PerformanceDataHandle,
+    DWORD Flags,
+    PPERFORMANCE_DATA PerformanceData
+);
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP) */
+
+#endif /* (_WIN32_WINNT >= 0x0601) */
+
+#if (NTDDI_VERSION >= NTDDI_WIN10_RS4)
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM)
+
+WINBASEAPI DWORD WINAPI RaiseCustomSystemEventTrigger(
+    PCUSTOM_SYSTEM_EVENT_TRIGGER_CONFIG CustomSystemEventTriggerConfig
+);
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM) */
+
+#endif /* (NTDDI_VERSION >= NTDDI_WIN10_RS4) */
+
+#if defined(ISOLATION_AWARE_ENABLED) && (ISOLATION_AWARE_ENABLED != 0)
+#include "winbase.inl"
+#endif /* ISOLATION_AWARE_ENABLED */
+
+#if __POCC__ >= 290
+#pragma warn(pop)
+#endif
+
+#endif /* _WINBASE_H */

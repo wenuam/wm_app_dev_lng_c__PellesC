@@ -1,0 +1,1007 @@
+#ifndef _NETIOAPI_H
+#define _NETIOAPI_H
+
+#if __POCC__ >= 500
+#pragma once
+#endif
+
+/* Version agnostic IP helper API definitions */
+
+#include <winapifamily.h>
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
+
+#ifndef ANY_SIZE
+#define ANY_SIZE  1
+#endif
+
+#ifdef _IPHLPAPI_H
+
+/* user mode */
+
+#define NETIO_STATUS  DWORD
+#define NETIO_SUCCESS(x)  ((x) == NO_ERROR)
+#define NETIOAPI_API_  WINAPI
+
+#else /* !_IPHLPAPI_H */
+
+/* kernel mode */
+
+#include <ws2def.h>
+#include <ws2ipdef.h>
+#include <ifdef.h>
+#include <nldef.h>
+
+#define NETIO_STATUS  NTSTATUS
+#define NETIO_SUCCESS(x)  NT_SUCCESS(x)
+#define NETIOAPI_API_  NTAPI
+
+#undef IPHLPAPI_DLL_LINKAGE
+#define IPHLPAPI_DLL_LINKAGE
+
+#endif /* _IPHLPAPI_H */
+
+#define NETIOAPI_API NETIO_STATUS NETIOAPI_API_
+
+typedef enum _MIB_NOTIFICATION_TYPE {
+    MibParameterNotification,
+    MibAddInstance,
+    MibDeleteInstance,
+    MibInitialNotification,
+} MIB_NOTIFICATION_TYPE, *PMIB_NOTIFICATION_TYPE;
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES) */
+
+#ifdef _WS2IPDEF_H
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
+
+#include <ntddndis.h>
+
+typedef struct _MIB_IF_ROW2 {
+    NET_LUID InterfaceLuid;
+    NET_IFINDEX InterfaceIndex;
+    GUID InterfaceGuid;
+    WCHAR Alias[IF_MAX_STRING_SIZE + 1];
+    WCHAR Description[IF_MAX_STRING_SIZE + 1];
+    ULONG PhysicalAddressLength;
+    UCHAR PhysicalAddress[IF_MAX_PHYS_ADDRESS_LENGTH];
+    UCHAR PermanentPhysicalAddress[IF_MAX_PHYS_ADDRESS_LENGTH];
+    ULONG Mtu;
+    IFTYPE Type;
+    TUNNEL_TYPE TunnelType;
+    NDIS_MEDIUM MediaType;
+    NDIS_PHYSICAL_MEDIUM PhysicalMediumType;
+    NET_IF_ACCESS_TYPE AccessType;
+    NET_IF_DIRECTION_TYPE DirectionType;
+    struct {
+        BOOLEAN HardwareInterface : 1;
+        BOOLEAN FilterInterface : 1;
+        BOOLEAN ConnectorPresent : 1;
+        BOOLEAN NotAuthenticated : 1;
+        BOOLEAN NotMediaConnected : 1;
+        BOOLEAN Paused : 1;
+        BOOLEAN LowPower : 1;
+        BOOLEAN EndPointInterface : 1;
+    } InterfaceAndOperStatusFlags;
+    IF_OPER_STATUS OperStatus;
+    NET_IF_ADMIN_STATUS AdminStatus;
+    NET_IF_MEDIA_CONNECT_STATE MediaConnectState;
+    NET_IF_NETWORK_GUID NetworkGuid;
+    NET_IF_CONNECTION_TYPE ConnectionType;
+    ULONG64 TransmitLinkSpeed;
+    ULONG64 ReceiveLinkSpeed;
+    ULONG64 InOctets;
+    ULONG64 InUcastPkts;
+    ULONG64 InNUcastPkts;
+    ULONG64 InDiscards;
+    ULONG64 InErrors;
+    ULONG64 InUnknownProtos;
+    ULONG64 InUcastOctets;
+    ULONG64 InMulticastOctets;
+    ULONG64 InBroadcastOctets;
+    ULONG64 OutOctets;
+    ULONG64 OutUcastPkts;
+    ULONG64 OutNUcastPkts;
+    ULONG64 OutDiscards;
+    ULONG64 OutErrors;
+    ULONG64 OutUcastOctets;
+    ULONG64 OutMulticastOctets;
+    ULONG64 OutBroadcastOctets;
+    ULONG64 OutQLen;
+} MIB_IF_ROW2, *PMIB_IF_ROW2;
+
+typedef struct _MIB_IF_TABLE2 {
+    ULONG NumEntries;
+    MIB_IF_ROW2 Table[ANY_SIZE];
+} MIB_IF_TABLE2, *PMIB_IF_TABLE2;
+
+IPHLPAPI_DLL_LINKAGE NETIOAPI_API GetIfEntry2(
+    PMIB_IF_ROW2 Row
+);
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
+
+#if (NTDDI_VERSION >= NTDDI_WIN10_RS2)
+
+typedef enum _MIB_IF_ENTRY_LEVEL {
+    MibIfEntryNormal = 0,
+    MibIfEntryNormalWithoutStatistics = 2
+} MIB_IF_ENTRY_LEVEL, *PMIB_IF_ENTRY_LEVEL;
+
+IPHLPAPI_DLL_LINKAGE NETIOAPI_API GetIfEntry2Ex(
+    MIB_IF_ENTRY_LEVEL Level,
+    PMIB_IF_ROW2 Row
+);
+
+#endif /* (NTDDI_VERSION >= NTDDI_WIN10_RS2) */
+
+IPHLPAPI_DLL_LINKAGE NETIOAPI_API GetIfTable2(
+    PMIB_IF_TABLE2 *Table
+);
+
+typedef enum _MIB_IF_TABLE_LEVEL {
+    MibIfTableNormal,
+    MibIfTableRaw,
+#if (NTDDI_VERSION >= NTDDI_WIN10_RS2)
+    MibIfTableNormalWithoutStatistics
+#endif /* (NTDDI_VERSION >= NTDDI_WIN10_RS2) */
+} MIB_IF_TABLE_LEVEL, *PMIB_IF_TABLE_LEVEL;
+
+IPHLPAPI_DLL_LINKAGE NETIOAPI_API GetIfTable2Ex(
+    MIB_IF_TABLE_LEVEL Level,
+    PMIB_IF_TABLE2 *Table
+);
+
+typedef struct _MIB_IPINTERFACE_ROW {
+    ADDRESS_FAMILY Family;
+    NET_LUID InterfaceLuid;
+    NET_IFINDEX InterfaceIndex;
+    ULONG MaxReassemblySize;
+    ULONG64 InterfaceIdentifier;
+    ULONG MinRouterAdvertisementInterval;
+    ULONG MaxRouterAdvertisementInterval;
+    BOOLEAN AdvertisingEnabled;
+    BOOLEAN ForwardingEnabled;
+    BOOLEAN WeakHostSend;
+    BOOLEAN WeakHostReceive;
+    BOOLEAN UseAutomaticMetric;
+    BOOLEAN UseNeighborUnreachabilityDetection;
+    BOOLEAN ManagedAddressConfigurationSupported;
+    BOOLEAN OtherStatefulConfigurationSupported;
+    BOOLEAN AdvertiseDefaultRoute;
+    NL_ROUTER_DISCOVERY_BEHAVIOR RouterDiscoveryBehavior;
+    ULONG DadTransmits;
+    ULONG BaseReachableTime;
+    ULONG RetransmitTime;
+    ULONG PathMtuDiscoveryTimeout;
+    NL_LINK_LOCAL_ADDRESS_BEHAVIOR LinkLocalAddressBehavior;
+    ULONG LinkLocalAddressTimeout;
+    ULONG ZoneIndices[ScopeLevelCount];
+    ULONG SitePrefixLength;
+    ULONG Metric;
+    ULONG NlMtu;
+    BOOLEAN Connected;
+    BOOLEAN SupportsWakeUpPatterns;
+    BOOLEAN SupportsNeighborDiscovery;
+    BOOLEAN SupportsRouterDiscovery;
+    ULONG ReachableTime;
+    NL_INTERFACE_OFFLOAD_ROD TransmitOffload;
+    NL_INTERFACE_OFFLOAD_ROD ReceiveOffload;
+    BOOLEAN DisableDefaultRoutes;
+} MIB_IPINTERFACE_ROW, *PMIB_IPINTERFACE_ROW;
+
+typedef struct _MIB_IPINTERFACE_TABLE {
+    ULONG NumEntries;
+    MIB_IPINTERFACE_ROW Table[ANY_SIZE];
+} MIB_IPINTERFACE_TABLE, *PMIB_IPINTERFACE_TABLE;
+
+typedef struct _MIB_IFSTACK_ROW {
+    NET_IFINDEX HigherLayerInterfaceIndex;
+    NET_IFINDEX LowerLayerInterfaceIndex;
+} MIB_IFSTACK_ROW, *PMIB_IFSTACK_ROW;
+
+typedef struct _MIB_INVERTEDIFSTACK_ROW {
+    NET_IFINDEX LowerLayerInterfaceIndex;
+    NET_IFINDEX HigherLayerInterfaceIndex;
+} MIB_INVERTEDIFSTACK_ROW, *PMIB_INVERTEDIFSTACK_ROW;
+
+typedef struct _MIB_IFSTACK_TABLE {
+    ULONG NumEntries;
+    MIB_IFSTACK_ROW Table[ANY_SIZE];
+} MIB_IFSTACK_TABLE, *PMIB_IFSTACK_TABLE;
+
+typedef struct _MIB_INVERTEDIFSTACK_TABLE {
+    ULONG NumEntries;
+    MIB_INVERTEDIFSTACK_ROW Table[ANY_SIZE];
+} MIB_INVERTEDIFSTACK_TABLE, *PMIB_INVERTEDIFSTACK_TABLE;
+
+typedef void (NETIOAPI_API_ *PIPINTERFACE_CHANGE_CALLBACK)(
+    PVOID CallerContext,
+    PMIB_IPINTERFACE_ROW Row,
+    MIB_NOTIFICATION_TYPE NotificationType
+);
+
+typedef struct _MIB_IP_NETWORK_CONNECTION_BANDWIDTH_ESTIMATES {
+    NL_BANDWIDTH_INFORMATION InboundBandwidthInformation;
+    NL_BANDWIDTH_INFORMATION OutboundBandwidthInformation;
+} MIB_IP_NETWORK_CONNECTION_BANDWIDTH_ESTIMATES, *PMIB_IP_NETWORK_CONNECTION_BANDWIDTH_ESTIMATES;
+
+IPHLPAPI_DLL_LINKAGE NETIOAPI_API GetIfStackTable(
+    PMIB_IFSTACK_TABLE *Table
+);
+
+IPHLPAPI_DLL_LINKAGE NETIOAPI_API GetInvertedIfStackTable(
+    PMIB_INVERTEDIFSTACK_TABLE *Table
+);
+
+IPHLPAPI_DLL_LINKAGE NETIOAPI_API GetIpInterfaceEntry(
+    PMIB_IPINTERFACE_ROW Row
+);
+
+IPHLPAPI_DLL_LINKAGE NETIOAPI_API GetIpInterfaceTable(
+    ADDRESS_FAMILY Family,
+    PMIB_IPINTERFACE_TABLE *Table
+);
+
+IPHLPAPI_DLL_LINKAGE void NETIOAPI_API_ InitializeIpInterfaceEntry(
+    PMIB_IPINTERFACE_ROW Row
+);
+
+IPHLPAPI_DLL_LINKAGE NETIOAPI_API NotifyIpInterfaceChange(
+    ADDRESS_FAMILY Family,
+    PIPINTERFACE_CHANGE_CALLBACK Callback,
+    PVOID CallerContext,
+    BOOLEAN InitialNotification,
+    HANDLE *NotificationHandle
+);
+
+IPHLPAPI_DLL_LINKAGE NETIOAPI_API SetIpInterfaceEntry(
+    PMIB_IPINTERFACE_ROW Row
+);
+
+IPHLPAPI_DLL_LINKAGE NETIOAPI_API GetIpNetworkConnectionBandwidthEstimates(
+    NET_IFINDEX InterfaceIndex,
+    ADDRESS_FAMILY AddressFamily,
+    PMIB_IP_NETWORK_CONNECTION_BANDWIDTH_ESTIMATES BandwidthEstimates
+);
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
+
+typedef struct _MIB_UNICASTIPADDRESS_ROW {
+    SOCKADDR_INET Address;
+    NET_LUID InterfaceLuid;
+    NET_IFINDEX InterfaceIndex;
+    NL_PREFIX_ORIGIN PrefixOrigin;
+    NL_SUFFIX_ORIGIN SuffixOrigin;
+    ULONG ValidLifetime;
+    ULONG PreferredLifetime;
+    UINT8 OnLinkPrefixLength;
+    BOOLEAN SkipAsSource;
+    NL_DAD_STATE DadState;
+    SCOPE_ID ScopeId;
+    LARGE_INTEGER CreationTimeStamp;
+} MIB_UNICASTIPADDRESS_ROW, *PMIB_UNICASTIPADDRESS_ROW;
+
+typedef struct _MIB_UNICASTIPADDRESS_TABLE {
+    ULONG NumEntries;
+    MIB_UNICASTIPADDRESS_ROW Table[ANY_SIZE];
+} MIB_UNICASTIPADDRESS_TABLE, *PMIB_UNICASTIPADDRESS_TABLE;
+
+typedef void (NETIOAPI_API_ *PUNICAST_IPADDRESS_CHANGE_CALLBACK)(
+    PVOID CallerContext,
+    PMIB_UNICASTIPADDRESS_ROW Row,
+    MIB_NOTIFICATION_TYPE NotificationType
+);
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
+
+IPHLPAPI_DLL_LINKAGE NETIOAPI_API CreateUnicastIpAddressEntry(
+    CONST MIB_UNICASTIPADDRESS_ROW *Row
+);
+
+IPHLPAPI_DLL_LINKAGE NETIOAPI_API DeleteUnicastIpAddressEntry(
+    CONST MIB_UNICASTIPADDRESS_ROW *Row
+);
+
+IPHLPAPI_DLL_LINKAGE NETIOAPI_API GetUnicastIpAddressEntry(
+    PMIB_UNICASTIPADDRESS_ROW Row
+);
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
+
+IPHLPAPI_DLL_LINKAGE NETIOAPI_API GetUnicastIpAddressTable(
+    ADDRESS_FAMILY Family,
+    PMIB_UNICASTIPADDRESS_TABLE *Table
+);
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
+
+IPHLPAPI_DLL_LINKAGE void NETIOAPI_API_ InitializeUnicastIpAddressEntry(
+    PMIB_UNICASTIPADDRESS_ROW Row
+);
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
+
+IPHLPAPI_DLL_LINKAGE NETIOAPI_API NotifyUnicastIpAddressChange(
+    ADDRESS_FAMILY Family,
+    PUNICAST_IPADDRESS_CHANGE_CALLBACK Callback,
+    PVOID CallerContext,
+    BOOLEAN InitialNotification,
+    HANDLE *NotificationHandle
+);
+
+typedef void (NETIOAPI_API_ *PSTABLE_UNICAST_IPADDRESS_TABLE_CALLBACK)(
+    PVOID CallerContext,
+    PMIB_UNICASTIPADDRESS_TABLE AddressTable
+);
+
+IPHLPAPI_DLL_LINKAGE NETIOAPI_API NotifyStableUnicastIpAddressTable(
+    ADDRESS_FAMILY Family,
+    PMIB_UNICASTIPADDRESS_TABLE *Table,
+    PSTABLE_UNICAST_IPADDRESS_TABLE_CALLBACK CallerCallback,
+    PVOID CallerContext,
+    HANDLE *NotificationHandle
+);
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
+
+IPHLPAPI_DLL_LINKAGE NETIOAPI_API SetUnicastIpAddressEntry(
+    CONST MIB_UNICASTIPADDRESS_ROW *Row
+);
+
+typedef struct _MIB_ANYCASTIPADDRESS_ROW {
+    SOCKADDR_INET Address;
+    NET_LUID InterfaceLuid;
+    NET_IFINDEX InterfaceIndex;
+    SCOPE_ID ScopeId;
+} MIB_ANYCASTIPADDRESS_ROW, *PMIB_ANYCASTIPADDRESS_ROW;
+
+typedef struct _MIB_ANYCASTIPADDRESS_TABLE {
+    ULONG NumEntries;
+    MIB_ANYCASTIPADDRESS_ROW Table[ANY_SIZE];
+} MIB_ANYCASTIPADDRESS_TABLE, *PMIB_ANYCASTIPADDRESS_TABLE;
+
+IPHLPAPI_DLL_LINKAGE NETIOAPI_API CreateAnycastIpAddressEntry(
+    CONST MIB_ANYCASTIPADDRESS_ROW *Row
+);
+
+IPHLPAPI_DLL_LINKAGE NETIOAPI_API DeleteAnycastIpAddressEntry(
+    CONST MIB_ANYCASTIPADDRESS_ROW *Row
+);
+
+IPHLPAPI_DLL_LINKAGE NETIOAPI_API GetAnycastIpAddressEntry(
+    PMIB_ANYCASTIPADDRESS_ROW Row
+);
+
+IPHLPAPI_DLL_LINKAGE NETIOAPI_API GetAnycastIpAddressTable(
+    ADDRESS_FAMILY Family,
+    PMIB_ANYCASTIPADDRESS_TABLE *Table
+);
+
+typedef struct _MIB_MULTICASTIPADDRESS_ROW {
+    SOCKADDR_INET Address;
+    NET_IFINDEX InterfaceIndex;
+    NET_LUID InterfaceLuid;
+    SCOPE_ID ScopeId;
+} MIB_MULTICASTIPADDRESS_ROW, *PMIB_MULTICASTIPADDRESS_ROW;
+
+typedef struct _MIB_MULTICASTIPADDRESS_TABLE {
+    ULONG NumEntries;
+    MIB_MULTICASTIPADDRESS_ROW Table[ANY_SIZE];
+} MIB_MULTICASTIPADDRESS_TABLE, *PMIB_MULTICASTIPADDRESS_TABLE;
+
+IPHLPAPI_DLL_LINKAGE NETIOAPI_API GetMulticastIpAddressEntry(
+    PMIB_MULTICASTIPADDRESS_ROW Row
+);
+
+IPHLPAPI_DLL_LINKAGE NETIOAPI_API GetMulticastIpAddressTable(
+    ADDRESS_FAMILY Family,
+    PMIB_MULTICASTIPADDRESS_TABLE *Table
+);
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
+
+typedef struct _IP_ADDRESS_PREFIX {
+    SOCKADDR_INET Prefix;
+    UINT8 PrefixLength;
+} IP_ADDRESS_PREFIX, *PIP_ADDRESS_PREFIX;
+
+typedef struct _MIB_IPFORWARD_ROW2 {
+    NET_LUID InterfaceLuid;
+    NET_IFINDEX InterfaceIndex;
+    IP_ADDRESS_PREFIX DestinationPrefix;
+    SOCKADDR_INET NextHop;
+    UCHAR SitePrefixLength;
+    ULONG ValidLifetime;
+    ULONG PreferredLifetime;
+    ULONG Metric;
+    NL_ROUTE_PROTOCOL Protocol;
+    BOOLEAN Loopback;
+    BOOLEAN AutoconfigureAddress;
+    BOOLEAN Publish;
+    BOOLEAN Immortal;
+    ULONG Age;
+    NL_ROUTE_ORIGIN Origin;
+} MIB_IPFORWARD_ROW2, *PMIB_IPFORWARD_ROW2;
+
+typedef struct _MIB_IPFORWARD_TABLE2 {
+    ULONG NumEntries;
+    MIB_IPFORWARD_ROW2 Table[ANY_SIZE];
+} MIB_IPFORWARD_TABLE2, *PMIB_IPFORWARD_TABLE2;
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
+
+typedef void (NETIOAPI_API_ *PIPFORWARD_CHANGE_CALLBACK)(
+    PVOID CallerContext,
+    PMIB_IPFORWARD_ROW2 Row,
+    MIB_NOTIFICATION_TYPE NotificationType
+);
+
+IPHLPAPI_DLL_LINKAGE NETIOAPI_API CreateIpForwardEntry2(
+    CONST MIB_IPFORWARD_ROW2 *Row
+);
+
+IPHLPAPI_DLL_LINKAGE NETIOAPI_API DeleteIpForwardEntry2(
+    CONST MIB_IPFORWARD_ROW2 *Row
+);
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
+
+IPHLPAPI_DLL_LINKAGE NETIOAPI_API GetBestRoute2(
+    NET_LUID *InterfaceLuid,
+    NET_IFINDEX InterfaceIndex,
+    CONST SOCKADDR_INET *SourceAddress,
+    CONST SOCKADDR_INET *DestinationAddress,
+    ULONG AddressSortOptions,
+    PMIB_IPFORWARD_ROW2 BestRoute,
+    SOCKADDR_INET *BestSourceAddress
+);
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
+
+IPHLPAPI_DLL_LINKAGE NETIOAPI_API GetIpForwardEntry2(
+    PMIB_IPFORWARD_ROW2 Row
+);
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
+
+IPHLPAPI_DLL_LINKAGE NETIOAPI_API GetIpForwardTable2(
+    ADDRESS_FAMILY Family,
+    PMIB_IPFORWARD_TABLE2 *Table
+);
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
+
+IPHLPAPI_DLL_LINKAGE void NETIOAPI_API_ InitializeIpForwardEntry(
+    PMIB_IPFORWARD_ROW2 Row
+);
+
+IPHLPAPI_DLL_LINKAGE NETIOAPI_API NotifyRouteChange2(
+    ADDRESS_FAMILY AddressFamily,
+    PIPFORWARD_CHANGE_CALLBACK Callback,
+    PVOID CallerContext,
+    BOOLEAN InitialNotification,
+    HANDLE *NotificationHandle
+);
+
+IPHLPAPI_DLL_LINKAGE NETIOAPI_API SetIpForwardEntry2(
+    CONST MIB_IPFORWARD_ROW2 *Route
+);
+
+typedef struct _MIB_IPPATH_ROW {
+    SOCKADDR_INET Source;
+    SOCKADDR_INET Destination;
+    NET_LUID InterfaceLuid;
+    NET_IFINDEX InterfaceIndex;
+    SOCKADDR_INET CurrentNextHop;
+    ULONG PathMtu;
+    ULONG RttMean;
+    ULONG RttDeviation;
+    union {
+        ULONG LastReachable;
+        ULONG LastUnreachable;
+    };
+    BOOLEAN IsReachable;
+    ULONG64 LinkTransmitSpeed;
+    ULONG64 LinkReceiveSpeed;
+} MIB_IPPATH_ROW, *PMIB_IPPATH_ROW;
+
+typedef struct _MIB_IPPATH_TABLE {
+    ULONG NumEntries;
+    MIB_IPPATH_ROW Table[ANY_SIZE];
+} MIB_IPPATH_TABLE, *PMIB_IPPATH_TABLE;
+
+IPHLPAPI_DLL_LINKAGE NETIOAPI_API FlushIpPathTable(
+    ADDRESS_FAMILY Family
+);
+
+IPHLPAPI_DLL_LINKAGE NETIOAPI_API GetIpPathEntry(
+    PMIB_IPPATH_ROW Row
+);
+
+IPHLPAPI_DLL_LINKAGE NETIOAPI_API GetIpPathTable(
+    ADDRESS_FAMILY Family,
+    PMIB_IPPATH_TABLE *Table
+);
+
+typedef struct _MIB_IPNET_ROW2 {
+    SOCKADDR_INET Address;
+    NET_IFINDEX InterfaceIndex;
+    NET_LUID InterfaceLuid;
+    UCHAR PhysicalAddress[IF_MAX_PHYS_ADDRESS_LENGTH];
+    ULONG PhysicalAddressLength;
+    NL_NEIGHBOR_STATE State;
+    union {
+        struct {
+            BOOLEAN IsRouter : 1;
+            BOOLEAN IsUnreachable : 1;
+        };
+        UCHAR Flags;
+    };
+    union {
+        ULONG LastReachable;
+        ULONG LastUnreachable;
+    } ReachabilityTime;
+} MIB_IPNET_ROW2, *PMIB_IPNET_ROW2;
+
+typedef struct _MIB_IPNET_TABLE2 {
+    ULONG NumEntries;
+    MIB_IPNET_ROW2 Table[ANY_SIZE];
+} MIB_IPNET_TABLE2, *PMIB_IPNET_TABLE2;
+
+IPHLPAPI_DLL_LINKAGE NETIOAPI_API CreateIpNetEntry2(
+    CONST MIB_IPNET_ROW2 *Row
+);
+
+IPHLPAPI_DLL_LINKAGE NETIOAPI_API DeleteIpNetEntry2(
+    CONST MIB_IPNET_ROW2 *Row
+);
+
+IPHLPAPI_DLL_LINKAGE NETIOAPI_API FlushIpNetTable2(
+    ADDRESS_FAMILY Family,
+    NET_IFINDEX InterfaceIndex
+);
+
+IPHLPAPI_DLL_LINKAGE NETIOAPI_API GetIpNetEntry2(
+    PMIB_IPNET_ROW2 Row
+);
+
+IPHLPAPI_DLL_LINKAGE NETIOAPI_API GetIpNetTable2(
+    ADDRESS_FAMILY Family,
+    PMIB_IPNET_TABLE2 *Table
+);
+
+IPHLPAPI_DLL_LINKAGE NETIOAPI_API ResolveIpNetEntry2(
+    PMIB_IPNET_ROW2 Row,
+    CONST SOCKADDR_INET *SourceAddress
+);
+
+IPHLPAPI_DLL_LINKAGE NETIOAPI_API SetIpNetEntry2(
+    PMIB_IPNET_ROW2 Row
+);
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM)
+
+#define MIB_INVALID_TEREDO_PORT_NUMBER 0
+
+typedef void (NETIOAPI_API_ *PTEREDO_PORT_CHANGE_CALLBACK)(
+    PVOID CallerContext,
+    USHORT Port,
+    MIB_NOTIFICATION_TYPE NotificationType
+);
+
+IPHLPAPI_DLL_LINKAGE NETIOAPI_API NotifyTeredoPortChange(
+    PTEREDO_PORT_CHANGE_CALLBACK Callback,
+    PVOID CallerContext,
+    BOOLEAN InitialNotification,
+    HANDLE *NotificationHandle
+);
+
+IPHLPAPI_DLL_LINKAGE NETIOAPI_API GetTeredoPort(
+    USHORT *Port
+);
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
+
+IPHLPAPI_DLL_LINKAGE NETIOAPI_API CancelMibChangeNotify2(
+    HANDLE NotificationHandle
+);
+
+IPHLPAPI_DLL_LINKAGE void NETIOAPI_API_ FreeMibTable(
+    PVOID Memory
+);
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
+
+IPHLPAPI_DLL_LINKAGE NETIOAPI_API CreateSortedAddressPairs(
+    const PSOCKADDR_IN6 SourceAddressList,
+    ULONG SourceAddressCount,
+    const PSOCKADDR_IN6 DestinationAddressList,
+    ULONG DestinationAddressCount,
+    ULONG AddressSortOptions,
+    PSOCKADDR_IN6_PAIR *SortedAddressPairList,
+    ULONG *SortedAddressPairCount
+);
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES) */
+
+#endif /* _WS2IPDEF_H */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
+
+IPHLPAPI_DLL_LINKAGE NETIOAPI_API ConvertCompartmentGuidToId(
+    CONST GUID *CompartmentGuid,
+    PNET_IF_COMPARTMENT_ID CompartmentId
+);
+
+IPHLPAPI_DLL_LINKAGE NETIOAPI_API ConvertCompartmentIdToGuid(
+    NET_IF_COMPARTMENT_ID CompartmentId,
+    GUID *CompartmentGuid
+);
+
+IPHLPAPI_DLL_LINKAGE NETIOAPI_API ConvertInterfaceNameToLuidA(
+    CONST CHAR *InterfaceName,
+    NET_LUID *InterfaceLuid
+);
+
+IPHLPAPI_DLL_LINKAGE NETIOAPI_API ConvertInterfaceNameToLuidW(
+    CONST WCHAR *InterfaceName,
+    NET_LUID *InterfaceLuid
+);
+
+IPHLPAPI_DLL_LINKAGE NETIOAPI_API ConvertInterfaceLuidToNameA(
+    CONST NET_LUID *InterfaceLuid,
+    PSTR InterfaceName,
+    SIZE_T Length
+);
+
+IPHLPAPI_DLL_LINKAGE NETIOAPI_API ConvertInterfaceLuidToNameW(
+    CONST NET_LUID *InterfaceLuid,
+    PWSTR InterfaceName,
+    SIZE_T Length
+);
+
+IPHLPAPI_DLL_LINKAGE NETIOAPI_API ConvertInterfaceLuidToIndex(
+    CONST NET_LUID *InterfaceLuid,
+    PNET_IFINDEX InterfaceIndex
+);
+
+IPHLPAPI_DLL_LINKAGE NETIOAPI_API ConvertInterfaceIndexToLuid(
+    NET_IFINDEX InterfaceIndex,
+    PNET_LUID InterfaceLuid
+);
+
+IPHLPAPI_DLL_LINKAGE NETIOAPI_API ConvertInterfaceLuidToAlias(
+    CONST NET_LUID *InterfaceLuid,
+    PWSTR InterfaceAlias,
+    SIZE_T Length
+);
+
+IPHLPAPI_DLL_LINKAGE NETIOAPI_API ConvertInterfaceAliasToLuid(
+    CONST WCHAR *InterfaceAlias,
+    PNET_LUID InterfaceLuid
+);
+
+IPHLPAPI_DLL_LINKAGE NETIOAPI_API ConvertInterfaceLuidToGuid(
+    CONST NET_LUID *InterfaceLuid,
+    GUID *InterfaceGuid
+);
+
+IPHLPAPI_DLL_LINKAGE NETIOAPI_API ConvertInterfaceGuidToLuid(
+    CONST GUID *InterfaceGuid,
+    PNET_LUID InterfaceLuid
+);
+
+#define IF_NAMESIZE NDIS_IF_MAX_STRING_SIZE
+
+IPHLPAPI_DLL_LINKAGE NET_IFINDEX NETIOAPI_API_ if_nametoindex(
+    PCSTR InterfaceName
+);
+
+IPHLPAPI_DLL_LINKAGE PCHAR NETIOAPI_API_ if_indextoname(
+    NET_IFINDEX InterfaceIndex,
+    PCHAR InterfaceName
+);
+
+IPHLPAPI_DLL_LINKAGE NET_IF_COMPARTMENT_ID NETIOAPI_API_ GetCurrentThreadCompartmentId(void);
+
+IPHLPAPI_DLL_LINKAGE NETIOAPI_API SetCurrentThreadCompartmentId(
+    NET_IF_COMPARTMENT_ID CompartmentId
+);
+
+IPHLPAPI_DLL_LINKAGE void NETIOAPI_API_ GetCurrentThreadCompartmentScope(
+    PNET_IF_COMPARTMENT_SCOPE CompartmentScope,
+    PNET_IF_COMPARTMENT_ID CompartmentId
+);
+
+IPHLPAPI_DLL_LINKAGE NETIOAPI_API SetCurrentThreadCompartmentScope(
+    NET_IF_COMPARTMENT_SCOPE CompartmentScope
+);
+
+IPHLPAPI_DLL_LINKAGE NET_IF_COMPARTMENT_ID NETIOAPI_API_ GetJobCompartmentId(
+    HANDLE JobHandle
+);
+
+IPHLPAPI_DLL_LINKAGE NETIOAPI_API SetJobCompartmentId( 
+    HANDLE JobHandle,
+    NET_IF_COMPARTMENT_ID CompartmentId
+);
+
+IPHLPAPI_DLL_LINKAGE NET_IF_COMPARTMENT_ID NETIOAPI_API_ GetSessionCompartmentId(
+    ULONG SessionId
+);
+
+IPHLPAPI_DLL_LINKAGE NETIOAPI_API SetSessionCompartmentId(
+    ULONG SessionId,
+    NET_IF_COMPARTMENT_ID CompartmentId
+);
+
+IPHLPAPI_DLL_LINKAGE NET_IF_COMPARTMENT_ID NETIOAPI_API_ GetDefaultCompartmentId(
+    void
+);
+
+IPHLPAPI_DLL_LINKAGE NETIOAPI_API GetNetworkInformation(
+    CONST NET_IF_NETWORK_GUID *NetworkGuid,
+    PNET_IF_COMPARTMENT_ID CompartmentId,
+    PULONG SiteId,
+    PWCHAR NetworkName,
+    ULONG Length
+);
+
+IPHLPAPI_DLL_LINKAGE NETIOAPI_API SetNetworkInformation(
+    CONST NET_IF_NETWORK_GUID *NetworkGuid,
+    NET_IF_COMPARTMENT_ID CompartmentId,
+    CONST WCHAR *NetworkName
+);
+
+IPHLPAPI_DLL_LINKAGE NETIOAPI_API ConvertLengthToIpv4Mask(
+    ULONG MaskLength,
+    PULONG Mask
+);
+
+IPHLPAPI_DLL_LINKAGE NETIOAPI_API ConvertIpv4MaskToLength(
+    ULONG Mask,
+    PUINT8 MaskLength
+);
+
+#define DNS_SETTINGS_VERSION1                     0x0001
+#define DNS_SETTINGS_VERSION2                     0x0002
+
+#define DNS_INTERFACE_SETTINGS_VERSION1           0x0001
+#define DNS_INTERFACE_SETTINGS_VERSION2           0x0002
+#define DNS_INTERFACE_SETTINGS_VERSION3           0x0003
+#define DNS_INTERFACE_SETTINGS_VERSION4           0x0004
+
+#define DNS_SETTING_IPV6                          0x0001
+#define DNS_SETTING_NAMESERVER                    0x0002
+#define DNS_SETTING_SEARCHLIST                    0x0004
+#define DNS_SETTING_REGISTRATION_ENABLED          0x0008
+#define DNS_SETTING_REGISTER_ADAPTER_NAME         0x0010
+#define DNS_SETTING_DOMAIN                        0x0020
+#define DNS_SETTING_HOSTNAME                      0x0040
+#define DNS_SETTINGS_ENABLE_LLMNR                 0x0080
+#define DNS_SETTINGS_QUERY_ADAPTER_NAME           0x0100
+#define DNS_SETTING_PROFILE_NAMESERVER            0x0200
+#define DNS_SETTING_DISABLE_UNCONSTRAINED_QUERIES 0x0400
+#define DNS_SETTING_SUPPLEMENTAL_SEARCH_LIST      0x0800
+#define DNS_SETTING_DOH                           0x1000
+#define DNS_SETTING_DOH_PROFILE                   0x2000
+#define DNS_SETTING_ENCRYPTED_DNS_ADAPTER_FLAGS   0x4000
+#define DNS_SETTING_DDR                           0x8000
+
+#define DNS_ENABLE_DOH                            0x0001
+#define DNS_DOH_POLICY_NOT_CONFIGURED             0x0004
+#define DNS_DOH_POLICY_DISABLE                    0x0008
+#define DNS_DOH_POLICY_AUTO                       0x0010
+#define DNS_DOH_POLICY_REQUIRED                   0x0020
+#define DNS_ENABLE_DDR                            0x0040
+
+#define DNS_SERVER_PROPERTY_VERSION1              0x0001
+
+#define DNS_DOH_SERVER_SETTINGS_ENABLE_AUTO       0x0001
+#define DNS_DOH_SERVER_SETTINGS_ENABLE            0x0002
+#define DNS_DOH_SERVER_SETTINGS_FALLBACK_TO_UDP   0x0004
+
+#define DNS_DOH_AUTO_UPGRADE_SERVER               0x0008
+#define DNS_DOH_SERVER_SETTINGS_ENABLE_DDR        0x0010
+
+#define DNS_DDR_ADAPTER_ENABLE_DOH                0x0001
+#define DNS_DDR_ADAPTER_ENABLE_UDP_FALLBACK       0x0002
+
+typedef struct _DNS_SETTINGS {
+    ULONG Version;
+    ULONG64 Flags;
+    PWSTR Hostname;
+    PWSTR Domain;
+    PWSTR SearchList;
+} DNS_SETTINGS;
+
+typedef struct _DNS_SETTINGS2 {
+    ULONG Version;
+    ULONG64 Flags;
+    PWSTR Hostname;
+    PWSTR Domain;
+    PWSTR SearchList;
+    ULONG64 SettingFlags;
+} DNS_SETTINGS2;
+
+typedef struct _DNS_DOH_SERVER_SETTINGS {
+#ifdef MIDL_PASS
+    [unique, string] PWSTR Template;
+#else /* !MIDL_PASS */
+    PWSTR Template;
+#endif /* !MIDL_PASS */
+    ULONG64 Flags;
+} DNS_DOH_SERVER_SETTINGS;
+
+typedef enum _DNS_SERVER_PROPERTY_TYPE {
+    DnsServerInvalidProperty = 0,
+    DnsServerDohProperty,
+} DNS_SERVER_PROPERTY_TYPE;
+
+#ifdef MIDL_PASS
+typedef [switch_type(DNS_SERVER_PROPERTY_TYPE)] union _DNS_SERVER_PROPERTY_TYPES {
+    [case(DnsServerDohProperty)] [unique] DNS_DOH_SERVER_SETTINGS *DohSettings;
+} DNS_SERVER_PROPERTY_TYPES;
+#else /* !MIDL_PASS */
+typedef union _DNS_SERVER_PROPERTY_TYPES {
+    DNS_DOH_SERVER_SETTINGS *DohSettings;
+} DNS_SERVER_PROPERTY_TYPES;
+#endif /* !MIDL_PASS */
+
+typedef struct _DNS_SERVER_PROPERTY {
+    ULONG Version;
+    ULONG ServerIndex;
+    DNS_SERVER_PROPERTY_TYPE Type;
+#ifdef MIDL_PASS
+    [switch_is(Type)] DNS_SERVER_PROPERTY_TYPES Property;
+#else /* !MIDL_PASS */
+    DNS_SERVER_PROPERTY_TYPES Property;
+#endif /* !MIDL_PASS */
+} DNS_SERVER_PROPERTY;
+
+typedef struct _DNS_INTERFACE_SETTINGS {
+    ULONG Version;
+    ULONG64 Flags;
+    PWSTR Domain;
+    PWSTR NameServer;
+    PWSTR SearchList;
+    ULONG RegistrationEnabled;
+    ULONG RegisterAdapterName;
+    ULONG EnableLLMNR;
+    ULONG QueryAdapterName;
+    PWSTR ProfileNameServer;
+} DNS_INTERFACE_SETTINGS;
+
+typedef struct _DNS_INTERFACE_SETTINGS_EX {
+    DNS_INTERFACE_SETTINGS SettingsV1;
+    ULONG DisableUnconstrainedQueries;
+    PWSTR SupplementalSearchList;
+} DNS_INTERFACE_SETTINGS_EX;
+
+typedef struct _DNS_INTERFACE_SETTINGS3 {
+    ULONG Version;
+    ULONG64 Flags;
+    PWSTR Domain;
+    PWSTR NameServer;
+    PWSTR SearchList;
+    ULONG RegistrationEnabled;
+    ULONG RegisterAdapterName;
+    ULONG EnableLLMNR;
+    ULONG QueryAdapterName;
+    PWSTR ProfileNameServer;
+    ULONG DisableUnconstrainedQueries;
+    PWSTR SupplementalSearchList;
+    ULONG cServerProperties;
+    DNS_SERVER_PROPERTY *ServerProperties;
+    ULONG cProfileServerProperties;
+    DNS_SERVER_PROPERTY *ProfileServerProperties;
+} DNS_INTERFACE_SETTINGS3;
+
+typedef struct _DNS_INTERFACE_SETTINGS4 {
+    ULONG Version;
+    ULONG64 Flags;
+    PWSTR Domain;
+    PWSTR NameServer;
+    PWSTR SearchList;
+    ULONG RegistrationEnabled;
+    ULONG RegisterAdapterName;
+    ULONG EnableLLMNR;
+    ULONG QueryAdapterName;
+    PWSTR ProfileNameServer;
+    ULONG DisableUnconstrainedQueries;
+    PWSTR SupplementalSearchList;
+    ULONG cServerProperties;
+    DNS_SERVER_PROPERTY *ServerProperties;
+    ULONG cProfileServerProperties;
+    DNS_SERVER_PROPERTY *ProfileServerProperties;
+    ULONG EncryptedDnsAdapterFlags;
+} DNS_INTERFACE_SETTINGS4;
+
+NETIOAPI_API GetDnsSettings(
+    DNS_SETTINGS *Settings
+);
+
+void NETIOAPI_API_ FreeDnsSettings(
+    DNS_SETTINGS *Settings
+);
+
+NETIOAPI_API SetDnsSettings(
+    const DNS_SETTINGS *Settings
+);
+
+NETIOAPI_API GetInterfaceDnsSettings(
+    GUID Interface,
+    DNS_INTERFACE_SETTINGS *Settings
+);
+
+void NETIOAPI_API_ FreeInterfaceDnsSettings(
+    DNS_INTERFACE_SETTINGS *Settings
+);
+
+NETIOAPI_API SetInterfaceDnsSettings(
+    GUID Interface,
+    const DNS_INTERFACE_SETTINGS *Settings
+);
+
+IPHLPAPI_DLL_LINKAGE NETIOAPI_API GetNetworkConnectivityHint(
+    NL_NETWORK_CONNECTIVITY_HINT *ConnectivityHint
+);
+
+IPHLPAPI_DLL_LINKAGE NETIOAPI_API GetNetworkConnectivityHintForInterface(
+    NET_IFINDEX InterfaceIndex,
+    NL_NETWORK_CONNECTIVITY_HINT *ConnectivityHint
+);
+
+typedef void (NETIOAPI_API_ *PNETWORK_CONNECTIVITY_HINT_CHANGE_CALLBACK)(
+    PVOID CallerContext,
+    NL_NETWORK_CONNECTIVITY_HINT ConnectivityHint
+);
+
+IPHLPAPI_DLL_LINKAGE NETIOAPI_API NotifyNetworkConnectivityHintChange(
+    PNETWORK_CONNECTIVITY_HINT_CHANGE_CALLBACK Callback,
+    PVOID CallerContext,
+    BOOLEAN InitialNotification,
+    PHANDLE NotificationHandle
+);
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES) */
+
+#endif /* _NETIOAPI_H */

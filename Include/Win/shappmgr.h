@@ -1,0 +1,578 @@
+/* Generated from shappmgr.idl by POIDL version 0.80 - Do not edit */
+
+#ifndef __REQUIRED_RPCNDR_H_VERSION__
+#define __REQUIRED_RPCNDR_H_VERSION__ 475
+#endif
+
+#include <rpc.h>
+#include <rpcndr.h>
+
+#ifndef __RPCNDR_H_VERSION__
+#error this stub requires an updated version of <rpcndr.h>
+#endif /* __RPCNDR_H_VERSION__ */
+
+#ifndef COM_NO_WINDOWS_H
+#include <windows.h>
+#include <ole2.h>
+#endif /* COM_NO_WINDOWS_H */
+
+#ifndef __shappmgr_h__
+#define __shappmgr_h__
+
+#if __POCC__ >= 500
+#pragma once
+#endif
+
+/* Forward declarations */
+
+#ifndef __IShellApp_FWD_DEFINED__
+#define __IShellApp_FWD_DEFINED__
+typedef interface IShellApp IShellApp;
+#endif /* __IShellApp_FWD_DEFINED__ */
+
+#ifndef __IPublishedApp_FWD_DEFINED__
+#define __IPublishedApp_FWD_DEFINED__
+typedef interface IPublishedApp IPublishedApp;
+#endif /* __IPublishedApp_FWD_DEFINED__ */
+
+#ifndef __IPublishedApp2_FWD_DEFINED__
+#define __IPublishedApp2_FWD_DEFINED__
+typedef interface IPublishedApp2 IPublishedApp2;
+#endif /* __IPublishedApp2_FWD_DEFINED__ */
+
+#ifndef __IEnumPublishedApps_FWD_DEFINED__
+#define __IEnumPublishedApps_FWD_DEFINED__
+typedef interface IEnumPublishedApps IEnumPublishedApps;
+#endif /* __IEnumPublishedApps_FWD_DEFINED__ */
+
+#ifndef __IAppPublisher_FWD_DEFINED__
+#define __IAppPublisher_FWD_DEFINED__
+typedef interface IAppPublisher IAppPublisher;
+#endif /* __IAppPublisher_FWD_DEFINED__ */
+
+/* Headers for imported files */
+
+#include "oaidl.h"
+#include "ocidl.h"
+#include "appmgmt.h"
+
+
+#ifndef _SHAPPMGR_H_
+#define _SHAPPMGR_H_
+
+#include <winapifamily.h>
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)
+
+/*****************************************************************************
+ * IShellApp interface
+ */
+#ifndef __IShellApp_INTERFACE_DEFINED__
+#define __IShellApp_INTERFACE_DEFINED__
+
+typedef enum _tagAppInfoFlags {
+    AIM_DISPLAYNAME = 0x1,
+    AIM_VERSION = 0x2,
+    AIM_PUBLISHER = 0x4,
+    AIM_PRODUCTID = 0x8,
+    AIM_REGISTEREDOWNER = 0x10,
+    AIM_REGISTEREDCOMPANY = 0x20,
+    AIM_LANGUAGE = 0x40,
+    AIM_SUPPORTURL = 0x80,
+    AIM_SUPPORTTELEPHONE = 0x100,
+    AIM_HELPLINK = 0x200,
+    AIM_INSTALLLOCATION = 0x400,
+    AIM_INSTALLSOURCE = 0x800,
+    AIM_INSTALLDATE = 0x1000,
+    AIM_CONTACT = 0x4000,
+    AIM_COMMENTS = 0x8000,
+    AIM_IMAGE = 0x20000,
+    AIM_READMEURL = 0x40000,
+    AIM_UPDATEINFOURL = 0x80000
+} APPINFODATAFLAGS;
+
+typedef struct _AppInfoData {
+    DWORD cbSize;
+    DWORD dwMask;
+    LPWSTR pszDisplayName;
+    LPWSTR pszVersion;
+    LPWSTR pszPublisher;
+    LPWSTR pszProductID;
+    LPWSTR pszRegisteredOwner;
+    LPWSTR pszRegisteredCompany;
+    LPWSTR pszLanguage;
+    LPWSTR pszSupportUrl;
+    LPWSTR pszSupportTelephone;
+    LPWSTR pszHelpLink;
+    LPWSTR pszInstallLocation;
+    LPWSTR pszInstallSource;
+    LPWSTR pszInstallDate;
+    LPWSTR pszContact;
+    LPWSTR pszComments;
+    LPWSTR pszImage;
+    LPWSTR pszReadmeUrl;
+    LPWSTR pszUpdateInfoUrl;
+} APPINFODATA;
+typedef struct _AppInfoData *PAPPINFODATA;
+
+typedef enum _tagAppActionFlags {
+    APPACTION_INSTALL = 0x1,
+    APPACTION_UNINSTALL = 0x2,
+    APPACTION_MODIFY = 0x4,
+    APPACTION_REPAIR = 0x8,
+    APPACTION_UPGRADE = 0x10,
+    APPACTION_CANGETSIZE = 0x20,
+    APPACTION_MODIFYREMOVE = 0x80,
+    APPACTION_ADDLATER = 0x100,
+    APPACTION_UNSCHEDULE = 0x200
+} APPACTIONFLAGS;
+
+typedef struct _tagSlowAppInfo {
+    ULONGLONG ullSize;
+    FILETIME ftLastUsed;
+    int iTimesUsed;
+    LPWSTR pszImage;
+} SLOWAPPINFO;
+typedef struct _tagSlowAppInfo *PSLOWAPPINFO;
+
+EXTERN_C const IID IID_IShellApp;
+
+#if defined(__cplusplus) && !defined(CINTERFACE)
+#error no support for C++
+#else /* C */
+typedef struct IShellAppVtbl {
+    BEGIN_INTERFACE
+
+    /*** IUnknown methods ***/
+    HRESULT (STDMETHODCALLTYPE *QueryInterface)(
+        IShellApp *This,
+        REFIID riid,
+        void **ppvObject);
+
+    ULONG (STDMETHODCALLTYPE *AddRef)(
+        IShellApp *This);
+
+    ULONG (STDMETHODCALLTYPE *Release)(
+        IShellApp *This);
+
+    /*** IShellApp methods ***/
+    HRESULT (STDMETHODCALLTYPE *GetAppInfo)(
+        IShellApp *This,
+        PAPPINFODATA pai);
+
+    HRESULT (STDMETHODCALLTYPE *GetPossibleActions)(
+        IShellApp *This,
+        DWORD *pdwActions);
+
+    HRESULT (STDMETHODCALLTYPE *GetSlowAppInfo)(
+        IShellApp *This,
+        PSLOWAPPINFO psaid);
+
+    HRESULT (STDMETHODCALLTYPE *GetCachedSlowAppInfo)(
+        IShellApp *This,
+        PSLOWAPPINFO psaid);
+
+    HRESULT (STDMETHODCALLTYPE *IsInstalled)(
+        IShellApp *This);
+
+    END_INTERFACE
+} IShellAppVtbl;
+
+interface IShellApp {
+    CONST_VTBL IShellAppVtbl* lpVtbl;
+};
+
+#ifdef COBJMACROS
+/*** IUnknown methods ***/
+#define IShellApp_QueryInterface(This,riid,ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This,riid,ppvObject))
+#define IShellApp_AddRef(This) \
+    ((This)->lpVtbl->AddRef(This))
+#define IShellApp_Release(This) \
+    ((This)->lpVtbl->Release(This))
+/*** IShellApp methods ***/
+#define IShellApp_GetAppInfo(This,pai) \
+    ((This)->lpVtbl->GetAppInfo(This,pai))
+#define IShellApp_GetPossibleActions(This,pdwActions) \
+    ((This)->lpVtbl->GetPossibleActions(This,pdwActions))
+#define IShellApp_GetSlowAppInfo(This,psaid) \
+    ((This)->lpVtbl->GetSlowAppInfo(This,psaid))
+#define IShellApp_GetCachedSlowAppInfo(This,psaid) \
+    ((This)->lpVtbl->GetCachedSlowAppInfo(This,psaid))
+#define IShellApp_IsInstalled(This) \
+    ((This)->lpVtbl->IsInstalled(This))
+#endif /* COBJMACROS */
+
+#endif /* C */
+
+#endif /* __IShellApp_INTERFACE_DEFINED__ */
+
+/*****************************************************************************
+ * IPublishedApp interface
+ */
+#ifndef __IPublishedApp_INTERFACE_DEFINED__
+#define __IPublishedApp_INTERFACE_DEFINED__
+
+typedef enum _tagPublishedAppInfoFlags {
+    PAI_SOURCE = 0x1,
+    PAI_ASSIGNEDTIME = 0x2,
+    PAI_PUBLISHEDTIME = 0x4,
+    PAI_SCHEDULEDTIME = 0x8,
+    PAI_EXPIRETIME = 0x10
+} PUBAPPINFOFLAGS;
+
+typedef struct _PubAppInfo {
+    DWORD cbSize;
+    DWORD dwMask;
+    LPWSTR pszSource;
+    SYSTEMTIME stAssigned;
+    SYSTEMTIME stPublished;
+    SYSTEMTIME stScheduled;
+    SYSTEMTIME stExpire;
+} PUBAPPINFO;
+typedef struct _PubAppInfo *PPUBAPPINFO;
+
+EXTERN_C const IID IID_IPublishedApp;
+
+#if defined(__cplusplus) && !defined(CINTERFACE)
+#error no support for C++
+#else /* C */
+typedef struct IPublishedAppVtbl {
+    BEGIN_INTERFACE
+
+    /*** IUnknown methods ***/
+    HRESULT (STDMETHODCALLTYPE *QueryInterface)(
+        IPublishedApp *This,
+        REFIID riid,
+        void **ppvObject);
+
+    ULONG (STDMETHODCALLTYPE *AddRef)(
+        IPublishedApp *This);
+
+    ULONG (STDMETHODCALLTYPE *Release)(
+        IPublishedApp *This);
+
+    /*** IShellApp methods ***/
+    HRESULT (STDMETHODCALLTYPE *GetAppInfo)(
+        IPublishedApp *This,
+        PAPPINFODATA pai);
+
+    HRESULT (STDMETHODCALLTYPE *GetPossibleActions)(
+        IPublishedApp *This,
+        DWORD *pdwActions);
+
+    HRESULT (STDMETHODCALLTYPE *GetSlowAppInfo)(
+        IPublishedApp *This,
+        PSLOWAPPINFO psaid);
+
+    HRESULT (STDMETHODCALLTYPE *GetCachedSlowAppInfo)(
+        IPublishedApp *This,
+        PSLOWAPPINFO psaid);
+
+    HRESULT (STDMETHODCALLTYPE *IsInstalled)(
+        IPublishedApp *This);
+
+    /*** IPublishedApp methods ***/
+    HRESULT (STDMETHODCALLTYPE *Install)(
+        IPublishedApp *This,
+        LPSYSTEMTIME pstInstall);
+
+    HRESULT (STDMETHODCALLTYPE *GetPublishedAppInfo)(
+        IPublishedApp *This,
+        PPUBAPPINFO ppai);
+
+    HRESULT (STDMETHODCALLTYPE *Unschedule)(
+        IPublishedApp *This);
+
+    END_INTERFACE
+} IPublishedAppVtbl;
+
+interface IPublishedApp {
+    CONST_VTBL IPublishedAppVtbl* lpVtbl;
+};
+
+#ifdef COBJMACROS
+/*** IUnknown methods ***/
+#define IPublishedApp_QueryInterface(This,riid,ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This,riid,ppvObject))
+#define IPublishedApp_AddRef(This) \
+    ((This)->lpVtbl->AddRef(This))
+#define IPublishedApp_Release(This) \
+    ((This)->lpVtbl->Release(This))
+/*** IShellApp methods ***/
+#define IPublishedApp_GetAppInfo(This,pai) \
+    ((This)->lpVtbl->GetAppInfo(This,pai))
+#define IPublishedApp_GetPossibleActions(This,pdwActions) \
+    ((This)->lpVtbl->GetPossibleActions(This,pdwActions))
+#define IPublishedApp_GetSlowAppInfo(This,psaid) \
+    ((This)->lpVtbl->GetSlowAppInfo(This,psaid))
+#define IPublishedApp_GetCachedSlowAppInfo(This,psaid) \
+    ((This)->lpVtbl->GetCachedSlowAppInfo(This,psaid))
+#define IPublishedApp_IsInstalled(This) \
+    ((This)->lpVtbl->IsInstalled(This))
+/*** IPublishedApp methods ***/
+#define IPublishedApp_Install(This,pstInstall) \
+    ((This)->lpVtbl->Install(This,pstInstall))
+#define IPublishedApp_GetPublishedAppInfo(This,ppai) \
+    ((This)->lpVtbl->GetPublishedAppInfo(This,ppai))
+#define IPublishedApp_Unschedule(This) \
+    ((This)->lpVtbl->Unschedule(This))
+#endif /* COBJMACROS */
+
+#endif /* C */
+
+#endif /* __IPublishedApp_INTERFACE_DEFINED__ */
+
+/*****************************************************************************
+ * IPublishedApp2 interface
+ */
+#ifndef __IPublishedApp2_INTERFACE_DEFINED__
+#define __IPublishedApp2_INTERFACE_DEFINED__
+
+EXTERN_C const IID IID_IPublishedApp2;
+
+#if defined(__cplusplus) && !defined(CINTERFACE)
+#error no support for C++
+#else /* C */
+typedef struct IPublishedApp2Vtbl {
+    BEGIN_INTERFACE
+
+    /*** IUnknown methods ***/
+    HRESULT (STDMETHODCALLTYPE *QueryInterface)(
+        IPublishedApp2 *This,
+        REFIID riid,
+        void **ppvObject);
+
+    ULONG (STDMETHODCALLTYPE *AddRef)(
+        IPublishedApp2 *This);
+
+    ULONG (STDMETHODCALLTYPE *Release)(
+        IPublishedApp2 *This);
+
+    /*** IShellApp methods ***/
+    HRESULT (STDMETHODCALLTYPE *GetAppInfo)(
+        IPublishedApp2 *This,
+        PAPPINFODATA pai);
+
+    HRESULT (STDMETHODCALLTYPE *GetPossibleActions)(
+        IPublishedApp2 *This,
+        DWORD *pdwActions);
+
+    HRESULT (STDMETHODCALLTYPE *GetSlowAppInfo)(
+        IPublishedApp2 *This,
+        PSLOWAPPINFO psaid);
+
+    HRESULT (STDMETHODCALLTYPE *GetCachedSlowAppInfo)(
+        IPublishedApp2 *This,
+        PSLOWAPPINFO psaid);
+
+    HRESULT (STDMETHODCALLTYPE *IsInstalled)(
+        IPublishedApp2 *This);
+
+    /*** IPublishedApp methods ***/
+    HRESULT (STDMETHODCALLTYPE *Install)(
+        IPublishedApp2 *This,
+        LPSYSTEMTIME pstInstall);
+
+    HRESULT (STDMETHODCALLTYPE *GetPublishedAppInfo)(
+        IPublishedApp2 *This,
+        PPUBAPPINFO ppai);
+
+    HRESULT (STDMETHODCALLTYPE *Unschedule)(
+        IPublishedApp2 *This);
+
+    /*** IPublishedApp2 methods ***/
+    HRESULT (STDMETHODCALLTYPE *Install2)(
+        IPublishedApp2 *This,
+        LPSYSTEMTIME pstInstall,
+        HWND hwndParent);
+
+    END_INTERFACE
+} IPublishedApp2Vtbl;
+
+interface IPublishedApp2 {
+    CONST_VTBL IPublishedApp2Vtbl* lpVtbl;
+};
+
+#ifdef COBJMACROS
+/*** IUnknown methods ***/
+#define IPublishedApp2_QueryInterface(This,riid,ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This,riid,ppvObject))
+#define IPublishedApp2_AddRef(This) \
+    ((This)->lpVtbl->AddRef(This))
+#define IPublishedApp2_Release(This) \
+    ((This)->lpVtbl->Release(This))
+/*** IShellApp methods ***/
+#define IPublishedApp2_GetAppInfo(This,pai) \
+    ((This)->lpVtbl->GetAppInfo(This,pai))
+#define IPublishedApp2_GetPossibleActions(This,pdwActions) \
+    ((This)->lpVtbl->GetPossibleActions(This,pdwActions))
+#define IPublishedApp2_GetSlowAppInfo(This,psaid) \
+    ((This)->lpVtbl->GetSlowAppInfo(This,psaid))
+#define IPublishedApp2_GetCachedSlowAppInfo(This,psaid) \
+    ((This)->lpVtbl->GetCachedSlowAppInfo(This,psaid))
+#define IPublishedApp2_IsInstalled(This) \
+    ((This)->lpVtbl->IsInstalled(This))
+/*** IPublishedApp methods ***/
+#define IPublishedApp2_Install(This,pstInstall) \
+    ((This)->lpVtbl->Install(This,pstInstall))
+#define IPublishedApp2_GetPublishedAppInfo(This,ppai) \
+    ((This)->lpVtbl->GetPublishedAppInfo(This,ppai))
+#define IPublishedApp2_Unschedule(This) \
+    ((This)->lpVtbl->Unschedule(This))
+/*** IPublishedApp2 methods ***/
+#define IPublishedApp2_Install2(This,pstInstall,hwndParent) \
+    ((This)->lpVtbl->Install2(This,pstInstall,hwndParent))
+#endif /* COBJMACROS */
+
+#endif /* C */
+
+#endif /* __IPublishedApp2_INTERFACE_DEFINED__ */
+
+/*****************************************************************************
+ * IEnumPublishedApps interface
+ */
+#ifndef __IEnumPublishedApps_INTERFACE_DEFINED__
+#define __IEnumPublishedApps_INTERFACE_DEFINED__
+
+EXTERN_C const IID IID_IEnumPublishedApps;
+
+#if defined(__cplusplus) && !defined(CINTERFACE)
+#error no support for C++
+#else /* C */
+typedef struct IEnumPublishedAppsVtbl {
+    BEGIN_INTERFACE
+
+    /*** IUnknown methods ***/
+    HRESULT (STDMETHODCALLTYPE *QueryInterface)(
+        IEnumPublishedApps *This,
+        REFIID riid,
+        void **ppvObject);
+
+    ULONG (STDMETHODCALLTYPE *AddRef)(
+        IEnumPublishedApps *This);
+
+    ULONG (STDMETHODCALLTYPE *Release)(
+        IEnumPublishedApps *This);
+
+    /*** IEnumPublishedApps methods ***/
+    HRESULT (STDMETHODCALLTYPE *Next)(
+        IEnumPublishedApps *This,
+        IPublishedApp **pia);
+
+    HRESULT (STDMETHODCALLTYPE *Reset)(
+        IEnumPublishedApps *This);
+
+    END_INTERFACE
+} IEnumPublishedAppsVtbl;
+
+interface IEnumPublishedApps {
+    CONST_VTBL IEnumPublishedAppsVtbl* lpVtbl;
+};
+
+#ifdef COBJMACROS
+/*** IUnknown methods ***/
+#define IEnumPublishedApps_QueryInterface(This,riid,ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This,riid,ppvObject))
+#define IEnumPublishedApps_AddRef(This) \
+    ((This)->lpVtbl->AddRef(This))
+#define IEnumPublishedApps_Release(This) \
+    ((This)->lpVtbl->Release(This))
+/*** IEnumPublishedApps methods ***/
+#define IEnumPublishedApps_Next(This,pia) \
+    ((This)->lpVtbl->Next(This,pia))
+#define IEnumPublishedApps_Reset(This) \
+    ((This)->lpVtbl->Reset(This))
+#endif /* COBJMACROS */
+
+#endif /* C */
+
+#endif /* __IEnumPublishedApps_INTERFACE_DEFINED__ */
+
+/*****************************************************************************
+ * IAppPublisher interface
+ */
+#ifndef __IAppPublisher_INTERFACE_DEFINED__
+#define __IAppPublisher_INTERFACE_DEFINED__
+
+EXTERN_C const IID IID_IAppPublisher;
+
+#if defined(__cplusplus) && !defined(CINTERFACE)
+#error no support for C++
+#else /* C */
+typedef struct IAppPublisherVtbl {
+    BEGIN_INTERFACE
+
+    /*** IUnknown methods ***/
+    HRESULT (STDMETHODCALLTYPE *QueryInterface)(
+        IAppPublisher *This,
+        REFIID riid,
+        void **ppvObject);
+
+    ULONG (STDMETHODCALLTYPE *AddRef)(
+        IAppPublisher *This);
+
+    ULONG (STDMETHODCALLTYPE *Release)(
+        IAppPublisher *This);
+
+    /*** IAppPublisher methods ***/
+    HRESULT (STDMETHODCALLTYPE *GetNumberOfCategories)(
+        IAppPublisher *This,
+        DWORD *pdwCat);
+
+    HRESULT (STDMETHODCALLTYPE *GetCategories)(
+        IAppPublisher *This,
+        APPCATEGORYINFOLIST *pAppCategoryList);
+
+    HRESULT (STDMETHODCALLTYPE *GetNumberOfApps)(
+        IAppPublisher *This,
+        DWORD *pdwApps);
+
+    HRESULT (STDMETHODCALLTYPE *EnumApps)(
+        IAppPublisher *This,
+        GUID *pAppCategoryId,
+        IEnumPublishedApps **ppepa);
+
+    END_INTERFACE
+} IAppPublisherVtbl;
+
+interface IAppPublisher {
+    CONST_VTBL IAppPublisherVtbl* lpVtbl;
+};
+
+#ifdef COBJMACROS
+/*** IUnknown methods ***/
+#define IAppPublisher_QueryInterface(This,riid,ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This,riid,ppvObject))
+#define IAppPublisher_AddRef(This) \
+    ((This)->lpVtbl->AddRef(This))
+#define IAppPublisher_Release(This) \
+    ((This)->lpVtbl->Release(This))
+/*** IAppPublisher methods ***/
+#define IAppPublisher_GetNumberOfCategories(This,pdwCat) \
+    ((This)->lpVtbl->GetNumberOfCategories(This,pdwCat))
+#define IAppPublisher_GetCategories(This,pAppCategoryList) \
+    ((This)->lpVtbl->GetCategories(This,pAppCategoryList))
+#define IAppPublisher_GetNumberOfApps(This,pdwApps) \
+    ((This)->lpVtbl->GetNumberOfApps(This,pdwApps))
+#define IAppPublisher_EnumApps(This,pAppCategoryId,ppepa) \
+    ((This)->lpVtbl->EnumApps(This,pAppCategoryId,ppepa))
+#endif /* COBJMACROS */
+
+#endif /* C */
+
+#endif /* __IAppPublisher_INTERFACE_DEFINED__ */
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP) */
+
+#endif /* _SHAPPMGR_H_ */
+/* Begin additional prototypes for all interfaces */
+
+ULONG __RPC_USER HWND_UserSize(ULONG *, ULONG, HWND *);
+unsigned char * __RPC_USER HWND_UserMarshal(ULONG *, unsigned char *, HWND *);
+unsigned char * __RPC_USER HWND_UserUnmarshal(ULONG *, unsigned char *, HWND *);
+void __RPC_USER HWND_UserFree(ULONG *, HWND *);
+
+/* End additional prototypes for all interfaces */
+
+#endif /* __shappmgr_h__ */

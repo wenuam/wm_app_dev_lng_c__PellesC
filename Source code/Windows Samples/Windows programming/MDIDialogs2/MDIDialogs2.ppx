@@ -1,0 +1,9 @@
+[main.c]
+Breakpoints=386;1;0;
+[Windows]
+File1=AboutDialog.c,22,22,754,319,0,0
+File2=Dialog1.c,0,0,732,297,0,0
+File3=statusbar.c,88,88,820,385,0,0
+File4=main.rc,0,0,732,297,0,0
+File5=main.h,132,132,864,429,0,0
+File6=main.c,-4,-23,980,400,1,1

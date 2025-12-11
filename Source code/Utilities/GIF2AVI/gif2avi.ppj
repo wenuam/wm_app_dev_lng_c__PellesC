@@ -1,0 +1,75 @@
+# 
+# PROJEKTFIL genererad av "Pelles C for Windows, version 7.00".
+# VARNING! REDIGERA INTE DENNA FIL.
+# 
+
+POC_PROJECT_VERSION = 7.00#
+POC_PROJECT_TYPE = 3#
+POC_PROJECT_OUTPUTDIR = output#
+POC_PROJECT_RESULTDIR = .#
+POC_PROJECT_ARGUMENTS = #
+POC_PROJECT_WORKPATH = #
+POC_PROJECT_EXECUTOR = #
+CC = pocc.exe#
+AS = poasm.exe#
+RC = porc.exe#
+LINK = polink.exe#
+SIGN = posign.exe#
+CCFLAGS = -W1 -Ot -Gd -Ze -Tx86-coff -std:C99#
+RCFLAGS = -r#
+LINKFLAGS = -release -machine:ix86 -subsystem:console kernel32.lib user32.lib winmm.lib avifil32.lib#
+ASFLAGS = -AIA32 -Gd#
+SIGNFLAGS = -location:CU -store:MY -timeurl:http://timestamp.verisign.com/scripts/timstamp.dll -errkill#
+INCLUDE = $(PellesCDir)\Include\Win;$(PellesCDir)\Include#
+LIB = $(PellesCDir)\Lib\Win;$(PellesCDir)\Lib#
+
+# 
+# Bygg gif2avi.exe.
+# 
+gif2avi.exe: \
+	output\avi.obj \
+	output\gif.obj \
+	output\main.obj \
+	output\utils.obj
+	$(LINK) $(LINKFLAGS) -out:"$@" $**
+
+# 
+# Bygg main.obj.
+# 
+output\main.obj: \
+	main.c \
+	gif2avi.h \
+	proj.h
+	$(CC) $(CCFLAGS) "$!" -Fo"$@"
+
+# 
+# Bygg avi.obj.
+# 
+output\avi.obj: \
+	avi.c \
+	gif2avi.h \
+	proj.h
+	$(CC) $(CCFLAGS) "$!" -Fo"$@"
+
+# 
+# Bygg gif.obj.
+# 
+output\gif.obj: \
+	gif.c \
+	gif2avi.h \
+	gif32.h \
+	proj.h
+	$(CC) $(CCFLAGS) "$!" -Fo"$@"
+
+# 
+# Bygg utils.obj.
+# 
+output\utils.obj: \
+	utils.c \
+	gif2avi.h \
+	proj.h
+	$(CC) $(CCFLAGS) "$!" -Fo"$@"
+
+.EXCLUDEDFILES:
+
+.SILENT:

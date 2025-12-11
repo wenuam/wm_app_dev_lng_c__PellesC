@@ -1,0 +1,4 @@
+[Windows]
+File1=SplashDialog.c,-4,-30,870,508,1,1
+File2=splashDialog.h,0,0,649,378,0,0
+File3=main.h,-4,-30,870,508,1,0

@@ -1,0 +1,27 @@
+// RESURSFIL genererad av "Pelles C for Windows, version 6.00".
+
+#include <windows.h>
+#include <commctrl.h>
+#include <richedit.h>
+#include "main.h"
+
+LANGUAGE LANG_ENGLISH,SUBLANG_ENGLISH_US
+
+DLG_MAIN DIALOGEX DISCARDABLE 6, 18, 315, 140
+STYLE DS_SHELLFONT|DS_MODALFRAME|DS_3DLOOK|DS_CENTER|WS_THICKFRAME|WS_CAPTION|WS_SYSMENU|WS_VISIBLE
+CAPTION "Windows Security Center Monitor"
+CLASS "winsecurClass"
+FONT 8, "MS Shell Dlg", 0, 0, 1
+{
+  CONTROL "Goodbye", IDOK, "Button", WS_TABSTOP, 5, 120, 45, 15
+  CONTROL "Firewall health:", -1, "Static", SS_RIGHT|WS_GROUP, 10, 50, 68, 8
+  CONTROL "bad", DID_FIREWALL_HEALTH, "Static", WS_GROUP, 85, 50, 220, 8
+  CONTROL "Antivirus health:", -1, "Static", SS_RIGHT|WS_GROUP, 10, 65, 68, 8
+  CONTROL "bad", DID_ANTIVIRUS_HEALTH, "Static", WS_GROUP, 85, 65, 220, 8
+  CONTROL "Anti-spyware health:", -1, "Static", SS_RIGHT|WS_GROUP, 10, 80, 68, 8
+  CONTROL "bad", DID_ANTI_SPYWARE_HEALTH, "Static", WS_GROUP, 85, 80, 220, 8
+  CONTROL "This program monitors the health of the Windows security. As long as this program is running, any change to the following security settings should be reflected in this dialog.", -1, "Static", WS_GROUP, 10, 10, 299, 30
+}
+
+IDR_ICO_MAIN ICON "winsec.ico"
+

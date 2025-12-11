@@ -1,0 +1,41 @@
+#ifndef _COMMAPI_H
+#define _COMMAPI_H
+
+#if __POCC__ >= 500
+#pragma once
+#endif
+
+/* ApiSet contract for api-ms-win-core-comm-l1 */
+
+#include <apiset.h>
+#include <apisetcconv.h>
+#include <windows.h>
+#include <winbase.h>
+#include <winapifamily.h>
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_APP)
+
+WINBASEAPI BOOL WINAPI ClearCommBreak(HANDLE hFile);
+WINBASEAPI BOOL WINAPI ClearCommError(HANDLE hFile, LPDWORD lpErrors, LPCOMSTAT lpStat);
+WINBASEAPI BOOL WINAPI SetupComm(HANDLE hFile, DWORD dwInQueue, DWORD dwOutQueue);
+WINBASEAPI BOOL WINAPI EscapeCommFunction(HANDLE hFile, DWORD dwFunc);
+WINBASEAPI BOOL WINAPI GetCommConfig(HANDLE hCommDev, LPCOMMCONFIG lpCC, LPDWORD lpdwSize);
+WINBASEAPI BOOL WINAPI GetCommMask(HANDLE hFile, LPDWORD lpEvtMask);
+WINBASEAPI BOOL WINAPI GetCommModemStatus(HANDLE hFile, LPDWORD lpModemStat);
+WINBASEAPI BOOL WINAPI GetCommProperties(HANDLE hFile, LPCOMMPROP lpCommProp);
+WINBASEAPI BOOL WINAPI GetCommState(HANDLE hFile, LPDCB lpDCB);
+WINBASEAPI BOOL WINAPI GetCommTimeouts(HANDLE hFile, LPCOMMTIMEOUTS lpCommTimeouts);
+WINBASEAPI BOOL WINAPI PurgeComm(HANDLE hFile, DWORD dwFlags);
+WINBASEAPI BOOL WINAPI SetCommBreak(HANDLE hFile);
+WINBASEAPI BOOL WINAPI SetCommConfig(HANDLE hCommDev, LPCOMMCONFIG lpCC, DWORD dwSize);
+WINBASEAPI BOOL WINAPI SetCommMask(HANDLE hFile, DWORD dwEvtMask);
+WINBASEAPI BOOL WINAPI SetCommState(HANDLE hFile, LPDCB lpDCB);
+WINBASEAPI BOOL WINAPI SetCommTimeouts(HANDLE hFile, LPCOMMTIMEOUTS lpCommTimeouts);
+WINBASEAPI BOOL WINAPI TransmitCommChar(HANDLE hFile, char cChar);
+WINBASEAPI BOOL WINAPI WaitCommEvent(HANDLE hFile, LPDWORD lpEvtMask, LPOVERLAPPED lpOverlapped);
+WINBASEAPI HANDLE WINAPI OpenCommPort(ULONG uPortNumber, DWORD dwDesiredAccess, DWORD dwFlagsAndAttributes);
+WINBASEAPI ULONG WINAPI GetCommPorts(PULONG lpPortNumbers, ULONG uPortNumbersCount, PULONG puPortNumbersFound);
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_APP) */
+
+#endif /* _COMMAPI_H */

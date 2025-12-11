@@ -1,0 +1,1627 @@
+#include <winapifamily.h>
+
+#ifndef _EVNTRACE_H
+#define _EVNTRACE_H
+
+/* Windows NT Event tracing definitions */
+
+#if __POCC__ >= 500
+#pragma once
+#endif
+
+#if defined(_WINNT_) || defined(WINNT)
+
+#define ETW_APP_DECLSPEC_DEPRECATED
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
+
+#ifndef MIDL_PASS
+#ifndef WMIAPI
+#define WMIAPI  DECLSPEC_IMPORT __stdcall
+#endif /* !WMIAPI */
+#endif /* !MIDL_PASS */
+
+#include <guiddef.h>
+
+#if defined(_NTDDK_) || defined(_NTIFS_) || defined(_WMIKM_)
+#define _EVNTRACE_KERNEL_MODE
+#endif
+
+#if !defined(_EVNTRACE_KERNEL_MODE)
+#include <wmistr.h>
+#endif
+
+DEFINE_GUID(EventTraceGuid, 0x68fdd900, 0x4a3e, 0x11d1, 0x84, 0xf4, 0x00, 0x00, 0xf8, 0x04, 0x64, 0xe3);
+DEFINE_GUID(SystemTraceControlGuid, 0x9e814aad, 0x3204, 0x11d2, 0x9a, 0x82, 0x00, 0x60, 0x08, 0xa8, 0x69, 0x39);
+DEFINE_GUID(EventTraceConfigGuid, 0x01853a65, 0x418f, 0x4f36, 0xae, 0xfc, 0xdc, 0x0f, 0x1d, 0x2f, 0xd2, 0x35);
+DEFINE_GUID(DefaultTraceSecurityGuid, 0x0811c1af, 0x7a07, 0x4a06, 0x82, 0xed, 0x86, 0x94, 0x55, 0xcd, 0xf7, 0x13);
+DEFINE_GUID(PrivateLoggerNotificationGuid, 0x3595ab5c, 0x042a, 0x4c8e, 0xb9, 0x42, 0x2d, 0x05, 0x9b, 0xfe, 0xb1, 0xb1);
+DEFINE_GUID(SystemIoFilterProviderGuid, 0xfbd09363, 0x9e22, 0x4661, 0xb8, 0xbf, 0xe7, 0xa3, 0x4b, 0x53, 0x5b, 0x8c);
+DEFINE_GUID(SystemObjectProviderGuid, 0xfebd7460, 0x3d1d, 0x47eb, 0xaf, 0x49, 0xc9, 0xee, 0xb1, 0xe1, 0x46, 0xf2);
+DEFINE_GUID(SystemPowerProviderGuid, 0xc134884a, 0x32d5, 0x4488, 0x80, 0xe5, 0x14, 0xed, 0x7a, 0xbb, 0x82, 0x69);
+DEFINE_GUID(SystemHypervisorProviderGuid, 0xbafa072a, 0x918a, 0x4bed, 0xb6, 0x22, 0xbc, 0x15, 0x20, 0x97, 0x9, 0x8f);
+DEFINE_GUID(SystemLockProviderGuid, 0x721ddfd3, 0xdacc, 0x4e1e, 0xb2, 0x6a, 0xa2, 0xcb, 0x31, 0xd4, 0x70, 0x5a);
+DEFINE_GUID(SystemConfigProviderGuid, 0xfef3a8b6, 0x318d, 0x4b67, 0xa9, 0x6a, 0x3b, 0xf, 0x6b, 0x8f, 0x18, 0xfe);
+DEFINE_GUID(SystemCpuProviderGuid, 0xc6c5265f, 0xeae8, 0x4650, 0xaa, 0xe4, 0x9d, 0x48, 0x60, 0x3d, 0x85, 0x10);
+DEFINE_GUID(SystemSchedulerProviderGuid, 0x599a2a76, 0x4d91, 0x4910, 0x9a, 0xc7, 0x7d, 0x33, 0xf2, 0xe9, 0x7a, 0x6c);
+DEFINE_GUID(SystemProfileProviderGuid, 0xbfeb0324, 0x1cee, 0x496f, 0xa4, 0x9, 0x2a, 0xc2, 0xb4, 0x8a, 0x63, 0x22);
+DEFINE_GUID(SystemIoProviderGuid, 0x3d5c43e3, 0xf1c, 0x4202, 0xb8, 0x17, 0x17, 0x4c, 0x0, 0x70, 0xdc, 0x79);
+DEFINE_GUID(SystemMemoryProviderGuid, 0x82958ca9, 0xb6cd, 0x47f8, 0xa3, 0xa8, 0x3, 0xae, 0x85, 0xa4, 0xbc, 0x24);
+DEFINE_GUID(SystemRegistryProviderGuid, 0x16156bd9, 0xfab4, 0x4cfa, 0xa2, 0x32, 0x89, 0xd1, 0x9, 0x90, 0x58, 0xe3);
+DEFINE_GUID(SystemProcessProviderGuid, 0x151f55dc, 0x467d, 0x471f, 0x83, 0xb5, 0x5f, 0x88, 0x9d, 0x46, 0xff, 0x66);
+DEFINE_GUID(SystemAlpcProviderGuid, 0xfcb9baaf, 0xe529, 0x4980, 0x92, 0xe9, 0xce, 0xd1, 0xa6, 0xaa, 0xdf, 0xdf);
+DEFINE_GUID(SystemSyscallProviderGuid, 0x434286f7, 0x6f1b, 0x45bb, 0xb3, 0x7e, 0x95, 0xf6, 0x23, 0x04, 0x6c, 0x7c);
+DEFINE_GUID(SystemInterruptProviderGuid, 0xd4bbee17, 0xb545, 0x4888, 0x85, 0x8b, 0x74, 0x41, 0x69, 0x01, 0x5b, 0x25);
+DEFINE_GUID(SystemTimerProviderGuid, 0x4f061568, 0xe215, 0x499f, 0xab, 0x2e, 0xed, 0xa0, 0xae, 0x89, 0x0a, 0x5b);
+
+#define KERNEL_LOGGER_NAMEW     L"NT Kernel Logger"
+#define GLOBAL_LOGGER_NAMEW     L"GlobalLogger"
+#define EVENT_LOGGER_NAMEW      L"EventLog"
+#define DIAG_LOGGER_NAMEW       L"DiagLog"
+
+#define KERNEL_LOGGER_NAMEA     "NT Kernel Logger"
+#define GLOBAL_LOGGER_NAMEA     "GlobalLogger"
+#define EVENT_LOGGER_NAMEA      "EventLog"
+#define DIAG_LOGGER_NAMEA       "DiagLog"
+
+#define MAX_MOF_FIELDS  16
+
+#ifndef _TRACEHANDLE_DEFINED
+#define _TRACEHANDLE_DEFINED
+typedef ULONG64 TRACEHANDLE, *PTRACEHANDLE;
+#endif
+
+#define SYSTEM_EVENT_TYPE  1
+
+#define EVENT_TRACE_TYPE_INFO               0x00
+#define EVENT_TRACE_TYPE_START              0x01
+#define EVENT_TRACE_TYPE_END                0x02
+#define EVENT_TRACE_TYPE_STOP               0x02
+#define EVENT_TRACE_TYPE_DC_START           0x03
+#define EVENT_TRACE_TYPE_DC_END             0x04
+#define EVENT_TRACE_TYPE_EXTENSION          0x05
+#define EVENT_TRACE_TYPE_REPLY              0x06
+#define EVENT_TRACE_TYPE_DEQUEUE            0x07
+#define EVENT_TRACE_TYPE_RESUME             0x07
+#define EVENT_TRACE_TYPE_CHECKPOINT         0x08
+#define EVENT_TRACE_TYPE_SUSPEND            0x08
+#define EVENT_TRACE_TYPE_WINEVT_SEND        0x09
+#define EVENT_TRACE_TYPE_WINEVT_RECEIVE     0XF0
+
+#define TRACE_LEVEL_NONE        0
+#define TRACE_LEVEL_CRITICAL    1
+#define TRACE_LEVEL_FATAL       1
+#define TRACE_LEVEL_ERROR       2
+#define TRACE_LEVEL_WARNING     3
+#define TRACE_LEVEL_INFORMATION 4
+#define TRACE_LEVEL_VERBOSE     5
+#define TRACE_LEVEL_RESERVED6   6
+#define TRACE_LEVEL_RESERVED7   7
+#define TRACE_LEVEL_RESERVED8   8
+#define TRACE_LEVEL_RESERVED9   9
+
+#define EVENT_TRACE_TYPE_LOAD                  0x0A
+#define EVENT_TRACE_TYPE_TERMINATE             0x0B
+
+#define EVENT_TRACE_TYPE_IO_READ               0x0A
+#define EVENT_TRACE_TYPE_IO_WRITE              0x0B
+#define EVENT_TRACE_TYPE_IO_READ_INIT          0x0C
+#define EVENT_TRACE_TYPE_IO_WRITE_INIT         0x0D
+#define EVENT_TRACE_TYPE_IO_FLUSH              0x0E
+#define EVENT_TRACE_TYPE_IO_FLUSH_INIT         0x0F
+#define EVENT_TRACE_TYPE_IO_REDIRECTED_INIT    0x10
+
+#define EVENT_TRACE_TYPE_MM_TF                 0x0A
+#define EVENT_TRACE_TYPE_MM_DZF                0x0B
+#define EVENT_TRACE_TYPE_MM_COW                0x0C
+#define EVENT_TRACE_TYPE_MM_GPF                0x0D
+#define EVENT_TRACE_TYPE_MM_HPF                0x0E
+#define EVENT_TRACE_TYPE_MM_AV                 0x0F
+
+#define EVENT_TRACE_TYPE_SEND                  0x0A
+#define EVENT_TRACE_TYPE_RECEIVE               0x0B
+#define EVENT_TRACE_TYPE_CONNECT               0x0C
+#define EVENT_TRACE_TYPE_DISCONNECT            0x0D
+#define EVENT_TRACE_TYPE_RETRANSMIT            0x0E
+#define EVENT_TRACE_TYPE_ACCEPT                0x0F
+#define EVENT_TRACE_TYPE_RECONNECT             0x10
+#define EVENT_TRACE_TYPE_CONNFAIL              0x11
+#define EVENT_TRACE_TYPE_COPY_TCP              0x12
+#define EVENT_TRACE_TYPE_COPY_ARP              0x13
+#define EVENT_TRACE_TYPE_ACKFULL               0x14
+#define EVENT_TRACE_TYPE_ACKPART               0x15
+#define EVENT_TRACE_TYPE_ACKDUP                0x16
+
+#define EVENT_TRACE_TYPE_GUIDMAP                0x0A
+#define EVENT_TRACE_TYPE_CONFIG                 0x0B
+#define EVENT_TRACE_TYPE_SIDINFO                0x0C
+#define EVENT_TRACE_TYPE_SECURITY               0x0D
+#define EVENT_TRACE_TYPE_DBGID_RSDS             0x40
+
+#define EVENT_TRACE_TYPE_REGCREATE                  0x0A
+#define EVENT_TRACE_TYPE_REGOPEN                    0x0B
+#define EVENT_TRACE_TYPE_REGDELETE                  0x0C
+#define EVENT_TRACE_TYPE_REGQUERY                   0x0D
+#define EVENT_TRACE_TYPE_REGSETVALUE                0x0E
+#define EVENT_TRACE_TYPE_REGDELETEVALUE             0x0F
+#define EVENT_TRACE_TYPE_REGQUERYVALUE              0x10
+#define EVENT_TRACE_TYPE_REGENUMERATEKEY            0x11
+#define EVENT_TRACE_TYPE_REGENUMERATEVALUEKEY       0x12
+#define EVENT_TRACE_TYPE_REGQUERYMULTIPLEVALUE      0x13
+#define EVENT_TRACE_TYPE_REGSETINFORMATION          0x14
+#define EVENT_TRACE_TYPE_REGFLUSH                   0x15
+#define EVENT_TRACE_TYPE_REGKCBCREATE               0x16
+#define EVENT_TRACE_TYPE_REGKCBDELETE               0x17
+#define EVENT_TRACE_TYPE_REGKCBRUNDOWNBEGIN         0x18
+#define EVENT_TRACE_TYPE_REGKCBRUNDOWNEND           0x19
+#define EVENT_TRACE_TYPE_REGVIRTUALIZE              0x1A
+#define EVENT_TRACE_TYPE_REGCLOSE                   0x1B
+#define EVENT_TRACE_TYPE_REGSETSECURITY             0x1C
+#define EVENT_TRACE_TYPE_REGQUERYSECURITY           0x1D
+#define EVENT_TRACE_TYPE_REGCOMMIT                  0x1E
+#define EVENT_TRACE_TYPE_REGPREPARE                 0x1F
+#define EVENT_TRACE_TYPE_REGROLLBACK                0x20
+#define EVENT_TRACE_TYPE_REGMOUNTHIVE               0x21
+
+#define EVENT_TRACE_TYPE_CONFIG_CPU             0x0A
+#define EVENT_TRACE_TYPE_CONFIG_PHYSICALDISK    0x0B
+#define EVENT_TRACE_TYPE_CONFIG_LOGICALDISK     0x0C
+#define EVENT_TRACE_TYPE_CONFIG_NIC             0x0D
+#define EVENT_TRACE_TYPE_CONFIG_VIDEO           0x0E
+#define EVENT_TRACE_TYPE_CONFIG_SERVICES        0x0F
+#define EVENT_TRACE_TYPE_CONFIG_POWER           0x10
+#define EVENT_TRACE_TYPE_CONFIG_NETINFO         0x11
+#define EVENT_TRACE_TYPE_CONFIG_OPTICALMEDIA    0x12
+#define EVENT_TRACE_TYPE_CONFIG_PHYSICALDISK_EX 0x13
+
+#define EVENT_TRACE_TYPE_CONFIG_IRQ             0x15
+#define EVENT_TRACE_TYPE_CONFIG_PNP             0x16
+#define EVENT_TRACE_TYPE_CONFIG_IDECHANNEL      0x17
+#define EVENT_TRACE_TYPE_CONFIG_NUMANODE        0x18
+#define EVENT_TRACE_TYPE_CONFIG_PLATFORM        0x19
+#define EVENT_TRACE_TYPE_CONFIG_PROCESSORGROUP  0x1A
+#define EVENT_TRACE_TYPE_CONFIG_PROCESSORNUMBER 0x1B
+#define EVENT_TRACE_TYPE_CONFIG_DPI             0x1C
+#define EVENT_TRACE_TYPE_CONFIG_CI_INFO         0x1D
+#define EVENT_TRACE_TYPE_CONFIG_MACHINEID       0x1E
+#define EVENT_TRACE_TYPE_CONFIG_DEFRAG          0x1F
+#define EVENT_TRACE_TYPE_CONFIG_MOBILEPLATFORM  0x20
+#define EVENT_TRACE_TYPE_CONFIG_DEVICEFAMILY    0x21
+#define EVENT_TRACE_TYPE_CONFIG_FLIGHTID        0x22
+#define EVENT_TRACE_TYPE_CONFIG_PROCESSOR       0x23
+#define EVENT_TRACE_TYPE_CONFIG_VIRTUALIZATION  0x24
+#define EVENT_TRACE_TYPE_CONFIG_BOOT            0x25
+
+#define EVENT_TRACE_TYPE_OPTICAL_IO_READ        0x37
+#define EVENT_TRACE_TYPE_OPTICAL_IO_WRITE       0x38
+#define EVENT_TRACE_TYPE_OPTICAL_IO_FLUSH       0x39
+#define EVENT_TRACE_TYPE_OPTICAL_IO_READ_INIT   0x3a
+#define EVENT_TRACE_TYPE_OPTICAL_IO_WRITE_INIT  0x3b
+#define EVENT_TRACE_TYPE_OPTICAL_IO_FLUSH_INIT  0x3c
+
+#define EVENT_TRACE_TYPE_FLT_PREOP_INIT         0x60
+#define EVENT_TRACE_TYPE_FLT_POSTOP_INIT        0x61
+#define EVENT_TRACE_TYPE_FLT_PREOP_COMPLETION   0x62
+#define EVENT_TRACE_TYPE_FLT_POSTOP_COMPLETION  0x63
+#define EVENT_TRACE_TYPE_FLT_PREOP_FAILURE      0x64
+#define EVENT_TRACE_TYPE_FLT_POSTOP_FAILURE     0x65
+
+#define EVENT_TRACE_FLAG_PROCESS            0x00000001
+#define EVENT_TRACE_FLAG_THREAD             0x00000002
+#define EVENT_TRACE_FLAG_IMAGE_LOAD         0x00000004
+
+#define EVENT_TRACE_FLAG_DISK_IO            0x00000100
+#define EVENT_TRACE_FLAG_DISK_FILE_IO       0x00000200
+
+#define EVENT_TRACE_FLAG_MEMORY_PAGE_FAULTS 0x00001000
+#define EVENT_TRACE_FLAG_MEMORY_HARD_FAULTS 0x00002000
+
+#define EVENT_TRACE_FLAG_NETWORK_TCPIP      0x00010000
+
+#define EVENT_TRACE_FLAG_REGISTRY           0x00020000
+#define EVENT_TRACE_FLAG_DBGPRINT           0x00040000
+
+#define EVENT_TRACE_FLAG_PROCESS_COUNTERS   0x00000008
+#define EVENT_TRACE_FLAG_CSWITCH            0x00000010
+#define EVENT_TRACE_FLAG_DPC                0x00000020
+#define EVENT_TRACE_FLAG_INTERRUPT          0x00000040
+#define EVENT_TRACE_FLAG_SYSTEMCALL         0x00000080
+
+#define EVENT_TRACE_FLAG_DISK_IO_INIT       0x00000400
+#define EVENT_TRACE_FLAG_ALPC               0x00100000
+#define EVENT_TRACE_FLAG_SPLIT_IO           0x00200000
+
+#define EVENT_TRACE_FLAG_DRIVER             0x00800000
+#define EVENT_TRACE_FLAG_PROFILE            0x01000000
+#define EVENT_TRACE_FLAG_FILE_IO            0x02000000
+#define EVENT_TRACE_FLAG_FILE_IO_INIT       0x04000000
+
+#define EVENT_TRACE_FLAG_DISPATCHER         0x00000800
+#define EVENT_TRACE_FLAG_VIRTUAL_ALLOC      0x00004000
+
+#define EVENT_TRACE_FLAG_VAMAP              0x00008000
+#define EVENT_TRACE_FLAG_NO_SYSCONFIG       0x10000000
+
+#define EVENT_TRACE_FLAG_JOB                0x00080000
+#define EVENT_TRACE_FLAG_DEBUG_EVENTS       0x00400000
+
+#define EVENT_TRACE_FLAG_EXTENSION          0x80000000
+#define EVENT_TRACE_FLAG_FORWARD_WMI        0x40000000
+#define EVENT_TRACE_FLAG_ENABLE_RESERVE     0x20000000
+
+#define EVENT_TRACE_FILE_MODE_NONE          0x00000000
+#define EVENT_TRACE_FILE_MODE_SEQUENTIAL    0x00000001
+#define EVENT_TRACE_FILE_MODE_CIRCULAR      0x00000002
+#define EVENT_TRACE_FILE_MODE_APPEND        0x00000004
+
+#define EVENT_TRACE_REAL_TIME_MODE          0x00000100
+#define EVENT_TRACE_DELAY_OPEN_FILE_MODE    0x00000200
+#define EVENT_TRACE_BUFFERING_MODE          0x00000400
+#define EVENT_TRACE_PRIVATE_LOGGER_MODE     0x00000800
+#define EVENT_TRACE_ADD_HEADER_MODE         0x00001000
+
+#define EVENT_TRACE_USE_GLOBAL_SEQUENCE     0x00004000
+#define EVENT_TRACE_USE_LOCAL_SEQUENCE      0x00008000
+
+#define EVENT_TRACE_RELOG_MODE              0x00010000
+
+#define EVENT_TRACE_USE_PAGED_MEMORY        0x01000000
+
+#define EVENT_TRACE_FILE_MODE_NEWFILE       0x00000008
+#define EVENT_TRACE_FILE_MODE_PREALLOCATE   0x00000020
+
+#define EVENT_TRACE_NONSTOPPABLE_MODE       0x00000040
+#define EVENT_TRACE_SECURE_MODE             0x00000080
+#define EVENT_TRACE_USE_KBYTES_FOR_SIZE     0x00002000
+#define EVENT_TRACE_PRIVATE_IN_PROC         0x00020000
+
+#define EVENT_TRACE_MODE_RESERVED           0x00100000
+
+#define EVENT_TRACE_NO_PER_PROCESSOR_BUFFERING 0x10000000
+
+#define EVENT_TRACE_SYSTEM_LOGGER_MODE      0x02000000
+#define EVENT_TRACE_ADDTO_TRIAGE_DUMP       0x80000000
+#define EVENT_TRACE_STOP_ON_HYBRID_SHUTDOWN 0x00400000
+#define EVENT_TRACE_PERSIST_ON_HYBRID_SHUTDOWN 0x00800000
+
+#define EVENT_TRACE_INDEPENDENT_SESSION_MODE  0x08000000
+
+#define EVENT_TRACE_COMPRESSED_MODE         0x04000000
+
+#define EVENT_TRACE_CONTROL_QUERY           0
+#define EVENT_TRACE_CONTROL_STOP            1
+#define EVENT_TRACE_CONTROL_UPDATE          2
+
+#define EVENT_TRACE_CONTROL_FLUSH           3
+
+#define EVENT_TRACE_CONTROL_INCREMENT_FILE  4
+
+#define EVENT_TRACE_CONTROL_CONVERT_TO_REALTIME  5
+
+#define TRACE_MESSAGE_SEQUENCE              1
+#define TRACE_MESSAGE_GUID                  2
+#define TRACE_MESSAGE_COMPONENTID           4
+#define TRACE_MESSAGE_TIMESTAMP             8
+#define TRACE_MESSAGE_PERFORMANCE_TIMESTAMP 16
+#define TRACE_MESSAGE_SYSTEMINFO            32
+
+#define TRACE_MESSAGE_POINTER32         0x0040
+#define TRACE_MESSAGE_POINTER64         0x0080
+
+#define TRACE_MESSAGE_FLAG_MASK         0xFFFF
+
+#define TRACE_MESSAGE_MAXIMUM_SIZE   (64 * 1024)
+
+#define EVENT_TRACE_USE_PROCTIME          0x0001
+#define EVENT_TRACE_USE_NOCPUTIME         0x0002
+
+#define TRACE_HEADER_FLAG_USE_TIMESTAMP     0x00000200
+#define TRACE_HEADER_FLAG_TRACED_GUID       0x00020000
+#define TRACE_HEADER_FLAG_LOG_WNODE         0x00040000
+#define TRACE_HEADER_FLAG_USE_GUID_PTR      0x00080000
+#define TRACE_HEADER_FLAG_USE_MOF_PTR       0x00100000
+
+#define SYSTEM_ALPC_KW_GENERAL  0x0000000000000001
+
+#define SYSTEM_CONFIG_KW_SYSTEM   0x0000000000000001
+#define SYSTEM_CONFIG_KW_GRAPHICS 0x0000000000000002
+#define SYSTEM_CONFIG_KW_STORAGE  0x0000000000000004
+#define SYSTEM_CONFIG_KW_NETWORK  0x0000000000000008
+#define SYSTEM_CONFIG_KW_SERVICES 0x0000000000000010
+#define SYSTEM_CONFIG_KW_PNP      0x0000000000000020
+#define SYSTEM_CONFIG_KW_OPTICAL  0x0000000000000040
+
+#define SYSTEM_CPU_KW_CONFIG           0x0000000000000001
+#define SYSTEM_CPU_KW_CACHE_FLUSH      0x0000000000000002
+#define SYSTEM_CPU_KW_SPEC_CONTROL     0x0000000000000004
+
+#define SYSTEM_HYPERVISOR_KW_PROFILE     0x0000000000000001
+#define SYSTEM_HYPERVISOR_KW_CALLOUTS    0x0000000000000002
+#define SYSTEM_HYPERVISOR_KW_VTL_CHANGE  0x0000000000000004
+
+#define SYSTEM_INTERRUPT_KW_GENERAL           0x0000000000000001
+#define SYSTEM_INTERRUPT_KW_CLOCK_INTERRUPT   0x0000000000000002
+#define SYSTEM_INTERRUPT_KW_DPC               0x0000000000000004
+#define SYSTEM_INTERRUPT_KW_DPC_QUEUE         0x0000000000000008
+#define SYSTEM_INTERRUPT_KW_WDF_DPC           0x0000000000000010
+#define SYSTEM_INTERRUPT_KW_WDF_INTERRUPT     0x0000000000000020
+#define SYSTEM_INTERRUPT_KW_IPI               0x0000000000000040
+
+#define SYSTEM_IO_KW_DISK            0x0000000000000001
+#define SYSTEM_IO_KW_DISK_INIT       0x0000000000000002
+#define SYSTEM_IO_KW_FILENAME        0x0000000000000004
+#define SYSTEM_IO_KW_SPLIT           0x0000000000000008
+#define SYSTEM_IO_KW_FILE            0x0000000000000010
+#define SYSTEM_IO_KW_OPTICAL         0x0000000000000020
+#define SYSTEM_IO_KW_OPTICAL_INIT    0x0000000000000040
+#define SYSTEM_IO_KW_DRIVERS         0x0000000000000080
+#define SYSTEM_IO_KW_CC              0x0000000000000100
+#define SYSTEM_IO_KW_NETWORK         0x0000000000000200
+
+#define SYSTEM_IOFILTER_KW_GENERAL         0x0000000000000001
+#define SYSTEM_IOFILTER_KW_INIT            0x0000000000000002
+#define SYSTEM_IOFILTER_KW_FASTIO          0x0000000000000004
+#define SYSTEM_IOFILTER_KW_FAILURE         0x0000000000000008
+
+#define SYSTEM_LOCK_KW_SPINLOCK           0x0000000000000001
+#define SYSTEM_LOCK_KW_SPINLOCK_COUNTERS  0x0000000000000002
+#define SYSTEM_LOCK_KW_SYNC_OBJECTS       0x0000000000000004
+
+#define SYSTEM_MEMORY_KW_GENERAL       0x0000000000000001
+#define SYSTEM_MEMORY_KW_HARD_FAULTS   0x0000000000000002
+#define SYSTEM_MEMORY_KW_ALL_FAULTS    0x0000000000000004
+#define SYSTEM_MEMORY_KW_POOL          0x0000000000000008
+#define SYSTEM_MEMORY_KW_MEMINFO       0x0000000000000010
+#define SYSTEM_MEMORY_KW_PFSECTION     0x0000000000000020
+#define SYSTEM_MEMORY_KW_MEMINFO_WS    0x0000000000000040
+#define SYSTEM_MEMORY_KW_HEAP          0x0000000000000080
+#define SYSTEM_MEMORY_KW_WS            0x0000000000000100
+#define SYSTEM_MEMORY_KW_CONTMEM_GEN   0x0000000000000200
+#define SYSTEM_MEMORY_KW_VIRTUAL_ALLOC 0x0000000000000400
+#define SYSTEM_MEMORY_KW_FOOTPRINT     0x0000000000000800
+#define SYSTEM_MEMORY_KW_SESSION       0x0000000000001000
+#define SYSTEM_MEMORY_KW_REFSET        0x0000000000002000
+#define SYSTEM_MEMORY_KW_VAMAP         0x0000000000004000
+#define SYSTEM_MEMORY_KW_NONTRADEABLE  0x0000000000008000
+
+#define SYSTEM_OBJECT_KW_GENERAL 0x0000000000000001
+#define SYSTEM_OBJECT_KW_HANDLE  0x0000000000000002
+
+#define SYSTEM_POWER_KW_GENERAL            0x0000000000000001
+#define SYSTEM_POWER_KW_HIBER_RUNDOWN      0x0000000000000002
+#define SYSTEM_POWER_KW_PROCESSOR_IDLE     0x0000000000000004
+#define SYSTEM_POWER_KW_IDLE_SELECTION     0x0000000000000008
+#define SYSTEM_POWER_KW_PPM_EXIT_LATENCY   0x0000000000000010
+
+#define SYSTEM_PROCESS_KW_GENERAL        0x0000000000000001
+#define SYSTEM_PROCESS_KW_INSWAP         0x0000000000000002
+#define SYSTEM_PROCESS_KW_FREEZE         0x0000000000000004
+#define SYSTEM_PROCESS_KW_PERF_COUNTER   0x0000000000000008
+#define SYSTEM_PROCESS_KW_WAKE_COUNTER   0x0000000000000010
+#define SYSTEM_PROCESS_KW_WAKE_DROP      0x0000000000000020
+#define SYSTEM_PROCESS_KW_WAKE_EVENT     0x0000000000000040
+#define SYSTEM_PROCESS_KW_DEBUG_EVENTS   0x0000000000000080
+#define SYSTEM_PROCESS_KW_DBGPRINT       0x0000000000000100
+#define SYSTEM_PROCESS_KW_JOB            0x0000000000000200
+#define SYSTEM_PROCESS_KW_WORKER_THREAD  0x0000000000000400
+#define SYSTEM_PROCESS_KW_THREAD         0x0000000000000800
+#define SYSTEM_PROCESS_KW_LOADER         0x0000000000001000
+
+#define SYSTEM_PROFILE_KW_GENERAL         0x0000000000000001
+#define SYSTEM_PROFILE_KW_PMC_PROFILE     0x0000000000000002
+
+#define SYSTEM_REGISTRY_KW_GENERAL      0x0000000000000001
+#define SYSTEM_REGISTRY_KW_HIVE         0x0000000000000002
+#define SYSTEM_REGISTRY_KW_NOTIFICATION 0x0000000000000004
+
+#define SYSTEM_SCHEDULER_KW_XSCHEDULER      0x0000000000000001
+#define SYSTEM_SCHEDULER_KW_DISPATCHER      0x0000000000000002
+#define SYSTEM_SCHEDULER_KW_KERNEL_QUEUE    0x0000000000000004
+#define SYSTEM_SCHEDULER_KW_SHOULD_YIELD    0x0000000000000008
+#define SYSTEM_SCHEDULER_KW_ANTI_STARVATION 0x0000000000000010
+#define SYSTEM_SCHEDULER_KW_LOAD_BALANCER   0x0000000000000020
+#define SYSTEM_SCHEDULER_KW_AFFINITY        0x0000000000000040
+#define SYSTEM_SCHEDULER_KW_PRIORITY        0x0000000000000080
+#define SYSTEM_SCHEDULER_KW_IDEAL_PROCESSOR 0x0000000000000100
+#define SYSTEM_SCHEDULER_KW_CONTEXT_SWITCH  0x0000000000000200
+#define SYSTEM_SCHEDULER_KW_COMPACT_CSWITCH 0x0000000000000400
+
+#define SYSTEM_SYSCALL_KW_GENERAL  0x0000000000000001
+
+#define SYSTEM_TIMER_KW_GENERAL       0x0000000000000001
+#define SYSTEM_TIMER_KW_CLOCK_TIMER   0x0000000000000002
+
+#define SYSTEM_MEMORY_POOL_FILTER_ID 1
+
+typedef enum {
+    EtwCompressionModeRestart = 0,
+    EtwCompressionModeNoDisable = 1,
+    EtwCompressionModeNoRestart = 2
+} ETW_COMPRESSION_RESUMPTION_MODE;
+
+typedef struct _EVENT_TRACE_HEADER {
+    USHORT Size;
+    union {
+        USHORT FieldTypeFlags;
+        struct {
+            UCHAR HeaderType;
+            UCHAR MarkerFlags;
+        } DUMMYSTRUCTNAME;
+    } DUMMYUNIONNAME;
+    union {
+        ULONG Version;
+        struct {
+            UCHAR Type;
+            UCHAR Level;
+            USHORT Version;
+        } Class;
+    } DUMMYUNIONNAME2;
+    ULONG ThreadId;
+    ULONG ProcessId;
+    LARGE_INTEGER TimeStamp;
+    union {
+        GUID Guid;
+        ULONGLONG GuidPtr;
+    } DUMMYUNIONNAME3;
+    union {
+        struct {
+            ULONG KernelTime;
+            ULONG UserTime;
+        } DUMMYSTRUCTNAME;
+        ULONG64 ProcessorTime;
+        struct {
+            ULONG ClientContext;
+            ULONG Flags;
+        } DUMMYSTRUCTNAME2;
+    } DUMMYUNIONNAME4;
+} EVENT_TRACE_HEADER, *PEVENT_TRACE_HEADER;
+
+typedef struct _EVENT_INSTANCE_HEADER {
+    USHORT Size;
+    union {
+        USHORT FieldTypeFlags;
+        struct {
+            UCHAR HeaderType;
+            UCHAR MarkerFlags;
+        } DUMMYSTRUCTNAME;
+    } DUMMYUNIONNAME;
+    union {
+        ULONG Version;
+        struct {
+            UCHAR Type;
+            UCHAR Level;
+            USHORT Version;
+        } Class;
+    } DUMMYUNIONNAME2;
+    ULONG ThreadId;
+    ULONG ProcessId;
+    LARGE_INTEGER TimeStamp;
+    ULONGLONG RegHandle;
+    ULONG InstanceId;
+    ULONG ParentInstanceId;
+    union {
+        struct {
+            ULONG KernelTime;
+            ULONG UserTime;
+        } DUMMYSTRUCTNAME;
+        ULONG64 ProcessorTime;
+        struct {
+            ULONG EventId;
+            ULONG Flags;
+        } DUMMYSTRUCTNAME2;
+    } DUMMYUNIONNAME3;
+    ULONGLONG ParentRegHandle;
+} EVENT_INSTANCE_HEADER, *PEVENT_INSTANCE_HEADER;
+
+#define ETW_NULL_TYPE_VALUE                 0
+#define ETW_OBJECT_TYPE_VALUE               1
+#define ETW_STRING_TYPE_VALUE               2
+#define ETW_SBYTE_TYPE_VALUE                3
+#define ETW_BYTE_TYPE_VALUE                 4
+#define ETW_INT16_TYPE_VALUE                5
+#define ETW_UINT16_TYPE_VALUE               6
+#define ETW_INT32_TYPE_VALUE                7
+#define ETW_UINT32_TYPE_VALUE               8
+#define ETW_INT64_TYPE_VALUE                9
+#define ETW_UINT64_TYPE_VALUE               10
+#define ETW_CHAR_TYPE_VALUE                 11
+#define ETW_SINGLE_TYPE_VALUE               12
+#define ETW_DOUBLE_TYPE_VALUE               13
+#define ETW_BOOLEAN_TYPE_VALUE              14
+#define ETW_DECIMAL_TYPE_VALUE              15
+
+#define ETW_GUID_TYPE_VALUE                 101
+#define ETW_ASCIICHAR_TYPE_VALUE            102
+#define ETW_ASCIISTRING_TYPE_VALUE          103
+#define ETW_COUNTED_STRING_TYPE_VALUE       104
+#define ETW_POINTER_TYPE_VALUE              105
+#define ETW_SIZET_TYPE_VALUE                106
+#define ETW_HIDDEN_TYPE_VALUE               107
+#define ETW_BOOL_TYPE_VALUE                 108
+#define ETW_COUNTED_ANSISTRING_TYPE_VALUE   109
+#define ETW_REVERSED_COUNTED_STRING_TYPE_VALUE 110
+#define ETW_REVERSED_COUNTED_ANSISTRING_TYPE_VALUE 111
+#define ETW_NON_NULL_TERMINATED_STRING_TYPE_VALUE 112
+#define ETW_REDUCED_ANSISTRING_TYPE_VALUE   113
+#define ETW_REDUCED_STRING_TYPE_VALUE       114
+#define ETW_SID_TYPE_VALUE                  115
+#define ETW_VARIANT_TYPE_VALUE              116
+#define ETW_PTVECTOR_TYPE_VALUE             117
+#define ETW_WMITIME_TYPE_VALUE              118
+#define ETW_DATETIME_TYPE_VALUE             119
+#define ETW_REFRENCE_TYPE_VALUE             120
+
+#define DEFINE_TRACE_MOF_FIELD(MOF, ptr, length, type) \
+    (MOF)->DataPtr  = (ULONG64)(ULONG_PTR) ptr; \
+    (MOF)->Length   = (ULONG) length; \
+    (MOF)->DataType = (ULONG) type;
+
+typedef struct _MOF_FIELD {
+    ULONG64 DataPtr;
+    ULONG Length;
+    ULONG DataType;
+} MOF_FIELD, *PMOF_FIELD;
+
+#if !defined(_EVNTRACE_KERNEL_MODE) || defined(_WMIKM_)
+
+typedef struct _TRACE_LOGFILE_HEADER {
+    ULONG BufferSize;
+    union {
+        ULONG Version;
+        struct {
+            UCHAR MajorVersion;
+            UCHAR MinorVersion;
+            UCHAR SubVersion;
+            UCHAR SubMinorVersion;
+        } VersionDetail;
+    } DUMMYUNIONNAME;
+    ULONG ProviderVersion;
+    ULONG NumberOfProcessors;
+    LARGE_INTEGER EndTime;
+    ULONG TimerResolution;
+    ULONG MaximumFileSize;
+    ULONG LogFileMode;
+    ULONG BuffersWritten;
+    union {
+        GUID LogInstanceGuid;
+        struct {
+            ULONG StartBuffers;
+            ULONG PointerSize;
+            ULONG EventsLost;
+            ULONG CpuSpeedInMHz;
+        } DUMMYSTRUCTNAME;
+    } DUMMYUNIONNAME2;
+#ifdef _WMIKM_
+    PWCHAR LoggerName;
+    PWCHAR LogFileName;
+    RTL_TIME_ZONE_INFORMATION TimeZone;
+#else /* !_WMIKM_ */
+    LPWSTR LoggerName;
+    LPWSTR LogFileName;
+    TIME_ZONE_INFORMATION TimeZone;
+#endif /* !_WMIKM_ */
+    LARGE_INTEGER BootTime;
+    LARGE_INTEGER PerfFreq;
+    LARGE_INTEGER StartTime;
+    ULONG ReservedFlags;
+    ULONG BuffersLost;
+} TRACE_LOGFILE_HEADER, *PTRACE_LOGFILE_HEADER;
+
+typedef struct _TRACE_LOGFILE_HEADER32 {
+    ULONG BufferSize;
+    union {
+        ULONG Version;
+        struct {
+            UCHAR MajorVersion;
+            UCHAR MinorVersion;
+            UCHAR SubVersion;
+            UCHAR SubMinorVersion;
+        } VersionDetail;
+    };
+    ULONG ProviderVersion;
+    ULONG NumberOfProcessors;
+    LARGE_INTEGER EndTime;
+    ULONG TimerResolution;
+    ULONG MaximumFileSize;
+    ULONG LogFileMode;
+    ULONG BuffersWritten;
+    union {
+        GUID LogInstanceGuid;
+        struct {
+            ULONG StartBuffers;
+            ULONG PointerSize;
+            ULONG EventsLost;
+            ULONG CpuSpeedInMHz;
+        };
+    };
+#ifdef _WMIKM_
+    ULONG32 LoggerName;
+    ULONG32 LogFileName;
+    RTL_TIME_ZONE_INFORMATION TimeZone;
+#else /* !_WMIKM_ */
+    ULONG32 LoggerName;
+    ULONG32 LogFileName;
+    TIME_ZONE_INFORMATION TimeZone;
+#endif /* !_WMIKM_ */
+    LARGE_INTEGER BootTime;
+    LARGE_INTEGER PerfFreq;
+    LARGE_INTEGER StartTime;
+    ULONG ReservedFlags;
+    ULONG BuffersLost;
+} TRACE_LOGFILE_HEADER32, *PTRACE_LOGFILE_HEADER32;
+
+typedef struct _TRACE_LOGFILE_HEADER64 {
+    ULONG BufferSize;
+    union {
+        ULONG Version;
+        struct {
+            UCHAR MajorVersion;
+            UCHAR MinorVersion;
+            UCHAR SubVersion;
+            UCHAR SubMinorVersion;
+        } VersionDetail;
+    };
+    ULONG ProviderVersion;
+    ULONG NumberOfProcessors;
+    LARGE_INTEGER EndTime;
+    ULONG TimerResolution;
+    ULONG MaximumFileSize;
+    ULONG LogFileMode;
+    ULONG BuffersWritten;
+    union {
+        GUID LogInstanceGuid;
+        struct {
+            ULONG StartBuffers;
+            ULONG PointerSize;
+            ULONG EventsLost;
+            ULONG CpuSpeedInMHz;
+        };
+    };
+#ifdef _WMIKM_
+    ULONG64 LoggerName;
+    ULONG64 LogFileName;
+    RTL_TIME_ZONE_INFORMATION TimeZone;
+#else /* !_WMIKM_ */
+    ULONG64 LoggerName;
+    ULONG64 LogFileName;
+    TIME_ZONE_INFORMATION TimeZone;
+#endif /* !_WMIKM_ */
+    LARGE_INTEGER BootTime;
+    LARGE_INTEGER PerfFreq;
+    LARGE_INTEGER StartTime;
+    ULONG ReservedFlags;
+    ULONG BuffersLost;
+} TRACE_LOGFILE_HEADER64, *PTRACE_LOGFILE_HEADER64;
+
+#endif /* !defined(_EVNTRACE_KERNEL_MODE) || defined(_WMIKM_) */
+
+typedef struct EVENT_INSTANCE_INFO {
+    HANDLE RegHandle;
+    ULONG InstanceId;
+} EVENT_INSTANCE_INFO, *PEVENT_INSTANCE_INFO;
+
+#if !defined(_EVNTRACE_KERNEL_MODE)
+
+typedef struct _EVENT_FILTER_DESCRIPTOR
+EVENT_FILTER_DESCRIPTOR, *PEVENT_FILTER_DESCRIPTOR;
+
+typedef struct _EVENT_TRACE_PROPERTIES {
+    WNODE_HEADER Wnode;
+    ULONG BufferSize;
+    ULONG MinimumBuffers;
+    ULONG MaximumBuffers;
+    ULONG MaximumFileSize;
+    ULONG LogFileMode;
+    ULONG FlushTimer;
+    ULONG EnableFlags;
+    union {
+        LONG AgeLimit;
+        LONG FlushThreshold;
+    } DUMMYUNIONNAME;
+    ULONG NumberOfBuffers;
+    ULONG FreeBuffers;
+    ULONG EventsLost;
+    ULONG BuffersWritten;
+    ULONG LogBuffersLost;
+    ULONG RealTimeBuffersLost;
+    HANDLE LoggerThreadId;
+    ULONG LogFileNameOffset;
+    ULONG LoggerNameOffset;
+} EVENT_TRACE_PROPERTIES, *PEVENT_TRACE_PROPERTIES;
+
+typedef struct _EVENT_TRACE_PROPERTIES_V2 {
+    WNODE_HEADER Wnode;
+    ULONG BufferSize;
+    ULONG MinimumBuffers;
+    ULONG MaximumBuffers;
+    ULONG MaximumFileSize;
+    ULONG LogFileMode;
+    ULONG FlushTimer;
+    ULONG EnableFlags;
+    union {
+        LONG AgeLimit;
+        LONG FlushThreshold;
+    } DUMMYUNIONNAME;
+    ULONG NumberOfBuffers;
+    ULONG FreeBuffers;
+    ULONG EventsLost;
+    ULONG BuffersWritten;
+    ULONG LogBuffersLost;
+    ULONG RealTimeBuffersLost;
+    HANDLE LoggerThreadId;
+    ULONG LogFileNameOffset;
+    ULONG LoggerNameOffset;
+    union {
+        struct {
+            ULONG VersionNumber : 8;
+        } DUMMYSTRUCTNAME;
+        ULONG V2Control;
+    } DUMMYUNIONNAME2;
+    ULONG FilterDescCount;
+    PEVENT_FILTER_DESCRIPTOR FilterDesc;
+    union {
+        struct {
+            ULONG Wow : 1;
+            ULONG QpcDeltaTracking : 1;
+            ULONG LargeMdlPages : 1;
+            ULONG ExcludeKernelStack : 1;
+        } DUMMYSTRUCTNAME;
+        ULONG64 V2Options;
+    } DUMMYUNIONNAME3;
+} EVENT_TRACE_PROPERTIES_V2, *PEVENT_TRACE_PROPERTIES_V2;
+
+typedef struct _TRACE_GUID_REGISTRATION {
+    LPCGUID Guid;
+    HANDLE RegHandle;
+} TRACE_GUID_REGISTRATION, *PTRACE_GUID_REGISTRATION;
+
+#endif /* !defined(_EVNTRACE_KERNEL_MODE) */
+
+typedef struct _TRACE_GUID_PROPERTIES {
+    GUID Guid;
+    ULONG GuidType;
+    ULONG LoggerId;
+    ULONG EnableLevel;
+    ULONG EnableFlags;
+    BOOLEAN IsEnable;
+} TRACE_GUID_PROPERTIES, *PTRACE_GUID_PROPERTIES;
+
+#ifndef ETW_BUFFER_CONTEXT_DEF
+#define ETW_BUFFER_CONTEXT_DEF
+typedef struct _ETW_BUFFER_CONTEXT {
+    union {
+        struct {
+            UCHAR ProcessorNumber;
+            UCHAR Alignment;
+        } DUMMYSTRUCTNAME;
+        USHORT ProcessorIndex;
+    } DUMMYUNIONNAME;
+    USHORT LoggerId;
+} ETW_BUFFER_CONTEXT, *PETW_BUFFER_CONTEXT;
+#endif /* ETW_BUFFER_CONTEXT_DEF */
+
+#define TRACE_PROVIDER_FLAG_LEGACY     (0x00000001)
+#define TRACE_PROVIDER_FLAG_PRE_ENABLE (0x00000002)
+
+typedef struct _TRACE_ENABLE_INFO {
+    ULONG IsEnabled;
+    UCHAR Level;
+    UCHAR Reserved1;
+    USHORT LoggerId;
+    ULONG EnableProperty;
+    ULONG Reserved2;
+    ULONGLONG MatchAnyKeyword;
+    ULONGLONG MatchAllKeyword;
+} TRACE_ENABLE_INFO, *PTRACE_ENABLE_INFO;
+
+typedef struct _TRACE_PROVIDER_INSTANCE_INFO {
+    ULONG NextOffset;
+    ULONG EnableCount;
+    ULONG Pid;
+    ULONG Flags;
+} TRACE_PROVIDER_INSTANCE_INFO, *PTRACE_PROVIDER_INSTANCE_INFO;
+
+typedef struct _TRACE_GUID_INFO {
+    ULONG InstanceCount;
+    ULONG Reserved;
+} TRACE_GUID_INFO, *PTRACE_GUID_INFO;
+
+typedef struct _PROFILE_SOURCE_INFO {
+    ULONG NextEntryOffset;
+    ULONG Source;
+    ULONG MinInterval;
+    ULONG MaxInterval;
+    ULONG64 Reserved;
+    WCHAR Description[ANYSIZE_ARRAY];
+} PROFILE_SOURCE_INFO, *PPROFILE_SOURCE_INFO;
+
+typedef enum _ETW_PMC_COUNTER_OWNER_TYPE {
+    EtwPmcOwnerFree,
+    EtwPmcOwnerUntagged,
+    EtwPmcOwnerTagged,
+    EtwPmcOwnerTaggedWithSource
+} ETW_PMC_COUNTER_OWNER_TYPE;
+
+typedef struct _ETW_PMC_COUNTER_OWNER {
+    ETW_PMC_COUNTER_OWNER_TYPE OwnerType;
+    ULONG ProfileSource;
+    ULONG OwnerTag;
+} ETW_PMC_COUNTER_OWNER, *PETW_PMC_COUNTER_OWNER;
+
+typedef struct _ETW_PMC_COUNTER_OWNERSHIP_STATUS {
+    ULONG ProcessorNumber;
+    ULONG NumberOfCounters;
+    ETW_PMC_COUNTER_OWNER CounterOwners[ANYSIZE_ARRAY];
+} ETW_PMC_COUNTER_OWNERSHIP_STATUS, *PETW_PMC_COUNTER_OWNERSHIP_STATUS;
+
+typedef struct {
+    ULONG NextEntryOffset;
+    USHORT LoggerId;
+    USHORT Reserved;
+    ULONG ProfileSourceCount;
+    ULONG HookIdCount;
+} ETW_PMC_SESSION_INFO;
+
+typedef struct _EVENT_TRACE {
+    EVENT_TRACE_HEADER Header;
+    ULONG InstanceId;
+    ULONG ParentInstanceId;
+    GUID ParentGuid;
+    PVOID MofData;
+    ULONG MofLength;
+    union {
+        ULONG ClientContext;
+        ETW_BUFFER_CONTEXT BufferContext;
+    } DUMMYUNIONNAME;
+} EVENT_TRACE, *PEVENT_TRACE;
+
+#define EVENT_CONTROL_CODE_DISABLE_PROVIDER 0
+#define EVENT_CONTROL_CODE_ENABLE_PROVIDER  1
+#define EVENT_CONTROL_CODE_CAPTURE_STATE    2
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES) */
+
+#if !defined(_EVNTRACE_KERNEL_MODE)
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
+
+typedef struct _EVENT_RECORD EVENT_RECORD, *PEVENT_RECORD;
+
+typedef struct _EVENT_TRACE_LOGFILEW EVENT_TRACE_LOGFILEW, *PEVENT_TRACE_LOGFILEW;
+
+typedef struct _EVENT_TRACE_LOGFILEA EVENT_TRACE_LOGFILEA, *PEVENT_TRACE_LOGFILEA;
+
+typedef ULONG (WINAPI * PEVENT_TRACE_BUFFER_CALLBACKW)(PEVENT_TRACE_LOGFILEW Logfile);
+
+typedef ULONG (WINAPI * PEVENT_TRACE_BUFFER_CALLBACKA)(PEVENT_TRACE_LOGFILEA Logfile);
+
+typedef VOID (WINAPI *PEVENT_CALLBACK)(PEVENT_TRACE pEvent);
+
+typedef VOID (WINAPI *PEVENT_RECORD_CALLBACK)(PEVENT_RECORD EventRecord);
+
+typedef struct ETW_BUFFER_HEADER {
+    ULONG Reserved1[4];
+    LARGE_INTEGER TimeStamp;
+    ULONG Reserved2[4];
+    ETW_BUFFER_CONTEXT ClientContext;
+    ULONG Reserved3;
+    ULONG FilledBytes;
+    ULONG Reserved4[5];
+} ETW_BUFFER_HEADER;
+
+typedef struct ETW_BUFFER_CALLBACK_INFORMATION {
+    TRACEHANDLE TraceHandle;
+    const TRACE_LOGFILE_HEADER * LogfileHeader;
+    ULONG BuffersRead;
+} ETW_BUFFER_CALLBACK_INFORMATION;
+
+typedef BOOL (WINAPI *PETW_BUFFER_CALLBACK)(
+    const ETW_BUFFER_HEADER * Buffer,
+    ULONG BufferSize,
+    const ETW_BUFFER_CALLBACK_INFORMATION * ConsumerInfo,
+    void * CallbackContext
+);
+
+typedef enum ETW_PROCESS_TRACE_MODES {
+    ETW_PROCESS_TRACE_MODE_NONE = 0,
+    ETW_PROCESS_TRACE_MODE_RAW_TIMESTAMP = 0x00000001
+} ETW_PROCESS_TRACE_MODES;
+
+typedef struct ETW_OPEN_TRACE_OPTIONS {
+    ETW_PROCESS_TRACE_MODES ProcessTraceModes;
+    PEVENT_RECORD_CALLBACK EventCallback;
+    void * EventCallbackContext;
+    PETW_BUFFER_CALLBACK BufferCallback;
+    void * BufferCallbackContext;
+} ETW_OPEN_TRACE_OPTIONS;
+
+typedef VOID (WINAPI *PETW_BUFFER_COMPLETION_CALLBACK)(
+    const ETW_BUFFER_HEADER * Buffer,
+    void * CallbackContext
+);
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
+
+typedef ULONG (
+#ifndef MIDL_PASS
+    WINAPI
+#endif /* !MIDL_PASS */
+    *WMIDPREQUEST)(
+    WMIDPREQUESTCODE RequestCode,
+    PVOID RequestContext,
+    ULONG *BufferSize,
+    PVOID Buffer
+);
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM)
+
+struct _EVENT_TRACE_LOGFILEW {
+    LPWSTR LogFileName;
+    LPWSTR LoggerName;
+    LONGLONG CurrentTime;
+    ULONG BuffersRead;
+    union {
+        ULONG LogFileMode;
+        ULONG ProcessTraceMode;
+    } DUMMYUNIONNAME;
+    EVENT_TRACE CurrentEvent;
+    TRACE_LOGFILE_HEADER LogfileHeader;
+    PEVENT_TRACE_BUFFER_CALLBACKW
+    BufferCallback;
+    ULONG BufferSize;
+    ULONG Filled;
+    ULONG EventsLost;
+    union {
+        PEVENT_CALLBACK EventCallback;
+        PEVENT_RECORD_CALLBACK EventRecordCallback;
+    } DUMMYUNIONNAME2;
+    ULONG IsKernelTrace;
+    PVOID Context;
+};
+
+struct _EVENT_TRACE_LOGFILEA {
+    LPSTR LogFileName;
+    LPSTR LoggerName;
+    LONGLONG CurrentTime;
+    ULONG BuffersRead;
+    union {
+        ULONG LogFileMode;
+        ULONG ProcessTraceMode;
+    } DUMMYUNIONNAME;
+    EVENT_TRACE CurrentEvent;
+    TRACE_LOGFILE_HEADER LogfileHeader;
+    PEVENT_TRACE_BUFFER_CALLBACKA
+    BufferCallback;
+    ULONG BufferSize;
+    ULONG Filled;
+    ULONG EventsLost;
+    union {
+        PEVENT_CALLBACK EventCallback;
+        PEVENT_RECORD_CALLBACK EventRecordCallback;
+    } DUMMYUNIONNAME2;
+    ULONG IsKernelTrace;
+    PVOID Context;
+};
+
+#if defined(_UNICODE) || defined(UNICODE)
+#define PEVENT_TRACE_BUFFER_CALLBACK    PEVENT_TRACE_BUFFER_CALLBACKW
+#define EVENT_TRACE_LOGFILE             EVENT_TRACE_LOGFILEW
+#define PEVENT_TRACE_LOGFILE            PEVENT_TRACE_LOGFILEW
+#define KERNEL_LOGGER_NAME              KERNEL_LOGGER_NAMEW
+#define GLOBAL_LOGGER_NAME              GLOBAL_LOGGER_NAMEW
+#define EVENT_LOGGER_NAME               EVENT_LOGGER_NAMEW
+#else /* !(defined(_UNICODE) || defined(UNICODE)) */
+#define PEVENT_TRACE_BUFFER_CALLBACK    PEVENT_TRACE_BUFFER_CALLBACKA
+#define EVENT_TRACE_LOGFILE             EVENT_TRACE_LOGFILEA
+#define PEVENT_TRACE_LOGFILE            PEVENT_TRACE_LOGFILEA
+#define KERNEL_LOGGER_NAME              KERNEL_LOGGER_NAMEA
+#define GLOBAL_LOGGER_NAME              GLOBAL_LOGGER_NAMEA
+#define EVENT_LOGGER_NAME               EVENT_LOGGER_NAMEA
+#endif /* !(defined(_UNICODE) || defined(UNICODE)) */
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM) */
+
+#ifndef _APISET_EVENTING
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
+
+EXTERN_C ULONG WMIAPI StartTraceW(
+    PTRACEHANDLE TraceHandle,
+    LPCWSTR InstanceName,
+    PEVENT_TRACE_PROPERTIES Properties
+);
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
+
+EXTERN_C ULONG WMIAPI StartTraceA(
+    PTRACEHANDLE TraceHandle,
+    LPCSTR InstanceName,
+    PEVENT_TRACE_PROPERTIES Properties
+);
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
+
+EXTERN_C ULONG WMIAPI StopTraceW(
+    TRACEHANDLE TraceHandle,
+    LPCWSTR InstanceName,
+    PEVENT_TRACE_PROPERTIES Properties
+);
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
+
+EXTERN_C ULONG WMIAPI StopTraceA(
+    TRACEHANDLE TraceHandle,
+    LPCSTR InstanceName,
+    PEVENT_TRACE_PROPERTIES Properties
+);
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
+
+EXTERN_C ULONG WMIAPI QueryTraceW(
+    TRACEHANDLE TraceHandle,
+    LPCWSTR InstanceName,
+    PEVENT_TRACE_PROPERTIES Properties
+);
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
+
+EXTERN_C ULONG WMIAPI QueryTraceA(
+    TRACEHANDLE TraceHandle,
+    LPCSTR InstanceName,
+    PEVENT_TRACE_PROPERTIES Properties
+);
+
+EXTERN_C ULONG WMIAPI UpdateTraceW(
+    TRACEHANDLE TraceHandle,
+    LPCWSTR InstanceName,
+    PEVENT_TRACE_PROPERTIES Properties
+);
+
+EXTERN_C ULONG WMIAPI UpdateTraceA(
+    TRACEHANDLE TraceHandle,
+    LPCSTR InstanceName,
+    PEVENT_TRACE_PROPERTIES Properties
+);
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
+
+#if (WINVER >= _WIN32_WINNT_WINXP)
+EXTERN_C ULONG WMIAPI FlushTraceW(
+    TRACEHANDLE TraceHandle,
+    LPCWSTR InstanceName,
+    PEVENT_TRACE_PROPERTIES Properties
+);
+#endif /* (WINVER >= _WIN32_WINNT_WINXP) */
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
+
+#if (WINVER >= _WIN32_WINNT_WINXP)
+EXTERN_C ULONG WMIAPI FlushTraceA(
+    TRACEHANDLE TraceHandle,
+    LPCSTR InstanceName,
+    PEVENT_TRACE_PROPERTIES Properties
+);
+#endif /* (WINVER >= _WIN32_WINNT_WINXP) */
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
+
+EXTERN_C ULONG WMIAPI ControlTraceW(
+    TRACEHANDLE TraceHandle,
+    LPCWSTR InstanceName,
+    PEVENT_TRACE_PROPERTIES Properties,
+    ULONG ControlCode
+);
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
+
+EXTERN_C ULONG WMIAPI ControlTraceA(
+    TRACEHANDLE TraceHandle,
+    LPCSTR InstanceName,
+    PEVENT_TRACE_PROPERTIES Properties,
+    ULONG ControlCode
+);
+
+EXTERN_C ULONG WMIAPI QueryAllTracesW(
+    PEVENT_TRACE_PROPERTIES *PropertyArray,
+    ULONG PropertyArrayCount,
+    PULONG LoggerCount
+);
+
+EXTERN_C ULONG WMIAPI QueryAllTracesA(
+    PEVENT_TRACE_PROPERTIES *PropertyArray,
+    ULONG PropertyArrayCount,
+    PULONG LoggerCount
+);
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
+
+EXTERN_C ULONG WMIAPI EnableTrace(
+    ULONG Enable,
+    ULONG EnableFlag,
+    ULONG EnableLevel,
+    LPCGUID ControlGuid,
+    TRACEHANDLE TraceHandle
+);
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES) */
+
+#endif
+
+#ifndef _APISET_EVENTING
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
+
+#if (WINVER >= _WIN32_WINNT_VISTA)
+EXTERN_C ULONG WMIAPI EnableTraceEx(
+    LPCGUID ProviderId,
+    LPCGUID SourceId,
+    TRACEHANDLE TraceHandle,
+    ULONG IsEnabled,
+    UCHAR Level,
+    ULONGLONG MatchAnyKeyword,
+    ULONGLONG MatchAllKeyword,
+    ULONG EnableProperty,
+    PEVENT_FILTER_DESCRIPTOR EnableFilterDesc
+);
+#endif /* (WINVER >= _WIN32_WINNT_VISTA) */
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES) */
+
+#endif /* !_APISET_EVENTING */
+
+#define ENABLE_TRACE_PARAMETERS_VERSION      1
+#define ENABLE_TRACE_PARAMETERS_VERSION_2    2
+
+typedef struct _ENABLE_TRACE_PARAMETERS_V1 {
+    ULONG Version;
+    ULONG EnableProperty;
+    ULONG ControlFlags;
+    GUID SourceId;
+    PEVENT_FILTER_DESCRIPTOR EnableFilterDesc;
+} ENABLE_TRACE_PARAMETERS_V1, *PENABLE_TRACE_PARAMETERS_V1;
+
+typedef struct _ENABLE_TRACE_PARAMETERS {
+    ULONG Version;
+    ULONG EnableProperty;
+    ULONG ControlFlags;
+    GUID SourceId;
+    PEVENT_FILTER_DESCRIPTOR EnableFilterDesc;
+    ULONG FilterDescCount;
+} ENABLE_TRACE_PARAMETERS, *PENABLE_TRACE_PARAMETERS;
+
+#ifndef _APISET_EVENTING
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
+
+#if (WINVER >= _WIN32_WINNT_WIN7)
+EXTERN_C ULONG WMIAPI EnableTraceEx2(
+    TRACEHANDLE TraceHandle,
+    LPCGUID ProviderId,
+    ULONG ControlCode,
+    UCHAR Level,
+    ULONGLONG MatchAnyKeyword,
+    ULONGLONG MatchAllKeyword,
+    ULONG Timeout,
+    PENABLE_TRACE_PARAMETERS EnableParameters
+);
+#endif /* (WINVER >= _WIN32_WINNT_WIN7) */
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES) */
+
+#endif /* !_APISET_EVENTING */
+
+typedef enum _TRACE_QUERY_INFO_CLASS {
+    TraceGuidQueryList = 0,
+    TraceGuidQueryInfo = 1,
+    TraceGuidQueryProcess = 2,
+    TraceStackTracingInfo = 3,
+    TraceSystemTraceEnableFlagsInfo = 4,
+    TraceSampledProfileIntervalInfo = 5,
+    TraceProfileSourceConfigInfo = 6,
+    TraceProfileSourceListInfo = 7,
+    TracePmcEventListInfo = 8,
+    TracePmcCounterListInfo = 9,
+    TraceSetDisallowList = 10,
+    TraceVersionInfo = 11,
+    TraceGroupQueryList = 12,
+    TraceGroupQueryInfo = 13,
+    TraceDisallowListQuery = 14,
+    TraceInfoReserved15 = 15,
+    TracePeriodicCaptureStateListInfo = 16,
+    TracePeriodicCaptureStateInfo = 17,
+    TraceProviderBinaryTracking = 18,
+    TraceMaxLoggersQuery = 19,
+    TraceLbrConfigurationInfo = 20,
+    TraceLbrEventListInfo = 21,
+    TraceMaxPmcCounterQuery = 22,
+    TraceStreamCount = 23,
+    TraceStackCachingInfo = 24,
+    TracePmcCounterOwners = 25,
+    TraceUnifiedStackCachingInfo = 26,
+    TracePmcSessionInformation = 27,
+    MaxTraceSetInfoClass
+} TRACE_QUERY_INFO_CLASS, TRACE_INFO_CLASS;
+
+#ifndef _APISET_EVENTING
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
+
+#if (WINVER >= _WIN32_WINNT_VISTA)
+EXTERN_C ULONG WMIAPI EnumerateTraceGuidsEx(
+    TRACE_QUERY_INFO_CLASS TraceQueryInfoClass,
+    PVOID InBuffer,
+    ULONG InBufferSize,
+    PVOID OutBuffer,
+    ULONG OutBufferSize,
+    PULONG ReturnLength
+);
+#endif /* (WINVER >= _WIN32_WINNT_VISTA) */
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES) */
+
+#endif /* !_APISET_EVENTING */
+
+typedef struct _CLASSIC_EVENT_ID {
+    GUID EventGuid;
+    UCHAR Type;
+    UCHAR Reserved[7];
+} CLASSIC_EVENT_ID, *PCLASSIC_EVENT_ID;
+
+typedef struct _TRACE_STACK_CACHING_INFO {
+    BOOLEAN Enabled;
+    ULONG CacheSize;
+    ULONG BucketCount;
+} TRACE_STACK_CACHING_INFO, *PTRACE_STACK_CACHING_INFO;
+
+typedef struct _TRACE_PROFILE_INTERVAL {
+    ULONG Source;
+    ULONG Interval;
+} TRACE_PROFILE_INTERVAL, *PTRACE_PROFILE_INTERVAL;
+
+typedef struct _TRACE_VERSION_INFO {
+    UINT EtwTraceProcessingVersion;
+    UINT Reserved;
+} TRACE_VERSION_INFO, *PTRACE_VERSION_INFO;
+
+typedef struct _TRACE_PERIODIC_CAPTURE_STATE_INFO {
+    ULONG CaptureStateFrequencyInSeconds;
+    USHORT ProviderCount;
+    USHORT Reserved;
+} TRACE_PERIODIC_CAPTURE_STATE_INFO, *PTRACE_PERIODIC_CAPTURE_STATE_INFO;
+
+#ifndef _APISET_EVENTING
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
+
+#if (WINVER >= _WIN32_WINNT_WIN7)
+EXTERN_C ULONG WMIAPI TraceSetInformation(
+    TRACEHANDLE SessionHandle,
+    TRACE_INFO_CLASS InformationClass,
+    PVOID TraceInformation,
+    ULONG InformationLength
+);
+#endif /* (WINVER >= _WIN32_WINNT_WIN7) */
+
+#if (WINVER >= _WIN32_WINNT_WIN8)
+EXTERN_C ULONG WMIAPI TraceQueryInformation(
+    TRACEHANDLE SessionHandle,
+    TRACE_INFO_CLASS InformationClass,
+    PVOID TraceInformation,
+    ULONG InformationLength,
+    PULONG ReturnLength
+);
+#endif /* (WINVER >= _WIN32_WINNT_WIN8) */
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)
+
+EXTERN_C ULONG WMIAPI CreateTraceInstanceId(
+    HANDLE RegHandle,
+    PEVENT_INSTANCE_INFO InstInfo
+);
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
+
+EXTERN_C ULONG WMIAPI TraceEvent(
+    TRACEHANDLE TraceHandle,
+    PEVENT_TRACE_HEADER EventTrace
+);
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)
+
+EXTERN_C ULONG WMIAPI TraceEventInstance(
+    TRACEHANDLE TraceHandle,
+    PEVENT_INSTANCE_HEADER EventTrace,
+    PEVENT_INSTANCE_INFO InstInfo,
+    PEVENT_INSTANCE_INFO ParentInstInfo
+);
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
+
+EXTERN_C ULONG WMIAPI RegisterTraceGuidsW(
+    WMIDPREQUEST RequestAddress,
+    PVOID RequestContext,
+    LPCGUID ControlGuid,
+    ULONG GuidCount,
+    PTRACE_GUID_REGISTRATION TraceGuidReg,
+    LPCWSTR MofImagePath,
+    LPCWSTR MofResourceName,
+    PTRACEHANDLE RegistrationHandle
+);
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
+
+EXTERN_C ULONG WMIAPI RegisterTraceGuidsA(
+    WMIDPREQUEST RequestAddress,
+    PVOID RequestContext,
+    LPCGUID ControlGuid,
+    ULONG GuidCount,
+    PTRACE_GUID_REGISTRATION TraceGuidReg,
+    LPCSTR MofImagePath,
+    LPCSTR MofResourceName,
+    PTRACEHANDLE RegistrationHandle
+);
+
+#if (WINVER >= _WIN32_WINNT_WINXP)
+EXTERN_C ULONG WMIAPI EnumerateTraceGuids(
+    PTRACE_GUID_PROPERTIES *GuidPropertiesArray,
+    ULONG PropertyArrayCount,
+    PULONG GuidCount
+);
+#endif /* (WINVER >= _WIN32_WINNT_WINXP) */
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
+
+EXTERN_C ULONG WMIAPI UnregisterTraceGuids(
+    TRACEHANDLE RegistrationHandle
+);
+
+EXTERN_C TRACEHANDLE WMIAPI GetTraceLoggerHandle(
+    PVOID Buffer
+);
+
+EXTERN_C UCHAR WMIAPI GetTraceEnableLevel(
+    TRACEHANDLE TraceHandle
+);
+
+EXTERN_C ULONG WMIAPI GetTraceEnableFlags(
+    TRACEHANDLE TraceHandle
+);
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
+
+EXTERN_C ETW_APP_DECLSPEC_DEPRECATED TRACEHANDLE WMIAPI OpenTraceW(
+    PEVENT_TRACE_LOGFILEW Logfile
+);
+
+EXTERN_C ETW_APP_DECLSPEC_DEPRECATED ULONG WMIAPI ProcessTrace(
+    PTRACEHANDLE HandleArray,
+    ULONG HandleCount,
+    LPFILETIME StartTime,
+    LPFILETIME EndTime
+);
+
+EXTERN_C ETW_APP_DECLSPEC_DEPRECATED ULONG WMIAPI CloseTrace(
+    TRACEHANDLE TraceHandle
+);
+
+EXTERN_C ETW_APP_DECLSPEC_DEPRECATED TRACEHANDLE WMIAPI OpenTraceFromBufferStream(
+    const ETW_OPEN_TRACE_OPTIONS * Options,
+    PETW_BUFFER_COMPLETION_CALLBACK BufferCompletionCallback,
+    void * BufferCompletionContext
+);
+
+EXTERN_C ETW_APP_DECLSPEC_DEPRECATED TRACEHANDLE WMIAPI OpenTraceFromRealTimeLogger(
+    PCWSTR LoggerName,
+    const ETW_OPEN_TRACE_OPTIONS * Options,
+    TRACE_LOGFILE_HEADER * LogFileHeader
+);
+
+EXTERN_C ETW_APP_DECLSPEC_DEPRECATED TRACEHANDLE WMIAPI OpenTraceFromRealTimeLoggerWithAllocationOptions(
+    PCWSTR LoggerName,
+    const ETW_OPEN_TRACE_OPTIONS * Options,
+    ULONG_PTR AllocationSize,
+    HANDLE MemoryPartitionHandle,
+    TRACE_LOGFILE_HEADER * LogFileHeader
+);
+
+EXTERN_C ETW_APP_DECLSPEC_DEPRECATED TRACEHANDLE WMIAPI OpenTraceFromFile(
+    PCWSTR LogFileName,
+    const ETW_OPEN_TRACE_OPTIONS * Options,
+    TRACE_LOGFILE_HEADER * LogFileHeader
+);
+
+EXTERN_C ETW_APP_DECLSPEC_DEPRECATED ULONG WMIAPI ProcessTraceBufferIncrementReference(
+    TRACEHANDLE TraceHandle,
+    const ETW_BUFFER_HEADER * Buffer
+);
+
+EXTERN_C ETW_APP_DECLSPEC_DEPRECATED ULONG WMIAPI ProcessTraceBufferDecrementReference(
+    const ETW_BUFFER_HEADER * Buffer
+);
+
+EXTERN_C ETW_APP_DECLSPEC_DEPRECATED ULONG WMIAPI ProcessTraceAddBufferToBufferStream(
+    TRACEHANDLE TraceHandle,
+    const ETW_BUFFER_HEADER * Buffer,
+    ULONG BufferSize
+);
+
+typedef enum _ETW_PROCESS_HANDLE_INFO_TYPE {
+    EtwQueryPartitionInformation = 1,
+    EtwQueryPartitionInformationV2 = 2,
+    EtwQueryLastDroppedTimes = 3,
+    EtwQueryLogFileHeader = 4,
+    EtwQueryProcessHandleInfoMax
+} ETW_PROCESS_HANDLE_INFO_TYPE;
+
+typedef struct _ETW_TRACE_PARTITION_INFORMATION {
+    GUID PartitionId;
+    GUID ParentId;
+    LONG64 QpcOffsetFromRoot;
+    ULONG PartitionType;
+} ETW_TRACE_PARTITION_INFORMATION, *PETW_TRACE_PARTITION_INFORMATION;
+
+typedef struct _ETW_TRACE_PARTITION_INFORMATION_V2 {
+    LONG64 QpcOffsetFromRoot;
+    ULONG PartitionType;
+    PWSTR PartitionId;
+    PWSTR ParentId;
+} ETW_TRACE_PARTITION_INFORMATION_V2, *PETW_TRACE_PARTITION_INFORMATION_V2;
+
+EXTERN_C ETW_APP_DECLSPEC_DEPRECATED ULONG WMIAPI QueryTraceProcessingHandle(
+    TRACEHANDLE ProcessingHandle,
+    ETW_PROCESS_HANDLE_INFO_TYPE InformationClass,
+    PVOID InBuffer,
+    ULONG InBufferSize,
+    PVOID OutBuffer,
+    ULONG OutBufferSize,
+    PULONG ReturnLength
+);
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM)
+
+EXTERN_C TRACEHANDLE WMIAPI OpenTraceA(
+    PEVENT_TRACE_LOGFILEA Logfile
+);
+
+EXTERN_C ULONG WMIAPI SetTraceCallback(
+    LPCGUID pGuid,
+    PEVENT_CALLBACK EventCallback
+);
+
+EXTERN_C ULONG WMIAPI RemoveTraceCallback(
+    LPCGUID pGuid
+);
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
+
+EXTERN_C ULONG __cdecl TraceMessage(
+    TRACEHANDLE LoggerHandle,
+    ULONG MessageFlags,
+    LPCGUID MessageGuid,
+    USHORT MessageNumber,
+    ...
+);
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
+
+EXTERN_C ULONG TraceMessageVa(
+    TRACEHANDLE LoggerHandle,
+    ULONG MessageFlags,
+    LPCGUID MessageGuid,
+    USHORT MessageNumber,
+    va_list MessageArgList
+);
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES) */
+
+#endif
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
+
+#define INVALID_PROCESSTRACE_HANDLE ((TRACEHANDLE)INVALID_HANDLE_VALUE)
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES) */
+
+#ifndef _APISET_EVENTING
+
+#if defined(UNICODE) || defined(_UNICODE)
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
+
+#define RegisterTraceGuids      RegisterTraceGuidsW
+#define StartTrace              StartTraceW
+#define ControlTrace            ControlTraceW
+#if defined(__TRACE_W2K_COMPATIBLE)
+#define StopTrace(a,b,c)        ControlTraceW((a),(b),(c), EVENT_TRACE_CONTROL_STOP)
+#define QueryTrace(a,b,c)       ControlTraceW((a),(b),(c), EVENT_TRACE_CONTROL_QUERY)
+#define UpdateTrace(a,b,c)      ControlTraceW((a),(b),(c), EVENT_TRACE_CONTROL_UPDATE)
+#else /* !defined(__TRACE_W2K_COMPATIBLE) */
+#define StopTrace               StopTraceW
+#define QueryTrace              QueryTraceW
+#define UpdateTrace             UpdateTraceW
+#endif /* !defined(__TRACE_W2K_COMPATIBLE) */
+#if (NTDDI_VERSION >= NTDDI_WINXP)
+#define FlushTrace              FlushTraceW
+#endif /* (NTDDI_VERSION >= NTDDI_WINXP) */
+#define QueryAllTraces          QueryAllTracesW
+#define OpenTrace               OpenTraceW
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES) */
+
+#else /* !(defined(UNICODE) || defined(_UNICODE)) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)
+
+#define RegisterTraceGuids      RegisterTraceGuidsA
+#define StartTrace              StartTraceA
+#define ControlTrace            ControlTraceA
+#if defined(__TRACE_W2K_COMPATIBLE)
+#define StopTrace(a,b,c)        ControlTraceA((a),(b),(c), EVENT_TRACE_CONTROL_STOP)
+#define QueryTrace(a,b,c)       ControlTraceA((a),(b),(c), EVENT_TRACE_CONTROL_QUERY)
+#define UpdateTrace(a,b,c)      ControlTraceA((a),(b),(c), EVENT_TRACE_CONTROL_UPDATE)
+#else /* !defined(__TRACE_W2K_COMPATIBLE) */
+#define StopTrace               StopTraceA
+#define QueryTrace              QueryTraceA
+#define UpdateTrace             UpdateTraceA
+#endif /* !defined(__TRACE_W2K_COMPATIBLE) */
+#if (NTDDI_VERSION >= NTDDI_WINXP)
+#define FlushTrace              FlushTraceA
+#endif /* (NTDDI_VERSION >= NTDDI_WINXP) */
+#define QueryAllTraces          QueryAllTracesA
+#define OpenTrace               OpenTraceA
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP) */
+
+#endif /* !(defined(UNICODE) || defined(_UNICODE)) */
+
+#endif /* !_APISET_EVENTING */
+
+#endif /* !defined(_EVNTRACE_KERNEL_MODE) */
+
+#endif /* defined(_WINNT_) || defined(WINNT) */
+
+#endif /* _EVNTRACE_H */

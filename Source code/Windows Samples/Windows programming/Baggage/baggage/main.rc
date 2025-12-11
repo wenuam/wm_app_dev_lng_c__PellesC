@@ -1,0 +1,26 @@
+// RESURSFIL genererad av "Pelles C for Windows, version 4.50".
+
+#include <windows.h>
+#include <commctrl.h>
+#include <richedit.h>
+#include "main.h"
+
+LANGUAGE LANG_ENGLISH,SUBLANG_ENGLISH_US
+
+DLG_MAIN DIALOGEX DISCARDABLE 6, 18, 195, 150
+STYLE DS_MODALFRAME|DS_3DLOOK|DS_CENTER|WS_THICKFRAME|WS_CAPTION|WS_SYSMENU|WS_VISIBLE
+CAPTION "Baggage Program"
+CLASS "BaggageClass"
+FONT 8, "MS Sans Serif", 0, 0, 1
+BEGIN
+  CONTROL "Example using some custom code for delayed loading, on two DLL files stored as resources in this EXE !", -1, "Static", WS_GROUP, 4, 8, 188, 20
+  CONTROL "Click each execute button more than once, and you will see a difference...", -1, "Static", WS_GROUP, 4, 30, 188, 20
+  CONTROL "Execute SampleDllFunction1 in TestDLL1.DLL", 4001, "Button", WS_TABSTOP, 4, 60, 188, 15
+  CONTROL "Execute SampleDllFunction2 in TestDLL2.DLL", 4002, "Button", WS_TABSTOP, 4, 76, 188, 15
+  CONTROL "OK, I have seen enough...", IDOK, "Button", WS_TABSTOP, 4, 130, 100, 15
+END
+
+IDR_ICO_MAIN ICON "main.ico"
+TESTDLL1 RCDATA "..\\testdll1\\testdll1.dll"
+TESTDLL2 RCDATA "..\\testdll2\\testdll2.dll"
+

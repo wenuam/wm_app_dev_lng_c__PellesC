@@ -1,0 +1,363 @@
+#ifndef _RTLSUPPORTAPI_H
+#define _RTLSUPPORTAPI_H
+
+#if __POCC__ >= 500
+#pragma once
+#endif
+
+/* ApiSet contract for api-ms-win-core-rtlsupport-l1 */
+
+#include <apiset.h>
+#include <apisetcconv.h>
+
+#include <winapifamily.h>
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
+
+#if (NTDDI_VERSION > NTDDI_WINXP)
+
+NTSYSAPI USHORT NTAPI RtlCaptureStackBackTrace(
+    ULONG FramesToSkip,
+    ULONG FramesToCapture,
+    PVOID * BackTrace,
+    PULONG BackTraceHash);
+
+#endif /* (NTDDI_VERSION > NTDDI_WINXP) */
+
+#if (NTDDI_VERSION > NTDDI_WIN2K)
+
+NTSYSAPI VOID NTAPI RtlCaptureContext(
+    PCONTEXT ContextRecord);
+
+#endif /* (NTDDI_VERSION > NTDDI_WIN2K) */
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
+
+#if (NTDDI_VERSION >= NTDDI_WIN10_VB)
+
+#ifdef _AMD64_
+NTSYSAPI VOID NTAPI RtlCaptureContext2(
+    PCONTEXT ContextRecord);
+#endif /* _AMD64_ */
+
+#endif /* (NTDDI_VERSION >= NTDDI_WIN10_VB) */
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES) */
+
+#if defined (_AMD64_) || defined(_ARM64_)
+
+#define UNWIND_HISTORY_TABLE_SIZE  12
+
+typedef struct _UNWIND_HISTORY_TABLE_ENTRY {
+    ULONG_PTR ImageBase;
+    PRUNTIME_FUNCTION FunctionEntry;
+} UNWIND_HISTORY_TABLE_ENTRY, *PUNWIND_HISTORY_TABLE_ENTRY;
+
+typedef struct _UNWIND_HISTORY_TABLE {
+    ULONG Count;
+    UCHAR LocalHint;
+    UCHAR GlobalHint;
+    UCHAR Search;
+    UCHAR Once;
+    ULONG_PTR LowAddress;
+    ULONG_PTR HighAddress;
+    UNWIND_HISTORY_TABLE_ENTRY Entry[UNWIND_HISTORY_TABLE_SIZE];
+} UNWIND_HISTORY_TABLE, *PUNWIND_HISTORY_TABLE;
+
+#endif /* yada, yada */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
+
+NTSYSAPI VOID NTAPI RtlUnwind(
+    PVOID TargetFrame,
+    PVOID TargetIp,
+    PEXCEPTION_RECORD ExceptionRecord,
+    PVOID ReturnValue);
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES) */
+
+#ifdef _AMD64_
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM)
+
+NTSYSAPI BOOLEAN __cdecl RtlAddFunctionTable(
+    PRUNTIME_FUNCTION FunctionTable,
+    ULONG EntryCount,
+    ULONG64 BaseAddress);
+
+NTSYSAPI BOOLEAN __cdecl RtlDeleteFunctionTable(
+    PRUNTIME_FUNCTION FunctionTable);
+
+NTSYSAPI BOOLEAN __cdecl RtlInstallFunctionTableCallback(
+    ULONG64 TableIdentifier,
+    ULONG64 BaseAddress,
+    ULONG Length,
+    PGET_RUNTIME_FUNCTION_CALLBACK Callback,
+    PVOID Context,
+    PCWSTR OutOfProcessCallbackDll
+);
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM)
+
+#if (NTDDI_VERSION >= NTDDI_WIN8)
+
+NTSYSAPI NTSTATUS NTAPI RtlAddGrowableFunctionTable(
+    PVOID * DynamicTable,
+    PRUNTIME_FUNCTION FunctionTable,
+    ULONG EntryCount,
+    ULONG MaximumEntryCount,
+    ULONG_PTR RangeBase,
+    ULONG_PTR RangeEnd
+);
+
+NTSYSAPI VOID NTAPI RtlGrowFunctionTable(
+    PVOID DynamicTable,
+    ULONG NewEntryCount);
+
+NTSYSAPI VOID NTAPI RtlDeleteGrowableFunctionTable(
+    PVOID DynamicTable);
+
+#endif /* (NTDDI_VERSION >= NTDDI_WIN8) */
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
+
+NTSYSAPI PRUNTIME_FUNCTION NTAPI RtlLookupFunctionEntry(
+    ULONG64 ControlPc,
+    PULONG64 ImageBase,
+    PUNWIND_HISTORY_TABLE HistoryTable);
+
+NTSYSAPI VOID __cdecl RtlRestoreContext(
+    PCONTEXT ContextRecord,
+    struct _EXCEPTION_RECORD *ExceptionRecord);
+
+NTSYSAPI VOID NTAPI RtlUnwindEx(
+    PVOID TargetFrame,
+    PVOID TargetIp,
+    PEXCEPTION_RECORD ExceptionRecord,
+    PVOID ReturnValue,
+    PCONTEXT ContextRecord,
+    PUNWIND_HISTORY_TABLE HistoryTable
+);
+
+NTSYSAPI PEXCEPTION_ROUTINE NTAPI RtlVirtualUnwind(
+    ULONG HandlerType,
+    ULONG64 ImageBase,
+    ULONG64 ControlPc,
+    PRUNTIME_FUNCTION FunctionEntry,
+    PCONTEXT ContextRecord,
+    PVOID* HandlerData,
+    PULONG64 EstablisherFrame,
+    PKNONVOLATILE_CONTEXT_POINTERS ContextPointers
+);
+
+#if (NTDDI_VERSION >= NTDDI_WIN10_FE)
+
+NTSYSAPI NTSTATUS NTAPI RtlVirtualUnwind2(
+    ULONG HandlerType,
+    ULONG64 ImageBase,
+    ULONG64 ControlPc,
+    PRUNTIME_FUNCTION FunctionEntry,
+    PCONTEXT ContextRecord,
+    PBOOLEAN MachineFrameUnwound,
+    PVOID * HandlerData,
+    PULONG64 EstablisherFrame,
+    PKNONVOLATILE_CONTEXT_POINTERS ContextPointers,
+    PULONG64 LowLimit,
+    PULONG64 HighLimit,
+    PEXCEPTION_ROUTINE* HandlerRoutine,
+    ULONG UnwindFlags
+);
+
+#endif /* NTDDI_VERSION >= NTDDI_WIN10_FE */
+
+#ifdef _M_ARM64EC
+NTSYSAPI BOOLEAN NTAPI RtlIsEcCode(
+    ULONG64 CodePointer);
+#endif /* _M_ARM64EC */
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES) */
+
+#endif /* _AMD64_ */
+
+#ifdef _ARM64_
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM)
+
+NTSYSAPI BOOLEAN __cdecl RtlAddFunctionTable(
+    PRUNTIME_FUNCTION FunctionTable,
+    ULONG EntryCount,
+    ULONG_PTR BaseAddress
+);
+
+NTSYSAPI BOOLEAN __cdecl RtlDeleteFunctionTable(
+    PRUNTIME_FUNCTION FunctionTable
+);
+
+NTSYSAPI BOOLEAN __cdecl RtlInstallFunctionTableCallback(
+    ULONG_PTR TableIdentifier,
+    ULONG_PTR BaseAddress,
+    ULONG Length,
+    PGET_RUNTIME_FUNCTION_CALLBACK Callback,
+    PVOID Context,
+    PCWSTR OutOfProcessCallbackDll
+);
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM)
+
+#if (NTDDI_VERSION >= NTDDI_WIN8)
+
+NTSYSAPI NTSTATUS NTAPI RtlAddGrowableFunctionTable(
+    PVOID * DynamicTable,
+    PRUNTIME_FUNCTION FunctionTable,
+    ULONG EntryCount,
+    ULONG MaximumEntryCount,
+    ULONG_PTR RangeBase,
+    ULONG_PTR RangeEnd
+);
+
+NTSYSAPI VOID NTAPI RtlGrowFunctionTable(
+    PVOID DynamicTable,
+    ULONG NewEntryCount
+);
+
+NTSYSAPI VOID NTAPI RtlDeleteGrowableFunctionTable(
+    PVOID DynamicTable
+);
+
+#endif /* (NTDDI_VERSION >= NTDDI_WIN8) */
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
+
+NTSYSAPI PRUNTIME_FUNCTION NTAPI RtlLookupFunctionEntry(
+    ULONG_PTR ControlPc,
+    PULONG_PTR ImageBase,
+    PUNWIND_HISTORY_TABLE HistoryTable
+);
+
+NTSYSAPI VOID __cdecl RtlRestoreContext(
+    PCONTEXT ContextRecord,
+    struct _EXCEPTION_RECORD * ExceptionRecord
+);
+
+NTSYSAPI VOID NTAPI RtlUnwindEx(
+    PVOID TargetFrame,
+    PVOID TargetIp,
+    PEXCEPTION_RECORD ExceptionRecord,
+    PVOID ReturnValue,
+    PCONTEXT ContextRecord,
+    PUNWIND_HISTORY_TABLE HistoryTable
+);
+
+NTSYSAPI PEXCEPTION_ROUTINE NTAPI RtlVirtualUnwind(
+    ULONG HandlerType,
+    ULONG_PTR ImageBase,
+    ULONG_PTR ControlPc,
+    PRUNTIME_FUNCTION FunctionEntry,
+    PCONTEXT ContextRecord,
+    PVOID* HandlerData,
+    PULONG_PTR EstablisherFrame,
+    PKNONVOLATILE_CONTEXT_POINTERS ContextPointers
+);
+
+#if (NTDDI_VERSION >= NTDDI_WIN10_FE)
+
+NTSYSAPI NTSTATUS NTAPI RtlVirtualUnwind2(
+    ULONG HandlerType,
+    ULONG_PTR ImageBase,
+    ULONG_PTR ControlPc,
+    PRUNTIME_FUNCTION FunctionEntry,
+    PCONTEXT ContextRecord,
+    PBOOLEAN MachineFrameUnwound,
+    PVOID * HandlerData,
+    PULONG_PTR EstablisherFrame,
+    PKNONVOLATILE_CONTEXT_POINTERS ContextPointers,
+    PULONG_PTR LowLimit,
+    PULONG_PTR HighLimit,
+    PEXCEPTION_ROUTINE* HandlerRoutine,
+    ULONG UnwindFlags
+);
+
+#endif /* NTDDI_VERSION >= NTDDI_WIN10_FE */
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES) */
+
+#endif /* _ARM64_ */
+
+#ifdef _X86_
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
+
+#if (NTDDI_VERSION >= NTDDI_WIN10_FE)
+
+NTSYSAPI VOID __cdecl RtlRestoreContext(
+    PCONTEXT ContextRecord,
+    struct _EXCEPTION_RECORD * ExceptionRecord
+);
+
+#endif /* NTDDI_VERSION >= NTDDI_WIN10_FE */
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES) */
+
+#endif /* _X86_ */
+
+#if defined(_CHPE_X86_ARM64_)
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM)
+
+NTSYSAPI VOID NTAPI RtlUnwindEx(
+    PVOID TargetFrame,
+    PVOID TargetIp,
+    PEXCEPTION_RECORD ExceptionRecord,
+    PVOID ReturnValue,
+    PCONTEXT ContextRecord,
+    PVOID HistoryTable
+);
+
+NTSYSAPI PIMAGE_ARM64_RUNTIME_FUNCTION_ENTRY NTAPI RtlLookupFunctionEntryCHPE(
+    ULONG_PTR ControlPc,
+    PULONG_PTR ImageBase,
+    PVOID HistoryTable
+);
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM) */
+
+#endif // defined(_CHPE_X86_ARM64_)
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
+
+NTSYSAPI VOID NTAPI RtlRaiseException(
+    PEXCEPTION_RECORD ExceptionRecord
+);
+
+NTSYSAPI PVOID NTAPI RtlPcToFileHeader(
+    PVOID PcValue,
+    PVOID * BaseOfImage
+);
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM)
+
+#if (NTDDI_VERSION >= NTDDI_WIN2K)
+
+NTSYSAPI SIZE_T NTAPI RtlCompareMemory(
+    const VOID *Source1,
+    const VOID *Source2,
+    SIZE_T Length
+);
+
+#endif /* (NTDDI_VERSION >= NTDDI_WIN2K) */
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM) */
+
+#endif /* _RTLSUPPORTAPI_H */

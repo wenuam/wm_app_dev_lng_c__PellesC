@@ -1,0 +1,13 @@
+# 
+# PROJEKTGRUPPFIL genererad av "Pelles C for Windows, version 4.50".
+# VARNING! REDIGERA INTE DENNA FIL.
+# 
+
+POC_WORKSPACE_VERSION = 1.00
+
+PROJECT = baggage\baggage.ppj
+PROJECT = testdll1\testdll1.ppj
+PROJECT = testdll2\testdll2.ppj
+
+DEPENDENCY = baggage\baggage.ppj ON testdll1\testdll1.ppj
+DEPENDENCY = baggage\baggage.ppj ON testdll2\testdll2.ppj

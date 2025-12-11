@@ -1,0 +1,58 @@
+#ifndef _TIMEAPI_H
+#define _TIMEAPI_H
+
+#if __POCC__ >= 500
+#pragma once
+#endif
+
+/* ApiSet contract for api-ms-win-mm-time-l1-1-0 */
+
+#include <apiset.h>
+#include <apisetcconv.h>
+
+#include <mmsyscom.h>
+
+#ifndef MMNOTIMER
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM)
+
+#define TIMERR_NOERROR  (0)
+#define TIMERR_NOCANDO  (TIMERR_BASE+1)
+#define TIMERR_STRUCT   (TIMERR_BASE+33)
+
+typedef struct timecaps_tag {
+    UINT wPeriodMin;
+    UINT wPeriodMax;
+} TIMECAPS, *PTIMECAPS, *NPTIMECAPS, *LPTIMECAPS;
+
+WINMMAPI MMRESULT WINAPI timeGetSystemTime(
+    LPMMTIME pmmt,
+    UINT cbmmt);
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM)
+
+WINMMAPI DWORD WINAPI timeGetTime(void);
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM)
+
+WINMMAPI MMRESULT WINAPI timeGetDevCaps(
+    LPTIMECAPS ptc,
+    UINT cbtc);
+
+WINMMAPI MMRESULT WINAPI timeBeginPeriod(
+    UINT uPeriod
+);
+
+WINMMAPI MMRESULT WINAPI timeEndPeriod(
+    UINT uPeriod
+);
+
+#endif  /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM) */
+
+#endif /* MMNOTIMER */
+
+#endif /* _TIMEAPI_H */

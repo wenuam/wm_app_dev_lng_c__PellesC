@@ -1,0 +1,447 @@
+#ifndef _SYSINFOAPI_H
+#define _SYSINFOAPI_H
+
+#if __POCC__ >= 500
+#pragma once
+#endif
+
+/* ApiSet contract for api-ms-win-core-sysinfo-l1 */
+
+#include <apiset.h>
+#include <apisetcconv.h>
+#include <minwindef.h>
+#include <minwinbase.h>
+
+#if __POCC__ >= 290
+#pragma warn(push)
+#pragma warn(disable:2198)  /* Nameless field is not standard */
+#endif
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
+
+typedef struct _SYSTEM_INFO {
+    union {
+        DWORD dwOemId;
+        struct {
+            WORD wProcessorArchitecture;
+            WORD wReserved;
+        } DUMMYSTRUCTNAME;
+    } DUMMYUNIONNAME;
+    DWORD dwPageSize;
+    LPVOID lpMinimumApplicationAddress;
+    LPVOID lpMaximumApplicationAddress;
+    DWORD_PTR dwActiveProcessorMask;
+    DWORD dwNumberOfProcessors;
+    DWORD dwProcessorType;
+    DWORD dwAllocationGranularity;
+    WORD wProcessorLevel;
+    WORD wProcessorRevision;
+} SYSTEM_INFO, *LPSYSTEM_INFO;
+
+typedef struct _MEMORYSTATUSEX {
+    DWORD dwLength;
+    DWORD dwMemoryLoad;
+    DWORDLONG ullTotalPhys;
+    DWORDLONG ullAvailPhys;
+    DWORDLONG ullTotalPageFile;
+    DWORDLONG ullAvailPageFile;
+    DWORDLONG ullTotalVirtual;
+    DWORDLONG ullAvailVirtual;
+    DWORDLONG ullAvailExtendedVirtual;
+} MEMORYSTATUSEX, *LPMEMORYSTATUSEX;
+
+#define USER_CET_ENVIRONMENT_WIN32_PROCESS        0x00000000
+#define USER_CET_ENVIRONMENT_SGX2_ENCLAVE         0x00000002
+#define USER_CET_ENVIRONMENT_VBS_ENCLAVE          0x00000010
+#define USER_CET_ENVIRONMENT_VBS_BASIC_ENCLAVE    0x00000011
+
+WINBASEAPI BOOL WINAPI GlobalMemoryStatusEx(
+    LPMEMORYSTATUSEX lpBuffer
+);
+
+WINBASEAPI void WINAPI GetSystemInfo(
+    LPSYSTEM_INFO lpSystemInfo
+);
+
+WINBASEAPI void WINAPI GetSystemTime(
+    LPSYSTEMTIME lpSystemTime
+);
+
+WINBASEAPI void WINAPI GetSystemTimeAsFileTime(
+    LPFILETIME lpSystemTimeAsFileTime
+);
+
+WINBASEAPI void WINAPI GetLocalTime(
+    LPSYSTEMTIME lpSystemTime
+);
+
+#if (NTDDI_VERSION >= NTDDI_WIN10_VB)
+
+WINBASEAPI BOOL WINAPI IsUserCetAvailableInEnvironment(
+    DWORD UserCetEnvironment
+);
+
+#endif /* (NTDDI_VERSION >= NTDDI_WIN10_VB) */
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM)
+
+#if (NTDDI_VERSION >= NTDDI_WIN10_19H1)
+
+WINBASEAPI BOOL WINAPI GetSystemLeapSecondInformation(
+    PBOOL Enabled,
+    PDWORD Flags
+);
+
+#endif /* (NTDDI_VERSION >= NTDDI_WIN10_19H1) */
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
+
+WINBASEAPI DWORD WINAPI GetVersion(void);
+
+WINBASEAPI BOOL WINAPI SetLocalTime(
+    CONST SYSTEMTIME *lpSystemTime
+);
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
+
+WINBASEAPI DWORD WINAPI GetTickCount(void);
+
+#if (_WIN32_WINNT >= 0x0600)
+WINBASEAPI ULONGLONG WINAPI GetTickCount64(void);
+#endif /* (_WIN32_WINNT >= 0x0600) */
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
+
+WINBASEAPI BOOL WINAPI GetSystemTimeAdjustment(
+    PDWORD lpTimeAdjustment,
+    PDWORD lpTimeIncrement,
+    PBOOL lpTimeAdjustmentDisabled
+);
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM)
+
+WINBASEAPI BOOL WINAPI GetSystemTimeAdjustmentPrecise(
+    PDWORD64 lpTimeAdjustment,
+    PDWORD64 lpTimeIncrement,
+    PBOOL lpTimeAdjustmentDisabled
+);
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
+
+WINBASEAPI UINT WINAPI GetSystemDirectoryA(
+    LPSTR lpBuffer,
+    UINT uSize
+);
+WINBASEAPI UINT WINAPI GetSystemDirectoryW(
+    LPWSTR lpBuffer,
+    UINT uSize
+);
+#ifdef UNICODE
+#define GetSystemDirectory  GetSystemDirectoryW
+#else /* !UNICODE */
+#define GetSystemDirectory  GetSystemDirectoryA
+#endif /* !UNICODE */
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
+
+WINBASEAPI UINT WINAPI GetWindowsDirectoryA(
+    LPSTR lpBuffer,
+    UINT uSize
+);
+WINBASEAPI UINT WINAPI GetWindowsDirectoryW(
+    LPWSTR lpBuffer,
+    UINT uSize
+);
+#ifdef UNICODE
+#define GetWindowsDirectory  GetWindowsDirectoryW
+#else /* !UNICODE */
+#define GetWindowsDirectory  GetWindowsDirectoryA
+#endif /* !UNICODE */
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
+
+WINBASEAPI UINT WINAPI GetSystemWindowsDirectoryA(
+    LPSTR lpBuffer,
+    UINT uSize
+);
+WINBASEAPI UINT WINAPI GetSystemWindowsDirectoryW(
+    LPWSTR lpBuffer,
+    UINT uSize
+);
+#ifdef UNICODE
+#define GetSystemWindowsDirectory  GetSystemWindowsDirectoryW
+#else /* !UNICODE */
+#define GetSystemWindowsDirectory  GetSystemWindowsDirectoryA
+#endif /* !UNICODE */
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
+
+typedef enum _COMPUTER_NAME_FORMAT {
+    ComputerNameNetBIOS,
+    ComputerNameDnsHostname,
+    ComputerNameDnsDomain,
+    ComputerNameDnsFullyQualified,
+    ComputerNamePhysicalNetBIOS,
+    ComputerNamePhysicalDnsHostname,
+    ComputerNamePhysicalDnsDomain,
+    ComputerNamePhysicalDnsFullyQualified,
+    ComputerNameMax
+} COMPUTER_NAME_FORMAT ;
+
+WINBASEAPI BOOL WINAPI GetComputerNameExA(
+    COMPUTER_NAME_FORMAT NameType,
+    LPSTR lpBuffer,
+    LPDWORD nSize
+);
+
+WINBASEAPI BOOL WINAPI GetComputerNameExW(
+    COMPUTER_NAME_FORMAT NameType,
+    LPWSTR lpBuffer,
+    LPDWORD nSize
+);
+#ifdef UNICODE
+#define GetComputerNameEx  GetComputerNameExW
+#else /* !UNICODE */
+#define GetComputerNameEx  GetComputerNameExA
+#endif /* !UNICODE */
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM)
+
+WINBASEAPI BOOL WINAPI SetComputerNameExW(
+    COMPUTER_NAME_FORMAT NameType,
+    LPCWSTR lpBuffer
+);
+
+#ifdef UNICODE
+#define SetComputerNameEx SetComputerNameExW
+#endif /* UNICODE */
+
+WINBASEAPI BOOL WINAPI SetSystemTime(
+    CONST SYSTEMTIME * lpSystemTime
+);
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
+
+WINBASEAPI BOOL WINAPI GetVersionExA(
+    LPOSVERSIONINFOA lpVersionInformation
+);
+WINBASEAPI BOOL WINAPI GetVersionExW(
+    LPOSVERSIONINFOW lpVersionInformation
+);
+#ifdef UNICODE
+#define GetVersionEx  GetVersionExW
+#else /* !UNICODE */
+#define GetVersionEx  GetVersionExA
+#endif /* !UNICODE */
+
+WINBASEAPI BOOL WINAPI GetLogicalProcessorInformation(
+    PSYSTEM_LOGICAL_PROCESSOR_INFORMATION Buffer,
+    PDWORD ReturnedLength
+);
+
+#if (_WIN32_WINNT >= _WIN32_WINNT_WIN7)
+WINBASEAPI BOOL WINAPI GetLogicalProcessorInformationEx(
+    LOGICAL_PROCESSOR_RELATIONSHIP RelationshipType,
+    PSYSTEM_LOGICAL_PROCESSOR_INFORMATION_EX Buffer,
+    PDWORD ReturnedLength
+);
+#endif /* (_WIN32_WINNT >= _WIN32_WINNT_WIN7) */
+
+#if (_WIN32_WINNT >= _WIN32_WINNT_WINXP)
+WINBASEAPI void WINAPI GetNativeSystemInfo(
+    LPSYSTEM_INFO lpSystemInfo
+);
+#endif /* (_WIN32_WINNT >= _WIN32_WINNT_WINXP) */
+
+#if (_WIN32_WINNT >= _WIN32_WINNT_WIN8)
+WINBASEAPI void WINAPI GetSystemTimePreciseAsFileTime(
+    LPFILETIME lpSystemTimeAsFileTime
+);
+#endif /* (_WIN32_WINNT >= _WIN32_WINNT_WIN8) */
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM)
+
+#if (_WIN32_WINNT >= _WIN32_WINNT_VISTA)
+WINBASEAPI BOOL WINAPI GetProductInfo(
+    DWORD dwOSMajorVersion,
+    DWORD dwOSMinorVersion,
+    DWORD dwSpMajorVersion,
+    DWORD dwSpMinorVersion,
+    PDWORD pdwReturnedProductType
+);
+#endif /* (_WIN32_WINNT >= _WIN32_WINNT_VISTA) */
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM)
+
+#if (NTDDI_VERSION >= NTDDI_WIN2K)
+NTSYSAPI ULONGLONG NTAPI VerSetConditionMask(
+    ULONGLONG ConditionMask,
+    ULONG TypeMask,
+    UCHAR Condition
+);
+#endif /* (NTDDI_VERSION >= NTDDI_WIN2K) */
+
+#if (_WIN32_WINNT >= _WIN32_WINNT_WIN8)
+WINBASEAPI BOOL WINAPI GetOsSafeBootMode(
+    PDWORD Flags
+);
+#endif /* (_WIN32_WINNT >= _WIN32_WINNT_WIN8) */
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_APP)
+
+WINBASEAPI UINT WINAPI EnumSystemFirmwareTables(
+    DWORD FirmwareTableProviderSignature,
+    PVOID pFirmwareTableEnumBuffer,
+    DWORD BufferSize
+);
+
+WINBASEAPI UINT WINAPI GetSystemFirmwareTable(
+    DWORD FirmwareTableProviderSignature,
+    DWORD FirmwareTableID,
+    PVOID pFirmwareTableBuffer,
+    DWORD BufferSize
+);
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_APP) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM)
+
+WINBASEAPI BOOL WINAPI DnsHostnameToComputerNameExW(
+    LPCWSTR Hostname,
+    LPWSTR ComputerName,
+    LPDWORD nSize
+);
+
+WINBASEAPI BOOL WINAPI GetPhysicallyInstalledSystemMemory(
+    PULONGLONG TotalMemoryInKilobytes
+);
+
+#define SCEX2_ALT_NETBIOS_NAME 0x00000001
+
+WINBASEAPI BOOL WINAPI SetComputerNameEx2W(
+    COMPUTER_NAME_FORMAT NameType,
+    DWORD Flags,
+    LPCWSTR lpBuffer
+);
+
+#ifdef UNICODE
+#define SetComputerNameEx2 SetComputerNameEx2W
+#endif /* UNICODE */
+
+WINBASEAPI BOOL WINAPI SetSystemTimeAdjustment(
+    DWORD dwTimeAdjustment,
+    BOOL bTimeAdjustmentDisabled
+);
+
+WINBASEAPI BOOL WINAPI SetSystemTimeAdjustmentPrecise(
+    DWORD64 dwTimeAdjustment,
+    BOOL bTimeAdjustmentDisabled
+);
+
+WINBASEAPI BOOL WINAPI InstallELAMCertificateInfo(
+    HANDLE ELAMFile
+);
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM) */
+
+#if (_WIN32_WINNT >= _WIN32_WINNT_WIN7)
+WINBASEAPI BOOL WINAPI GetProcessorSystemCycleTime(
+    USHORT Group,
+    PSYSTEM_PROCESSOR_CYCLE_TIME_INFORMATION Buffer,
+    PDWORD ReturnedLength
+);
+#endif /* (_WIN32_WINNT >= _WIN32_WINNT_WIN7) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM)
+
+#if (_WIN32_WINNT >= _WIN32_WINNT_WINTHRESHOLD)
+WINBASEAPI BOOL WINAPI GetOsManufacturingMode(
+    PBOOL pbEnabled
+);
+#endif /* (_WIN32_WINNT >= _WIN32_WINNT_WINTHRESHOLD) */
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM)
+
+#if (_WIN32_WINNT >= _WIN32_WINNT_WINTHRESHOLD)
+WINBASEAPI HRESULT WINAPI GetIntegratedDisplaySize(
+    double * sizeInInches
+);
+#endif /* (_WIN32_WINNT >= _WIN32_WINNT_WINTHRESHOLD) */
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM)
+
+WINBASEAPI BOOL WINAPI SetComputerNameA(
+    LPCSTR lpComputerName
+);
+WINBASEAPI BOOL WINAPI SetComputerNameW(
+    LPCWSTR lpComputerName
+);
+#ifdef UNICODE
+#define SetComputerName  SetComputerNameW
+#else /* !UNICODE */
+#define SetComputerName  SetComputerNameA
+#endif /* !UNICODE */
+
+WINBASEAPI BOOL WINAPI SetComputerNameExA(
+    COMPUTER_NAME_FORMAT NameType,
+    LPCSTR lpBuffer
+);
+
+#ifndef UNICODE
+#define SetComputerNameEx SetComputerNameExA
+#endif /* UNICODE */
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM)
+
+typedef enum DEVELOPER_DRIVE_ENABLEMENT_STATE {
+    DeveloperDriveEnablementStateError,
+    DeveloperDriveEnabled,
+    DeveloperDriveDisabledBySystemPolicy,
+    DeveloperDriveDisabledByGroupPolicy
+} DEVELOPER_DRIVE_ENABLEMENT_STATE;
+
+#if (NTDDI_VERSION >= NTDDI_WIN11_NI)
+WINBASEAPI DEVELOPER_DRIVE_ENABLEMENT_STATE WINAPI GetDeveloperDriveEnablementState(void);
+#endif /* (NTDDI_VERSION >= NTDDI_WIN11_NI) */
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM) */
+
+#if __POCC__ >= 290
+#pragma warn(pop)
+#endif
+
+#endif /* _SYSINFOAPI_H */

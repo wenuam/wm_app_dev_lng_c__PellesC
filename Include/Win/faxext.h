@@ -1,0 +1,106 @@
+#ifndef _FAXEXT_H
+#define _FAXEXT_H
+
+#if __POCC__ >= 500
+#pragma once
+#endif
+
+/* fax extension configuration and notification definitions */
+
+#include <winapifamily.h>
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)
+
+typedef enum {
+    DEV_ID_SRC_FAX,
+    DEV_ID_SRC_TAPI
+} FAX_ENUM_DEVICE_ID_SOURCE;
+
+DWORD WINAPI FaxExtGetData(
+    DWORD dwDeviceId,
+    FAX_ENUM_DEVICE_ID_SOURCE DevIdSrc,
+    LPCWSTR lpcwstrDataGUID,
+    LPBYTE *ppData,
+    LPDWORD lpdwDataSize
+);
+typedef DWORD (CALLBACK *PFAX_EXT_GET_DATA)(
+    DWORD,
+    FAX_ENUM_DEVICE_ID_SOURCE,
+    LPCWSTR,
+    LPBYTE *,
+    LPDWORD
+);
+
+DWORD WINAPI FaxExtSetData(
+    HINSTANCE hInst,
+    DWORD dwDeviceId,
+    FAX_ENUM_DEVICE_ID_SOURCE DevIdSrc,
+    LPCWSTR lpcwstrDataGUID,
+    LPBYTE pData,
+    DWORD dwDataSize
+);
+typedef DWORD (CALLBACK *PFAX_EXT_SET_DATA)(
+    HINSTANCE,
+    DWORD,
+    FAX_ENUM_DEVICE_ID_SOURCE,
+    LPCWSTR,
+    LPBYTE,
+    DWORD
+);
+
+HRESULT WINAPI FaxExtConfigChange(
+    DWORD dwDeviceId,
+    LPCWSTR lpcwstrDataGUID,
+    LPBYTE lpData,
+    DWORD dwDataSize
+);
+typedef HRESULT (WINAPI *PFAX_EXT_CONFIG_CHANGE)(
+    DWORD,
+    LPCWSTR,
+    LPBYTE,
+    DWORD
+);
+
+HANDLE WINAPI FaxExtRegisterForEvents(
+    HINSTANCE hInst,
+    DWORD dwDeviceId,
+    FAX_ENUM_DEVICE_ID_SOURCE DevIdSrc,
+    LPCWSTR lpcwstrDataGUID,
+    PFAX_EXT_CONFIG_CHANGE lpConfigChangeCallback
+);
+typedef HANDLE (CALLBACK *PFAX_EXT_REGISTER_FOR_EVENTS)(
+    HINSTANCE,
+    DWORD,
+    FAX_ENUM_DEVICE_ID_SOURCE,
+    LPCWSTR,
+    PFAX_EXT_CONFIG_CHANGE
+);
+
+DWORD WINAPI FaxExtUnregisterForEvents(
+    HANDLE hNotification
+);
+typedef DWORD (CALLBACK *PFAX_EXT_UNREGISTER_FOR_EVENTS)(HANDLE);
+
+void WINAPI FaxExtFreeBuffer(
+    LPVOID lpvBuffer
+);
+typedef void (CALLBACK *PFAX_EXT_FREE_BUFFER)(LPVOID);
+
+HRESULT WINAPI FaxExtInitializeConfig(
+    PFAX_EXT_GET_DATA,
+    PFAX_EXT_SET_DATA,
+    PFAX_EXT_REGISTER_FOR_EVENTS,
+    PFAX_EXT_UNREGISTER_FOR_EVENTS,
+    PFAX_EXT_FREE_BUFFER
+);
+typedef HRESULT (WINAPI *PFAX_EXT_INITIALIZE_CONFIG)(
+    PFAX_EXT_GET_DATA,
+    PFAX_EXT_SET_DATA,
+    PFAX_EXT_REGISTER_FOR_EVENTS,
+    PFAX_EXT_UNREGISTER_FOR_EVENTS,
+    PFAX_EXT_FREE_BUFFER
+);
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP) */
+
+#endif /* _FAXEXT_H */

@@ -1,0 +1,143 @@
+#ifndef _HEAPAPI_H
+#define _HEAPAPI_H
+
+#if __POCC__ >= 500
+#pragma once
+#endif
+
+/* ApiSet contract for api-ms-win-core-heap-l1 */
+
+#include <apiset.h>
+#include <apisetcconv.h>
+#include <minwindef.h>
+#include <minwinbase.h>
+
+#if __POCC__ >= 900 && !defined(__midl)
+#define DECLSPEC_ALLOCATOR   __declspec(allocator)
+#define DECLSPEC_RELEASE(n)  __declspec(release(n))
+#define DECLSPEC_NODISCARD   __declspec(nodiscard)
+#else /* __POCC__ < 900 */
+#define DECLSPEC_ALLOCATOR
+#define DECLSPEC_RELEASE(x)
+#define DECLSPEC_NODISCARD
+#endif /* __POCC__ < 900 */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
+
+typedef struct _HEAP_SUMMARY {
+    DWORD cb;
+    SIZE_T cbAllocated;
+    SIZE_T cbCommitted;
+    SIZE_T cbReserved;
+    SIZE_T cbMaxReserve;
+} HEAP_SUMMARY, *PHEAP_SUMMARY;
+typedef PHEAP_SUMMARY LPHEAP_SUMMARY;
+
+WINBASEAPI HANDLE WINAPI HeapCreate(
+    DWORD flOptions,
+    SIZE_T dwInitialSize,
+    SIZE_T dwMaximumSize
+);
+
+WINBASEAPI BOOL WINAPI HeapDestroy(
+    HANDLE hHeap
+);
+
+WINBASEAPI DECLSPEC_NODISCARD DECLSPEC_ALLOCATOR LPVOID WINAPI HeapAlloc(
+    HANDLE hHeap,
+    DWORD dwFlags,
+    SIZE_T dwBytes
+);
+
+WINBASEAPI DECLSPEC_NODISCARD DECLSPEC_ALLOCATOR LPVOID WINAPI HeapReAlloc(
+    HANDLE hHeap,
+    DWORD dwFlags,
+    LPVOID lpMem,
+    SIZE_T dwBytes
+);
+
+WINBASEAPI DECLSPEC_RELEASE(3) BOOL WINAPI HeapFree( 
+    HANDLE hHeap,
+    DWORD dwFlags,
+    LPVOID lpMem
+);
+
+WINBASEAPI SIZE_T WINAPI HeapSize(
+    HANDLE hHeap,
+    DWORD dwFlags,
+    LPCVOID lpMem
+);
+
+WINBASEAPI HANDLE WINAPI GetProcessHeap(
+    void
+);
+
+WINBASEAPI SIZE_T WINAPI HeapCompact(
+    HANDLE hHeap,
+    DWORD dwFlags
+);
+
+WINBASEAPI BOOL WINAPI HeapSetInformation(
+    HANDLE HeapHandle,
+    HEAP_INFORMATION_CLASS HeapInformationClass,
+    PVOID HeapInformation,
+    SIZE_T HeapInformationLength
+);
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
+
+WINBASEAPI BOOL WINAPI HeapValidate(
+    HANDLE hHeap,
+    DWORD dwFlags,
+    LPCVOID lpMem
+);
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP)
+
+BOOL WINAPI HeapSummary(
+    HANDLE hHeap,
+    DWORD dwFlags,
+    LPHEAP_SUMMARY lpSummary
+);
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
+
+WINBASEAPI DWORD WINAPI GetProcessHeaps(
+    DWORD NumberOfHeaps,
+    PHANDLE ProcessHeaps
+);
+
+WINBASEAPI BOOL WINAPI HeapLock(
+    HANDLE hHeap
+);
+
+WINBASEAPI BOOL WINAPI HeapUnlock(
+    HANDLE hHeap
+);
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
+
+WINBASEAPI BOOL WINAPI HeapWalk(
+    HANDLE hHeap,
+    LPPROCESS_HEAP_ENTRY lpEntry
+);
+
+WINBASEAPI BOOL WINAPI HeapQueryInformation(
+    HANDLE HeapHandle,
+    HEAP_INFORMATION_CLASS HeapInformationClass,
+    PVOID HeapInformation,
+    SIZE_T HeapInformationLength,
+    PSIZE_T ReturnLength
+);
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES) */
+
+#endif /* _HEAPAPI_H */

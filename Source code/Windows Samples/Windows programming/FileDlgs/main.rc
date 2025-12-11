@@ -1,0 +1,26 @@
+// RESURSFIL genererad av "Pelles C for Windows, version 6.50".
+
+#include <windows.h>
+#include <commctrl.h>
+#include <richedit.h>
+#include "main.h"
+
+LANGUAGE LANG_ENGLISH,SUBLANG_ENGLISH_US
+
+1 MANIFEST "filedlgs.manifest"
+
+IDR_APPICON ICON "main.ico"
+
+STRINGTABLE
+{
+  IDS_APPNAME, "New File Dialog Sample"
+  IDS_OPENMESSAGE, "Instructions:\r\n1. Read this carefully\r\n2. Remember what you have just read\r\n3. Forget point 1, 2 and 3\r\n\r\nOh, by the way, the selected filename is:\r\n"
+  IDS_FILTERNAME1, "Sample executables (*.exe)"
+  IDS_FILTERSPEC1, "*.exe"
+  IDS_FILTERNAME2, "Sample scripts (*.rc)"
+  IDS_FILTERSPEC2, "*.rc"
+  IDS_DEFAULTEXT, "exe"
+  IDS_SAVEMESSAGE, "Now we all pretend that this file is saved:\r\n"
+  IDS_SAVETEXTMESSAGE, "Fetched the following text from the custom edit box (through the event handler):"
+}
+

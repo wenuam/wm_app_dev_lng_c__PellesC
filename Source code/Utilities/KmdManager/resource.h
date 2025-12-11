@@ -1,0 +1,25 @@
+// resource.h
+
+#define IDD_DIALOG				1000
+#define IDB_BROWSE				1001
+#define IDB_REGISTER			1002
+#define IDB_RUN					1003
+#define IDB_IOCONTROL			1004
+#define IDB_UNREGISTER			1005
+#define IDB_STOP				1006
+
+#define IDB_OPTIONS				1007
+#define IDB_ABOUT				1008
+#define IDB_EXIT				1009
+
+#define IDCHK_REGTORUNLINK		1010
+#define IDCHK_UNREGTOSTOPLINK	1011
+#define IDCHK_IOCONTROLLINK		1012
+
+#define IDE_PATH				1020
+#define IDE_CONTROL_CODE		1021
+
+#define IDC_REPORT_LIST			1030
+
+#define IDI_ICON				2000
+

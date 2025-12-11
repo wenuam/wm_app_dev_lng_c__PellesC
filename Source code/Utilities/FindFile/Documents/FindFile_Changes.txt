@@ -1,0 +1,449 @@
+===============================================================
+28th April 2016. Version 3.2 (JF)
+===============================================================
+Removed ButtEx64W.lib & ButtEx32W.lib and included ButtonEx.c
+for both the 32bit and 64bit projects.
+
+There is only one .RC file now for both the 32bit and 64bit 
+versions of FindFile. "FindFileUni.rc"
+
+Added a Mutex so that only one instance of FindFile can be run 
+at any one time. See wWinMain().
+
+The total bytes listed are summed and displayed in the status bar
+after the scan has finished, this can also be used to show the 
+bytes used on a drive, partition or in a folder.
+
+In many cases used the macro ARRSIZE(s) to pass size of buffer
+to a Windows API instead of a hardcoded number.
+
+Allow Ctrl+C in header window - see SubClassTextBoxProc()
+
+Changed SHRecycleBin() (Shell.c) to send folders to the 
+Recycle Bin as well as files.
+
+A new Dutch translation has been added to the resource strings
+by Siekmanski, and Grincheux has done a better French translation.
+
+Two Dialog message boxes always displayed in English - fixed.
+
+Added ToolTip to the WebSite button on the About Dialogbox
+explaining what one will find there.
+
+Removed the icon from the Search button.
+
+===============================================================
+10th August 2014. Version 3.1 (JF)
+===============================================================
+Improved Unicode recognition and display - UTF8, UTF16, UTF32 
+with and without BOM's, and UNIX text are now displayed in the 
+header window, and the main window's title bar describes which.
+
+e.g. 
+	- [UNIX]
+	- [UTF8]BOM
+	- [UTF8]NO BOM
+	- [UTF16LE]BOM
+	- [UTF16BE]BOM
+	- [UTF16LE]NO BOM
+	- [UTF16BE]NO BOM
+	- [UTF32LE]BOM
+	- [UTF32BE]BOM
+	- [UTF32LE]NO BOM
+	- [UTF32BE]NO BOM
+
+===============================================================
+28th July 2014. Version 3.0 (JF)
+===============================================================
+Previously only an empty folder could be deleted, now any folder
+will be deleted. Shell functions, MoveTo, CopyTo and Delete will
+show a progress dialog if the operation is lengthy.
+
+===============================================================
+14th July 2014. Version 3.0.0.0 (JF)
+===============================================================
+Changed the DoShellExecuteEx() routine to add quotes '"' at each 
+end of the string. Some old apps do not allow spaces in command 
+string.
+
+Changed SortHead() to use hasbom() instead of the Windows API
+IsTextUnicode() which would occasionally get it wrong.
+
+Improved the way the header text is displayed.
+
+===============================================================
+13th May 2014. Version 3.0.0.0 (JF)
+===============================================================
+The displaying of folders in the status bar was slowing down
+FindFile - something has happened between XP and WIN7. To speed 
+things up the folders are only displayed every DIR_COUNT. Here
+a full scan of the hard drive has gone from 16secs to 5secs.
+
+One can now search for more than two files simultaneously.
+*.bmp,*.png,*jpg or mydoc.txt,yourdoc.txt
+Each argument separated by a comma.
+
+I've not been able to get the Explorer ContextMenu DLL working 
+in Win7, instead one can use Explorer's SendTo
+
+Paste this into Explorer's address bar and go to that folder
+%APPDATA%\Microsoft\Windows\SendTo
+
+then make a shortcut of FindFile64 or FindFile32 in that folder.
+
+===============================================================
+14th December 2013. Version 3.0.0.0 (JF)
+===============================================================
+Two bugs 
+
+1. If one has selected one of the MRU's then selects BROWSE and
+then Cancel, the wrong MRU was placed at the top of the list.
+
+The following code was added to the function OnCommand() case IDC_COMBO:
+
+// Only do IfMruExists if selection is past the BROWSE
+if(idx > g_dwLastNative){
+    IfMruExists(g_sInitialDir);
+    idx = g_dwLastNative+1; // If MRU was placed at top idx must reflect that
+}
+
+2. In the function SubClassRenameEditBoxProc() I had
+SetWindowLongPtr(hwnd, GWLP_WNDPROC, (DWORD)pSubClassRenameEditBoxProc);
+
+should have been
+
+SetWindowLongPtr(hwnd, GWLP_WNDPROC, (LONG_PTR)pSubClassRenameEditBoxProc);
+
+===============================================================
+12th December 2013. Version 3.0.0.0 (JF)
+===============================================================
+New 64Bit version. Unicode only. Changed Ole image loader to 
+GdiPlus image loader.
+
+Will now load PNG, TIF, JPG, GIF, EMF, BMP, DIB, WMF.
+Icons are loaded with LoadImage API.
+
+Improved the way the rename edit box is displayed with border
+and horizontal scrolling.
+
+Increased number of MRU items for Browsing to ten.
+
+32bit and 64bit project files are included in zip.
+
+Tidied up various things, deleted obsolete images, deleted
+any other files not needed and some unused functions.
+
+If an existing MRU is selected move to top and shuffle the 
+rest down.
+
+===============================================================
+22nd September 2009. Version 2.0.0.0 (JF)
+===============================================================
+Changed the way Menu item 'Explore Folder' works so that when a 
+file is selected the containing folder is opened and the file 
+highlighted.
+
+Changed Menu 'Open' and clicking on items (LVN_ITEMACTIVATE) 
+- now checks to see if a folder or a file has been selected 
+and calls respectively.
+
+===============================================================
+26th August 2009. Version 2.0.0.0 (JF)
+===============================================================
+Cleaned up code so that compiling with level 2 warnings is
+quiet. Added a few #pragma's and a few casts.
+
+Also used fgetpos() instead of fseek() in find.c so that 
+large files can be dealt with.
+
+===============================================================
+12th August 2009. Version 2.0.0.0 (JF)
+===============================================================
+Renamed most global variables to be pre-fixed with 'g_'
+
+Remove all CriticalSection code as I don't think it did anything
+useful.
+
+Macro replacement for using %ls or %s in various calls.
+
+e.g. 
+
+#ifdef UNICODE
+  _stprintf(str, SIZE, _T("%ls%ls"), pathname, str1);
+#else
+  _stprintf(str, SIZE, _T("%s%s"), pathname, str1);
+#endif
+
+becomes this
+
+_stprintf(str, SIZE, _TS _TS, pathname, str1);
+
+
+This reduces the number of #ifdef UNICODE instances.
+
+Also use ShellExecute() instead of WinExec in func DoShellExecuteEx()
+
+===============================================================
+10th May 2009. Version 2.0.0.0 (JF)
+===============================================================
+I don't know why this bug did not show up before. Activate the
+listview while FindFile is scanning and then hover over various
+listed files, sometimes it will crash!
+
+strGen0 used in case LVN_ITEMCHANGED: in OnNotify() was becoming
+corrupted because of the multitasking, probably in function
+CallBackProc(). Changed to strGen1 in case LVN_ITEMCHANGED:,
+all seems ok now.
+
+===============================================================
+3rd May 2009. Version 2.0.0.0 (JF)
+===============================================================
+The advent of PellesC 6.0 required a small change to accommodate
+Pelle adding a check to see if a jump occurs within a VLA block.
+
+These lines in DragDrop.c 
+// Moved these lines to above goto's to accommodate Pelles C 6.0
+// Cannot goto within a VLA block.
+
+===============================================================
+10th February 2008. Version 2.0.0.0 (JF)
+===============================================================
+PellesC does Unicode, thanks Pelle.
+
+Make RC file and manifest file Unicode. Added Russian language 
+strings to RC file, changed all the Dialogs template fonts 
+to "MS Shell Dlg".
+
+Changed way the menu items width and height is calculated in
+MenuMeasureItem() in Utils.c
+
+===============================================================
+22nd September 2007. Version 2.0.0.0 (JF)
+===============================================================
+Added multiple token ability for pattern matching.
+
+The "File Search" string can have multiple tokens separated
+by a comma.
+
+e.g. 
+
+*.h,*.c
+
+mytext.txt,*.c
+
+*.h,*.c,*.cpp
+  
+Do not include spaces in the string.
+
+*.h, *.c   WRONG
+
+See Private_FindFile() and IsFilterMatch() in Find.c
+
+===============================================================
+21st September 2007. Version 2.0.0.0 (JF)
+===============================================================
+Very large file (multi gig) sizes were not displayed correctly. 
+The macro MAKELONGLONG was not correct.
+
+was
+#define MAKELONGLONG(a,b) ((long long) (((long) (a)) | ((long long ) ((long) (b))) << 32))
+
+should be
+#define MAKELONGLONG(a,b) ((long long)(((long)(a)&0xFFFFFFFF) | (((long long)((long) (b)&0xFFFFFFFF)) << 32)))
+
+===============================================================
+16th September 2007. Version 2.0.0.0 (JF)
+===============================================================
+Fixed a long time problem where one could not DragDrop when
+a text search causes braces to be displayed in the listview,
+e.g. file.txt [4] c:\    See HandleDragDrop()
+
+===============================================================
+15th September 2007. Version 2.0.0.0 (JF)
+===============================================================
+Bug in the WideChar search routines. Hopefully it is fixed now.
+
+===============================================================
+11th September 2007. Version 2.0.0.0 (JF)
+===============================================================
+Converted FindFile to run as Unicode. Made extensive use 
+of tchar.h to redefine various functions. e.g strlen/wcslen
+becomes _tcslen, snprintf/swprintf becomes _stprintf, etc.
+
+_UNICODE and UNICODE are defined in 
+Project Options/Compiler Tab/Define preprocessor symbols. 
+
+_UNICODE is for the C runtime, UNICODE is for Windows,
+both need to be defined.
+
+To compile as ANSI take out _UNICODE and UNICODE.
+
+Quite a few int's have been made size_t.
+
+With the intention of supporting different languages, moved
+all appropriate strings into string resource. All these 
+strings are now loaded at run time with the API LoadString().
+
+A new feature has been added allowing text searching for
+UNICODE strings. This requires some new functions described
+next.
+
+New functions have been added. SortHead() has been added 
+to convert the header text, to ANSI or UNICODE depending 
+on how the app is complied. SortHead() is called from 
+DisplayFileHead() after the text has been loaded.
+
+Also added - ViewSearchResultsWc, ViewSearchResultsMb, 
+strSearchMb, strSearchiMb, strSearchWc and strSearchiWc, 
+to deal with the different situations depending on UNICODE 
+or ANSI.
+
+To compile for different languages use the API SetThreadLocale()
+See examples in _tWinMain(). In the folder LandIDs you will find
+the list of identifiers. You may not need to use the API 
+SetThreadLocale() as the Locale is automatically set.
+
+If you add your own language please send me the appropriate
+changes made to FindFile.rc
+
+Code has been added that can restart the app - in the future
+the different languages may be selectable from a menu, for the 
+changes to take effect the app will need closing and restarting.
+
+Changes were also made to MenuMeasureItem() to accommodate the
+different widths depending on which language is used.
+
+===============================================================
+3rd November 2006. Version 1.5.1.7 (SZ)
+===============================================================
+BUG: If a commandline was send with quotes FindFile could not process it.
+
+Bugfix in InitDialog.
+
+===============================================================
+19th September 2006. Version 1.5.1.6 (JF)
+===============================================================
+BUG: DisplayFileHead func was displaying one less character than it should.
+
+// Was [size-1], changed the malloc size of g_strMem to (PREVIEW_MEMSIZE+1)
+g_strMem[size] = 0; // terminate
+
+Took out the following unnecessary code from the same func
+by using fread correctly.
+--------------------------------
+    if (filesize < PREVIEW_MEMSIZE)
+        size = filesize;
+    else
+        size = PREVIEW_MEMSIZE;
+--------------------------------    
+
+===============================================================
+10th August 2006. Version 1.5.1.6 (JF)
+===============================================================
+Removed a superfluous line in findfile.c (993) (Stephan Zorn), 
+added two InvalidateRect calls in SizeControls to ensure correct 
+display of buttons when resizing.
+
+
+===============================================================
+20th December 2005. Version 1.5.1.6 (JF)
+===============================================================
+In IDragDrop.c HandleDragDrop() variables needed to be declared 
+higher up the code so that in case of error certain objects 
+are not freed. These following two vars were moved up the code 
+so that they are declared before the first goto cleanup.
+
+  IDragSourceHelper * pIDragSourceHelper = NULL;
+  HBITMAP hbm = NULL;
+
+
+===============================================================
+19th December 2005. Version 1.5.1.6 (JF)
+===============================================================
+Changes to the way IDragDrop.c initialises the drag bitmap
+when dragging files. HandleDragDrop() calls a new function 
+CreateDragBitmap() before calling the COM handler
+InitializeFromBitmap(). The pervious version used 
+InitializeFromWindow() which asked the listview to supply
+the bitmap, this caused unacceptable delays on some machines.
+
+Also the way the COM interfaces IDropSource, IDataObject, 
+IDropTarget and IEnumFORMATETC, are created has been improved 
+slightly.
+
+===============================================================
+25th October 2005. Version 1.5.1.5 (JF)
+===============================================================
+Changed code in the class registration so that there is less
+flicker when resizing the dialog box with the Windows 
+"show window contents while dragging" set. 
+Tip from L D Blake.
+
+Was wc.style = CS_VREDRAW | CS_HREDRAW | CS_DBLCLKS;
+Now wc.style = CS_DBLCLKS;
+
+===============================================================
+24th October 2005. Version 1.5.1.4 (JF)
+===============================================================
+Changed code in the GetUserParams() function so it deals
+with Network paths. example; \\netname\c
+
+Searching on a network drive is slow so I would advise
+narrowing the search to specific folders. Choose the 
+network folder/drive with the BROWSE option in the 
+dropdown combo box or use the command line feature.
+
+Example;
+FindFile.exe /P\\netname\c\PellesC\include/Tcb_addstring/D+/F*.h
+
+Also changed the way controls are positioned/resized using
+a new function MapCtrl(). This will save new values in the 
+registry for positioning/resizing so if you have a previous 
+version of FindFile.exe you will need to reposition the main
+window.
+===============================================================
+
+===============================================================
+25th February 2005. Version 1.5.1.3 (JF)
+===============================================================
+Changed code in the DoShellExecuteEx() function that puts 
+quotes around a filename. This has been added so that paths 
+with spaces do not cause problems with certain applications.
+(FireFox for example will not accept paths with spaces.)
+===============================================================
+
+===============================================================
+26th December 2004, Version 1.5.1.1 (SZ)
+===============================================================
++ Sort also by Folders in Listview
+* Sort UI changed, sort increasing at first click,
+  remember sorting direction only for last sorted column
+
+===============================================================
+20th September 2004. (JF)
+===============================================================
+The 'Browse for folder' (BROWSE) option started with 
+'Desktop/My Documents', changed to start with 'C:\' which 
+makes folder navigation a little easier for most operations.
+===============================================================
+
+===============================================================
+8th September 2004. FindFile searches for folders as well as files. (JF)
+===============================================================
+
+===============================================================
+29th June 2004. When searching with extended dates and sizes, (JF)
+===============================================================
+FindFile would not deal with the dates properly. Thanks to 
+Stephan Zorn for reporting that.
+===============================================================
+
+===========================================================
+28th June 2004. Bug fixed and a new dialog added. (JF)
+===========================================================
+
+===========================================================
+4th June 2004. Commandline extensions have been added by Stephan Zorn. (SZ)
+Stephan has explained the switches in a text file, 'FindFile_CmdLine.txt'. 
+===========================================================
+

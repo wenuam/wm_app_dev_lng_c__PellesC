@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<settings version="1.0">
+	<category name="FindFile.c">
+		<category name="Window">
+			<property name="Left" type="integer">-9</property>
+			<property name="Top" type="integer">-38</property>
+			<property name="Right" type="integer">1147</property>
+			<property name="Bottom" type="integer">536</property>
+			<property name="Maximized" type="integer">1</property>
+			<property name="Active" type="integer">1</property>
+		</category>
+	</category>
+	<category name="Shell.c" />
+	<category name="Debugger">
+		<category name="Watches">
+			<property name="Watch1" type="string">g_fileopts</property>
+			<property name="Watch2" type="string">fops</property>
+		</category>
+	</category>
+	<category name="Find.c">
+		<category name="Bookmarks">
+			<property name="Line1" type="integer">1043</property>
+		</category>
+	</category>
+	<category name="FindFileUni64.rc" />
+	<category name="Dialogs.c">
+		<category name="Bookmarks">
+			<property name="Line1" type="integer">135</property>
+		</category>
+	</category>
+	<category name="documents\FindFile_Changes.txt" />
+	<category name="Utils.c" />
+	<category name="find.h" />
+	<category name="documents\FindFile_cmdline.txt" />
+	<category name="unicode.h" />
+	<category name="unicode.c">
+		<category name="Breakpoints">
+			<category name="Breakpoint1">
+				<property name="Line" type="integer">142</property>
+				<property name="Enabled" type="integer">1</property>
+				<property name="HitCount" type="integer">0</property>
+				<property name="Expression" type="string" />			</category>
+		</category>
+	</category>
+	<category name="utils.h" />
+	<category name="mlang.h" />
+	<category name="Registry.c" />
+	<category name="shell.h" />
+	<category name="Unicode.c" />
+	<category name="ButtonEx.c">
+		<category name="Bookmarks">
+			<property name="Line1" type="integer">1174</property>
+			<property name="Line2" type="integer">1249</property>
+		</category>
+	</category>
+	<category name="buttonEx.h" />
+	<category name="dialogs.h" />
+	<category name="JMem.c" />
+	<category name="IDragDrop.c" />
+	<category name="GdipImage.c" />
+	<category name="FindFileUni.rc" />
+	<category name="ButtonExOrg.c" />
+	<category name="run.rc" />
+	<category name="findfileres.h" />
+</settings>

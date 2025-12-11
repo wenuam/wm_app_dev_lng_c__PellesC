@@ -1,0 +1,92 @@
+#ifndef _DEBUGAPI_H
+#define _DEBUGAPI_H
+
+#if __POCC__ >= 500
+#pragma once
+#endif
+
+/* ApiSet contract for api-ms-win-core-debug-l1 */
+
+#include <apiset.h>
+#include <apisetcconv.h>
+#include <minwindef.h>
+#include <minwinbase.h>
+
+#include <winapifamily.h>
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
+
+#if (_WIN32_WINNT >= 0x0400) || (_WIN32_WINDOWS > 0x0400)
+WINBASEAPI BOOL WINAPI IsDebuggerPresent(
+    VOID
+);
+#endif /* (_WIN32_WINNT >= 0x0400) || (_WIN32_WINDOWS > 0x0400) */
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
+ 
+WINBASEAPI VOID WINAPI DebugBreak(
+    VOID
+);
+
+WINBASEAPI VOID WINAPI OutputDebugStringA(
+    LPCSTR lpOutputString
+);
+
+WINBASEAPI VOID WINAPI OutputDebugStringW(
+    LPCWSTR lpOutputString
+);
+
+#ifdef UNICODE
+#define OutputDebugString  OutputDebugStringW
+#else /* !UNICODE */
+#define OutputDebugString  OutputDebugStringA
+#endif /* !UNICODE */
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
+
+WINBASEAPI BOOL APIENTRY ContinueDebugEvent(
+    DWORD dwProcessId,
+    DWORD dwThreadId,
+    DWORD dwContinueStatus
+);
+
+WINBASEAPI BOOL APIENTRY WaitForDebugEvent(
+    LPDEBUG_EVENT lpDebugEvent,
+    DWORD dwMilliseconds
+);
+
+WINBASEAPI BOOL APIENTRY DebugActiveProcess(
+    DWORD dwProcessId
+);
+
+WINBASEAPI BOOL APIENTRY DebugActiveProcessStop(
+    DWORD dwProcessId
+);
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM)
+
+#if (_WIN32_WINNT >= 0x0501)
+WINBASEAPI BOOL WINAPI CheckRemoteDebuggerPresent(
+    HANDLE hProcess,
+    PBOOL pbDebuggerPresent
+);
+#endif /* (_WIN32_WINNT >= 0x0501) */
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM)
+
+WINBASEAPI BOOL APIENTRY WaitForDebugEventEx(
+    LPDEBUG_EVENT lpDebugEvent,
+    DWORD dwMilliseconds
+);
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP | WINAPI_PARTITION_SYSTEM) */
+
+#endif /* _DEBUGAPI_H */

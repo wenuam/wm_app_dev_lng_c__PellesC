@@ -1,0 +1,2144 @@
+@item----HELP
+@itemWhy this template tool?
+When writing code, I think sometimes, that
+it could be useful to generate code more
+automatically, especially when retyping 
+sequences a lot of time with little modifications.
+
+This idea resulted in small number of keywords,
+which build a very simple kind of script
+language, with its help I can write very easy
+templates, that are better than keyboard makros.
+
+When writing code, I have a lot of times to
+remember, where I have seen a code snippet or
+source code, that I can need for my actual purposes.
+I search in different directories or even books.
+Than I have to copy and modify the code.
+So I had the idea to make a collection of this 
+often used code fragments in this template tool.
+
+@itemfeedback...
+feedback, comments, critics, wishes,
+bug reports, selfmade new templates,
+and other ideas
+
+please mail to me:
+
+Holger.Buick@atfreenet.de  ->
+
+     ->(for correct emailaddress please run the script)
+@delete63	
+
+Thanks.
+@itemexample loop-endloop
+This example shows you loop-endloop with a string inside 
+
+@loop welcome the people
+hello, @"Mr XXX", good morning,
+
+@endloop
+You are welcome.
+@itemexample listloop
+@list select how the weather was yesterday
+cloudy
+misty
+a lot of sunshine
+dark
+warm
+cold
+stormy
+a lot of snowfall
+fresh
+good
+@endlist
+Yesterday the weather was
+@listloop
+@inlist and @endlistloop
+@delete4!!!
+@itemexample getstring-instring
+@getstring a name
+@instring is a good person,
+because @instring is friendly and modest.
+@item----STUCTURE
+@item include
+@list
+windows
+windowsx
+stdio
+tchar
+ctype
+time
+math
+string
+@endlist
+@listloop
+#include<@inlist.h>
+@endlistloop
+@item typedef struct (all simple window types)
+@list
+int
+int*
+int[]
+long
+long*
+long[]
+short
+short*
+shor[]
+float
+float*
+flost[]
+double
+double*
+double[]
+char
+char*
+char[]
+ABORTPROC
+ACMDRIVERENUMCB
+ACMDRIVERPROC
+ACMFILTERCHOOSEHOOKPROC
+ACMFILTERENUMCB
+ACMFILTERTAGENUMCB
+ACMFORMATCHOOSEHOOKPROC
+ACMFORMATENUMCB
+ACMFORMATTAGENUMCB
+APPLET_PROC
+ATOM
+BOOL
+BOOLEAN
+BYTE
+CCHAR
+CHAR
+COLORREF
+CONST
+CRITICAL_SECTION
+CTRYID
+DLGPROC
+DWORD
+DWORDLONG
+EDITWORDBREAKPROC
+ENHMFENUMPROC
+ENUMRESLANGPROC
+ENUMRESNAMEPROC
+ENUMRESTYPEPROC
+FARPROC
+FLOAT
+FONTENUMPROC
+GLOBALHANDLE
+GOBJENUMPROC
+GRAYSTRINGPROC
+HACCEL
+HANDLE
+HBITMAP
+HBRUSH
+HCOLORSPACE
+HCONV
+HCONVLIST
+HCURSOR
+HDC
+HDDEDATA
+HDWP
+HENHMETAFILE
+HFILE
+HFONT
+HGDIOBJ
+HGLOBAL
+HHOOK
+HICON
+HIMAGELIST
+HINSTANCE
+HKEY
+HKL
+HLOCAL
+HMENU
+HMETAFILE
+HMODULE
+HOOKPROC
+HPALETTE
+HPEN
+HRGN
+HRSRC
+HSZ
+HTREEITEM
+HWINSTA
+HWND
+INT
+IPADDR
+LANGID
+LCID
+LCSCSTYPE
+LCSGAMUTMATCH
+LCTYPE
+LINEDDAPROC
+LOCALHANDLE
+LONG
+LONGLONG
+LP
+LPARAM
+LPBOOL
+LPBYTE
+LPCCH
+LPCCHOOKPROC
+LPCFHOOKPROC
+LPCH
+LPCOLORREF
+LPCRITICAL_SECTION
+LPCSTR
+LPCTSTR
+LPCWCH
+LPCWSTR
+LPDWORD
+LPFRHOOKPROC
+LPHANDLE
+LPHANDLER_FUNCTION
+LPINT
+LPLONG
+LPOFNHOOKPROC
+LPPRINTHOOKPROC
+LPSETUPHOOKPROC
+LPSTR
+LPTCH
+LPTSTR
+LRESULT
+LPVOID
+LPWCH
+LPWORD
+LPWSTR
+LUID
+MFENUMPROC
+NPSTR
+NWPSTR
+PBOOL
+PBOOLEAN
+PBYTE
+PCCH
+PCHPCHAR
+PCRITICAL_SECTION
+PCSTR
+PCWCH
+PCWSTR
+PDWORD
+PFLOAT
+PFNCALLBACK
+PHANDLE
+PHANDLER_ROUTINE
+PHKEY
+PINT
+PLCID
+PLONG
+PLUID
+PROC
+PROPENUMPROC
+PROPENUMPROCEX
+PSHORT
+PSID
+PSTR
+PSZ
+PTBYTE
+PTCH
+PTCHAR
+PTSTR
+PUCHAR
+PUINT
+PULONG
+PUSHORT
+PVOID
+PWCH
+PWCHAR
+PWORD
+PWSTR
+REGSAM
+SC_HANDLE
+SENDASYNCPROC
+SERVICE_STATUS_HANDLE
+SHORT
+SPHANDLE
+TBYTE
+TCHAR
+TIMERPROC
+UCHAR
+UINT
+ULONG
+USHORT
+VOID
+WCHAR
+WNDENUMPROC
+WNDPROC
+WORD
+WPARAM
+YIELDPROC 
+@endlist
+@getstring structname
+typedef struct _@instring{
+@listloop
+@inlist  ;
+@endlistloop
+} @instring,*lp@instring;
+@item typedef struct (most used simple window types)
+@list
+int
+int*
+int[]
+long
+long*
+long[]
+short
+short*
+shor[]
+float
+float*
+flost[]
+double
+double*
+double[]
+char
+char*
+char[]
+BOOL
+BYTE
+CHAR
+COLORREF
+CONST
+DLGPROC
+DWORD
+FARPROC
+FLOAT
+GLOBALHANDLE
+HACCEL
+HANDLE
+HBITMAP
+HBRUSH
+HCURSOR
+HDC
+HFILE
+HFONT
+HGDIOBJ
+HGLOBAL
+HHOOK
+HICON
+HINSTANCE
+HKEY
+HLOCAL
+HMENU
+HPEN
+HWND
+INT
+LONGLONG
+LP
+LPARAM
+LPBOOL
+LPBYTE
+LPCOLORREF
+LPDWORD
+LPSTR
+LPVOID
+PROC
+SHORT
+TIMERPROC
+UINT
+ULONG
+USHORT
+VOID
+WNDPROC
+WORD
+WPARAM
+@endlist
+@getstring structname
+typedef struct _@instring{
+@listloop
+@inlist  ;
+@endlistloop
+} @instring,*lp@instring;
+@item----LOOP
+@item for
+for( ; ; ){
+
+}
+@item for (2-dimensional)
+for(i=0;i<imax;i++){
+	for(j=0;j<jmax;j++){
+		vector[i,j]=xx;
+	}
+}
+@item for (3-dimensional)
+for(i=0;i<imax;i++){
+	for(j=0;j<jmax;j++){
+		for(k=0;k<kmax;k++){
+			vector[i,j,k]=xx;
+		}
+	}
+}
+@item while
+while( ){
+
+}
+@item do while
+do{
+
+}
+while( );
+@item switch case break
+switch(@">switch integer<"){
+@loop case - break
+	case @">case integer<" :
+
+	break;
+@endloop
+	default:
+	break;
+}
+@item switch case return TRUE
+switch(@">switch integer<"){
+@loop case
+	case @">case integer<" :
+
+	return TRUE;
+@endloop
+	default:
+	return FALSE;
+}
+@item if else if
+if(@">if-condition<"){
+
+}
+@loop else if
+else if(@">else-if-condition<"){
+
+}
+@endloop
+else {
+
+}
+@item while(){if( ) continue/break;}
+@list select as often as you need
+continue
+break
+@endlist
+while( ){
+@listloop
+	if( ){
+
+	@inlist;
+	}	
+@endlistloop
+}
+@item----DEBUG
+@item debug double
+@helpkwd MessageBox
+//----D E B U G -------------------------------
+/**/{   char debugbuffer[100];
+/**/    sprintf(debugbuffer,"%f",xxx);
+/**/    MessageBox(0,debugbuffer,"debug",0); }
+//----D E B U G -------------------------------
+@item debug integer
+@helpkwd MessageBox
+//----D E B U G -------------------------------
+/**/{   char debugbuffer[100];
+/**/    sprintf(debugbuffer,"%d",xxx);
+/**/    MessageBox(0,debugbuffer,"debug",0);  }
+//----D E B U G -------------------------------
+@item copy to clipboard
+@helpkwd OpenClipboard
+void copy(void){
+	int size=strlen(string)+1;
+	if (OpenClipboard(0))
+	{
+		HGLOBAL hCopy = GlobalAlloc(GMEM_SHARE, size);
+		if (hCopy != INVALID_HANDLE_VALUE){
+			LPVOID lpCopy = GlobalLock(hCopy);
+			EmptyClipboard();
+			memcpy((LPBYTE)lpCopy,(LPBYTE)string,size);
+			SetClipboardData(CF_TEXT,hCopy);
+			GlobalUnlock(hCopy);
+		}
+		else MessageBox(0,"Error: invalid handle value at globalalloc","",0);
+		CloseClipboard();
+	}
+	else MessageBox(0,"cannot open clipboard.","",0);
+}
+@item paste from clipboard
+@helpkwd OpenClipboard
+void paste(void){
+	if(OpenClipboard(0))
+	{
+		HANDLE hCopy = GetClipboardData(CF_TEXT);
+
+		if (hCopy > (HANDLE)NULL)
+		{
+			LPVOID lpCopy = GlobalLock(hCopy);
+			size_t size = (size_t)GlobalSize(hCopy);
+			string=(char*)realloc(string,size);
+			if(string!=NULL){
+				memcpy(string,lpCopy,size);
+			}
+			else MessageBox(hwndMain,"realloc failed","paste:",MB_SYSTEMMODAL);
+			GlobalUnlock(hCopy);
+		}
+		else MessageBox(0,"data cannot be copied.","paste:",MB_SYSTEMMODAL);
+		CloseClipboard();
+	}
+	else MessageBox(0,"clipboard cannot be opened.","paste:",MB_SYSTEMMODAL);
+}
+@item error display function
+@helpkwd FormatMessage
+void error(void){
+	LPVOID lpMsgBuf;
+	FormatMessage(
+		FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM,
+		NULL,
+		0,
+		MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
+		(LPTSTR) &lpMsgBuf,
+		0,
+		NULL
+		    );
+
+	MessageBox( NULL, lpMsgBuf, "GetLastError", MB_OK|MB_ICONINFORMATION );
+
+	LocalFree( lpMsgBuf );
+}
+@item----DIALOG
+@itemDialogBox
+@helpkwd DialogBox
+ DialogBox(@"hinst", MAKEINTRESOURCE(@"DLG_XXX"), @"hWnd", (DLGPROC)@"xxxDlgProc");
+		
+@item dialogfunction declaration
+@helpkwd DialogBox
+static LRESULT WINAPI  ExampleDlgProc(HWND hwndDlg, UINT msg, WPARAM wParam, LPARAM lParam);
+@item dialogfunction
+@helpkwd WM_CLOSE
+@list WM_COMMAND is already selected 
+WM_INITDIALOG
+WM_CLOSE
+WM_DESTROY
+WM_SHOWWINDOW 
+WM_KEYDOWN
+WM_SIZE
+WM_PAINT
+WM_DRAWITEM
+WM_NOTIFY
+@endlist
+static LRESULT CALLBACK ExampleDlgProc(HWND hdlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
+{
+	switch (uMsg)
+	{
+		case WM_COMMAND:
+			switch LOWORD(wParam)
+			{
+				case IDOK:
+				{
+					return TRUE;
+				}
+				case IDCANCEL:
+				{
+					EndDialog(hdlg,0);
+					return TRUE;
+				}
+@loop case in WM_COMMAND
+@getstring ID
+				case @instring:
+				{
+
+				}
+				break;
+@endloop
+			}
+		return FALSE;
+@listloop
+		case @inlist:
+		{
+
+		}
+		return FALSE;
+@endlistloop
+	}
+	return FALSE;
+}
+@item----MESSAGE CRACKERS
+@item Button_
+@helpkwd BM_
+@list
+Enable(hwndCtl,fEnable)
+GetCheck(hwndCtl)
+GetState(hwndCtl)
+GetText(hwndCtl,lpch,cchMax)
+GetTextLength(hwndCtl)
+GetImage(hwndCtl,type)
+SetCheck(hwndCtl,check)
+SetState(hwndCtl,state)
+SetStyle(hwndCtl,style,fRedraw)
+SetText(hwndCtl,lpsz)
+SetImage(hwndCtl,type,hImage)
+@endlist
+@listloop
+Button_@inlist
+@endlistloop
+
+@item ComboBox_
+@helpkwd CB_
+@list
+AddItemData(hwndCtl,data)
+AddString(hwndCtl,lpsz)
+DeleteString(hwndCtl,index)
+Dir(hwndCtl,attrs,lpszFileSpec)
+Enable(hwndCtl,fEnable)
+FindItemData(hwndCtl,indexStart,data)
+FindString(hwndCtl,indexStart,lpszFind)
+FindStringExact(hwndCtl,indexStart,lpszFind)
+GetCount(hwndCtl)
+GetCurSel(hwndCtl)
+GetDroppedControlRect(hwndCtl,lprc)
+GetDroppedState(hwndCtl)
+GetEditSel(hwndCtl)
+GetExtendedUI(hwndCtl)
+GetItemData(hwndCtl,index)
+GetItemHeight(hwndCtl)
+GetLBText(hwndCtl,index,lpszBuffer)
+GetLBTextLen(hwndCtl,index)
+GetText(hwndCtl,lpch,cchMax)
+GetTextLength(hwndCtl)
+InsertItemData(hwndCtl,index,data)
+InsertString(hwndCtl,index,lpsz)
+LimitText(hwndCtl,cchLimit)
+ResetContent(hwndCtl)
+SelectItemData(hwndCtl,indexStart,data)
+SelectString(hwndCtl,indexStart,lpszSelect)
+SetCurSel(hwndCtl,index)
+SetEditSel(hwndCtl,ichStart,ichEnd)
+SetExtendedUI(hwndCtl,flags)
+SetItemData(hwndCtl,index,data)
+SetItemHeight(hwndCtl,index,cyItem)
+SetText(hwndCtl,lpsz)
+SetWindowText((hwndCtl),(lpsz))
+ShowDropdown(hwndCtl,fShow)
+@endlist
+@listloop
+ComboBox_@inlist
+@endlistloop
+
+@item Edit_
+@helpkwd EM_
+@list
+CanUndo(hwndCtl)
+EmptyUndoBuffer(hwndCtl)
+Enable(hwndCtl,fEnable)
+FmtLines(hwndCtl,fAddEOL)
+GetFirstVisibleLine(hwndCtl)
+GetHandle(hwndCtl)
+GetLine(hwndCtl,line,lpch,cchMax)
+GetLineCount(hwndCtl)
+GetModify(hwndCtl)
+GetPasswordChar(hwndCtl)
+GetRect(hwndCtl,lprc)
+GetSel(hwndCtl)
+GetText(hwndCtl,lpch,cchMax)
+GetTextLength(hwndCtl)
+GetWordBreakProc(hwndCtl)
+LimitText(hwndCtl,cchMax)
+LineFromChar(hwndCtl,ich)
+LineIndex(hwndCtl,line)
+LineLength(hwndCtl,line)
+ReplaceSel(hwndCtl,lpszReplace)
+Scroll(hwndCtl,dv,dh)
+ScrollCaret(hwndCtl)
+SetHandle(hwndCtl,h)
+SetModify(hwndCtl,fModified)
+SetPasswordChar(hwndCtl,ch)
+SetReadOnly(hwndCtl,fReadOnly)
+SetRect(hwndCtl,lprc)
+SetRectNoPaint(hwndCtl,lprc)
+SetSel(hwndCtl,ichStart,ichEnd)
+SetTabStops(hwndCtl,cTabs,lpTabs)
+SetText(hwndCtl,lpsz)
+SetWordBreakProc(hwndCtl,lpfnWordBreak)
+Undo(hwndCtl)
+@endlist
+@listloop
+Edit_@inlist
+@endlistloop
+
+@item ListBox_
+@helpkwd LB_
+@list
+AddItemData(hwndCtl,data)
+AddString(hwndCtl,lpsz)
+DeleteString(hwndCtl,index)
+Dir(hwndCtl,attrs,lpszFileSpec)
+Enable(hwndCtl,fEnable)
+FindItemData(hwndCtl,indexStart,data)
+FindString(hwndCtl,indexStart,lpszFind)
+FindStringExact(hwndCtl,indexStart,lpszFind)
+GetCaretIndex(hwndCtl)
+GetCount(hwndCtl)
+GetCurSel(hwndCtl)
+GetHorizontalExtent(hwndCtl)
+GetItemData(hwndCtl,index)
+GetItemHeight(hwndCtl,index)
+GetItemRect(hwndCtl,index,lprc)
+GetSel(hwndCtl,index)
+GetSelCount(hwndCtl)
+GetSelItems(hwndCtl,cItems,lpItems)
+GetText(hwndCtl,index,lpszBuffer)
+GetTextLen(hwndCtl,index)
+GetTopIndex(hwndCtl)
+InsertItemData(hwndCtl,index,data)
+InsertString(hwndCtl,index,lpsz)
+ResetContent(hwndCtl)
+SelItemRange(hwndCtl,fSelect,first,last)
+SelectItemData(hwndCtl,indexStart,data)
+SelectString(hwndCtl,indexStart,lpszFind)
+SetCaretIndex(hwndCtl,index)
+SetColumnWidth(hwndCtl,cxColumn)
+SetCurSel(hwndCtl,index)
+SetHorizontalExtent(hwndCtl,cxExtent)
+SetItemData(hwndCtl,index,data)
+SetItemHeight(hwndCtl,index,cy)
+SetSel(hwndCtl,fSelect,index)
+SetTabStops(hwndCtl,cTabs,lpTabs)
+SetTopIndex(hwndCtl,indexTop)
+@endlist
+@listloop
+ListBox_@inlist
+@endlistloop
+
+@item ScrollBar_
+@helpkwd EnableScrollBar
+@list
+Enable(hwndCtl,flags)
+GetPos(hwndCtl)
+GetRange(hwndCtl,lpposMin,lpposMax)
+SetPos(hwndCtl,pos,fRedraw)
+SetRange(hwndCtl,posMin,posMax,fRedraw)
+Show(hwndCtl,fShow)
+@endlist
+@listloop
+ScrollBar_@inlist
+@endlistloop
+
+@item Static_
+@helpkwd STM_GETIMAGE
+@list
+Enable(hwndCtl,fEnable)
+GetIcon(hwndCtl)
+GetImage(hwndCtl,type)
+GetText(hwndCtl,lpch,cchMax)
+GetTextLength(hwndCtl)
+SetIcon(hwndCtl,hIcon)
+SetImage(hwndCtl,type,hImage)
+SetText(hwndCtl,lpsz)
+@endlist
+@listloop
+Static_@inlist
+@endlistloop
+@item----WM_
+@helpkwd SendMessage
+@item WM_KEYDOWN
+@list
+VK_LBUTTON
+VK_RBUTTON
+VK_CANCEL
+VK_PRIOR
+VK_NEXT
+VK_HOME
+VK_END
+VK_LEFT
+VK_RIGHT
+VK_UP
+VK_DOWN
+VK_INSERT
+VK_DELETE
+VK_BACK
+VK_TAB
+VK_CLEAR
+VK_RETURN
+VK_ESCAPE
+VK_SPACE
+VK_HELP
+VK_SCROLL
+VK_LSHIFT
+@endlist
+	case WM_KEYDOWN:
+		switch(wParam)
+		{
+@listloop
+			case @inlist:
+
+			break;
+@endlistloop
+			default:
+
+			break;
+		}
+	break; 
+@item WM_MOUSMOVE
+@helpkwd WM_MOUSEMOVE
+case WM_MOUSEMOVE:
+{
+    int fwKeys = wParam;        // key flags
+    int xPos = LOWORD(lParam);  // horizontal position of cursor
+    int yPos = HIWORD(lParam);  // vertical position of cursor
+    if(fwKeys==MK_LBUTTON){
+
+    }
+    if(fwKeys==MK_RBUTTON){
+
+    }
+}
+break;
+@item----WINDOW
+@helpkwd GetMessage
+@item winmain
+@helpkwd WinMain
+int PASCAL WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdLine, int nCmdShow)
+{
+    HWND hwnd;
+    MSG msg;
+
+    if (!hPrevInstance)
+    {
+        WNDCLASS wc;
+
+        wc.lpszClassName = _T("winClass");
+        wc.lpfnWndProc = MainWndProc;
+        wc.style = CS_OWNDC|CS_VREDRAW|CS_HREDRAW;
+        wc.hInstance = hInstance;
+        wc.hIcon = LoadIcon(hInstance, MAKEINTRESOURCE(IDR_ICO_MAIN));
+        wc.hCursor = LoadCursor(NULL, IDC_ARROW);
+        wc.hbrBackground = (HBRUSH)(COLOR_WINDOW+1);
+        wc.lpszMenuName = MAKEINTRESOURCE(IDR_MNU_MAIN);
+        wc.cbClsExtra = 0;
+        wc.cbWndExtra = 0;
+
+        if (!RegisterClass(&wc))
+            return 1;
+    }
+
+    hwnd = CreateWindow(_T("winClass"),
+        _T("win Program"),
+        WS_OVERLAPPEDWINDOW|WS_HSCROLL|WS_VSCROLL,
+        0,
+        0,
+        CW_USEDEFAULT,
+        CW_USEDEFAULT,
+        NULL,
+        NULL,
+        hInstance,
+        NULL
+    );
+    if (!hwnd) return 1;
+
+    ShowWindow(hwnd, nCmdShow);
+    UpdateWindow(hwnd);
+
+    while (GetMessage(&msg, NULL, 0, 0))
+    {
+        TranslateMessage(&msg);
+        DispatchMessage(&msg);
+    }
+
+    return msg.wParam;
+}
+@item MainWndProc declaration
+static LRESULT CALLBACK MainWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
+@item MainWndProc (case)
+@helpkwd DefWindowProc
+@list select Window-Messages
+COMMAND
+CREATE
+CLOSE
+DESTROY
+SHOWWINDOW 
+ACTIVATE
+KEYDOWN
+MOVE
+MOUSEMOVE
+RBUTTONDOWN
+LBUTTONDOWN
+SIZE
+PAINT
+HSCROLL
+VSCROLL
+@endlist
+static LRESULT CALLBACK MainWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
+{
+    switch (msg)
+    {
+@listloop
+	case WM_@inlist:
+
+	return FALSE;
+@endlistloop
+        default:
+            return DefWindowProc(hwnd, msg, wParam, lParam);
+    }
+}
+@item MainWndProc (HANDLE_MSG)
+@list select Window-Messages
+COMMAND
+CREATE
+CLOSE
+DESTROY
+SHOWWINDOW 
+ACTIVATE
+KEYDOWN
+MOVE
+MOUSEMOVE
+RBUTTONDOWN
+LBUTTONDOWN
+SIZE
+PAINT
+HSCROLL
+VSCROLL
+@endlist
+@getstring MainWndProc
+static LRESULT CALLBACK @instring(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
+{
+    switch (msg)
+    {
+@listloop
+	HANDLE_MSG(hwnd, WM_@inlist, @instring_On@inlist);
+@endlistloop
+        default:
+            return DefWindowProc(hwnd, msg, wParam, lParam);
+    }
+}
+@listloop
+static void @instring_On@inlist(HWND hwnd, ??? )
+{
+    
+}
+@endlistloop
+@item MainWndProc_OnCommand declaration
+void MainWndProc_OnCommand(HWND hwnd, int id, HWND hwndCtl, UINT codeNotify);
+@item MainWndProc_OnCommand
+void MainWndProc_OnCommand(HWND hwnd, int id, HWND hwndCtl, UINT codeNotify)
+{
+	switch(id) {       
+@loop case IDM_XX
+	case IDM_XX:
+
+	break;
+@endloop
+	case IDM_EXIT:
+		PostMessage(hwnd,WM_CLOSE,0,0);
+	break;
+}
+@item----SCROLLING
+@item scrolling(WM_HSCROLL, WM_VSCROLL)
+@getstring hwndMain
+// xpos,ypos are global positions
+	case WM_HSCROLL:
+	{
+		int nScrollCode = (int) LOWORD(wParam);  // scroll bar value
+		int nPos = (int) HIWORD(wParam);   // scroll box position
+		HWND hwndScrollBar = (HWND) lParam;
+
+		static SCROLLINFO si;
+		si.cbSize=sizeof(SCROLLINFO);
+		si.fMask=SIF_RANGE;
+		GetScrollInfo(@instring,SB_HORZ,&si);
+
+		int xposold=xpos;
+
+		RECT rc;
+		GetClientRect(@instring,&rc);
+		int page=(int)((double)(rc.right-rc.left)*0.9);
+
+		switch (nScrollCode){
+			case SB_BOTTOM:		//Scrolls to the lower right.
+				xpos=si.nMin;
+				break;
+			case SB_TOP:		//Scrolls to the lower left.
+				xpos=si.nMax;
+				break;
+			case SB_ENDSCROLL:	//Ends scroll.
+
+				break;
+			case SB_LINELEFT:	//Scrolls left by one unit.
+				xpos+=20;	
+				if(xpos>si.nMax)xpos=si.nMax;
+				break;
+			case SB_LINERIGHT:	//Scrolls right by one unit.
+				xpos-=20;	
+				if(xpos<si.nMin)xpos=si.nMin;
+				break;
+			case SB_PAGELEFT:	//Scrolls left by the width of the window.
+				xpos+=page;
+				if(xpos>si.nMax)xpos=si.nMax;
+				break;
+			case SB_PAGERIGHT:	//Scrolls right by the width of the window.
+				xpos-=page;
+				if(xpos<si.nMin)xpos=si.nMin;
+				break;
+			case SB_THUMBPOSITION:	//Scrolls to the absolute position. The current position is specified by the nPos parameter.
+				xpos=si.nMin+si.nMax-nPos;
+				break;
+			case SB_THUMBTRACK:	//Drags scroll box to the specified position. The current position is specified by the nPos parameter.
+				xpos=si.nMin+si.nMax-nPos;	
+				break;				
+			}
+			si.fMask=SIF_POS;
+			si.nPos=si.nMax+si.nMin-xpos;
+			SetScrollInfo(@instring,SB_HORZ,&si,TRUE);				
+
+			scroll(hwnd,xpos-xposold,0);
+	}
+	return 0;
+	case WM_VSCROLL:
+	{
+		int nScrollCode = (int) LOWORD(wParam);  // scroll bar value
+		int nPos = (int) HIWORD(wParam);   // scroll box position
+		HWND hwndScrollBar = (HWND) lParam;
+
+		static SCROLLINFO si;
+		si.cbSize=sizeof(SCROLLINFO);
+
+		si.fMask=SIF_RANGE;
+		GetScrollInfo(@instring,SIF_RANGE,&si);
+
+		RECT rc;
+		GetClientRect(@instring,&rc);
+		int page=(int)((double)(rc.bottom-rc.top)*0.9);
+
+		int yposold=ypos;
+		switch (nScrollCode){
+			case SB_BOTTOM:		//Scrolls to the lower right.
+				ypos=si.nMin;
+				break;
+			case SB_TOP:		//Scrolls to the upper left.
+				ypos=si.nMax;
+				break;
+			case SB_ENDSCROLL:	//Ends scroll.
+				
+				break;
+			case SB_LINEDOWN:	//Scrolls one line down.
+				ypos-=10;
+				if(ypos<si.nMin)ypos=si.nMin;
+				break;
+			case SB_LINEUP:		//Scrolls one line up.
+				ypos+=10;
+				if(ypos>si.nMax)ypos=si.nMax;
+				break;
+			case SB_PAGEDOWN:	//Scrolls one page down.
+				ypos-=page;
+				if(ypos<si.nMin)ypos=si.nMin;
+				break;
+			case SB_PAGEUP:		//Scrolls one page up.
+				ypos+=page;
+				if(ypos>si.nMax)ypos=si.nMax;
+				break;
+			case SB_THUMBPOSITION:	//Scrolls to the absolute position. The current position is specified by the nPos parameter.
+				si.nPos=nPos;
+				break;
+			case SB_THUMBTRACK:	//Drags scroll box to the specified position. The current position is specified by the nPos parameter.
+				ypos=si.nMin+si.nMax-nPos;	
+				break;							
+			}
+			si.fMask=SIF_POS;
+			si.nPos=si.nMax+si.nMin-ypos;
+			SetScrollInfo(@instring,SB_VERT,&si,TRUE);				
+	
+			scroll(hwnd,0,ypos-yposold);
+	}
+	return 0;
+@item scroll (function example)
+@helpkwd ScrollWindowEx
+// this function is called from "case WM_HSCROLL" and "case WM_VSCROLL"
+void scroll(HWND hwnd,int dx,int dy){
+	RECT rc,rcscroll,rcclip,rcupdate;
+	GetClientRect(hwnd,&rc);
+	rcupdate=rcscroll=rc;
+	rcclip=rcscroll;
+
+	ScrollWindowEx(
+		hwnd,       // handle of window to scroll
+		dx,     // amount of horizontal scrolling
+		dy,     // amount of vertical scrolling
+		&rcscroll,      // address of structure with scroll rectangle
+		&rcclip,        // address of structure with clip rectangle
+		NULL,   // handle of update region
+		NULL,   // address of structure for update rectangle
+		SW_INVALIDATE | SW_ERASE        // scrolling flags
+		);
+
+	UpdateWindow(hwnd);
+}
+@item setwindowscrolls(function example)
+@helpkwd SetScrollInfo
+void setwindowscrolls(HWND hwnd){
+//xpoy,ypos are global positions
+//call this function when window is shown first time
+	RECT rc;
+	GetClientRect(hwnd,&rc);
+	SCROLLINFO si;
+	memset(&si,0,sizeof(SCROLLINFO));
+	si.cbSize=sizeof(SCROLLINFO);
+	si.fMask=SIF_POS|SIF_RANGE;
+
+	si.nMin=0;
+	si.nMax=rc.right;
+	si.nPos=si.nMin+si.nMax-xpos;
+	SetScrollInfo(hwnd,SB_HORZ,&si,TRUE);
+
+	si.nMin=0;
+	si.nMax=rc.bottom;
+	si.nPos=si.nMin+si.nMax-ypos;
+	SetScrollInfo(hwnd,SB_VERT,&si,TRUE);
+}
+@item WM_KEYDOWN to SCROLL
+@helpkwd WM_KEYDOWN
+@getstring hwndMain
+	case WM_KEYDOWN:
+		switch(wParam){
+		case VK_HOME:
+			SendMessage(@instring,WM_VSCROLL,SB_TOP,0);
+			break;
+		case VK_END:
+			SendMessage(@instring,WM_VSCROLL,SB_BOTTOM,0);
+			break;
+		case VK_UP:
+			SendMessage(@instring,WM_VSCROLL,SB_LINEUP,0);
+			break;
+		case VK_DOWN:
+			SendMessage(@instring,WM_VSCROLL,SB_LINEDOWN,0);
+			break;
+		case VK_PRIOR:
+			SendMessage(@instring,WM_VSCROLL,SB_PAGEUP,0);
+			break;
+		case VK_NEXT:
+			SendMessage(@instring,WM_VSCROLL,SB_PAGEDOWN,0);
+			break;
+		case VK_LEFT:
+			SendMessage(@instring,WM_HSCROLL,SB_LINELEFT,0);
+			break;
+		case VK_RIGHT:
+			SendMessage(@instring,WM_HSCROLL,SB_LINERIGHT,0);
+			break;
+		}
+@item----PRINT
+@helpkwd PrintDlg
+@item print
+void print(void){
+	HANDLE hDevMode=0;
+
+	PRINTDLG pd={0};
+	pd.lStructSize = sizeof(PRINTDLG);
+	pd.hwndOwner   = GetParent(hwndMain);
+	pd.Flags       = PD_RETURNDC | PD_NOSELECTION | PD_NOPAGENUMS | PD_HIDEPRINTTOFILE;
+	pd.hDevMode    = hDevMode;
+
+	PrintDlg(&pd);
+
+
+	DEVMODE *dm=(DEVMODE *)GlobalLock(pd.hDevMode);
+	if(dm){
+		//Examples
+		//dm->dmOrientation=DMORIENT_LANDSCAPE;
+		//if(dm->dmColor==DMCOLOR_COLOR)    ;
+		//if(dm->dmColor==DMCOLOR_MONOCHROME)    ;
+
+		ResetDC(pd.hDC,dm);
+		GlobalUnlock(pd.hDevMode);
+	};
+	DOCINFO di={0};
+	di.cbSize      = sizeof(di);
+	di.lpszDocName = "Example";
+
+	if (StartDoc(pd.hDC, &di) > 0){
+		StartPage(pd.hDC);
+		//Examles
+		//textout(pd.hDC,textbuffer,TRUE);
+		//GDI-Functions here
+
+		EndPage(pd.hDC);
+	}
+
+	if(hDevMode)GlobalFree(hDevMode);
+	EndDoc(pd.hDC);
+	DeleteDC(pd.hDC);
+}
+@item----ShellExecute
+@helpkwd ShellExecute
+@item email
+@helpkwd ShellExecute
+ShellExecute(0,"open","mailto: examplename@ataddress.com"
+"?subject=answer of your question"
+"&body=Hello Mister Example,"
+,"","",SW_SHOW);
+@item homepage 
+@helpkwd ShellExecute
+ShellExecute(0,"open","www.examplecompany.com","","",SW_SHOW); 
+@item----REGISTRY
+@helpkwd RegSetValueEx
+@itemRegSetValueEx
+@helpkwd RegSetValueEx
+RegSetValueEx(
+@list hKey: Identifies a currently open key or any of the following predefined reserved handle values: 
+HKEY_CLASSES_ROOT
+HKEY_CURRENT_USER
+HKEY_LOCAL_MACHINE
+HKEY_USERS
+@endlist
+@listloop
+@inlist @endlistloop
+,
+@"lpValueName",
+0,
+@list dwType: Specifies the type of information to be stored as the value’s data. This parameter can be one of the following values: 
+REG_BINARY
+REG_DWORD
+REG_DWORD_LITTLE_ENDIAN
+REG_DWORD_BIG_ENDIAN
+REG_EXPAND_SZ
+REG_LINK
+REG_MULTI_SZ
+REG_NONE
+REG_RESOURCE_LIST
+REG_SZ@endlist
+@listloop
+@inlist @endlistloop
+,
+@"*lpData",
+@"cbData"
+);	
+
+
+
+
+@item registry example
+    writeregint("numbers","firstnumber",123);
+    char buffer[buflen+1];
+    getregstring("numbers","firstnumber",buffer);
+    MessageBox(0,buffer,"example",0);
+    int d;
+    getregint("numbers","firstnumber",&d);
+    sprintf(buffer,"%d",d*3);
+    MessageBox(0,buffer,"example",0);
+
+
+@item registry definitions
+@helpkwd RegSetValueEx
+#define buflen 256
+void writeregstring(char* pszKey,char* lpValuename,char* pszString);
+int getregstring(char* pszKey,char* lpValuename,char* pszReturnBuffer);
+void writeregint(char* pszKey,char* lpValuename,int pValue);
+void getregint(char* pszKey,char* lpValuename,int* pReturnBuffer);
+void writeregdouble(char* pszKey,char* lpValuename,double pValue);
+void getregdouble(char* pszKey,char* lpValuename,double* pReturnBuffer);
+
+const char* key= "Software\\ExampleApplication\\";
+
+@item registry functions
+@helpkwd RegSetValueEx
+void writeregstring(char* pszKey,char* lpValuename,char* pszValue){
+
+	HKEY  hKey=0;
+	DWORD cbValue;
+	DWORD dwType;
+	char  szCurrentKey[128];
+
+	lstrcpy(szCurrentKey,key);
+	lstrcat(szCurrentKey, pszKey);
+
+
+	dwType = REG_OPENED_EXISTING_KEY;
+
+	if (RegCreateKeyEx(HKEY_CURRENT_USER, szCurrentKey, 0, 0,
+		REG_OPTION_NON_VOLATILE, KEY_WRITE,
+		0, &hKey, &dwType) > ERROR_SUCCESS){
+		dwType = REG_CREATED_NEW_KEY;
+		RegCreateKeyEx(HKEY_CURRENT_USER, szCurrentKey, 0, 0,
+			REG_OPTION_NON_VOLATILE, KEY_WRITE,
+			0,&hKey, &dwType);
+	}
+
+	if(hKey){
+		cbValue = strlen(pszValue)+1;
+		RegSetValueEx(hKey, lpValuename, 0, REG_SZ,(const unsigned char*) pszValue, cbValue);
+		RegCloseKey(hKey);
+	}
+}
+int getregstring(char* pszKey,char* lpValuename,char* pszReturnBuffer){
+	HKEY hKey=0;
+	char  szCurrentKey[128];
+	unsigned long cbReturnBuffer=buflen;
+
+	lstrcpy(szCurrentKey,key);
+	lstrcat(szCurrentKey, pszKey);
+
+	if (RegOpenKeyEx(HKEY_CURRENT_USER, szCurrentKey, 0, KEY_QUERY_VALUE,
+		&hKey) == ERROR_SUCCESS){
+
+
+		if(RegQueryValueEx(hKey, lpValuename, 0,0,(unsigned char*) pszReturnBuffer,
+			&cbReturnBuffer)==ERROR_SUCCESS){
+			RegCloseKey(hKey);
+			return 1;
+		}
+	}
+	return 0;
+}
+
+void writeregint(char* pszKey,char* lpValuename,int pValue){
+	char buffer[1024];
+	buffer[0]=0;
+	sprintf(buffer,"%d",pValue);
+	writeregstring(pszKey,lpValuename,buffer);
+}
+
+void getregint(char* pszKey,char* lpValuename,int* pReturnBuffer){
+	char buffer[1024];
+	buffer[0]=0;
+	if(getregstring(pszKey,lpValuename,buffer)){
+		*pReturnBuffer=atoi(buffer);
+	}
+}
+
+void writeregdouble(char* pszKey,char* lpValuename,double pValue){
+	char buffer[1024];
+	buffer[0]=0;
+	sprintf(buffer,"%g",pValue);
+	writeregstring(pszKey,lpValuename,buffer);
+}
+
+void getregdouble(char* pszKey,char* lpValuename,double* pReturnBuffer){
+	char buffer[1024];
+	buffer[0]=0;
+	if(getregstring(pszKey,lpValuename,buffer)){
+		*pReturnBuffer=atof(buffer);
+	}
+}
+@item----FILE
+@itemget file name example
+@helpkwd GetSaveFileName
+int GetFileName(char *buffer)
+{
+	char szinitial [MAX_PATH];
+	strncpy(szinitial,buffer,MAX_PATH);
+	char tmpfilter[40];
+	static char customfilter[128]="";
+
+	int i = 0;
+	strcpy(tmpfilter,"Help Files,*.hlp");
+	while(tmpfilter[i]) {
+		if (tmpfilter[i] == ',')
+			tmpfilter[i] = 0;
+		i++;
+	}
+	tmpfilter[i++] = 0;
+	tmpfilter[i++] = 0;
+
+	OPENFILENAME ofn;
+
+	memset(&ofn,0,sizeof(ofn));
+	ofn.lStructSize = sizeof(ofn);
+	ofn.hwndOwner = GetActiveWindow();
+	ofn.hInstance = GetModuleHandle(NULL);
+	ofn.lpstrFilter = tmpfilter;
+	ofn.lpstrCustomFilter= customfilter;
+	ofn.nMaxCustFilter = 128;
+	ofn.nFilterIndex = 1;
+	ofn.lpstrFile = buffer;
+	ofn.nMaxFile = MAX_PATH;
+	ofn.lpstrFileTitle=0;
+	ofn.nMaxFileTitle=256;
+	ofn.lpstrInitialDir=szinitial;
+	ofn.lpstrTitle = "*** cwiz Help File Path ***, will be saved in registry.";
+	ofn.Flags = 0;
+	ofn.lpstrDefExt = "hlp";
+
+	buffer[0]=0;
+	int n;
+	n= GetSaveFileName(&ofn);
+	int f=CommDlgExtendedError();
+	if(f==FNERR_BUFFERTOOSMALL)MessageBox(0,"FNERR_BUFFERTOOSMALL","",MB_SYSTEMMODAL);
+	if(f==FNERR_INVALIDFILENAME)MessageBox(0,"FNERR_INVALIDFILENAME","",MB_SYSTEMMODAL);
+	if(f==FNERR_SUBCLASSFAILURE	)MessageBox(0,"FNERR_SUBCLASSFAILURE","",MB_SYSTEMMODAL);
+
+	return n;
+}
+@item----GDI (GRAFIC DEVICE INTERFACE)
+@item GDI functions (most used)
+@helpkwd BitBlt
+@list
+BitBlt(HDC,int,int,int,int,HDC,int,int,DWORD);
+CombineRgn(HRGN,HRGN,HRGN,int);
+CreateBitmap(int,int,UINT,UINT,CONST VOID*);
+CreateCompatibleBitmap(HDC,int,int);
+CreateCompatibleDC(HDC);
+CreatePen(int,int,COLORREF);
+CreateSolidBrush(COLORREF);
+DeleteDC(HDC);
+Ellipse(HDC,int,int,int,int);
+ExcludeClipRect(HDC,int,int,int,int);
+FillRgn(HDC,HRGN,HBRUSH);
+GetBkColor(HDC);
+GetDC(HWND);
+GetDeviceCaps(HDC,int);
+GetPixel(HDC,int,int);
+GetStockObject(int);
+LineTo(HDC,int,int);
+PaintRgn(HDC,HRGN);
+PtVisible(HDC,int,int);
+RectInRegion(HRGN,CONST RECT*);
+Rectangle(HDC,int,int,int,int);
+ReleaseDC(HWND,HDC);
+RoundRect(HDC,int,int,int,int,int,int);
+SetBkColor(HDC,COLORREF);
+SetBkMode(HDC,int);
+SetPixel(HDC,int,int,COLORREF);
+StretchBlt(HDC,int,int,int,int,HDC,int,int,int,int,DWORD);
+SetTextColor(HDC,COLORREF);
+TextOut(HDC,int,int,LPCSTR,int);
+Polygon(HDC,CONST POINT*,int);
+@endlist
+@listloop
+@inlist
+@endlistloop
+@item copy Bitmap
+@helpkwd BitBlt
+void copyBmp(HDC hdc,int x,int y,HBITMAP hbmp){
+
+        HDC shdc;
+        HINSTANCE hinst;
+        BITMAP bmp;
+        HBITMAP hbmpold;
+        LONG bmx,bmy;
+
+        hinst=GetModuleHandle(NULL);
+        shdc = CreateCompatibleDC(hdc);
+        hbmpold=SelectObject(shdc, hbmp);
+
+        GetObject(hbmp, sizeof(BITMAP), &bmp);
+        bmx =bmp.bmWidth;
+        bmy =bmp.bmHeight;
+
+        BitBlt(hdc, x,y,bmx,bmy, shdc,0,0, SRCCOPY);
+
+        SelectObject(shdc,hbmpold);
+        DeleteDC(shdc);
+}
+@item copy Bitmap with Mask
+@helpkwd BitBlt
+BitBltMaskExample(HDC hdc,long x,long y)
+{
+	HDC         	hdcmask,hdcbitmap, hdctemp;
+	HBITMAP		hbitmap,hmask,htemp;
+    	HINSTANCE hInst=GetModuleHandle(NULL);
+	long xsize,ysize;
+
+	BITMAP bmp;
+
+	hdcmask   = CreateCompatibleDC(hdc);
+	hdcbitmap = CreateCompatibleDC(hdc);
+	hdctemp   = CreateCompatibleDC(hdc);
+
+	hmask  =LoadBitmap(hInst,MAKEINTRESOURCE(IDMASK));
+	hbitmap=LoadBitmap(hInst,MAKEINTRESOURCE(IDBMP));
+
+    	hmaskold  =SelectObject(hdcmask,   hmask);
+	hbitmapold=SelectObject(hdcbitmap, hbitmap);
+
+    	GetObject(hmask, sizeof(BITMAP), &bmp);
+	xsize=bmp.bmWidth;
+	ysize=bmp.bmHeight;
+
+	htemp=CreateCompatibleBitmap(hdc,xsize,ysize);
+	htempold=SelectObject(hdctemp, htemp);
+
+	x-=xsize/2;
+	y-=ysize/2;
+	BitBlt(hdctemp,0,0,xsize,ysize,hdc,      x,y,SRCCOPY);
+	BitBlt(hdctemp,0,0,xsize,ysize,hdcmask,  0,0,SRCERASE);
+	BitBlt(hdctemp,0,0,xsize,ysize,hdcbitmap,0,0,SRCINVERT);
+	BitBlt(hdc    ,x,y,xsize,ysize,hdctemp,  0,0,SRCCOPY);
+
+	SelectObject(hdcmask,  hmaskold);
+	SelectObject(hdcbitmap,hbitmapold);
+	SelectObject(hdctemp,  htempold);
+	DeleteDC(hdcmask);
+	DeleteDC(hdcbitmap);
+	DeleteDC(hdctemp);
+
+	DeleteObject(hmask);
+	DeleteObject(hbitmap);
+	DeleteObject(htemp);
+}
+@item----WINDOW FUNCTIONS
+@item DrawText
+@helpkwd DrawText
+DrawText(
+@"hDC",
+@"lpString",
+@"nCount",
+@"lpRect",
+@list uFormat
+DT_BOTTOM
+DT_CALCRECT
+DT_CENTER
+DT_EDITCONTROL
+DT_END_ELLIPSIS
+DT_PATH_ELLIPSIS
+DT_EXPANDTABS
+DT_EXTERNALLEADING
+DT_LEFT
+DT_MODIFYSTRING
+DT_NOCLIP
+DT_NOPREFIX
+DT_RIGHT
+DT_RTLREADING
+DT_SINGLELINE
+DT_TABSTOP
+DT_TOP
+DT_VCENTER
+DT_WORDBREAK
+@endlist
+@listloop
+@inlist | @endlistloop
+@delete2);	
+@item MessageBox
+@helpkwd MessageBox
+@list select maximal one style of each group.
+0 //no style selected
+--------
+ABORTRETRYIGNORE
+OK
+OKCANCEL
+RETRYCANCEL
+YESNO
+YESNOCANCEL
+--------
+ICONEXCLAMATION
+ICONWARNING
+ICONINFORMATION
+ICONASTERISK
+ICONQUESTION
+ICONSTOP
+ICONERROR
+ICONHAND
+--------
+DEFBUTTON1
+DEFBUTTON2
+DEFBUTTON3
+DEFBUTTON4	
+--------
+APPLMODAL
+SYSTEMMODAL
+TASKMODAL
+DEFAULT_DESKTOP_ONLY
+--------
+HELP
+--------
+RIGHT
+--------
+RTLREADING
+--------
+SETFOREGROUND
+--------
+TOPMOST
+--------
+SERVICE_NOTIFICATION
+@endlist
+int mb=MessageBox(@"hwnd",@"lpText",@"lpCaption",   @listloop,
+MB_@inlist | @endlistloop
+@delete3 );
+@list return values of interest
+IDABORT
+IDCANCEL
+IDIGNORE
+IDNO
+IDOK
+IDRETRY
+IDYES
+@endlist
+@listloop
+if(mb==@inlist)     ;
+@endlistloop
+@item CreateWindowEx
+@helpkwd CreateWindowEx
+HWND hwndex=CreateWindowEx(
+@list select  ONLY ONE  extended styles
+0, //no extended style selected
+WS_EX_ACCEPTFILES
+WS_EX_APPWINDOW
+WS_EX_CLIENTEDGE
+WS_EX_CONTEXTHELP
+WS_EX_CONTROLPARENT
+WS_EX_DLGMODALFRAME
+WS_EX_LEFT
+WS_EX_LEFTSCROLLBAR
+WS_EX_LTRREADING
+WS_EX_MDICHILD
+WS_EX_NOPARENTNOTIFY
+WS_EX_OVERLAPPEDWINDOW
+WS_EX_PALETTEWINDOW
+WS_EX_RIGHT
+WS_EX_RIGHTSCROLLBAR
+WS_EX_RTLREADING
+WS_EX_STATICEDGE
+WS_EX_TOOLWINDOW
+WS_EX_TOPMOST
+WS_EX_TRANSPARENT
+WS_EX_WINDOWEDGE
+@endlist
+@listloop
+@inlist | @endlistloop
+@delete2,
+@list lpClassName, select one
+"BUTTON"
+"COMBOBOX"
+"EDIT"
+"LISTBOX"
+"MDICLIENT"
+"SCROLLBAR"
+"STATIC"
+WC_HEADER
+WC_LISTVIEW
+WC_TREEVIEW
+WC_COMBOBOXEX
+WC_TABCONTROL
+WC_IPADDRESS,
+WC_PAGESCROLLER
+WC_NATIVEFONTCTL
+WC_BUTTON
+WC_STATIC
+WC_EDIT
+WC_LISTBOX
+WC_COMBOBOX
+WC_SCROLLBAR
+"SysLink"  
+TRACKBAR_CLASS
+TOOLTIPS_CLASS
+UPDOWN_CLASS
+PROGRESS_CLASS
+HOTKEY_CLASS
+ANIMATE_CLASS
+MONTHCAL_CLASS
+DATETIMEPICK_CLASS
+@endlist
+@listloop
+@inlist,
+@endlistloop
+@"lpWindowName",
+@list dwStyle 
+WS_BORDER
+WS_CAPTION
+WS_CHILD
+WS_CHILDWINDOW
+WS_CLIPCHILDREN
+WS_CLIPSIBLINGS
+WS_DISABLED
+WS_DLGFRAME
+WS_GROUP
+WS_HSCROLL
+WS_ICONIC
+WS_MAXIMIZE
+WS_MAXIMIZEBOX
+WS_MINIMIZE
+WS_MINIMIZEBOX
+WS_OVERLAPPED
+WS_OVERLAPPEDWINDOW
+WS_POPUP
+WS_POPUPWINDOW
+WS_SIZEBOX
+WS_SYSMENU
+WS_TABSTOP
+WS_THICKFRAME
+WS_TILED
+WS_TILEDWINDOW
+WS_VISIBLE
+WS_VSCROLL
+------------only select for BUTTON class--
+BS_3STATE
+BS_AUTO3STATE
+BS_AUTOCHECKBOX
+BS_AUTORADIOBUTTON
+BS_CHECKBOX
+BS_DEFPUSHBUTTON
+BS_GROUPBOX
+BS_LEFTTEXT
+BS_OWNERDRAW
+BS_PUSHBUTTON
+BS_RADIOBUTTON
+BS_USERBUTTON
+BS_BITMAP
+BS_BOTTOM
+BS_CENTER
+BS_ICON
+BS_LEFT
+BS_MULTILINE
+BS_NOTIFY
+BS_PUSHLIKE
+BS_RIGHT
+BS_RIGHTBUTTON
+BS_TEXT
+BS_TOP
+BS_VCENTER
+-----------only select for COMBOBOX class-----
+CBS_AUTOHSCROLL
+CBS_DISABLENOSCROLL
+CBS_DROPDOWN
+CBS_DROPDOWNLIST
+CBS_HASSTRINGS
+CBS_LOWERCASE
+CBS_NOINTEGRALHEIGHT
+CBS_OEMCONVERT
+CBS_OWNERDRAWFIXED
+CBS_OWNERDRAWVARIABLE
+CBS_SIMPLE
+CBS_SORT
+CBS_UPPERCASE
+---------onlx select for EDIT class-----
+ES_AUTOHSCROLL
+ES_AUTOVSCROLL
+ES_CENTER
+ES_LEFT
+ES_LOWERCASE
+ES_MULTILINE
+ES_NOHIDESEL
+ES_NUMBER
+ES_OEMCONVERT
+ES_PASSWORD
+ES_READONLY
+ES_RIGHT
+ES_UPPERCASE
+ES_WANTRETURN
+------------only select for LISTBOX class----
+LBS_DISABLENOSCROLL
+LBS_EXTENDEDSEL
+LBS_HASSTRINGS
+LBS_MULTICOLUMN
+LBS_MULTIPLESEL
+LBS_NODATA
+LBS_NOINTEGRALHEIGHT
+LBS_NOREDRAW
+LBS_NOSEL
+LBS_NOTIFY
+LBS_OWNERDRAWFIXED
+LBS_OWNERDRAWVARIABLE
+LBS_SORT
+LBS_STANDARD
+LBS_USETABSTOPS
+LBS_WANTKEYBOARDINPUT
+------------only select for SCROLLBAR class-----
+SBS_BOTTOMALIGN
+SBS_HORZ
+SBS_LEFTALIGN
+SBS_RIGHTALIGN
+SBS_SIZEBOX
+SBS_SIZEBOXBOTTOMRIGHTALIGN
+SBS_SIZEBOXTOPLEFTALIGN
+SBS_SIZEGRIP
+SBS_TOPALIGN
+SBS_VERT
+-------------only select with STATIC class-----
+SS_BITMAP
+SS_BLACKFRAME
+SS_BLACKRECT
+SS_CENTER
+SS_CENTERIMAGE
+SS_GRAYFRAME
+SS_GRAYRECT
+SS_ICON
+SS_LEFT
+SS_LEFTNOWORDWRAP
+SS_METAPICT
+SS_NOPREFIX
+SS_NOTIFY
+SS_RIGHT
+SS_RIGHTIMAGE
+SS_SIMPLE
+SS_WHITEFRAME
+SS_WHITERECT
+-------------dialog box styles-----
+DS_3DLOOK
+DS_ABSALIGN
+DS_CENTER
+DS_CENTERMOUSE
+DS_CONTEXTHELP
+DS_CONTROL
+DS_FIXEDSYS
+DS_LOCALEDIT
+DS_MODALFRAME
+DS_NOFAILCREATE
+DS_NOIDLEMSG
+DS_RECURSE
+DS_SETFONT
+DS_SETFOREGROUND
+DS_SYSMODAL
+-------------track bar styles-----
+TBS_AUTOTICKS  
+TBS_VERT  
+TBS_HORZ  
+TBS_TOP  
+TBS_BOTTOM  
+TBS_LEFT  
+TBS_RIGHT  
+TBS_BOTH  
+TBS_NOTICKS  
+TBS_ENABLESELRANGE  
+TBS_FIXEDLENGTH  
+TBS_NOTHUMB  
+TBS_TOOLTIPS  
+------------updown control styles-------
+UDS_WRAP  
+UDS_SETBUDDYINT  
+UDS_ALIGNRIGHT  
+UDS_ALIGNLEFT  
+UDS_AUTOBUDDY  
+UDS_ARROWKEYS  
+UDS_HORZ  
+UDS_NOTHOUSANDS  
+UDS_HOTTRACK  
+@endlist
+@listloop
+@inlist | @endlistloop
+@delete2,
+CW_USEDEFAULT, //x
+CW_USEDEFAULT, //y
+CW_USEDEFAULT, //nWidth
+CW_USEDEFAULT, //nHeight
+@"hWndParent",
+(HMENU)@"IDCONTROL",
+@"hInstance",
+NULL  // pointer to window-creation data
+);
+@item SetWindowHookEx
+@helpkwd SetWindowsHookEx
+HHOOK hhk= SetWindowsHookEx(
+@list select type of hook to install
+WH_CALLWNDPROC
+WH_CALLWNDPROCRET
+WH_CBT
+WH_DEBUG
+WH_GETMESSAGE
+WH_JOURNALPLAYBACK
+WH_JOURNALRECORD
+WH_KEYBOARD
+WH_MOUSE
+WH_MSGFILTER
+WH_SHELL
+WH_SYSMSGFILTER
+@endlist
+@listloop
+@inlist,
+@endlistloop
+@"HOOKPROC lpfn//address of hook procedure",
+@"HINSTANCE hMod//handle of application instance",
+@"DWORD dwThreadId//identity of thread to install hook for" 
+);	
+@item----WINDOW-STRUCTURES
+@item RECT
+@helpkwd RECT
+@getstring rectname
+RECT @instring;
+@instring.left  =@"left value";
+@instring.top   =@"top value";
+@instring.right =@"right value";
+@instring.bottom=@"bottom value";
+@item LOGFONT
+@helpkwd LOGFONT
+@getstring lf
+LOGFONT @instring;
+memset(&@instring,0,sizeof(@instring));
+@instring.lfHeight         =@"lfHeight";
+@instring.lfWidth          =@"lfWidht";
+@instring.lfEscapement     =@"lfEscapement";
+@instring.lfOrientation    =@"lfOrientation";
+@list lfWeight: Specifies the weight of the font in the range 0 through 1000. For example, 400 is normal and 700 is bold. If this value is zero, a default weight is used. The following values are defined for convenience:
+FW_DONTCARE
+FW_THIN
+FW_EXTRALIGHT
+FW_LIGHT
+FW_NORMAL
+FW_MEDIUM
+FW_SEMIBOLD
+FW_BOLD
+FW_EXTRABOLD
+FW_HEAVY
+@endlist
+@instring.lfWeight         =@listloop
+@inlist;
+@endlistloop
+@instring.lfItalic         =FALSE;
+@instring.lfUnderline      =FALSE;
+@instring.lfStrikeOut      =FALSE;
+@instring.lfCharSet        =ANSI_CHARSET;
+@instring.lfOutPrecision   =0;//OUT_TT_ONLY_PRECIS;
+@instring.lfClipPrecision  =0;
+@list lfQuality: Specifies the output quality. The output quality defines how carefully the graphics device interface (GDI) must attempt to match the logical-font attributes to those of an actual physical font. It can be one of the following values: 
+DEFAULT_QUALITY
+DRAFT_QUALITY
+PROOF_QUALITY
+@endlist
+@instring.lfQuality=@listloop
+@inlist;
+@endlistloop
+@list PitchAndFamily: select maximal one of each group.
+DEFAULT_PITCH
+FIXED_PITCH
+VARIABLE_PITCH
+
+FF_DECORATIVE
+FF_DONTCARE
+FF_MODERN
+FF_ROMAN
+FF_SCRIPT
+FF_SWISS
+@endlist
+@instring.lfPitchAndFamily =@listloop
+@inlist | @endlistloop;
+@delete2;
+//strcpy(lf.lfFaceName,"MS Serif");
+@itemWNDCLASS
+@helpkwd WNDCLASS
+WNDCLASS wc;
+memset(&wc,0,sizeof(wc));
+@list style: This member can be any combination of the following values: 
+CS_BYTEALIGNCLIENT
+CS_BYTEALIGNWINDOW
+CS_CLASSDC
+CS_DBLCLKS
+CS_GLOBALCLASS
+CS_HREDRAW
+CS_NOCLOSE
+CS_OWNDC
+CS_PARENTDC
+CS_SAVEBITS
+CS_VREDRAW
+@endlist
+wc.style=@listloop
+@inlist | @endlistloop
+@delete2;
+wc.lpfnWndProc=(WNDPROC)@"MainWndProc"; ;
+wc.cbClsExtra= 0;
+@list If an application uses the WNDCLASS structure to register a dialog box created by using the CLASS directive in the resource file, it must set this member to DLGWINDOWEXTRA. 
+0
+DLGWINDOWEXTRA
+@endlist
+wc.cbWndExtra= @listloop
+@inlist @endlistloop
+;
+@getstring hInst
+wc.hInstance= @instring;
+wc.hIcon= LoadIcon(@instring, MAKEINTRESOURCE(@"IDICON"));
+@list select one cursor
+MAKEINTRESOURCE(IDCURSOR)
+IDC_ARROW
+IDC_IBEAM
+IDC_WAIT
+IDC_CROSS
+IDC_UPARROW
+IDC_SIZE
+IDC_ICON
+IDC_SIZENWSE
+IDC_SIZENESW
+IDC_SIZEWE
+IDC_SIZENS
+IDC_SIZEALL
+IDC_NO
+@endlist
+wc.hCursor = LoadCursor(@instring,@listloop
+@inlist);
+@endlistloop
+@list hbrBackground: select one.
+(HBRUSH) (COLOR_ACTIVEBORDER+1)
+(HBRUSH) (COLOR_ACTIVECAPTION+1)
+(HBRUSH) (COLOR_APPWORKSPACE+1)
+(HBRUSH) (COLOR_BACKGROUND+1)
+(HBRUSH) (COLOR_BTNFACE+1)
+(HBRUSH) (COLOR_BTNSHADOW+1)
+(HBRUSH) (COLOR_BTNTEXT+1)
+(HBRUSH) (COLOR_CAPTIONTEXT+1)
+(HBRUSH) (COLOR_GRAYTEXT+1)
+(HBRUSH) (COLOR_HIGHLIGHT+1)
+(HBRUSH) (COLOR_HIGHLIGHTTEXT+1)
+(HBRUSH) (COLOR_INACTIVEBORDER+1)
+(HBRUSH) (COLOR_INACTIVECAPTION+1)
+(HBRUSH) (COLOR_MENU+1)
+(HBRUSH) (COLOR_MENUTEXT+1)
+(HBRUSH) (COLOR_SCROLLBAR+1)
+(HBRUSH) (COLOR_WINDOW+1)
+(HBRUSH) (COLOR_WINDOWFRAME+1)
+(HBRUSH) (COLOR_WINDOWTEXT+1)
+GetStockObject(BLACK_BRUSH)
+GetStockObject(DKGRAY_BRUSH)
+GetStockObject(GRAY_BRUSH)
+GetStockObject(HOLLOW_BRUSH)
+GetStockObject(LTGRAY_BRUSH)
+GetStockObject(NULL_BRUSH)
+@endlist
+wc.hbrBackground=@listloop
+@inlist @endlistloop
+;
+wc.lpszMenuName= MAKEINTRESOURCE(@"IDMAINMENU");
+wc.lpszClassName= "@"WndClass"";
+RegisterClass(&wc);
+
+  @itemTV_ITEM (treeview)
+@helpkwd TV_ITEM
+@getstringtv_item
+TV_ITEM @instring;
+memset(&wc,0,sizeof(@instring));
+@list Array of flags that indicate which of the other structure members contain valid data. When this structure is used with the TVM_GETITEM message, the mask member indicates the item attributes to retrieve. This member can be a combination of the following values:
+TVIF_CHILDREN
+TVIF_HANDLE
+TVIF_IMAGE
+TVIF_PARAM
+TVIF_SELECTEDIMAGE
+TVIF_STATE
+TVIF_TEXT
+@endlist
+@instring.mask=@listloop
+@inlist | @endlistloop;
+@delete2;
+@instring.hItem=   ;
+@instring.state=   ;
+@instring.stateMask=   ;
+@instring.pszText=   ;
+@instring.cchTextMax=   ;
+@instring.iImage=   ;
+@instring.iSelectedImage=   ;
+@instring.cChildren=   ;
+@instring.lParam=   ; 
+    @itemOPENFILENAME
+@helpkwd OPENFILENAME
+
+OPENFILENAME ofn;
+
+memset(&ofn,0,sizeof(ofn));
+
+@list A set of bit flags you can use to initialize the dialog box. When the dialog box returns, it sets these flags to indicate the user’s input. This member can be a combination of the following flags:
+OFN_ALLOWMULTISELECT
+OFN_CREATEPROMPT
+OFN_ENABLEHOOK
+OFN_ENABLETEMPLATE
+OFN_ENABLETEMPLATEHANDLE
+OFN_EXPLORER
+OFN_EXTENSIONDIFFERENT
+OFN_FILEMUSTEXIST
+OFN_HIDEREADONLY
+OFN_LONGNAMES
+OFN_NOCHANGEDIR
+OFN_NODEREFERENCELINKS
+OFN_NOLONGNAMES
+OFN_NONETWORKBUTTON
+OFN_NOREADONLYRETURN
+OFN_NOTESTFILECREATE
+OFN_NOVALIDATE
+OFN_OVERWRITEPROMPT
+OFN_PATHMUSTEXIST
+OFN_READONLY
+OFN_SHAREAWARE
+OFN_SHOWHELP
+@endlist
+
+ofn.lStructSize=   ;
+ofn.hwndOwner=  GetActiveWindow();  ;
+ofn.hInstance=  GetModuleHandle(NULL) ;
+ofn.lpstrFilter=   ;
+ofn.lpstrCustomFilter=   ;
+ofn.nMaxCustFilter=   ;
+ofn.nFilterIndex=   ;
+ofn.lpstrFile=   ;
+ofn.nMaxFile=   ;
+ofn.lpstrFileTitle=   ;
+ofn.nMaxFileTitle=   ;
+ofn.lpstrInitialDir=   ;
+ofn.lpstrTitle=   ;
+ofn.Flags= @listloop
+@inlist | @endlistloop
+@delete2  ;
+ofn.nFileOffset=   ;
+ofn.nFileExtension=   ;
+ofn.lpstrDefExt=   ;
+ofn.lCustData=   ;
+ofn.lpfnHook=   ;
+ofn.lpTemplateName=   ;
+
+@itemPRINTDLG
+@helpkwd PRINTDLG
+PRINTDLG pd;
+memset(&pd,0,sizeof(pd));
+
+@list A set of bit flags that you can use to initialize the Print common dialog box.
+PD_ALLPAGES
+PD_COLLATE
+PD_DISABLEPRINTTOFILE
+PD_ENABLEPRINTHOOK
+PD_ENABLEPRINTTEMPLATE
+PD_ENABLEPRINTTEMPLATEHANDLE
+PD_ENABLESETUPHOOK
+PD_ENABLESETUPTEMPLATE
+PD_ENABLESETUPTEMPLATEHANDLE
+PD_HIDEPRINTTOFILE
+PD_NOPAGENUMS
+PD_NOSELECTION
+PD_NOWARNING
+PD_PAGENUMS
+PD_PRINTSETUP
+PD_PRINTTOFILE
+PD_RETURNDC
+PD_RETURNDEFAULT
+PD_RETURNIC
+PD_SELECTION
+PD_SHOWHELP
+PD_USEDEVMODECOPIES
+PD_USEDEVMODECOPIESANDCOLLATE
+@endlist
+pd.lStructSize= sizeof(PRINTDLG);  ;
+pd.Flags= @listloop
+@inlist | @endlistloop
+@delete2  ;
+@list select what you wnat to initialize
+pd.hwndOwner=   ;
+pd.hDevMode=   ;
+pd.hDevNames=   ;
+pd.hDC=   ;
+pd.nFromPage=   ;
+pd.nToPage=   ;
+pd.nMinPage=   ;
+pd.nMaxPage=   ;
+pd.nCopies=   ;
+pd.hInstance=   ;
+pd.lCustData=   ;
+pd.lpfnPrintHook=   ;
+pd.lpfnSetupHook=   ;
+pd.lpPrintTemplateName=   ;
+pd.lpSetupTemplateName=   ;
+pd.hPrintTemplate=   ;
+pd.hSetupTemplate=   ;
+@endlist
+@listloop
+@inlist 
+@endlistloop
+
+@itemBITMAPINFOHEADER 
+@helpkwd BITMAPINFOHEADER 
+
+@getstringbitmapinfoheader
+BITMAPINFOHEADER @instring;
+memset(&@instring,0,sizeof(@instring));
+@list Specifies the type of compression for a compressed bottom-up bitmap (top-down DIBs cannot be compressed). It can be one of the following values: 
+BI_RGB
+BI_RLE8
+BI_RLE4
+BI_BITFIELDS@endlist
+
+@instring.biSize=   ;
+@instring.biWidth=   ;
+@instring.biHeight=   ;
+@instring.biPlanes=   ;
+@instring.biBitCount=   ;
+@instring.biCompression=@listloop
+@inlist | @endlistloop
+@delete2   ;
+@instring.biSizeImage=   ;
+@instring.biXPelsPerMeter=   ;
+@instring.biYPelsPerMeter=   ;
+@instring.biClrUsed=   ;
+@instring.biClrImportant=   ;
+
+ 

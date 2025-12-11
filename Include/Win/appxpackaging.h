@@ -1,0 +1,6991 @@
+/* Generated from appxpackaging.idl by POIDL version 0.80 - Do not edit */
+
+#ifndef __REQUIRED_RPCNDR_H_VERSION__
+#define __REQUIRED_RPCNDR_H_VERSION__ 475
+#endif
+
+#include <rpc.h>
+#include <rpcndr.h>
+
+#ifndef __RPCNDR_H_VERSION__
+#error this stub requires an updated version of <rpcndr.h>
+#endif /* __RPCNDR_H_VERSION__ */
+
+#ifndef COM_NO_WINDOWS_H
+#include <windows.h>
+#include <ole2.h>
+#endif /* COM_NO_WINDOWS_H */
+
+#ifndef __appxpackaging_h__
+#define __appxpackaging_h__
+
+#if __POCC__ >= 500
+#pragma once
+#endif
+
+/* Forward declarations */
+
+#ifndef __IAppxFactory_FWD_DEFINED__
+#define __IAppxFactory_FWD_DEFINED__
+typedef interface IAppxFactory IAppxFactory;
+#endif /* __IAppxFactory_FWD_DEFINED__ */
+
+#ifndef __IAppxFactory2_FWD_DEFINED__
+#define __IAppxFactory2_FWD_DEFINED__
+typedef interface IAppxFactory2 IAppxFactory2;
+#endif /* __IAppxFactory2_FWD_DEFINED__ */
+
+#ifndef __IAppxFactory3_FWD_DEFINED__
+#define __IAppxFactory3_FWD_DEFINED__
+typedef interface IAppxFactory3 IAppxFactory3;
+#endif /* __IAppxFactory3_FWD_DEFINED__ */
+
+#ifndef __IAppxPackageReader_FWD_DEFINED__
+#define __IAppxPackageReader_FWD_DEFINED__
+typedef interface IAppxPackageReader IAppxPackageReader;
+#endif /* __IAppxPackageReader_FWD_DEFINED__ */
+
+#ifndef __IAppxPackageWriter_FWD_DEFINED__
+#define __IAppxPackageWriter_FWD_DEFINED__
+typedef interface IAppxPackageWriter IAppxPackageWriter;
+#endif /* __IAppxPackageWriter_FWD_DEFINED__ */
+
+#ifndef __IAppxPackageWriter2_FWD_DEFINED__
+#define __IAppxPackageWriter2_FWD_DEFINED__
+typedef interface IAppxPackageWriter2 IAppxPackageWriter2;
+#endif /* __IAppxPackageWriter2_FWD_DEFINED__ */
+
+#ifndef __IAppxPackageWriter3_FWD_DEFINED__
+#define __IAppxPackageWriter3_FWD_DEFINED__
+typedef interface IAppxPackageWriter3 IAppxPackageWriter3;
+#endif /* __IAppxPackageWriter3_FWD_DEFINED__ */
+
+#ifndef __IAppxFile_FWD_DEFINED__
+#define __IAppxFile_FWD_DEFINED__
+typedef interface IAppxFile IAppxFile;
+#endif /* __IAppxFile_FWD_DEFINED__ */
+
+#ifndef __IAppxFilesEnumerator_FWD_DEFINED__
+#define __IAppxFilesEnumerator_FWD_DEFINED__
+typedef interface IAppxFilesEnumerator IAppxFilesEnumerator;
+#endif /* __IAppxFilesEnumerator_FWD_DEFINED__ */
+
+#ifndef __IAppxBlockMapReader_FWD_DEFINED__
+#define __IAppxBlockMapReader_FWD_DEFINED__
+typedef interface IAppxBlockMapReader IAppxBlockMapReader;
+#endif /* __IAppxBlockMapReader_FWD_DEFINED__ */
+
+#ifndef __IAppxBlockMapFile_FWD_DEFINED__
+#define __IAppxBlockMapFile_FWD_DEFINED__
+typedef interface IAppxBlockMapFile IAppxBlockMapFile;
+#endif /* __IAppxBlockMapFile_FWD_DEFINED__ */
+
+#ifndef __IAppxBlockMapFilesEnumerator_FWD_DEFINED__
+#define __IAppxBlockMapFilesEnumerator_FWD_DEFINED__
+typedef interface IAppxBlockMapFilesEnumerator IAppxBlockMapFilesEnumerator;
+#endif /* __IAppxBlockMapFilesEnumerator_FWD_DEFINED__ */
+
+#ifndef __IAppxBlockMapBlock_FWD_DEFINED__
+#define __IAppxBlockMapBlock_FWD_DEFINED__
+typedef interface IAppxBlockMapBlock IAppxBlockMapBlock;
+#endif /* __IAppxBlockMapBlock_FWD_DEFINED__ */
+
+#ifndef __IAppxBlockMapBlocksEnumerator_FWD_DEFINED__
+#define __IAppxBlockMapBlocksEnumerator_FWD_DEFINED__
+typedef interface IAppxBlockMapBlocksEnumerator IAppxBlockMapBlocksEnumerator;
+#endif /* __IAppxBlockMapBlocksEnumerator_FWD_DEFINED__ */
+
+#ifndef __IAppxManifestReader_FWD_DEFINED__
+#define __IAppxManifestReader_FWD_DEFINED__
+typedef interface IAppxManifestReader IAppxManifestReader;
+#endif /* __IAppxManifestReader_FWD_DEFINED__ */
+
+#ifndef __IAppxManifestReader2_FWD_DEFINED__
+#define __IAppxManifestReader2_FWD_DEFINED__
+typedef interface IAppxManifestReader2 IAppxManifestReader2;
+#endif /* __IAppxManifestReader2_FWD_DEFINED__ */
+
+#ifndef __IAppxManifestReader3_FWD_DEFINED__
+#define __IAppxManifestReader3_FWD_DEFINED__
+typedef interface IAppxManifestReader3 IAppxManifestReader3;
+#endif /* __IAppxManifestReader3_FWD_DEFINED__ */
+
+#ifndef __IAppxManifestReader4_FWD_DEFINED__
+#define __IAppxManifestReader4_FWD_DEFINED__
+typedef interface IAppxManifestReader4 IAppxManifestReader4;
+#endif /* __IAppxManifestReader4_FWD_DEFINED__ */
+
+#ifndef __IAppxManifestReader5_FWD_DEFINED__
+#define __IAppxManifestReader5_FWD_DEFINED__
+typedef interface IAppxManifestReader5 IAppxManifestReader5;
+#endif /* __IAppxManifestReader5_FWD_DEFINED__ */
+
+#ifndef __IAppxManifestReader6_FWD_DEFINED__
+#define __IAppxManifestReader6_FWD_DEFINED__
+typedef interface IAppxManifestReader6 IAppxManifestReader6;
+#endif /* __IAppxManifestReader6_FWD_DEFINED__ */
+
+#ifndef __IAppxManifestReader7_FWD_DEFINED__
+#define __IAppxManifestReader7_FWD_DEFINED__
+typedef interface IAppxManifestReader7 IAppxManifestReader7;
+#endif /* __IAppxManifestReader7_FWD_DEFINED__ */
+
+#ifndef __IAppxManifestDriverDependenciesEnumerator_FWD_DEFINED__
+#define __IAppxManifestDriverDependenciesEnumerator_FWD_DEFINED__
+typedef interface IAppxManifestDriverDependenciesEnumerator IAppxManifestDriverDependenciesEnumerator;
+#endif /* __IAppxManifestDriverDependenciesEnumerator_FWD_DEFINED__ */
+
+#ifndef __IAppxManifestDriverDependency_FWD_DEFINED__
+#define __IAppxManifestDriverDependency_FWD_DEFINED__
+typedef interface IAppxManifestDriverDependency IAppxManifestDriverDependency;
+#endif /* __IAppxManifestDriverDependency_FWD_DEFINED__ */
+
+#ifndef __IAppxManifestDriverConstraintsEnumerator_FWD_DEFINED__
+#define __IAppxManifestDriverConstraintsEnumerator_FWD_DEFINED__
+typedef interface IAppxManifestDriverConstraintsEnumerator IAppxManifestDriverConstraintsEnumerator;
+#endif /* __IAppxManifestDriverConstraintsEnumerator_FWD_DEFINED__ */
+
+#ifndef __IAppxManifestDriverConstraint_FWD_DEFINED__
+#define __IAppxManifestDriverConstraint_FWD_DEFINED__
+typedef interface IAppxManifestDriverConstraint IAppxManifestDriverConstraint;
+#endif /* __IAppxManifestDriverConstraint_FWD_DEFINED__ */
+
+#ifndef __IAppxManifestOSPackageDependenciesEnumerator_FWD_DEFINED__
+#define __IAppxManifestOSPackageDependenciesEnumerator_FWD_DEFINED__
+typedef interface IAppxManifestOSPackageDependenciesEnumerator IAppxManifestOSPackageDependenciesEnumerator;
+#endif /* __IAppxManifestOSPackageDependenciesEnumerator_FWD_DEFINED__ */
+
+#ifndef __IAppxManifestOSPackageDependency_FWD_DEFINED__
+#define __IAppxManifestOSPackageDependency_FWD_DEFINED__
+typedef interface IAppxManifestOSPackageDependency IAppxManifestOSPackageDependency;
+#endif /* __IAppxManifestOSPackageDependency_FWD_DEFINED__ */
+
+#ifndef __IAppxManifestHostRuntimeDependenciesEnumerator_FWD_DEFINED__
+#define __IAppxManifestHostRuntimeDependenciesEnumerator_FWD_DEFINED__
+typedef interface IAppxManifestHostRuntimeDependenciesEnumerator IAppxManifestHostRuntimeDependenciesEnumerator;
+#endif /* __IAppxManifestHostRuntimeDependenciesEnumerator_FWD_DEFINED__ */
+
+#ifndef __IAppxManifestHostRuntimeDependency_FWD_DEFINED__
+#define __IAppxManifestHostRuntimeDependency_FWD_DEFINED__
+typedef interface IAppxManifestHostRuntimeDependency IAppxManifestHostRuntimeDependency;
+#endif /* __IAppxManifestHostRuntimeDependency_FWD_DEFINED__ */
+
+#ifndef __IAppxManifestHostRuntimeDependency2_FWD_DEFINED__
+#define __IAppxManifestHostRuntimeDependency2_FWD_DEFINED__
+typedef interface IAppxManifestHostRuntimeDependency2 IAppxManifestHostRuntimeDependency2;
+#endif /* __IAppxManifestHostRuntimeDependency2_FWD_DEFINED__ */
+
+#ifndef __IAppxManifestOptionalPackageInfo_FWD_DEFINED__
+#define __IAppxManifestOptionalPackageInfo_FWD_DEFINED__
+typedef interface IAppxManifestOptionalPackageInfo IAppxManifestOptionalPackageInfo;
+#endif /* __IAppxManifestOptionalPackageInfo_FWD_DEFINED__ */
+
+#ifndef __IAppxManifestMainPackageDependenciesEnumerator_FWD_DEFINED__
+#define __IAppxManifestMainPackageDependenciesEnumerator_FWD_DEFINED__
+typedef interface IAppxManifestMainPackageDependenciesEnumerator IAppxManifestMainPackageDependenciesEnumerator;
+#endif /* __IAppxManifestMainPackageDependenciesEnumerator_FWD_DEFINED__ */
+
+#ifndef __IAppxManifestMainPackageDependency_FWD_DEFINED__
+#define __IAppxManifestMainPackageDependency_FWD_DEFINED__
+typedef interface IAppxManifestMainPackageDependency IAppxManifestMainPackageDependency;
+#endif /* __IAppxManifestMainPackageDependency_FWD_DEFINED__ */
+
+#ifndef __IAppxManifestPackageId_FWD_DEFINED__
+#define __IAppxManifestPackageId_FWD_DEFINED__
+typedef interface IAppxManifestPackageId IAppxManifestPackageId;
+#endif /* __IAppxManifestPackageId_FWD_DEFINED__ */
+
+#ifndef __IAppxManifestPackageId2_FWD_DEFINED__
+#define __IAppxManifestPackageId2_FWD_DEFINED__
+typedef interface IAppxManifestPackageId2 IAppxManifestPackageId2;
+#endif /* __IAppxManifestPackageId2_FWD_DEFINED__ */
+
+#ifndef __IAppxManifestProperties_FWD_DEFINED__
+#define __IAppxManifestProperties_FWD_DEFINED__
+typedef interface IAppxManifestProperties IAppxManifestProperties;
+#endif /* __IAppxManifestProperties_FWD_DEFINED__ */
+
+#ifndef __IAppxManifestTargetDeviceFamiliesEnumerator_FWD_DEFINED__
+#define __IAppxManifestTargetDeviceFamiliesEnumerator_FWD_DEFINED__
+typedef interface IAppxManifestTargetDeviceFamiliesEnumerator IAppxManifestTargetDeviceFamiliesEnumerator;
+#endif /* __IAppxManifestTargetDeviceFamiliesEnumerator_FWD_DEFINED__ */
+
+#ifndef __IAppxManifestTargetDeviceFamily_FWD_DEFINED__
+#define __IAppxManifestTargetDeviceFamily_FWD_DEFINED__
+typedef interface IAppxManifestTargetDeviceFamily IAppxManifestTargetDeviceFamily;
+#endif /* __IAppxManifestTargetDeviceFamily_FWD_DEFINED__ */
+
+#ifndef __IAppxManifestPackageDependenciesEnumerator_FWD_DEFINED__
+#define __IAppxManifestPackageDependenciesEnumerator_FWD_DEFINED__
+typedef interface IAppxManifestPackageDependenciesEnumerator IAppxManifestPackageDependenciesEnumerator;
+#endif /* __IAppxManifestPackageDependenciesEnumerator_FWD_DEFINED__ */
+
+#ifndef __IAppxManifestPackageDependency_FWD_DEFINED__
+#define __IAppxManifestPackageDependency_FWD_DEFINED__
+typedef interface IAppxManifestPackageDependency IAppxManifestPackageDependency;
+#endif /* __IAppxManifestPackageDependency_FWD_DEFINED__ */
+
+#ifndef __IAppxManifestPackageDependency2_FWD_DEFINED__
+#define __IAppxManifestPackageDependency2_FWD_DEFINED__
+typedef interface IAppxManifestPackageDependency2 IAppxManifestPackageDependency2;
+#endif /* __IAppxManifestPackageDependency2_FWD_DEFINED__ */
+
+#ifndef __IAppxManifestPackageDependency3_FWD_DEFINED__
+#define __IAppxManifestPackageDependency3_FWD_DEFINED__
+typedef interface IAppxManifestPackageDependency3 IAppxManifestPackageDependency3;
+#endif /* __IAppxManifestPackageDependency3_FWD_DEFINED__ */
+
+#ifndef __IAppxManifestResourcesEnumerator_FWD_DEFINED__
+#define __IAppxManifestResourcesEnumerator_FWD_DEFINED__
+typedef interface IAppxManifestResourcesEnumerator IAppxManifestResourcesEnumerator;
+#endif /* __IAppxManifestResourcesEnumerator_FWD_DEFINED__ */
+
+#ifndef __IAppxManifestDeviceCapabilitiesEnumerator_FWD_DEFINED__
+#define __IAppxManifestDeviceCapabilitiesEnumerator_FWD_DEFINED__
+typedef interface IAppxManifestDeviceCapabilitiesEnumerator IAppxManifestDeviceCapabilitiesEnumerator;
+#endif /* __IAppxManifestDeviceCapabilitiesEnumerator_FWD_DEFINED__ */
+
+#ifndef __IAppxManifestCapabilitiesEnumerator_FWD_DEFINED__
+#define __IAppxManifestCapabilitiesEnumerator_FWD_DEFINED__
+typedef interface IAppxManifestCapabilitiesEnumerator IAppxManifestCapabilitiesEnumerator;
+#endif /* __IAppxManifestCapabilitiesEnumerator_FWD_DEFINED__ */
+
+#ifndef __IAppxManifestApplicationsEnumerator_FWD_DEFINED__
+#define __IAppxManifestApplicationsEnumerator_FWD_DEFINED__
+typedef interface IAppxManifestApplicationsEnumerator IAppxManifestApplicationsEnumerator;
+#endif /* __IAppxManifestApplicationsEnumerator_FWD_DEFINED__ */
+
+#ifndef __IAppxManifestApplication_FWD_DEFINED__
+#define __IAppxManifestApplication_FWD_DEFINED__
+typedef interface IAppxManifestApplication IAppxManifestApplication;
+#endif /* __IAppxManifestApplication_FWD_DEFINED__ */
+
+#ifndef __IAppxManifestQualifiedResourcesEnumerator_FWD_DEFINED__
+#define __IAppxManifestQualifiedResourcesEnumerator_FWD_DEFINED__
+typedef interface IAppxManifestQualifiedResourcesEnumerator IAppxManifestQualifiedResourcesEnumerator;
+#endif /* __IAppxManifestQualifiedResourcesEnumerator_FWD_DEFINED__ */
+
+#ifndef __IAppxManifestQualifiedResource_FWD_DEFINED__
+#define __IAppxManifestQualifiedResource_FWD_DEFINED__
+typedef interface IAppxManifestQualifiedResource IAppxManifestQualifiedResource;
+#endif /* __IAppxManifestQualifiedResource_FWD_DEFINED__ */
+
+#ifndef __IAppxBundleFactory_FWD_DEFINED__
+#define __IAppxBundleFactory_FWD_DEFINED__
+typedef interface IAppxBundleFactory IAppxBundleFactory;
+#endif /* __IAppxBundleFactory_FWD_DEFINED__ */
+
+#ifndef __IAppxBundleFactory2_FWD_DEFINED__
+#define __IAppxBundleFactory2_FWD_DEFINED__
+typedef interface IAppxBundleFactory2 IAppxBundleFactory2;
+#endif /* __IAppxBundleFactory2_FWD_DEFINED__ */
+
+#ifndef __IAppxBundleWriter_FWD_DEFINED__
+#define __IAppxBundleWriter_FWD_DEFINED__
+typedef interface IAppxBundleWriter IAppxBundleWriter;
+#endif /* __IAppxBundleWriter_FWD_DEFINED__ */
+
+#ifndef __IAppxBundleWriter2_FWD_DEFINED__
+#define __IAppxBundleWriter2_FWD_DEFINED__
+typedef interface IAppxBundleWriter2 IAppxBundleWriter2;
+#endif /* __IAppxBundleWriter2_FWD_DEFINED__ */
+
+#ifndef __IAppxBundleWriter3_FWD_DEFINED__
+#define __IAppxBundleWriter3_FWD_DEFINED__
+typedef interface IAppxBundleWriter3 IAppxBundleWriter3;
+#endif /* __IAppxBundleWriter3_FWD_DEFINED__ */
+
+#ifndef __IAppxBundleWriter4_FWD_DEFINED__
+#define __IAppxBundleWriter4_FWD_DEFINED__
+typedef interface IAppxBundleWriter4 IAppxBundleWriter4;
+#endif /* __IAppxBundleWriter4_FWD_DEFINED__ */
+
+#ifndef __IAppxBundleReader_FWD_DEFINED__
+#define __IAppxBundleReader_FWD_DEFINED__
+typedef interface IAppxBundleReader IAppxBundleReader;
+#endif /* __IAppxBundleReader_FWD_DEFINED__ */
+
+#ifndef __IAppxBundleManifestReader_FWD_DEFINED__
+#define __IAppxBundleManifestReader_FWD_DEFINED__
+typedef interface IAppxBundleManifestReader IAppxBundleManifestReader;
+#endif /* __IAppxBundleManifestReader_FWD_DEFINED__ */
+
+#ifndef __IAppxBundleManifestReader2_FWD_DEFINED__
+#define __IAppxBundleManifestReader2_FWD_DEFINED__
+typedef interface IAppxBundleManifestReader2 IAppxBundleManifestReader2;
+#endif /* __IAppxBundleManifestReader2_FWD_DEFINED__ */
+
+#ifndef __IAppxBundleManifestPackageInfoEnumerator_FWD_DEFINED__
+#define __IAppxBundleManifestPackageInfoEnumerator_FWD_DEFINED__
+typedef interface IAppxBundleManifestPackageInfoEnumerator IAppxBundleManifestPackageInfoEnumerator;
+#endif /* __IAppxBundleManifestPackageInfoEnumerator_FWD_DEFINED__ */
+
+#ifndef __IAppxBundleManifestPackageInfo_FWD_DEFINED__
+#define __IAppxBundleManifestPackageInfo_FWD_DEFINED__
+typedef interface IAppxBundleManifestPackageInfo IAppxBundleManifestPackageInfo;
+#endif /* __IAppxBundleManifestPackageInfo_FWD_DEFINED__ */
+
+#ifndef __IAppxBundleManifestPackageInfo2_FWD_DEFINED__
+#define __IAppxBundleManifestPackageInfo2_FWD_DEFINED__
+typedef interface IAppxBundleManifestPackageInfo2 IAppxBundleManifestPackageInfo2;
+#endif /* __IAppxBundleManifestPackageInfo2_FWD_DEFINED__ */
+
+#ifndef __IAppxBundleManifestPackageInfo3_FWD_DEFINED__
+#define __IAppxBundleManifestPackageInfo3_FWD_DEFINED__
+typedef interface IAppxBundleManifestPackageInfo3 IAppxBundleManifestPackageInfo3;
+#endif /* __IAppxBundleManifestPackageInfo3_FWD_DEFINED__ */
+
+#ifndef __IAppxBundleManifestPackageInfo4_FWD_DEFINED__
+#define __IAppxBundleManifestPackageInfo4_FWD_DEFINED__
+typedef interface IAppxBundleManifestPackageInfo4 IAppxBundleManifestPackageInfo4;
+#endif /* __IAppxBundleManifestPackageInfo4_FWD_DEFINED__ */
+
+#ifndef __IAppxBundleManifestOptionalBundleInfoEnumerator_FWD_DEFINED__
+#define __IAppxBundleManifestOptionalBundleInfoEnumerator_FWD_DEFINED__
+typedef interface IAppxBundleManifestOptionalBundleInfoEnumerator IAppxBundleManifestOptionalBundleInfoEnumerator;
+#endif /* __IAppxBundleManifestOptionalBundleInfoEnumerator_FWD_DEFINED__ */
+
+#ifndef __IAppxBundleManifestOptionalBundleInfo_FWD_DEFINED__
+#define __IAppxBundleManifestOptionalBundleInfo_FWD_DEFINED__
+typedef interface IAppxBundleManifestOptionalBundleInfo IAppxBundleManifestOptionalBundleInfo;
+#endif /* __IAppxBundleManifestOptionalBundleInfo_FWD_DEFINED__ */
+
+#ifndef __IAppxContentGroupFilesEnumerator_FWD_DEFINED__
+#define __IAppxContentGroupFilesEnumerator_FWD_DEFINED__
+typedef interface IAppxContentGroupFilesEnumerator IAppxContentGroupFilesEnumerator;
+#endif /* __IAppxContentGroupFilesEnumerator_FWD_DEFINED__ */
+
+#ifndef __IAppxContentGroup_FWD_DEFINED__
+#define __IAppxContentGroup_FWD_DEFINED__
+typedef interface IAppxContentGroup IAppxContentGroup;
+#endif /* __IAppxContentGroup_FWD_DEFINED__ */
+
+#ifndef __IAppxContentGroupsEnumerator_FWD_DEFINED__
+#define __IAppxContentGroupsEnumerator_FWD_DEFINED__
+typedef interface IAppxContentGroupsEnumerator IAppxContentGroupsEnumerator;
+#endif /* __IAppxContentGroupsEnumerator_FWD_DEFINED__ */
+
+#ifndef __IAppxContentGroupMapReader_FWD_DEFINED__
+#define __IAppxContentGroupMapReader_FWD_DEFINED__
+typedef interface IAppxContentGroupMapReader IAppxContentGroupMapReader;
+#endif /* __IAppxContentGroupMapReader_FWD_DEFINED__ */
+
+#ifndef __IAppxSourceContentGroupMapReader_FWD_DEFINED__
+#define __IAppxSourceContentGroupMapReader_FWD_DEFINED__
+typedef interface IAppxSourceContentGroupMapReader IAppxSourceContentGroupMapReader;
+#endif /* __IAppxSourceContentGroupMapReader_FWD_DEFINED__ */
+
+#ifndef __IAppxContentGroupMapWriter_FWD_DEFINED__
+#define __IAppxContentGroupMapWriter_FWD_DEFINED__
+typedef interface IAppxContentGroupMapWriter IAppxContentGroupMapWriter;
+#endif /* __IAppxContentGroupMapWriter_FWD_DEFINED__ */
+
+#ifndef __IAppxPackagingDiagnosticEventSink_FWD_DEFINED__
+#define __IAppxPackagingDiagnosticEventSink_FWD_DEFINED__
+typedef interface IAppxPackagingDiagnosticEventSink IAppxPackagingDiagnosticEventSink;
+#endif /* __IAppxPackagingDiagnosticEventSink_FWD_DEFINED__ */
+
+#ifndef __IAppxPackagingDiagnosticEventSinkManager_FWD_DEFINED__
+#define __IAppxPackagingDiagnosticEventSinkManager_FWD_DEFINED__
+typedef interface IAppxPackagingDiagnosticEventSinkManager IAppxPackagingDiagnosticEventSinkManager;
+#endif /* __IAppxPackagingDiagnosticEventSinkManager_FWD_DEFINED__ */
+
+#ifndef __IAppxAppInstallerReader_FWD_DEFINED__
+#define __IAppxAppInstallerReader_FWD_DEFINED__
+typedef interface IAppxAppInstallerReader IAppxAppInstallerReader;
+#endif /* __IAppxAppInstallerReader_FWD_DEFINED__ */
+
+#ifndef __IAppxDigestProvider_FWD_DEFINED__
+#define __IAppxDigestProvider_FWD_DEFINED__
+typedef interface IAppxDigestProvider IAppxDigestProvider;
+#endif /* __IAppxDigestProvider_FWD_DEFINED__ */
+
+#ifndef __IAppxEncryptionFactory_FWD_DEFINED__
+#define __IAppxEncryptionFactory_FWD_DEFINED__
+typedef interface IAppxEncryptionFactory IAppxEncryptionFactory;
+#endif /* __IAppxEncryptionFactory_FWD_DEFINED__ */
+
+#ifndef __IAppxEncryptionFactory2_FWD_DEFINED__
+#define __IAppxEncryptionFactory2_FWD_DEFINED__
+typedef interface IAppxEncryptionFactory2 IAppxEncryptionFactory2;
+#endif /* __IAppxEncryptionFactory2_FWD_DEFINED__ */
+
+#ifndef __IAppxEncryptionFactory3_FWD_DEFINED__
+#define __IAppxEncryptionFactory3_FWD_DEFINED__
+typedef interface IAppxEncryptionFactory3 IAppxEncryptionFactory3;
+#endif /* __IAppxEncryptionFactory3_FWD_DEFINED__ */
+
+#ifndef __IAppxEncryptionFactory4_FWD_DEFINED__
+#define __IAppxEncryptionFactory4_FWD_DEFINED__
+typedef interface IAppxEncryptionFactory4 IAppxEncryptionFactory4;
+#endif /* __IAppxEncryptionFactory4_FWD_DEFINED__ */
+
+#ifndef __IAppxEncryptionFactory5_FWD_DEFINED__
+#define __IAppxEncryptionFactory5_FWD_DEFINED__
+typedef interface IAppxEncryptionFactory5 IAppxEncryptionFactory5;
+#endif /* __IAppxEncryptionFactory5_FWD_DEFINED__ */
+
+#ifndef __IAppxEncryptedPackageWriter_FWD_DEFINED__
+#define __IAppxEncryptedPackageWriter_FWD_DEFINED__
+typedef interface IAppxEncryptedPackageWriter IAppxEncryptedPackageWriter;
+#endif /* __IAppxEncryptedPackageWriter_FWD_DEFINED__ */
+
+#ifndef __IAppxEncryptedPackageWriter2_FWD_DEFINED__
+#define __IAppxEncryptedPackageWriter2_FWD_DEFINED__
+typedef interface IAppxEncryptedPackageWriter2 IAppxEncryptedPackageWriter2;
+#endif /* __IAppxEncryptedPackageWriter2_FWD_DEFINED__ */
+
+#ifndef __IAppxEncryptedBundleWriter_FWD_DEFINED__
+#define __IAppxEncryptedBundleWriter_FWD_DEFINED__
+typedef interface IAppxEncryptedBundleWriter IAppxEncryptedBundleWriter;
+#endif /* __IAppxEncryptedBundleWriter_FWD_DEFINED__ */
+
+#ifndef __IAppxEncryptedBundleWriter2_FWD_DEFINED__
+#define __IAppxEncryptedBundleWriter2_FWD_DEFINED__
+typedef interface IAppxEncryptedBundleWriter2 IAppxEncryptedBundleWriter2;
+#endif /* __IAppxEncryptedBundleWriter2_FWD_DEFINED__ */
+
+#ifndef __IAppxEncryptedBundleWriter3_FWD_DEFINED__
+#define __IAppxEncryptedBundleWriter3_FWD_DEFINED__
+typedef interface IAppxEncryptedBundleWriter3 IAppxEncryptedBundleWriter3;
+#endif /* __IAppxEncryptedBundleWriter3_FWD_DEFINED__ */
+
+#ifndef __IAppxPackageEditor_FWD_DEFINED__
+#define __IAppxPackageEditor_FWD_DEFINED__
+typedef interface IAppxPackageEditor IAppxPackageEditor;
+#endif /* __IAppxPackageEditor_FWD_DEFINED__ */
+
+#ifndef __AppxFactory_FWD_DEFINED__
+#define __AppxFactory_FWD_DEFINED__
+typedef struct AppxFactory AppxFactory;
+#endif /* __AppxFactory_FWD_DEFINED__ */
+
+#ifndef __AppxBundleFactory_FWD_DEFINED__
+#define __AppxBundleFactory_FWD_DEFINED__
+typedef struct AppxBundleFactory AppxBundleFactory;
+#endif /* __AppxBundleFactory_FWD_DEFINED__ */
+
+#ifndef __AppxPackagingDiagnosticEventSinkManager_FWD_DEFINED__
+#define __AppxPackagingDiagnosticEventSinkManager_FWD_DEFINED__
+typedef struct AppxPackagingDiagnosticEventSinkManager AppxPackagingDiagnosticEventSinkManager;
+#endif /* __AppxPackagingDiagnosticEventSinkManager_FWD_DEFINED__ */
+
+#ifndef __AppxEncryptionFactory_FWD_DEFINED__
+#define __AppxEncryptionFactory_FWD_DEFINED__
+typedef struct AppxEncryptionFactory AppxEncryptionFactory;
+#endif /* __AppxEncryptionFactory_FWD_DEFINED__ */
+
+#ifndef __AppxPackageEditor_FWD_DEFINED__
+#define __AppxPackageEditor_FWD_DEFINED__
+typedef struct AppxPackageEditor AppxPackageEditor;
+#endif /* __AppxPackageEditor_FWD_DEFINED__ */
+
+/* Headers for imported files */
+
+#include "oaidl.h"
+#include "ocidl.h"
+#include "urlmon.h"
+
+
+#include <winapifamily.h>
+
+#if (NTDDI_VERSION >= NTDDI_WIN7)
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP)
+
+typedef struct APPX_PACKAGE_SETTINGS {
+    BOOL forceZip32;
+    IUri *hashMethod;
+} APPX_PACKAGE_SETTINGS;
+
+typedef enum APPX_COMPRESSION_OPTION {
+    APPX_COMPRESSION_OPTION_NONE = 0,
+    APPX_COMPRESSION_OPTION_NORMAL = 1,
+    APPX_COMPRESSION_OPTION_MAXIMUM = 2,
+    APPX_COMPRESSION_OPTION_FAST = 3,
+    APPX_COMPRESSION_OPTION_SUPERFAST = 4
+} APPX_COMPRESSION_OPTION;
+
+typedef struct APPX_PACKAGE_WRITER_PAYLOAD_STREAM {
+    IStream *inputStream;
+    LPCWSTR fileName;
+    LPCWSTR contentType;
+    APPX_COMPRESSION_OPTION compressionOption;
+} APPX_PACKAGE_WRITER_PAYLOAD_STREAM;
+
+typedef enum APPX_FOOTPRINT_FILE_TYPE {
+    APPX_FOOTPRINT_FILE_TYPE_MANIFEST = 0,
+    APPX_FOOTPRINT_FILE_TYPE_BLOCKMAP = 1,
+    APPX_FOOTPRINT_FILE_TYPE_SIGNATURE = 2,
+    APPX_FOOTPRINT_FILE_TYPE_CODEINTEGRITY = 3,
+    APPX_FOOTPRINT_FILE_TYPE_CONTENTGROUPMAP = 4
+} APPX_FOOTPRINT_FILE_TYPE;
+
+typedef enum APPX_BUNDLE_FOOTPRINT_FILE_TYPE {
+    APPX_BUNDLE_FOOTPRINT_FILE_TYPE_FIRST = 0,
+    APPX_BUNDLE_FOOTPRINT_FILE_TYPE_MANIFEST = 0,
+    APPX_BUNDLE_FOOTPRINT_FILE_TYPE_BLOCKMAP = 1,
+    APPX_BUNDLE_FOOTPRINT_FILE_TYPE_SIGNATURE = 2,
+    APPX_BUNDLE_FOOTPRINT_FILE_TYPE_LAST = 2
+} APPX_BUNDLE_FOOTPRINT_FILE_TYPE;
+
+typedef enum APPX_CAPABILITIES {
+    APPX_CAPABILITY_INTERNET_CLIENT = 0x1,
+    APPX_CAPABILITY_INTERNET_CLIENT_SERVER = 0x2,
+    APPX_CAPABILITY_PRIVATE_NETWORK_CLIENT_SERVER = 0x4,
+    APPX_CAPABILITY_DOCUMENTS_LIBRARY = 0x8,
+    APPX_CAPABILITY_PICTURES_LIBRARY = 0x10,
+    APPX_CAPABILITY_VIDEOS_LIBRARY = 0x20,
+    APPX_CAPABILITY_MUSIC_LIBRARY = 0x40,
+    APPX_CAPABILITY_ENTERPRISE_AUTHENTICATION = 0x80,
+    APPX_CAPABILITY_SHARED_USER_CERTIFICATES = 0x100,
+    APPX_CAPABILITY_REMOVABLE_STORAGE = 0x200,
+    APPX_CAPABILITY_APPOINTMENTS = 0x400,
+    APPX_CAPABILITY_CONTACTS = 0x800
+} APPX_CAPABILITIES;
+
+typedef enum APPX_PACKAGE_ARCHITECTURE {
+    APPX_PACKAGE_ARCHITECTURE_X86 = 0,
+    APPX_PACKAGE_ARCHITECTURE_ARM = 5,
+    APPX_PACKAGE_ARCHITECTURE_X64 = 9,
+    APPX_PACKAGE_ARCHITECTURE_NEUTRAL = 11,
+    APPX_PACKAGE_ARCHITECTURE_ARM64 = 12
+} APPX_PACKAGE_ARCHITECTURE;
+
+typedef enum APPX_PACKAGE_ARCHITECTURE2 {
+    APPX_PACKAGE_ARCHITECTURE2_X86 = 0,
+    APPX_PACKAGE_ARCHITECTURE2_ARM = 5,
+    APPX_PACKAGE_ARCHITECTURE2_X64 = 9,
+    APPX_PACKAGE_ARCHITECTURE2_NEUTRAL = 11,
+    APPX_PACKAGE_ARCHITECTURE2_ARM64 = 12,
+    APPX_PACKAGE_ARCHITECTURE2_X86_ON_ARM64 = 14,
+    APPX_PACKAGE_ARCHITECTURE2_UNKNOWN = 0xffff
+} APPX_PACKAGE_ARCHITECTURE2;
+
+typedef enum APPX_BUNDLE_PAYLOAD_PACKAGE_TYPE {
+    APPX_BUNDLE_PAYLOAD_PACKAGE_TYPE_APPLICATION = 0,
+    APPX_BUNDLE_PAYLOAD_PACKAGE_TYPE_RESOURCE = 1
+} APPX_BUNDLE_PAYLOAD_PACKAGE_TYPE;
+
+typedef enum DX_FEATURE_LEVEL {
+    DX_FEATURE_LEVEL_UNSPECIFIED = 0,
+    DX_FEATURE_LEVEL_9 = 1,
+    DX_FEATURE_LEVEL_10 = 2,
+    DX_FEATURE_LEVEL_11 = 3
+} DX_FEATURE_LEVEL;
+
+typedef enum APPX_CAPABILITY_CLASS_TYPE {
+    APPX_CAPABILITY_CLASS_DEFAULT = 0x0,
+    APPX_CAPABILITY_CLASS_GENERAL = 0x1,
+    APPX_CAPABILITY_CLASS_RESTRICTED = 0x2,
+    APPX_CAPABILITY_CLASS_WINDOWS = 0x4,
+    APPX_CAPABILITY_CLASS_ALL = 0x7,
+    APPX_CAPABILITY_CLASS_CUSTOM = 0x8
+} APPX_CAPABILITY_CLASS_TYPE;
+
+typedef enum APPX_PACKAGING_CONTEXT_CHANGE_TYPE {
+    APPX_PACKAGING_CONTEXT_CHANGE_TYPE_START = 0,
+    APPX_PACKAGING_CONTEXT_CHANGE_TYPE_CHANGE = 1,
+    APPX_PACKAGING_CONTEXT_CHANGE_TYPE_DETAILS = 2,
+    APPX_PACKAGING_CONTEXT_CHANGE_TYPE_END = 3
+} APPX_PACKAGING_CONTEXT_CHANGE_TYPE;
+
+
+#ifndef __IAppxPackageWriter_FWD_DEFINED__
+#define __IAppxPackageWriter_FWD_DEFINED__
+typedef interface IAppxPackageWriter IAppxPackageWriter;
+#endif /* __IAppxPackageWriter_FWD_DEFINED__ */
+
+#ifndef __IAppxPackageReader_FWD_DEFINED__
+#define __IAppxPackageReader_FWD_DEFINED__
+typedef interface IAppxPackageReader IAppxPackageReader;
+#endif /* __IAppxPackageReader_FWD_DEFINED__ */
+
+#ifndef __IAppxFile_FWD_DEFINED__
+#define __IAppxFile_FWD_DEFINED__
+typedef interface IAppxFile IAppxFile;
+#endif /* __IAppxFile_FWD_DEFINED__ */
+
+#ifndef __IAppxFilesEnumerator_FWD_DEFINED__
+#define __IAppxFilesEnumerator_FWD_DEFINED__
+typedef interface IAppxFilesEnumerator IAppxFilesEnumerator;
+#endif /* __IAppxFilesEnumerator_FWD_DEFINED__ */
+
+#ifndef __IAppxBlockMapReader_FWD_DEFINED__
+#define __IAppxBlockMapReader_FWD_DEFINED__
+typedef interface IAppxBlockMapReader IAppxBlockMapReader;
+#endif /* __IAppxBlockMapReader_FWD_DEFINED__ */
+
+#ifndef __IAppxBlockMapFile_FWD_DEFINED__
+#define __IAppxBlockMapFile_FWD_DEFINED__
+typedef interface IAppxBlockMapFile IAppxBlockMapFile;
+#endif /* __IAppxBlockMapFile_FWD_DEFINED__ */
+
+#ifndef __IAppxBlockMapFilesEnumerator_FWD_DEFINED__
+#define __IAppxBlockMapFilesEnumerator_FWD_DEFINED__
+typedef interface IAppxBlockMapFilesEnumerator IAppxBlockMapFilesEnumerator;
+#endif /* __IAppxBlockMapFilesEnumerator_FWD_DEFINED__ */
+
+#ifndef __IAppxBlockMapBlock_FWD_DEFINED__
+#define __IAppxBlockMapBlock_FWD_DEFINED__
+typedef interface IAppxBlockMapBlock IAppxBlockMapBlock;
+#endif /* __IAppxBlockMapBlock_FWD_DEFINED__ */
+
+#ifndef __IAppxBlockMapBlocksEnumerator_FWD_DEFINED__
+#define __IAppxBlockMapBlocksEnumerator_FWD_DEFINED__
+typedef interface IAppxBlockMapBlocksEnumerator IAppxBlockMapBlocksEnumerator;
+#endif /* __IAppxBlockMapBlocksEnumerator_FWD_DEFINED__ */
+
+#ifndef __IAppxManifestApplicationsEnumerator_FWD_DEFINED__
+#define __IAppxManifestApplicationsEnumerator_FWD_DEFINED__
+typedef interface IAppxManifestApplicationsEnumerator IAppxManifestApplicationsEnumerator;
+#endif /* __IAppxManifestApplicationsEnumerator_FWD_DEFINED__ */
+
+#ifndef __IAppxManifestApplication_FWD_DEFINED__
+#define __IAppxManifestApplication_FWD_DEFINED__
+typedef interface IAppxManifestApplication IAppxManifestApplication;
+#endif /* __IAppxManifestApplication_FWD_DEFINED__ */
+
+#ifndef __IAppxManifestDeviceCapabilitiesEnumerator_FWD_DEFINED__
+#define __IAppxManifestDeviceCapabilitiesEnumerator_FWD_DEFINED__
+typedef interface IAppxManifestDeviceCapabilitiesEnumerator IAppxManifestDeviceCapabilitiesEnumerator;
+#endif /* __IAppxManifestDeviceCapabilitiesEnumerator_FWD_DEFINED__ */
+
+#ifndef __IAppxManifestPackageId_FWD_DEFINED__
+#define __IAppxManifestPackageId_FWD_DEFINED__
+typedef interface IAppxManifestPackageId IAppxManifestPackageId;
+#endif /* __IAppxManifestPackageId_FWD_DEFINED__ */
+
+#ifndef __IAppxManifestPackageId2_FWD_DEFINED__
+#define __IAppxManifestPackageId2_FWD_DEFINED__
+typedef interface IAppxManifestPackageId2 IAppxManifestPackageId2;
+#endif /* __IAppxManifestPackageId2_FWD_DEFINED__ */
+
+#ifndef __IAppxManifestPackageDependency_FWD_DEFINED__
+#define __IAppxManifestPackageDependency_FWD_DEFINED__
+typedef interface IAppxManifestPackageDependency IAppxManifestPackageDependency;
+#endif /* __IAppxManifestPackageDependency_FWD_DEFINED__ */
+
+#ifndef __IAppxManifestPackageDependenciesEnumerator_FWD_DEFINED__
+#define __IAppxManifestPackageDependenciesEnumerator_FWD_DEFINED__
+typedef interface IAppxManifestPackageDependenciesEnumerator IAppxManifestPackageDependenciesEnumerator;
+#endif /* __IAppxManifestPackageDependenciesEnumerator_FWD_DEFINED__ */
+
+#ifndef __IAppxManifestProperties_FWD_DEFINED__
+#define __IAppxManifestProperties_FWD_DEFINED__
+typedef interface IAppxManifestProperties IAppxManifestProperties;
+#endif /* __IAppxManifestProperties_FWD_DEFINED__ */
+
+#ifndef __IAppxManifestReader_FWD_DEFINED__
+#define __IAppxManifestReader_FWD_DEFINED__
+typedef interface IAppxManifestReader IAppxManifestReader;
+#endif /* __IAppxManifestReader_FWD_DEFINED__ */
+
+#ifndef __IAppxBundleFactory_FWD_DEFINED__
+#define __IAppxBundleFactory_FWD_DEFINED__
+typedef interface IAppxBundleFactory IAppxBundleFactory;
+#endif /* __IAppxBundleFactory_FWD_DEFINED__ */
+
+#ifndef __IAppxBundleFactory2_FWD_DEFINED__
+#define __IAppxBundleFactory2_FWD_DEFINED__
+typedef interface IAppxBundleFactory2 IAppxBundleFactory2;
+#endif /* __IAppxBundleFactory2_FWD_DEFINED__ */
+
+#ifndef __IAppxBundleWriter_FWD_DEFINED__
+#define __IAppxBundleWriter_FWD_DEFINED__
+typedef interface IAppxBundleWriter IAppxBundleWriter;
+#endif /* __IAppxBundleWriter_FWD_DEFINED__ */
+
+#ifndef __IAppxBundleWriter2_FWD_DEFINED__
+#define __IAppxBundleWriter2_FWD_DEFINED__
+typedef interface IAppxBundleWriter2 IAppxBundleWriter2;
+#endif /* __IAppxBundleWriter2_FWD_DEFINED__ */
+
+#ifndef __IAppxBundleWriter3_FWD_DEFINED__
+#define __IAppxBundleWriter3_FWD_DEFINED__
+typedef interface IAppxBundleWriter3 IAppxBundleWriter3;
+#endif /* __IAppxBundleWriter3_FWD_DEFINED__ */
+
+#ifndef __IAppxBundleWriter4_FWD_DEFINED__
+#define __IAppxBundleWriter4_FWD_DEFINED__
+typedef interface IAppxBundleWriter4 IAppxBundleWriter4;
+#endif /* __IAppxBundleWriter4_FWD_DEFINED__ */
+
+#ifndef __IAppxBundleReader_FWD_DEFINED__
+#define __IAppxBundleReader_FWD_DEFINED__
+typedef interface IAppxBundleReader IAppxBundleReader;
+#endif /* __IAppxBundleReader_FWD_DEFINED__ */
+
+#ifndef __IAppxBundleManifestReader_FWD_DEFINED__
+#define __IAppxBundleManifestReader_FWD_DEFINED__
+typedef interface IAppxBundleManifestReader IAppxBundleManifestReader;
+#endif /* __IAppxBundleManifestReader_FWD_DEFINED__ */
+
+#ifndef __IAppxBundleManifestReader2_FWD_DEFINED__
+#define __IAppxBundleManifestReader2_FWD_DEFINED__
+typedef interface IAppxBundleManifestReader2 IAppxBundleManifestReader2;
+#endif /* __IAppxBundleManifestReader2_FWD_DEFINED__ */
+
+#ifndef __IAppxBundleManifestPackageInfoEnumerator_FWD_DEFINED__
+#define __IAppxBundleManifestPackageInfoEnumerator_FWD_DEFINED__
+typedef interface IAppxBundleManifestPackageInfoEnumerator IAppxBundleManifestPackageInfoEnumerator;
+#endif /* __IAppxBundleManifestPackageInfoEnumerator_FWD_DEFINED__ */
+
+#ifndef __IAppxBundleManifestPackageInfo_FWD_DEFINED__
+#define __IAppxBundleManifestPackageInfo_FWD_DEFINED__
+typedef interface IAppxBundleManifestPackageInfo IAppxBundleManifestPackageInfo;
+#endif /* __IAppxBundleManifestPackageInfo_FWD_DEFINED__ */
+
+#ifndef __IAppxBundleManifestPackageInfo2_FWD_DEFINED__
+#define __IAppxBundleManifestPackageInfo2_FWD_DEFINED__
+typedef interface IAppxBundleManifestPackageInfo2 IAppxBundleManifestPackageInfo2;
+#endif /* __IAppxBundleManifestPackageInfo2_FWD_DEFINED__ */
+
+#ifndef __IAppxBundleManifestPackageInfo3_FWD_DEFINED__
+#define __IAppxBundleManifestPackageInfo3_FWD_DEFINED__
+typedef interface IAppxBundleManifestPackageInfo3 IAppxBundleManifestPackageInfo3;
+#endif /* __IAppxBundleManifestPackageInfo3_FWD_DEFINED__ */
+
+#ifndef __IAppxBundleManifestOptionalBundleInfoEnumerator_FWD_DEFINED__
+#define __IAppxBundleManifestOptionalBundleInfoEnumerator_FWD_DEFINED__
+typedef interface IAppxBundleManifestOptionalBundleInfoEnumerator IAppxBundleManifestOptionalBundleInfoEnumerator;
+#endif /* __IAppxBundleManifestOptionalBundleInfoEnumerator_FWD_DEFINED__ */
+
+#ifndef __IAppxBundleManifestOptionalBundleInfo_FWD_DEFINED__
+#define __IAppxBundleManifestOptionalBundleInfo_FWD_DEFINED__
+typedef interface IAppxBundleManifestOptionalBundleInfo IAppxBundleManifestOptionalBundleInfo;
+#endif /* __IAppxBundleManifestOptionalBundleInfo_FWD_DEFINED__ */
+
+#ifndef __IAppxManifestQualifiedResourcesEnumerator_FWD_DEFINED__
+#define __IAppxManifestQualifiedResourcesEnumerator_FWD_DEFINED__
+typedef interface IAppxManifestQualifiedResourcesEnumerator IAppxManifestQualifiedResourcesEnumerator;
+#endif /* __IAppxManifestQualifiedResourcesEnumerator_FWD_DEFINED__ */
+
+#ifndef __IAppxManifestQualifiedResource_FWD_DEFINED__
+#define __IAppxManifestQualifiedResource_FWD_DEFINED__
+typedef interface IAppxManifestQualifiedResource IAppxManifestQualifiedResource;
+#endif /* __IAppxManifestQualifiedResource_FWD_DEFINED__ */
+
+#ifndef __IAppxManifestTargetDeviceFamily_FWD_DEFINED__
+#define __IAppxManifestTargetDeviceFamily_FWD_DEFINED__
+typedef interface IAppxManifestTargetDeviceFamily IAppxManifestTargetDeviceFamily;
+#endif /* __IAppxManifestTargetDeviceFamily_FWD_DEFINED__ */
+
+#ifndef __IAppxManifestTargetDeviceFamiliesEnumerator_FWD_DEFINED__
+#define __IAppxManifestTargetDeviceFamiliesEnumerator_FWD_DEFINED__
+typedef interface IAppxManifestTargetDeviceFamiliesEnumerator IAppxManifestTargetDeviceFamiliesEnumerator;
+#endif /* __IAppxManifestTargetDeviceFamiliesEnumerator_FWD_DEFINED__ */
+
+#ifndef __IAppxManifestPackageDependency2_FWD_DEFINED__
+#define __IAppxManifestPackageDependency2_FWD_DEFINED__
+typedef interface IAppxManifestPackageDependency2 IAppxManifestPackageDependency2;
+#endif /* __IAppxManifestPackageDependency2_FWD_DEFINED__ */
+
+#ifndef __IAppxManifestPackageDependency3_FWD_DEFINED__
+#define __IAppxManifestPackageDependency3_FWD_DEFINED__
+typedef interface IAppxManifestPackageDependency3 IAppxManifestPackageDependency3;
+#endif /* __IAppxManifestPackageDependency3_FWD_DEFINED__ */
+
+#ifndef __IAppxManifestResourcesEnumerator_FWD_DEFINED__
+#define __IAppxManifestResourcesEnumerator_FWD_DEFINED__
+typedef interface IAppxManifestResourcesEnumerator IAppxManifestResourcesEnumerator;
+#endif /* __IAppxManifestResourcesEnumerator_FWD_DEFINED__ */
+
+#ifndef __IAppxManifestCapabilitiesEnumerator_FWD_DEFINED__
+#define __IAppxManifestCapabilitiesEnumerator_FWD_DEFINED__
+typedef interface IAppxManifestCapabilitiesEnumerator IAppxManifestCapabilitiesEnumerator;
+#endif /* __IAppxManifestCapabilitiesEnumerator_FWD_DEFINED__ */
+
+#ifndef __IAppxManifestOptionalPackageInfo_FWD_DEFINED__
+#define __IAppxManifestOptionalPackageInfo_FWD_DEFINED__
+typedef interface IAppxManifestOptionalPackageInfo IAppxManifestOptionalPackageInfo;
+#endif /* __IAppxManifestOptionalPackageInfo_FWD_DEFINED__ */
+
+#ifndef __IAppxContentGroupFilesEnumerator_FWD_DEFINED__
+#define __IAppxContentGroupFilesEnumerator_FWD_DEFINED__
+typedef interface IAppxContentGroupFilesEnumerator IAppxContentGroupFilesEnumerator;
+#endif /* __IAppxContentGroupFilesEnumerator_FWD_DEFINED__ */
+
+#ifndef __IAppxContentGroupsEnumerator_FWD_DEFINED__
+#define __IAppxContentGroupsEnumerator_FWD_DEFINED__
+typedef interface IAppxContentGroupsEnumerator IAppxContentGroupsEnumerator;
+#endif /* __IAppxContentGroupsEnumerator_FWD_DEFINED__ */
+
+#ifndef __IAppxContentGroup_FWD_DEFINED__
+#define __IAppxContentGroup_FWD_DEFINED__
+typedef interface IAppxContentGroup IAppxContentGroup;
+#endif /* __IAppxContentGroup_FWD_DEFINED__ */
+
+#ifndef __IAppxContentGroupMapReader_FWD_DEFINED__
+#define __IAppxContentGroupMapReader_FWD_DEFINED__
+typedef interface IAppxContentGroupMapReader IAppxContentGroupMapReader;
+#endif /* __IAppxContentGroupMapReader_FWD_DEFINED__ */
+
+#ifndef __IAppxSourceContentGroupMapReader_FWD_DEFINED__
+#define __IAppxSourceContentGroupMapReader_FWD_DEFINED__
+typedef interface IAppxSourceContentGroupMapReader IAppxSourceContentGroupMapReader;
+#endif /* __IAppxSourceContentGroupMapReader_FWD_DEFINED__ */
+
+#ifndef __IAppxContentGroupMapWriter_FWD_DEFINED__
+#define __IAppxContentGroupMapWriter_FWD_DEFINED__
+typedef interface IAppxContentGroupMapWriter IAppxContentGroupMapWriter;
+#endif /* __IAppxContentGroupMapWriter_FWD_DEFINED__ */
+
+#ifndef __IAppxManifestMainPackageDependenciesEnumerator_FWD_DEFINED__
+#define __IAppxManifestMainPackageDependenciesEnumerator_FWD_DEFINED__
+typedef interface IAppxManifestMainPackageDependenciesEnumerator IAppxManifestMainPackageDependenciesEnumerator;
+#endif /* __IAppxManifestMainPackageDependenciesEnumerator_FWD_DEFINED__ */
+
+#ifndef __IAppxManifestMainPackageDependency_FWD_DEFINED__
+#define __IAppxManifestMainPackageDependency_FWD_DEFINED__
+typedef interface IAppxManifestMainPackageDependency IAppxManifestMainPackageDependency;
+#endif /* __IAppxManifestMainPackageDependency_FWD_DEFINED__ */
+
+#ifndef __IAppxManifestDriverDependency_FWD_DEFINED__
+#define __IAppxManifestDriverDependency_FWD_DEFINED__
+typedef interface IAppxManifestDriverDependency IAppxManifestDriverDependency;
+#endif /* __IAppxManifestDriverDependency_FWD_DEFINED__ */
+
+#ifndef __IAppxManifestDriverDependenciesEnumerator_FWD_DEFINED__
+#define __IAppxManifestDriverDependenciesEnumerator_FWD_DEFINED__
+typedef interface IAppxManifestDriverDependenciesEnumerator IAppxManifestDriverDependenciesEnumerator;
+#endif /* __IAppxManifestDriverDependenciesEnumerator_FWD_DEFINED__ */
+
+#ifndef __IAppxManifestDriverConstraint_FWD_DEFINED__
+#define __IAppxManifestDriverConstraint_FWD_DEFINED__
+typedef interface IAppxManifestDriverConstraint IAppxManifestDriverConstraint;
+#endif /* __IAppxManifestDriverConstraint_FWD_DEFINED__ */
+
+#ifndef __IAppxManifestDriverConstraintsEnumerator_FWD_DEFINED__
+#define __IAppxManifestDriverConstraintsEnumerator_FWD_DEFINED__
+typedef interface IAppxManifestDriverConstraintsEnumerator IAppxManifestDriverConstraintsEnumerator;
+#endif /* __IAppxManifestDriverConstraintsEnumerator_FWD_DEFINED__ */
+
+#ifndef __IAppxManifestOSPackageDependency_FWD_DEFINED__
+#define __IAppxManifestOSPackageDependency_FWD_DEFINED__
+typedef interface IAppxManifestOSPackageDependency IAppxManifestOSPackageDependency;
+#endif /* __IAppxManifestOSPackageDependency_FWD_DEFINED__ */
+
+#ifndef __IAppxManifestOSPackageDependenciesEnumerator_FWD_DEFINED__
+#define __IAppxManifestOSPackageDependenciesEnumerator_FWD_DEFINED__
+typedef interface IAppxManifestOSPackageDependenciesEnumerator IAppxManifestOSPackageDependenciesEnumerator;
+#endif /* __IAppxManifestOSPackageDependenciesEnumerator_FWD_DEFINED__ */
+
+#ifndef __IAppxManifestHostRuntimeDependency_FWD_DEFINED__
+#define __IAppxManifestHostRuntimeDependency_FWD_DEFINED__
+typedef interface IAppxManifestHostRuntimeDependency IAppxManifestHostRuntimeDependency;
+#endif /* __IAppxManifestHostRuntimeDependency_FWD_DEFINED__ */
+
+#ifndef __IAppxManifestHostRuntimeDependenciesEnumerator_FWD_DEFINED__
+#define __IAppxManifestHostRuntimeDependenciesEnumerator_FWD_DEFINED__
+typedef interface IAppxManifestHostRuntimeDependenciesEnumerator IAppxManifestHostRuntimeDependenciesEnumerator;
+#endif /* __IAppxManifestHostRuntimeDependenciesEnumerator_FWD_DEFINED__ */
+
+#ifndef __IAppxAppInstallerReader_FWD_DEFINED__
+#define __IAppxAppInstallerReader_FWD_DEFINED__
+typedef interface IAppxAppInstallerReader IAppxAppInstallerReader;
+#endif /* __IAppxAppInstallerReader_FWD_DEFINED__ */
+
+#ifndef __IAppxDigestProvider_FWD_DEFINED__
+#define __IAppxDigestProvider_FWD_DEFINED__
+typedef interface IAppxDigestProvider IAppxDigestProvider;
+#endif /* __IAppxDigestProvider_FWD_DEFINED__ */
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)
+
+#ifndef __IAppxEncryptionFactory_FWD_DEFINED__
+#define __IAppxEncryptionFactory_FWD_DEFINED__
+typedef interface IAppxEncryptionFactory IAppxEncryptionFactory;
+#endif /* __IAppxEncryptionFactory_FWD_DEFINED__ */
+
+#ifndef __IAppxEncryptedPackageWriter_FWD_DEFINED__
+#define __IAppxEncryptedPackageWriter_FWD_DEFINED__
+typedef interface IAppxEncryptedPackageWriter IAppxEncryptedPackageWriter;
+#endif /* __IAppxEncryptedPackageWriter_FWD_DEFINED__ */
+
+#ifndef __IAppxEncryptedBundleWriter_FWD_DEFINED__
+#define __IAppxEncryptedBundleWriter_FWD_DEFINED__
+typedef interface IAppxEncryptedBundleWriter IAppxEncryptedBundleWriter;
+#endif /* __IAppxEncryptedBundleWriter_FWD_DEFINED__ */
+
+#ifndef __IAppxEncryptedBundleWriter2_FWD_DEFINED__
+#define __IAppxEncryptedBundleWriter2_FWD_DEFINED__
+typedef interface IAppxEncryptedBundleWriter2 IAppxEncryptedBundleWriter2;
+#endif /* __IAppxEncryptedBundleWriter2_FWD_DEFINED__ */
+
+#ifndef __IAppxEncryptedBundleWriter3_FWD_DEFINED__
+#define __IAppxEncryptedBundleWriter3_FWD_DEFINED__
+typedef interface IAppxEncryptedBundleWriter3 IAppxEncryptedBundleWriter3;
+#endif /* __IAppxEncryptedBundleWriter3_FWD_DEFINED__ */
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP)
+
+/*****************************************************************************
+ * IAppxFactory interface
+ */
+#ifndef __IAppxFactory_INTERFACE_DEFINED__
+#define __IAppxFactory_INTERFACE_DEFINED__
+
+EXTERN_C const IID IID_IAppxFactory;
+
+#if defined(__cplusplus) && !defined(CINTERFACE)
+#error no support for C++
+#else /* C */
+typedef struct IAppxFactoryVtbl {
+    BEGIN_INTERFACE
+
+    /*** IUnknown methods ***/
+    HRESULT (STDMETHODCALLTYPE *QueryInterface)(
+        IAppxFactory *This,
+        REFIID riid,
+        void **ppvObject);
+
+    ULONG (STDMETHODCALLTYPE *AddRef)(
+        IAppxFactory *This);
+
+    ULONG (STDMETHODCALLTYPE *Release)(
+        IAppxFactory *This);
+
+    /*** IAppxFactory methods ***/
+    HRESULT (STDMETHODCALLTYPE *CreatePackageWriter)(
+        IAppxFactory *This,
+        IStream *outputStream,
+        APPX_PACKAGE_SETTINGS *settings,
+        IAppxPackageWriter **packageWriter);
+
+    HRESULT (STDMETHODCALLTYPE *CreatePackageReader)(
+        IAppxFactory *This,
+        IStream *inputStream,
+        IAppxPackageReader **packageReader);
+
+    HRESULT (STDMETHODCALLTYPE *CreateManifestReader)(
+        IAppxFactory *This,
+        IStream *inputStream,
+        IAppxManifestReader **manifestReader);
+
+    HRESULT (STDMETHODCALLTYPE *CreateBlockMapReader)(
+        IAppxFactory *This,
+        IStream *inputStream,
+        IAppxBlockMapReader **blockMapReader);
+
+    HRESULT (STDMETHODCALLTYPE *CreateValidatedBlockMapReader)(
+        IAppxFactory *This,
+        IStream *blockMapStream,
+        LPCWSTR signatureFileName,
+        IAppxBlockMapReader **blockMapReader);
+
+    END_INTERFACE
+} IAppxFactoryVtbl;
+
+interface IAppxFactory {
+    CONST_VTBL IAppxFactoryVtbl* lpVtbl;
+};
+
+#ifdef COBJMACROS
+/*** IUnknown methods ***/
+#define IAppxFactory_QueryInterface(This,riid,ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This,riid,ppvObject))
+#define IAppxFactory_AddRef(This) \
+    ((This)->lpVtbl->AddRef(This))
+#define IAppxFactory_Release(This) \
+    ((This)->lpVtbl->Release(This))
+/*** IAppxFactory methods ***/
+#define IAppxFactory_CreatePackageWriter(This,outputStream,settings,packageWriter) \
+    ((This)->lpVtbl->CreatePackageWriter(This,outputStream,settings,packageWriter))
+#define IAppxFactory_CreatePackageReader(This,inputStream,packageReader) \
+    ((This)->lpVtbl->CreatePackageReader(This,inputStream,packageReader))
+#define IAppxFactory_CreateManifestReader(This,inputStream,manifestReader) \
+    ((This)->lpVtbl->CreateManifestReader(This,inputStream,manifestReader))
+#define IAppxFactory_CreateBlockMapReader(This,inputStream,blockMapReader) \
+    ((This)->lpVtbl->CreateBlockMapReader(This,inputStream,blockMapReader))
+#define IAppxFactory_CreateValidatedBlockMapReader(This,blockMapStream,signatureFileName,blockMapReader) \
+    ((This)->lpVtbl->CreateValidatedBlockMapReader(This,blockMapStream,signatureFileName,blockMapReader))
+#endif /* COBJMACROS */
+
+#endif /* C */
+
+#endif /* __IAppxFactory_INTERFACE_DEFINED__ */
+
+/*****************************************************************************
+ * IAppxFactory2 interface
+ */
+#ifndef __IAppxFactory2_INTERFACE_DEFINED__
+#define __IAppxFactory2_INTERFACE_DEFINED__
+
+EXTERN_C const IID IID_IAppxFactory2;
+
+#if defined(__cplusplus) && !defined(CINTERFACE)
+#error no support for C++
+#else /* C */
+typedef struct IAppxFactory2Vtbl {
+    BEGIN_INTERFACE
+
+    /*** IUnknown methods ***/
+    HRESULT (STDMETHODCALLTYPE *QueryInterface)(
+        IAppxFactory2 *This,
+        REFIID riid,
+        void **ppvObject);
+
+    ULONG (STDMETHODCALLTYPE *AddRef)(
+        IAppxFactory2 *This);
+
+    ULONG (STDMETHODCALLTYPE *Release)(
+        IAppxFactory2 *This);
+
+    /*** IAppxFactory2 methods ***/
+    HRESULT (STDMETHODCALLTYPE *CreateContentGroupMapReader)(
+        IAppxFactory2 *This,
+        IStream *inputStream,
+        IAppxContentGroupMapReader **contentGroupMapReader);
+
+    HRESULT (STDMETHODCALLTYPE *CreateSourceContentGroupMapReader)(
+        IAppxFactory2 *This,
+        IStream *inputStream,
+        IAppxSourceContentGroupMapReader **reader);
+
+    HRESULT (STDMETHODCALLTYPE *CreateContentGroupMapWriter)(
+        IAppxFactory2 *This,
+        IStream *stream,
+        IAppxContentGroupMapWriter **contentGroupMapWriter);
+
+    END_INTERFACE
+} IAppxFactory2Vtbl;
+
+interface IAppxFactory2 {
+    CONST_VTBL IAppxFactory2Vtbl* lpVtbl;
+};
+
+#ifdef COBJMACROS
+/*** IUnknown methods ***/
+#define IAppxFactory2_QueryInterface(This,riid,ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This,riid,ppvObject))
+#define IAppxFactory2_AddRef(This) \
+    ((This)->lpVtbl->AddRef(This))
+#define IAppxFactory2_Release(This) \
+    ((This)->lpVtbl->Release(This))
+/*** IAppxFactory2 methods ***/
+#define IAppxFactory2_CreateContentGroupMapReader(This,inputStream,contentGroupMapReader) \
+    ((This)->lpVtbl->CreateContentGroupMapReader(This,inputStream,contentGroupMapReader))
+#define IAppxFactory2_CreateSourceContentGroupMapReader(This,inputStream,reader) \
+    ((This)->lpVtbl->CreateSourceContentGroupMapReader(This,inputStream,reader))
+#define IAppxFactory2_CreateContentGroupMapWriter(This,stream,contentGroupMapWriter) \
+    ((This)->lpVtbl->CreateContentGroupMapWriter(This,stream,contentGroupMapWriter))
+#endif /* COBJMACROS */
+
+#endif /* C */
+
+#endif /* __IAppxFactory2_INTERFACE_DEFINED__ */
+
+/*****************************************************************************
+ * IAppxFactory3 interface
+ */
+#ifndef __IAppxFactory3_INTERFACE_DEFINED__
+#define __IAppxFactory3_INTERFACE_DEFINED__
+
+EXTERN_C const IID IID_IAppxFactory3;
+
+#if defined(__cplusplus) && !defined(CINTERFACE)
+#error no support for C++
+#else /* C */
+typedef struct IAppxFactory3Vtbl {
+    BEGIN_INTERFACE
+
+    /*** IUnknown methods ***/
+    HRESULT (STDMETHODCALLTYPE *QueryInterface)(
+        IAppxFactory3 *This,
+        REFIID riid,
+        void **ppvObject);
+
+    ULONG (STDMETHODCALLTYPE *AddRef)(
+        IAppxFactory3 *This);
+
+    ULONG (STDMETHODCALLTYPE *Release)(
+        IAppxFactory3 *This);
+
+    /*** IAppxFactory3 methods ***/
+    HRESULT (STDMETHODCALLTYPE *CreatePackageReader2)(
+        IAppxFactory3 *This,
+        IStream *inputStream,
+        LPCWSTR expectedDigest,
+        IAppxPackageReader **packageReader);
+
+    HRESULT (STDMETHODCALLTYPE *CreateManifestReader2)(
+        IAppxFactory3 *This,
+        IStream *inputStream,
+        LPCWSTR expectedDigest,
+        IAppxManifestReader **manifestReader);
+
+    HRESULT (STDMETHODCALLTYPE *CreateAppInstallerReader)(
+        IAppxFactory3 *This,
+        IStream *inputStream,
+        LPCWSTR expectedDigest,
+        IAppxAppInstallerReader **appInstallerReader);
+
+    END_INTERFACE
+} IAppxFactory3Vtbl;
+
+interface IAppxFactory3 {
+    CONST_VTBL IAppxFactory3Vtbl* lpVtbl;
+};
+
+#ifdef COBJMACROS
+/*** IUnknown methods ***/
+#define IAppxFactory3_QueryInterface(This,riid,ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This,riid,ppvObject))
+#define IAppxFactory3_AddRef(This) \
+    ((This)->lpVtbl->AddRef(This))
+#define IAppxFactory3_Release(This) \
+    ((This)->lpVtbl->Release(This))
+/*** IAppxFactory3 methods ***/
+#define IAppxFactory3_CreatePackageReader2(This,inputStream,expectedDigest,packageReader) \
+    ((This)->lpVtbl->CreatePackageReader2(This,inputStream,expectedDigest,packageReader))
+#define IAppxFactory3_CreateManifestReader2(This,inputStream,expectedDigest,manifestReader) \
+    ((This)->lpVtbl->CreateManifestReader2(This,inputStream,expectedDigest,manifestReader))
+#define IAppxFactory3_CreateAppInstallerReader(This,inputStream,expectedDigest,appInstallerReader) \
+    ((This)->lpVtbl->CreateAppInstallerReader(This,inputStream,expectedDigest,appInstallerReader))
+#endif /* COBJMACROS */
+
+#endif /* C */
+
+#endif /* __IAppxFactory3_INTERFACE_DEFINED__ */
+
+/*****************************************************************************
+ * IAppxPackageReader interface
+ */
+#ifndef __IAppxPackageReader_INTERFACE_DEFINED__
+#define __IAppxPackageReader_INTERFACE_DEFINED__
+
+EXTERN_C const IID IID_IAppxPackageReader;
+
+#if defined(__cplusplus) && !defined(CINTERFACE)
+#error no support for C++
+#else /* C */
+typedef struct IAppxPackageReaderVtbl {
+    BEGIN_INTERFACE
+
+    /*** IUnknown methods ***/
+    HRESULT (STDMETHODCALLTYPE *QueryInterface)(
+        IAppxPackageReader *This,
+        REFIID riid,
+        void **ppvObject);
+
+    ULONG (STDMETHODCALLTYPE *AddRef)(
+        IAppxPackageReader *This);
+
+    ULONG (STDMETHODCALLTYPE *Release)(
+        IAppxPackageReader *This);
+
+    /*** IAppxPackageReader methods ***/
+    HRESULT (STDMETHODCALLTYPE *GetBlockMap)(
+        IAppxPackageReader *This,
+        IAppxBlockMapReader **blockMapReader);
+
+    HRESULT (STDMETHODCALLTYPE *GetFootprintFile)(
+        IAppxPackageReader *This,
+        APPX_FOOTPRINT_FILE_TYPE type,
+        IAppxFile **file);
+
+    HRESULT (STDMETHODCALLTYPE *GetPayloadFile)(
+        IAppxPackageReader *This,
+        LPCWSTR fileName,
+        IAppxFile **file);
+
+    HRESULT (STDMETHODCALLTYPE *GetPayloadFiles)(
+        IAppxPackageReader *This,
+        IAppxFilesEnumerator **filesEnumerator);
+
+    HRESULT (STDMETHODCALLTYPE *GetManifest)(
+        IAppxPackageReader *This,
+        IAppxManifestReader **manifestReader);
+
+    END_INTERFACE
+} IAppxPackageReaderVtbl;
+
+interface IAppxPackageReader {
+    CONST_VTBL IAppxPackageReaderVtbl* lpVtbl;
+};
+
+#ifdef COBJMACROS
+/*** IUnknown methods ***/
+#define IAppxPackageReader_QueryInterface(This,riid,ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This,riid,ppvObject))
+#define IAppxPackageReader_AddRef(This) \
+    ((This)->lpVtbl->AddRef(This))
+#define IAppxPackageReader_Release(This) \
+    ((This)->lpVtbl->Release(This))
+/*** IAppxPackageReader methods ***/
+#define IAppxPackageReader_GetBlockMap(This,blockMapReader) \
+    ((This)->lpVtbl->GetBlockMap(This,blockMapReader))
+#define IAppxPackageReader_GetFootprintFile(This,type,file) \
+    ((This)->lpVtbl->GetFootprintFile(This,type,file))
+#define IAppxPackageReader_GetPayloadFile(This,fileName,file) \
+    ((This)->lpVtbl->GetPayloadFile(This,fileName,file))
+#define IAppxPackageReader_GetPayloadFiles(This,filesEnumerator) \
+    ((This)->lpVtbl->GetPayloadFiles(This,filesEnumerator))
+#define IAppxPackageReader_GetManifest(This,manifestReader) \
+    ((This)->lpVtbl->GetManifest(This,manifestReader))
+#endif /* COBJMACROS */
+
+#endif /* C */
+
+#endif /* __IAppxPackageReader_INTERFACE_DEFINED__ */
+
+/*****************************************************************************
+ * IAppxPackageWriter interface
+ */
+#ifndef __IAppxPackageWriter_INTERFACE_DEFINED__
+#define __IAppxPackageWriter_INTERFACE_DEFINED__
+
+EXTERN_C const IID IID_IAppxPackageWriter;
+
+#if defined(__cplusplus) && !defined(CINTERFACE)
+#error no support for C++
+#else /* C */
+typedef struct IAppxPackageWriterVtbl {
+    BEGIN_INTERFACE
+
+    /*** IUnknown methods ***/
+    HRESULT (STDMETHODCALLTYPE *QueryInterface)(
+        IAppxPackageWriter *This,
+        REFIID riid,
+        void **ppvObject);
+
+    ULONG (STDMETHODCALLTYPE *AddRef)(
+        IAppxPackageWriter *This);
+
+    ULONG (STDMETHODCALLTYPE *Release)(
+        IAppxPackageWriter *This);
+
+    /*** IAppxPackageWriter methods ***/
+    HRESULT (STDMETHODCALLTYPE *AddPayloadFile)(
+        IAppxPackageWriter *This,
+        LPCWSTR fileName,
+        LPCWSTR contentType,
+        APPX_COMPRESSION_OPTION compressionOption,
+        IStream *inputStream);
+
+    HRESULT (STDMETHODCALLTYPE *Close)(
+        IAppxPackageWriter *This,
+        IStream *manifest);
+
+    END_INTERFACE
+} IAppxPackageWriterVtbl;
+
+interface IAppxPackageWriter {
+    CONST_VTBL IAppxPackageWriterVtbl* lpVtbl;
+};
+
+#ifdef COBJMACROS
+/*** IUnknown methods ***/
+#define IAppxPackageWriter_QueryInterface(This,riid,ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This,riid,ppvObject))
+#define IAppxPackageWriter_AddRef(This) \
+    ((This)->lpVtbl->AddRef(This))
+#define IAppxPackageWriter_Release(This) \
+    ((This)->lpVtbl->Release(This))
+/*** IAppxPackageWriter methods ***/
+#define IAppxPackageWriter_AddPayloadFile(This,fileName,contentType,compressionOption,inputStream) \
+    ((This)->lpVtbl->AddPayloadFile(This,fileName,contentType,compressionOption,inputStream))
+#define IAppxPackageWriter_Close(This,manifest) \
+    ((This)->lpVtbl->Close(This,manifest))
+#endif /* COBJMACROS */
+
+#endif /* C */
+
+#endif /* __IAppxPackageWriter_INTERFACE_DEFINED__ */
+
+/*****************************************************************************
+ * IAppxPackageWriter2 interface
+ */
+#ifndef __IAppxPackageWriter2_INTERFACE_DEFINED__
+#define __IAppxPackageWriter2_INTERFACE_DEFINED__
+
+EXTERN_C const IID IID_IAppxPackageWriter2;
+
+#if defined(__cplusplus) && !defined(CINTERFACE)
+#error no support for C++
+#else /* C */
+typedef struct IAppxPackageWriter2Vtbl {
+    BEGIN_INTERFACE
+
+    /*** IUnknown methods ***/
+    HRESULT (STDMETHODCALLTYPE *QueryInterface)(
+        IAppxPackageWriter2 *This,
+        REFIID riid,
+        void **ppvObject);
+
+    ULONG (STDMETHODCALLTYPE *AddRef)(
+        IAppxPackageWriter2 *This);
+
+    ULONG (STDMETHODCALLTYPE *Release)(
+        IAppxPackageWriter2 *This);
+
+    /*** IAppxPackageWriter2 methods ***/
+    HRESULT (STDMETHODCALLTYPE *Close)(
+        IAppxPackageWriter2 *This,
+        IStream *manifest,
+        IStream *contentGroupMap);
+
+    END_INTERFACE
+} IAppxPackageWriter2Vtbl;
+
+interface IAppxPackageWriter2 {
+    CONST_VTBL IAppxPackageWriter2Vtbl* lpVtbl;
+};
+
+#ifdef COBJMACROS
+/*** IUnknown methods ***/
+#define IAppxPackageWriter2_QueryInterface(This,riid,ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This,riid,ppvObject))
+#define IAppxPackageWriter2_AddRef(This) \
+    ((This)->lpVtbl->AddRef(This))
+#define IAppxPackageWriter2_Release(This) \
+    ((This)->lpVtbl->Release(This))
+/*** IAppxPackageWriter2 methods ***/
+#define IAppxPackageWriter2_Close(This,manifest,contentGroupMap) \
+    ((This)->lpVtbl->Close(This,manifest,contentGroupMap))
+#endif /* COBJMACROS */
+
+#endif /* C */
+
+#endif /* __IAppxPackageWriter2_INTERFACE_DEFINED__ */
+
+/*****************************************************************************
+ * IAppxPackageWriter3 interface
+ */
+#ifndef __IAppxPackageWriter3_INTERFACE_DEFINED__
+#define __IAppxPackageWriter3_INTERFACE_DEFINED__
+
+EXTERN_C const IID IID_IAppxPackageWriter3;
+
+#if defined(__cplusplus) && !defined(CINTERFACE)
+#error no support for C++
+#else /* C */
+typedef struct IAppxPackageWriter3Vtbl {
+    BEGIN_INTERFACE
+
+    /*** IUnknown methods ***/
+    HRESULT (STDMETHODCALLTYPE *QueryInterface)(
+        IAppxPackageWriter3 *This,
+        REFIID riid,
+        void **ppvObject);
+
+    ULONG (STDMETHODCALLTYPE *AddRef)(
+        IAppxPackageWriter3 *This);
+
+    ULONG (STDMETHODCALLTYPE *Release)(
+        IAppxPackageWriter3 *This);
+
+    /*** IAppxPackageWriter3 methods ***/
+    HRESULT (STDMETHODCALLTYPE *AddPayloadFiles)(
+        IAppxPackageWriter3 *This,
+        UINT32 fileCount,
+        APPX_PACKAGE_WRITER_PAYLOAD_STREAM *payloadFiles,
+        UINT64 memoryLimit);
+
+    END_INTERFACE
+} IAppxPackageWriter3Vtbl;
+
+interface IAppxPackageWriter3 {
+    CONST_VTBL IAppxPackageWriter3Vtbl* lpVtbl;
+};
+
+#ifdef COBJMACROS
+/*** IUnknown methods ***/
+#define IAppxPackageWriter3_QueryInterface(This,riid,ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This,riid,ppvObject))
+#define IAppxPackageWriter3_AddRef(This) \
+    ((This)->lpVtbl->AddRef(This))
+#define IAppxPackageWriter3_Release(This) \
+    ((This)->lpVtbl->Release(This))
+/*** IAppxPackageWriter3 methods ***/
+#define IAppxPackageWriter3_AddPayloadFiles(This,fileCount,payloadFiles,memoryLimit) \
+    ((This)->lpVtbl->AddPayloadFiles(This,fileCount,payloadFiles,memoryLimit))
+#endif /* COBJMACROS */
+
+#endif /* C */
+
+#endif /* __IAppxPackageWriter3_INTERFACE_DEFINED__ */
+
+/*****************************************************************************
+ * IAppxFile interface
+ */
+#ifndef __IAppxFile_INTERFACE_DEFINED__
+#define __IAppxFile_INTERFACE_DEFINED__
+
+EXTERN_C const IID IID_IAppxFile;
+
+#if defined(__cplusplus) && !defined(CINTERFACE)
+#error no support for C++
+#else /* C */
+typedef struct IAppxFileVtbl {
+    BEGIN_INTERFACE
+
+    /*** IUnknown methods ***/
+    HRESULT (STDMETHODCALLTYPE *QueryInterface)(
+        IAppxFile *This,
+        REFIID riid,
+        void **ppvObject);
+
+    ULONG (STDMETHODCALLTYPE *AddRef)(
+        IAppxFile *This);
+
+    ULONG (STDMETHODCALLTYPE *Release)(
+        IAppxFile *This);
+
+    /*** IAppxFile methods ***/
+    HRESULT (STDMETHODCALLTYPE *GetCompressionOption)(
+        IAppxFile *This,
+        APPX_COMPRESSION_OPTION *compressionOption);
+
+    HRESULT (STDMETHODCALLTYPE *GetContentType)(
+        IAppxFile *This,
+        LPWSTR *contentType);
+
+    HRESULT (STDMETHODCALLTYPE *GetName)(
+        IAppxFile *This,
+        LPWSTR *fileName);
+
+    HRESULT (STDMETHODCALLTYPE *GetSize)(
+        IAppxFile *This,
+        UINT64 *size);
+
+    HRESULT (STDMETHODCALLTYPE *GetStream)(
+        IAppxFile *This,
+        IStream **stream);
+
+    END_INTERFACE
+} IAppxFileVtbl;
+
+interface IAppxFile {
+    CONST_VTBL IAppxFileVtbl* lpVtbl;
+};
+
+#ifdef COBJMACROS
+/*** IUnknown methods ***/
+#define IAppxFile_QueryInterface(This,riid,ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This,riid,ppvObject))
+#define IAppxFile_AddRef(This) \
+    ((This)->lpVtbl->AddRef(This))
+#define IAppxFile_Release(This) \
+    ((This)->lpVtbl->Release(This))
+/*** IAppxFile methods ***/
+#define IAppxFile_GetCompressionOption(This,compressionOption) \
+    ((This)->lpVtbl->GetCompressionOption(This,compressionOption))
+#define IAppxFile_GetContentType(This,contentType) \
+    ((This)->lpVtbl->GetContentType(This,contentType))
+#define IAppxFile_GetName(This,fileName) \
+    ((This)->lpVtbl->GetName(This,fileName))
+#define IAppxFile_GetSize(This,size) \
+    ((This)->lpVtbl->GetSize(This,size))
+#define IAppxFile_GetStream(This,stream) \
+    ((This)->lpVtbl->GetStream(This,stream))
+#endif /* COBJMACROS */
+
+#endif /* C */
+
+#endif /* __IAppxFile_INTERFACE_DEFINED__ */
+/*****************************************************************************
+ * IAppxFilesEnumerator interface
+ */
+#ifndef __IAppxFilesEnumerator_INTERFACE_DEFINED__
+#define __IAppxFilesEnumerator_INTERFACE_DEFINED__
+
+EXTERN_C const IID IID_IAppxFilesEnumerator;
+
+#if defined(__cplusplus) && !defined(CINTERFACE)
+#error no support for C++
+#else /* C */
+typedef struct IAppxFilesEnumeratorVtbl {
+    BEGIN_INTERFACE
+
+    /*** IUnknown methods ***/
+    HRESULT (STDMETHODCALLTYPE *QueryInterface)(
+        IAppxFilesEnumerator *This,
+        REFIID riid,
+        void **ppvObject);
+
+    ULONG (STDMETHODCALLTYPE *AddRef)(
+        IAppxFilesEnumerator *This);
+
+    ULONG (STDMETHODCALLTYPE *Release)(
+        IAppxFilesEnumerator *This);
+
+    /*** IAppxFilesEnumerator methods ***/
+    HRESULT (STDMETHODCALLTYPE *GetCurrent)(
+        IAppxFilesEnumerator *This,
+        IAppxFile **file);
+
+    HRESULT (STDMETHODCALLTYPE *GetHasCurrent)(
+        IAppxFilesEnumerator *This,
+        BOOL *hasCurrent);
+
+    HRESULT (STDMETHODCALLTYPE *MoveNext)(
+        IAppxFilesEnumerator *This,
+        BOOL *hasNext);
+
+    END_INTERFACE
+} IAppxFilesEnumeratorVtbl;
+
+interface IAppxFilesEnumerator {
+    CONST_VTBL IAppxFilesEnumeratorVtbl* lpVtbl;
+};
+
+#ifdef COBJMACROS
+/*** IUnknown methods ***/
+#define IAppxFilesEnumerator_QueryInterface(This,riid,ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This,riid,ppvObject))
+#define IAppxFilesEnumerator_AddRef(This) \
+    ((This)->lpVtbl->AddRef(This))
+#define IAppxFilesEnumerator_Release(This) \
+    ((This)->lpVtbl->Release(This))
+/*** IAppxFilesEnumerator methods ***/
+#define IAppxFilesEnumerator_GetCurrent(This,file) \
+    ((This)->lpVtbl->GetCurrent(This,file))
+#define IAppxFilesEnumerator_GetHasCurrent(This,hasCurrent) \
+    ((This)->lpVtbl->GetHasCurrent(This,hasCurrent))
+#define IAppxFilesEnumerator_MoveNext(This,hasNext) \
+    ((This)->lpVtbl->MoveNext(This,hasNext))
+#endif /* COBJMACROS */
+
+#endif /* C */
+
+#endif /* __IAppxFilesEnumerator_INTERFACE_DEFINED__ */
+/*****************************************************************************
+ * IAppxBlockMapReader interface
+ */
+#ifndef __IAppxBlockMapReader_INTERFACE_DEFINED__
+#define __IAppxBlockMapReader_INTERFACE_DEFINED__
+
+EXTERN_C const IID IID_IAppxBlockMapReader;
+
+#if defined(__cplusplus) && !defined(CINTERFACE)
+#error no support for C++
+#else /* C */
+typedef struct IAppxBlockMapReaderVtbl {
+    BEGIN_INTERFACE
+
+    /*** IUnknown methods ***/
+    HRESULT (STDMETHODCALLTYPE *QueryInterface)(
+        IAppxBlockMapReader *This,
+        REFIID riid,
+        void **ppvObject);
+
+    ULONG (STDMETHODCALLTYPE *AddRef)(
+        IAppxBlockMapReader *This);
+
+    ULONG (STDMETHODCALLTYPE *Release)(
+        IAppxBlockMapReader *This);
+
+    /*** IAppxBlockMapReader methods ***/
+    HRESULT (STDMETHODCALLTYPE *GetFile)(
+        IAppxBlockMapReader *This,
+        LPCWSTR filename,
+        IAppxBlockMapFile **file);
+
+    HRESULT (STDMETHODCALLTYPE *GetFiles)(
+        IAppxBlockMapReader *This,
+        IAppxBlockMapFilesEnumerator **enumerator);
+
+    HRESULT (STDMETHODCALLTYPE *GetHashMethod)(
+        IAppxBlockMapReader *This,
+        IUri **hashMethod);
+
+    HRESULT (STDMETHODCALLTYPE *GetStream)(
+        IAppxBlockMapReader *This,
+        IStream **blockMapStream);
+
+    END_INTERFACE
+} IAppxBlockMapReaderVtbl;
+
+interface IAppxBlockMapReader {
+    CONST_VTBL IAppxBlockMapReaderVtbl* lpVtbl;
+};
+
+#ifdef COBJMACROS
+/*** IUnknown methods ***/
+#define IAppxBlockMapReader_QueryInterface(This,riid,ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This,riid,ppvObject))
+#define IAppxBlockMapReader_AddRef(This) \
+    ((This)->lpVtbl->AddRef(This))
+#define IAppxBlockMapReader_Release(This) \
+    ((This)->lpVtbl->Release(This))
+/*** IAppxBlockMapReader methods ***/
+#define IAppxBlockMapReader_GetFile(This,filename,file) \
+    ((This)->lpVtbl->GetFile(This,filename,file))
+#define IAppxBlockMapReader_GetFiles(This,enumerator) \
+    ((This)->lpVtbl->GetFiles(This,enumerator))
+#define IAppxBlockMapReader_GetHashMethod(This,hashMethod) \
+    ((This)->lpVtbl->GetHashMethod(This,hashMethod))
+#define IAppxBlockMapReader_GetStream(This,blockMapStream) \
+    ((This)->lpVtbl->GetStream(This,blockMapStream))
+#endif /* COBJMACROS */
+
+#endif /* C */
+
+#endif /* __IAppxBlockMapReader_INTERFACE_DEFINED__ */
+/*****************************************************************************
+ * IAppxBlockMapFile interface
+ */
+#ifndef __IAppxBlockMapFile_INTERFACE_DEFINED__
+#define __IAppxBlockMapFile_INTERFACE_DEFINED__
+
+EXTERN_C const IID IID_IAppxBlockMapFile;
+
+#if defined(__cplusplus) && !defined(CINTERFACE)
+#error no support for C++
+#else /* C */
+typedef struct IAppxBlockMapFileVtbl {
+    BEGIN_INTERFACE
+
+    /*** IUnknown methods ***/
+    HRESULT (STDMETHODCALLTYPE *QueryInterface)(
+        IAppxBlockMapFile *This,
+        REFIID riid,
+        void **ppvObject);
+
+    ULONG (STDMETHODCALLTYPE *AddRef)(
+        IAppxBlockMapFile *This);
+
+    ULONG (STDMETHODCALLTYPE *Release)(
+        IAppxBlockMapFile *This);
+
+    /*** IAppxBlockMapFile methods ***/
+    HRESULT (STDMETHODCALLTYPE *GetBlocks)(
+        IAppxBlockMapFile *This,
+        IAppxBlockMapBlocksEnumerator **blocks);
+
+    HRESULT (STDMETHODCALLTYPE *GetLocalFileHeaderSize)(
+        IAppxBlockMapFile *This,
+        UINT32 *lfhSize);
+
+    HRESULT (STDMETHODCALLTYPE *GetName)(
+        IAppxBlockMapFile *This,
+        LPWSTR *name);
+
+    HRESULT (STDMETHODCALLTYPE *GetUncompressedSize)(
+        IAppxBlockMapFile *This,
+        UINT64 *size);
+
+    HRESULT (STDMETHODCALLTYPE *ValidateFileHash)(
+        IAppxBlockMapFile *This,
+        IStream *fileStream,
+        BOOL *isValid);
+
+    END_INTERFACE
+} IAppxBlockMapFileVtbl;
+
+interface IAppxBlockMapFile {
+    CONST_VTBL IAppxBlockMapFileVtbl* lpVtbl;
+};
+
+#ifdef COBJMACROS
+/*** IUnknown methods ***/
+#define IAppxBlockMapFile_QueryInterface(This,riid,ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This,riid,ppvObject))
+#define IAppxBlockMapFile_AddRef(This) \
+    ((This)->lpVtbl->AddRef(This))
+#define IAppxBlockMapFile_Release(This) \
+    ((This)->lpVtbl->Release(This))
+/*** IAppxBlockMapFile methods ***/
+#define IAppxBlockMapFile_GetBlocks(This,blocks) \
+    ((This)->lpVtbl->GetBlocks(This,blocks))
+#define IAppxBlockMapFile_GetLocalFileHeaderSize(This,lfhSize) \
+    ((This)->lpVtbl->GetLocalFileHeaderSize(This,lfhSize))
+#define IAppxBlockMapFile_GetName(This,name) \
+    ((This)->lpVtbl->GetName(This,name))
+#define IAppxBlockMapFile_GetUncompressedSize(This,size) \
+    ((This)->lpVtbl->GetUncompressedSize(This,size))
+#define IAppxBlockMapFile_ValidateFileHash(This,fileStream,isValid) \
+    ((This)->lpVtbl->ValidateFileHash(This,fileStream,isValid))
+#endif /* COBJMACROS */
+
+#endif /* C */
+
+#endif /* __IAppxBlockMapFile_INTERFACE_DEFINED__ */
+/*****************************************************************************
+ * IAppxBlockMapFilesEnumerator interface
+ */
+#ifndef __IAppxBlockMapFilesEnumerator_INTERFACE_DEFINED__
+#define __IAppxBlockMapFilesEnumerator_INTERFACE_DEFINED__
+
+EXTERN_C const IID IID_IAppxBlockMapFilesEnumerator;
+
+#if defined(__cplusplus) && !defined(CINTERFACE)
+#error no support for C++
+#else /* C */
+typedef struct IAppxBlockMapFilesEnumeratorVtbl {
+    BEGIN_INTERFACE
+
+    /*** IUnknown methods ***/
+    HRESULT (STDMETHODCALLTYPE *QueryInterface)(
+        IAppxBlockMapFilesEnumerator *This,
+        REFIID riid,
+        void **ppvObject);
+
+    ULONG (STDMETHODCALLTYPE *AddRef)(
+        IAppxBlockMapFilesEnumerator *This);
+
+    ULONG (STDMETHODCALLTYPE *Release)(
+        IAppxBlockMapFilesEnumerator *This);
+
+    /*** IAppxBlockMapFilesEnumerator methods ***/
+    HRESULT (STDMETHODCALLTYPE *GetCurrent)(
+        IAppxBlockMapFilesEnumerator *This,
+        IAppxBlockMapFile **file);
+
+    HRESULT (STDMETHODCALLTYPE *GetHasCurrent)(
+        IAppxBlockMapFilesEnumerator *This,
+        BOOL *hasCurrent);
+
+    HRESULT (STDMETHODCALLTYPE *MoveNext)(
+        IAppxBlockMapFilesEnumerator *This,
+        BOOL *hasCurrent);
+
+    END_INTERFACE
+} IAppxBlockMapFilesEnumeratorVtbl;
+
+interface IAppxBlockMapFilesEnumerator {
+    CONST_VTBL IAppxBlockMapFilesEnumeratorVtbl* lpVtbl;
+};
+
+#ifdef COBJMACROS
+/*** IUnknown methods ***/
+#define IAppxBlockMapFilesEnumerator_QueryInterface(This,riid,ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This,riid,ppvObject))
+#define IAppxBlockMapFilesEnumerator_AddRef(This) \
+    ((This)->lpVtbl->AddRef(This))
+#define IAppxBlockMapFilesEnumerator_Release(This) \
+    ((This)->lpVtbl->Release(This))
+/*** IAppxBlockMapFilesEnumerator methods ***/
+#define IAppxBlockMapFilesEnumerator_GetCurrent(This,file) \
+    ((This)->lpVtbl->GetCurrent(This,file))
+#define IAppxBlockMapFilesEnumerator_GetHasCurrent(This,hasCurrent) \
+    ((This)->lpVtbl->GetHasCurrent(This,hasCurrent))
+#define IAppxBlockMapFilesEnumerator_MoveNext(This,hasCurrent) \
+    ((This)->lpVtbl->MoveNext(This,hasCurrent))
+#endif /* COBJMACROS */
+
+#endif /* C */
+
+#endif /* __IAppxBlockMapFilesEnumerator_INTERFACE_DEFINED__ */
+/*****************************************************************************
+ * IAppxBlockMapBlock interface
+ */
+#ifndef __IAppxBlockMapBlock_INTERFACE_DEFINED__
+#define __IAppxBlockMapBlock_INTERFACE_DEFINED__
+
+EXTERN_C const IID IID_IAppxBlockMapBlock;
+
+#if defined(__cplusplus) && !defined(CINTERFACE)
+#error no support for C++
+#else /* C */
+typedef struct IAppxBlockMapBlockVtbl {
+    BEGIN_INTERFACE
+
+    /*** IUnknown methods ***/
+    HRESULT (STDMETHODCALLTYPE *QueryInterface)(
+        IAppxBlockMapBlock *This,
+        REFIID riid,
+        void **ppvObject);
+
+    ULONG (STDMETHODCALLTYPE *AddRef)(
+        IAppxBlockMapBlock *This);
+
+    ULONG (STDMETHODCALLTYPE *Release)(
+        IAppxBlockMapBlock *This);
+
+    /*** IAppxBlockMapBlock methods ***/
+    HRESULT (STDMETHODCALLTYPE *GetHash)(
+        IAppxBlockMapBlock *This,
+        UINT32 *bufferSize,
+        BYTE **buffer);
+
+    HRESULT (STDMETHODCALLTYPE *GetCompressedSize)(
+        IAppxBlockMapBlock *This,
+        UINT32 *size);
+
+    END_INTERFACE
+} IAppxBlockMapBlockVtbl;
+
+interface IAppxBlockMapBlock {
+    CONST_VTBL IAppxBlockMapBlockVtbl* lpVtbl;
+};
+
+#ifdef COBJMACROS
+/*** IUnknown methods ***/
+#define IAppxBlockMapBlock_QueryInterface(This,riid,ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This,riid,ppvObject))
+#define IAppxBlockMapBlock_AddRef(This) \
+    ((This)->lpVtbl->AddRef(This))
+#define IAppxBlockMapBlock_Release(This) \
+    ((This)->lpVtbl->Release(This))
+/*** IAppxBlockMapBlock methods ***/
+#define IAppxBlockMapBlock_GetHash(This,bufferSize,buffer) \
+    ((This)->lpVtbl->GetHash(This,bufferSize,buffer))
+#define IAppxBlockMapBlock_GetCompressedSize(This,size) \
+    ((This)->lpVtbl->GetCompressedSize(This,size))
+#endif /* COBJMACROS */
+
+#endif /* C */
+
+#endif /* __IAppxBlockMapBlock_INTERFACE_DEFINED__ */
+/*****************************************************************************
+ * IAppxBlockMapBlocksEnumerator interface
+ */
+#ifndef __IAppxBlockMapBlocksEnumerator_INTERFACE_DEFINED__
+#define __IAppxBlockMapBlocksEnumerator_INTERFACE_DEFINED__
+
+EXTERN_C const IID IID_IAppxBlockMapBlocksEnumerator;
+
+#if defined(__cplusplus) && !defined(CINTERFACE)
+#error no support for C++
+#else /* C */
+typedef struct IAppxBlockMapBlocksEnumeratorVtbl {
+    BEGIN_INTERFACE
+
+    /*** IUnknown methods ***/
+    HRESULT (STDMETHODCALLTYPE *QueryInterface)(
+        IAppxBlockMapBlocksEnumerator *This,
+        REFIID riid,
+        void **ppvObject);
+
+    ULONG (STDMETHODCALLTYPE *AddRef)(
+        IAppxBlockMapBlocksEnumerator *This);
+
+    ULONG (STDMETHODCALLTYPE *Release)(
+        IAppxBlockMapBlocksEnumerator *This);
+
+    /*** IAppxBlockMapBlocksEnumerator methods ***/
+    HRESULT (STDMETHODCALLTYPE *GetCurrent)(
+        IAppxBlockMapBlocksEnumerator *This,
+        IAppxBlockMapBlock **block);
+
+    HRESULT (STDMETHODCALLTYPE *GetHasCurrent)(
+        IAppxBlockMapBlocksEnumerator *This,
+        BOOL *hasCurrent);
+
+    HRESULT (STDMETHODCALLTYPE *MoveNext)(
+        IAppxBlockMapBlocksEnumerator *This,
+        BOOL *hasNext);
+
+    END_INTERFACE
+} IAppxBlockMapBlocksEnumeratorVtbl;
+
+interface IAppxBlockMapBlocksEnumerator {
+    CONST_VTBL IAppxBlockMapBlocksEnumeratorVtbl* lpVtbl;
+};
+
+#ifdef COBJMACROS
+/*** IUnknown methods ***/
+#define IAppxBlockMapBlocksEnumerator_QueryInterface(This,riid,ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This,riid,ppvObject))
+#define IAppxBlockMapBlocksEnumerator_AddRef(This) \
+    ((This)->lpVtbl->AddRef(This))
+#define IAppxBlockMapBlocksEnumerator_Release(This) \
+    ((This)->lpVtbl->Release(This))
+/*** IAppxBlockMapBlocksEnumerator methods ***/
+#define IAppxBlockMapBlocksEnumerator_GetCurrent(This,block) \
+    ((This)->lpVtbl->GetCurrent(This,block))
+#define IAppxBlockMapBlocksEnumerator_GetHasCurrent(This,hasCurrent) \
+    ((This)->lpVtbl->GetHasCurrent(This,hasCurrent))
+#define IAppxBlockMapBlocksEnumerator_MoveNext(This,hasNext) \
+    ((This)->lpVtbl->MoveNext(This,hasNext))
+#endif /* COBJMACROS */
+
+#endif /* C */
+
+#endif /* __IAppxBlockMapBlocksEnumerator_INTERFACE_DEFINED__ */
+
+/*****************************************************************************
+ * IAppxManifestReader interface
+ */
+#ifndef __IAppxManifestReader_INTERFACE_DEFINED__
+#define __IAppxManifestReader_INTERFACE_DEFINED__
+
+EXTERN_C const IID IID_IAppxManifestReader;
+
+#if defined(__cplusplus) && !defined(CINTERFACE)
+#error no support for C++
+#else /* C */
+typedef struct IAppxManifestReaderVtbl {
+    BEGIN_INTERFACE
+
+    /*** IUnknown methods ***/
+    HRESULT (STDMETHODCALLTYPE *QueryInterface)(
+        IAppxManifestReader *This,
+        REFIID riid,
+        void **ppvObject);
+
+    ULONG (STDMETHODCALLTYPE *AddRef)(
+        IAppxManifestReader *This);
+
+    ULONG (STDMETHODCALLTYPE *Release)(
+        IAppxManifestReader *This);
+
+    /*** IAppxManifestReader methods ***/
+    HRESULT (STDMETHODCALLTYPE *GetPackageId)(
+        IAppxManifestReader *This,
+        IAppxManifestPackageId **packageId);
+
+    HRESULT (STDMETHODCALLTYPE *GetProperties)(
+        IAppxManifestReader *This,
+        IAppxManifestProperties **packageProperties);
+
+    HRESULT (STDMETHODCALLTYPE *GetPackageDependencies)(
+        IAppxManifestReader *This,
+        IAppxManifestPackageDependenciesEnumerator **dependencies);
+
+    HRESULT (STDMETHODCALLTYPE *GetCapabilities)(
+        IAppxManifestReader *This,
+        APPX_CAPABILITIES *capabilities);
+
+    HRESULT (STDMETHODCALLTYPE *GetResources)(
+        IAppxManifestReader *This,
+        IAppxManifestResourcesEnumerator **resources);
+
+    HRESULT (STDMETHODCALLTYPE *GetDeviceCapabilities)(
+        IAppxManifestReader *This,
+        IAppxManifestDeviceCapabilitiesEnumerator **deviceCapabilities);
+
+    HRESULT (STDMETHODCALLTYPE *GetPrerequisite)(
+        IAppxManifestReader *This,
+        LPCWSTR name,
+        UINT64 *value);
+
+    HRESULT (STDMETHODCALLTYPE *GetApplications)(
+        IAppxManifestReader *This,
+        IAppxManifestApplicationsEnumerator **applications);
+
+    HRESULT (STDMETHODCALLTYPE *GetStream)(
+        IAppxManifestReader *This,
+        IStream **manifestStream);
+
+    END_INTERFACE
+} IAppxManifestReaderVtbl;
+
+interface IAppxManifestReader {
+    CONST_VTBL IAppxManifestReaderVtbl* lpVtbl;
+};
+
+#ifdef COBJMACROS
+/*** IUnknown methods ***/
+#define IAppxManifestReader_QueryInterface(This,riid,ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This,riid,ppvObject))
+#define IAppxManifestReader_AddRef(This) \
+    ((This)->lpVtbl->AddRef(This))
+#define IAppxManifestReader_Release(This) \
+    ((This)->lpVtbl->Release(This))
+/*** IAppxManifestReader methods ***/
+#define IAppxManifestReader_GetPackageId(This,packageId) \
+    ((This)->lpVtbl->GetPackageId(This,packageId))
+#define IAppxManifestReader_GetProperties(This,packageProperties) \
+    ((This)->lpVtbl->GetProperties(This,packageProperties))
+#define IAppxManifestReader_GetPackageDependencies(This,dependencies) \
+    ((This)->lpVtbl->GetPackageDependencies(This,dependencies))
+#define IAppxManifestReader_GetCapabilities(This,capabilities) \
+    ((This)->lpVtbl->GetCapabilities(This,capabilities))
+#define IAppxManifestReader_GetResources(This,resources) \
+    ((This)->lpVtbl->GetResources(This,resources))
+#define IAppxManifestReader_GetDeviceCapabilities(This,deviceCapabilities) \
+    ((This)->lpVtbl->GetDeviceCapabilities(This,deviceCapabilities))
+#define IAppxManifestReader_GetPrerequisite(This,name,value) \
+    ((This)->lpVtbl->GetPrerequisite(This,name,value))
+#define IAppxManifestReader_GetApplications(This,applications) \
+    ((This)->lpVtbl->GetApplications(This,applications))
+#define IAppxManifestReader_GetStream(This,manifestStream) \
+    ((This)->lpVtbl->GetStream(This,manifestStream))
+#endif /* COBJMACROS */
+
+#endif /* C */
+
+#endif /* __IAppxManifestReader_INTERFACE_DEFINED__ */
+
+/*****************************************************************************
+ * IAppxManifestReader2 interface
+ */
+#ifndef __IAppxManifestReader2_INTERFACE_DEFINED__
+#define __IAppxManifestReader2_INTERFACE_DEFINED__
+
+EXTERN_C const IID IID_IAppxManifestReader2;
+
+#if defined(__cplusplus) && !defined(CINTERFACE)
+#error no support for C++
+#else /* C */
+typedef struct IAppxManifestReader2Vtbl {
+    BEGIN_INTERFACE
+
+    /*** IUnknown methods ***/
+    HRESULT (STDMETHODCALLTYPE *QueryInterface)(
+        IAppxManifestReader2 *This,
+        REFIID riid,
+        void **ppvObject);
+
+    ULONG (STDMETHODCALLTYPE *AddRef)(
+        IAppxManifestReader2 *This);
+
+    ULONG (STDMETHODCALLTYPE *Release)(
+        IAppxManifestReader2 *This);
+
+    /*** IAppxManifestReader methods ***/
+    HRESULT (STDMETHODCALLTYPE *GetPackageId)(
+        IAppxManifestReader2 *This,
+        IAppxManifestPackageId **packageId);
+
+    HRESULT (STDMETHODCALLTYPE *GetProperties)(
+        IAppxManifestReader2 *This,
+        IAppxManifestProperties **packageProperties);
+
+    HRESULT (STDMETHODCALLTYPE *GetPackageDependencies)(
+        IAppxManifestReader2 *This,
+        IAppxManifestPackageDependenciesEnumerator **dependencies);
+
+    HRESULT (STDMETHODCALLTYPE *GetCapabilities)(
+        IAppxManifestReader2 *This,
+        APPX_CAPABILITIES *capabilities);
+
+    HRESULT (STDMETHODCALLTYPE *GetResources)(
+        IAppxManifestReader2 *This,
+        IAppxManifestResourcesEnumerator **resources);
+
+    HRESULT (STDMETHODCALLTYPE *GetDeviceCapabilities)(
+        IAppxManifestReader2 *This,
+        IAppxManifestDeviceCapabilitiesEnumerator **deviceCapabilities);
+
+    HRESULT (STDMETHODCALLTYPE *GetPrerequisite)(
+        IAppxManifestReader2 *This,
+        LPCWSTR name,
+        UINT64 *value);
+
+    HRESULT (STDMETHODCALLTYPE *GetApplications)(
+        IAppxManifestReader2 *This,
+        IAppxManifestApplicationsEnumerator **applications);
+
+    HRESULT (STDMETHODCALLTYPE *GetStream)(
+        IAppxManifestReader2 *This,
+        IStream **manifestStream);
+
+    /*** IAppxManifestReader2 methods ***/
+    HRESULT (STDMETHODCALLTYPE *GetQualifiedResources)(
+        IAppxManifestReader2 *This,
+        IAppxManifestQualifiedResourcesEnumerator **resources);
+
+    END_INTERFACE
+} IAppxManifestReader2Vtbl;
+
+interface IAppxManifestReader2 {
+    CONST_VTBL IAppxManifestReader2Vtbl* lpVtbl;
+};
+
+#ifdef COBJMACROS
+/*** IUnknown methods ***/
+#define IAppxManifestReader2_QueryInterface(This,riid,ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This,riid,ppvObject))
+#define IAppxManifestReader2_AddRef(This) \
+    ((This)->lpVtbl->AddRef(This))
+#define IAppxManifestReader2_Release(This) \
+    ((This)->lpVtbl->Release(This))
+/*** IAppxManifestReader methods ***/
+#define IAppxManifestReader2_GetPackageId(This,packageId) \
+    ((This)->lpVtbl->GetPackageId(This,packageId))
+#define IAppxManifestReader2_GetProperties(This,packageProperties) \
+    ((This)->lpVtbl->GetProperties(This,packageProperties))
+#define IAppxManifestReader2_GetPackageDependencies(This,dependencies) \
+    ((This)->lpVtbl->GetPackageDependencies(This,dependencies))
+#define IAppxManifestReader2_GetCapabilities(This,capabilities) \
+    ((This)->lpVtbl->GetCapabilities(This,capabilities))
+#define IAppxManifestReader2_GetResources(This,resources) \
+    ((This)->lpVtbl->GetResources(This,resources))
+#define IAppxManifestReader2_GetDeviceCapabilities(This,deviceCapabilities) \
+    ((This)->lpVtbl->GetDeviceCapabilities(This,deviceCapabilities))
+#define IAppxManifestReader2_GetPrerequisite(This,name,value) \
+    ((This)->lpVtbl->GetPrerequisite(This,name,value))
+#define IAppxManifestReader2_GetApplications(This,applications) \
+    ((This)->lpVtbl->GetApplications(This,applications))
+#define IAppxManifestReader2_GetStream(This,manifestStream) \
+    ((This)->lpVtbl->GetStream(This,manifestStream))
+/*** IAppxManifestReader2 methods ***/
+#define IAppxManifestReader2_GetQualifiedResources(This,resources) \
+    ((This)->lpVtbl->GetQualifiedResources(This,resources))
+#endif /* COBJMACROS */
+
+#endif /* C */
+
+#endif /* __IAppxManifestReader2_INTERFACE_DEFINED__ */
+
+/*****************************************************************************
+ * IAppxManifestReader3 interface
+ */
+#ifndef __IAppxManifestReader3_INTERFACE_DEFINED__
+#define __IAppxManifestReader3_INTERFACE_DEFINED__
+
+EXTERN_C const IID IID_IAppxManifestReader3;
+
+#if defined(__cplusplus) && !defined(CINTERFACE)
+#error no support for C++
+#else /* C */
+typedef struct IAppxManifestReader3Vtbl {
+    BEGIN_INTERFACE
+
+    /*** IUnknown methods ***/
+    HRESULT (STDMETHODCALLTYPE *QueryInterface)(
+        IAppxManifestReader3 *This,
+        REFIID riid,
+        void **ppvObject);
+
+    ULONG (STDMETHODCALLTYPE *AddRef)(
+        IAppxManifestReader3 *This);
+
+    ULONG (STDMETHODCALLTYPE *Release)(
+        IAppxManifestReader3 *This);
+
+    /*** IAppxManifestReader methods ***/
+    HRESULT (STDMETHODCALLTYPE *GetPackageId)(
+        IAppxManifestReader3 *This,
+        IAppxManifestPackageId **packageId);
+
+    HRESULT (STDMETHODCALLTYPE *GetProperties)(
+        IAppxManifestReader3 *This,
+        IAppxManifestProperties **packageProperties);
+
+    HRESULT (STDMETHODCALLTYPE *GetPackageDependencies)(
+        IAppxManifestReader3 *This,
+        IAppxManifestPackageDependenciesEnumerator **dependencies);
+
+    HRESULT (STDMETHODCALLTYPE *GetCapabilities)(
+        IAppxManifestReader3 *This,
+        APPX_CAPABILITIES *capabilities);
+
+    HRESULT (STDMETHODCALLTYPE *GetResources)(
+        IAppxManifestReader3 *This,
+        IAppxManifestResourcesEnumerator **resources);
+
+    HRESULT (STDMETHODCALLTYPE *GetDeviceCapabilities)(
+        IAppxManifestReader3 *This,
+        IAppxManifestDeviceCapabilitiesEnumerator **deviceCapabilities);
+
+    HRESULT (STDMETHODCALLTYPE *GetPrerequisite)(
+        IAppxManifestReader3 *This,
+        LPCWSTR name,
+        UINT64 *value);
+
+    HRESULT (STDMETHODCALLTYPE *GetApplications)(
+        IAppxManifestReader3 *This,
+        IAppxManifestApplicationsEnumerator **applications);
+
+    HRESULT (STDMETHODCALLTYPE *GetStream)(
+        IAppxManifestReader3 *This,
+        IStream **manifestStream);
+
+    /*** IAppxManifestReader2 methods ***/
+    HRESULT (STDMETHODCALLTYPE *GetQualifiedResources)(
+        IAppxManifestReader3 *This,
+        IAppxManifestQualifiedResourcesEnumerator **resources);
+
+    /*** IAppxManifestReader3 methods ***/
+    HRESULT (STDMETHODCALLTYPE *GetCapabilitiesByCapabilityClass)(
+        IAppxManifestReader3 *This,
+        APPX_CAPABILITY_CLASS_TYPE capabilityClass,
+        IAppxManifestCapabilitiesEnumerator **capabilities);
+
+    HRESULT (STDMETHODCALLTYPE *GetTargetDeviceFamilies)(
+        IAppxManifestReader3 *This,
+        IAppxManifestTargetDeviceFamiliesEnumerator **targetDeviceFamilies);
+
+    END_INTERFACE
+} IAppxManifestReader3Vtbl;
+
+interface IAppxManifestReader3 {
+    CONST_VTBL IAppxManifestReader3Vtbl* lpVtbl;
+};
+
+#ifdef COBJMACROS
+/*** IUnknown methods ***/
+#define IAppxManifestReader3_QueryInterface(This,riid,ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This,riid,ppvObject))
+#define IAppxManifestReader3_AddRef(This) \
+    ((This)->lpVtbl->AddRef(This))
+#define IAppxManifestReader3_Release(This) \
+    ((This)->lpVtbl->Release(This))
+/*** IAppxManifestReader methods ***/
+#define IAppxManifestReader3_GetPackageId(This,packageId) \
+    ((This)->lpVtbl->GetPackageId(This,packageId))
+#define IAppxManifestReader3_GetProperties(This,packageProperties) \
+    ((This)->lpVtbl->GetProperties(This,packageProperties))
+#define IAppxManifestReader3_GetPackageDependencies(This,dependencies) \
+    ((This)->lpVtbl->GetPackageDependencies(This,dependencies))
+#define IAppxManifestReader3_GetCapabilities(This,capabilities) \
+    ((This)->lpVtbl->GetCapabilities(This,capabilities))
+#define IAppxManifestReader3_GetResources(This,resources) \
+    ((This)->lpVtbl->GetResources(This,resources))
+#define IAppxManifestReader3_GetDeviceCapabilities(This,deviceCapabilities) \
+    ((This)->lpVtbl->GetDeviceCapabilities(This,deviceCapabilities))
+#define IAppxManifestReader3_GetPrerequisite(This,name,value) \
+    ((This)->lpVtbl->GetPrerequisite(This,name,value))
+#define IAppxManifestReader3_GetApplications(This,applications) \
+    ((This)->lpVtbl->GetApplications(This,applications))
+#define IAppxManifestReader3_GetStream(This,manifestStream) \
+    ((This)->lpVtbl->GetStream(This,manifestStream))
+/*** IAppxManifestReader2 methods ***/
+#define IAppxManifestReader3_GetQualifiedResources(This,resources) \
+    ((This)->lpVtbl->GetQualifiedResources(This,resources))
+/*** IAppxManifestReader3 methods ***/
+#define IAppxManifestReader3_GetCapabilitiesByCapabilityClass(This,capabilityClass,capabilities) \
+    ((This)->lpVtbl->GetCapabilitiesByCapabilityClass(This,capabilityClass,capabilities))
+#define IAppxManifestReader3_GetTargetDeviceFamilies(This,targetDeviceFamilies) \
+    ((This)->lpVtbl->GetTargetDeviceFamilies(This,targetDeviceFamilies))
+#endif /* COBJMACROS */
+
+#endif /* C */
+
+#endif /* __IAppxManifestReader3_INTERFACE_DEFINED__ */
+
+/*****************************************************************************
+ * IAppxManifestReader4 interface
+ */
+#ifndef __IAppxManifestReader4_INTERFACE_DEFINED__
+#define __IAppxManifestReader4_INTERFACE_DEFINED__
+
+EXTERN_C const IID IID_IAppxManifestReader4;
+
+#if defined(__cplusplus) && !defined(CINTERFACE)
+#error no support for C++
+#else /* C */
+typedef struct IAppxManifestReader4Vtbl {
+    BEGIN_INTERFACE
+
+    /*** IUnknown methods ***/
+    HRESULT (STDMETHODCALLTYPE *QueryInterface)(
+        IAppxManifestReader4 *This,
+        REFIID riid,
+        void **ppvObject);
+
+    ULONG (STDMETHODCALLTYPE *AddRef)(
+        IAppxManifestReader4 *This);
+
+    ULONG (STDMETHODCALLTYPE *Release)(
+        IAppxManifestReader4 *This);
+
+    /*** IAppxManifestReader methods ***/
+    HRESULT (STDMETHODCALLTYPE *GetPackageId)(
+        IAppxManifestReader4 *This,
+        IAppxManifestPackageId **packageId);
+
+    HRESULT (STDMETHODCALLTYPE *GetProperties)(
+        IAppxManifestReader4 *This,
+        IAppxManifestProperties **packageProperties);
+
+    HRESULT (STDMETHODCALLTYPE *GetPackageDependencies)(
+        IAppxManifestReader4 *This,
+        IAppxManifestPackageDependenciesEnumerator **dependencies);
+
+    HRESULT (STDMETHODCALLTYPE *GetCapabilities)(
+        IAppxManifestReader4 *This,
+        APPX_CAPABILITIES *capabilities);
+
+    HRESULT (STDMETHODCALLTYPE *GetResources)(
+        IAppxManifestReader4 *This,
+        IAppxManifestResourcesEnumerator **resources);
+
+    HRESULT (STDMETHODCALLTYPE *GetDeviceCapabilities)(
+        IAppxManifestReader4 *This,
+        IAppxManifestDeviceCapabilitiesEnumerator **deviceCapabilities);
+
+    HRESULT (STDMETHODCALLTYPE *GetPrerequisite)(
+        IAppxManifestReader4 *This,
+        LPCWSTR name,
+        UINT64 *value);
+
+    HRESULT (STDMETHODCALLTYPE *GetApplications)(
+        IAppxManifestReader4 *This,
+        IAppxManifestApplicationsEnumerator **applications);
+
+    HRESULT (STDMETHODCALLTYPE *GetStream)(
+        IAppxManifestReader4 *This,
+        IStream **manifestStream);
+
+    /*** IAppxManifestReader2 methods ***/
+    HRESULT (STDMETHODCALLTYPE *GetQualifiedResources)(
+        IAppxManifestReader4 *This,
+        IAppxManifestQualifiedResourcesEnumerator **resources);
+
+    /*** IAppxManifestReader3 methods ***/
+    HRESULT (STDMETHODCALLTYPE *GetCapabilitiesByCapabilityClass)(
+        IAppxManifestReader4 *This,
+        APPX_CAPABILITY_CLASS_TYPE capabilityClass,
+        IAppxManifestCapabilitiesEnumerator **capabilities);
+
+    HRESULT (STDMETHODCALLTYPE *GetTargetDeviceFamilies)(
+        IAppxManifestReader4 *This,
+        IAppxManifestTargetDeviceFamiliesEnumerator **targetDeviceFamilies);
+
+    /*** IAppxManifestReader4 methods ***/
+    HRESULT (STDMETHODCALLTYPE *GetOptionalPackageInfo)(
+        IAppxManifestReader4 *This,
+        IAppxManifestOptionalPackageInfo **optionalPackageInfo);
+
+    END_INTERFACE
+} IAppxManifestReader4Vtbl;
+
+interface IAppxManifestReader4 {
+    CONST_VTBL IAppxManifestReader4Vtbl* lpVtbl;
+};
+
+#ifdef COBJMACROS
+/*** IUnknown methods ***/
+#define IAppxManifestReader4_QueryInterface(This,riid,ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This,riid,ppvObject))
+#define IAppxManifestReader4_AddRef(This) \
+    ((This)->lpVtbl->AddRef(This))
+#define IAppxManifestReader4_Release(This) \
+    ((This)->lpVtbl->Release(This))
+/*** IAppxManifestReader methods ***/
+#define IAppxManifestReader4_GetPackageId(This,packageId) \
+    ((This)->lpVtbl->GetPackageId(This,packageId))
+#define IAppxManifestReader4_GetProperties(This,packageProperties) \
+    ((This)->lpVtbl->GetProperties(This,packageProperties))
+#define IAppxManifestReader4_GetPackageDependencies(This,dependencies) \
+    ((This)->lpVtbl->GetPackageDependencies(This,dependencies))
+#define IAppxManifestReader4_GetCapabilities(This,capabilities) \
+    ((This)->lpVtbl->GetCapabilities(This,capabilities))
+#define IAppxManifestReader4_GetResources(This,resources) \
+    ((This)->lpVtbl->GetResources(This,resources))
+#define IAppxManifestReader4_GetDeviceCapabilities(This,deviceCapabilities) \
+    ((This)->lpVtbl->GetDeviceCapabilities(This,deviceCapabilities))
+#define IAppxManifestReader4_GetPrerequisite(This,name,value) \
+    ((This)->lpVtbl->GetPrerequisite(This,name,value))
+#define IAppxManifestReader4_GetApplications(This,applications) \
+    ((This)->lpVtbl->GetApplications(This,applications))
+#define IAppxManifestReader4_GetStream(This,manifestStream) \
+    ((This)->lpVtbl->GetStream(This,manifestStream))
+/*** IAppxManifestReader2 methods ***/
+#define IAppxManifestReader4_GetQualifiedResources(This,resources) \
+    ((This)->lpVtbl->GetQualifiedResources(This,resources))
+/*** IAppxManifestReader3 methods ***/
+#define IAppxManifestReader4_GetCapabilitiesByCapabilityClass(This,capabilityClass,capabilities) \
+    ((This)->lpVtbl->GetCapabilitiesByCapabilityClass(This,capabilityClass,capabilities))
+#define IAppxManifestReader4_GetTargetDeviceFamilies(This,targetDeviceFamilies) \
+    ((This)->lpVtbl->GetTargetDeviceFamilies(This,targetDeviceFamilies))
+/*** IAppxManifestReader4 methods ***/
+#define IAppxManifestReader4_GetOptionalPackageInfo(This,optionalPackageInfo) \
+    ((This)->lpVtbl->GetOptionalPackageInfo(This,optionalPackageInfo))
+#endif /* COBJMACROS */
+
+#endif /* C */
+
+#endif /* __IAppxManifestReader4_INTERFACE_DEFINED__ */
+
+/*****************************************************************************
+ * IAppxManifestReader5 interface
+ */
+#ifndef __IAppxManifestReader5_INTERFACE_DEFINED__
+#define __IAppxManifestReader5_INTERFACE_DEFINED__
+
+EXTERN_C const IID IID_IAppxManifestReader5;
+
+#if defined(__cplusplus) && !defined(CINTERFACE)
+#error no support for C++
+#else /* C */
+typedef struct IAppxManifestReader5Vtbl {
+    BEGIN_INTERFACE
+
+    /*** IUnknown methods ***/
+    HRESULT (STDMETHODCALLTYPE *QueryInterface)(
+        IAppxManifestReader5 *This,
+        REFIID riid,
+        void **ppvObject);
+
+    ULONG (STDMETHODCALLTYPE *AddRef)(
+        IAppxManifestReader5 *This);
+
+    ULONG (STDMETHODCALLTYPE *Release)(
+        IAppxManifestReader5 *This);
+
+    /*** IAppxManifestReader5 methods ***/
+    HRESULT (STDMETHODCALLTYPE *GetMainPackageDependencies)(
+        IAppxManifestReader5 *This,
+        IAppxManifestMainPackageDependenciesEnumerator **mainPackageDependencies);
+
+    END_INTERFACE
+} IAppxManifestReader5Vtbl;
+
+interface IAppxManifestReader5 {
+    CONST_VTBL IAppxManifestReader5Vtbl* lpVtbl;
+};
+
+#ifdef COBJMACROS
+/*** IUnknown methods ***/
+#define IAppxManifestReader5_QueryInterface(This,riid,ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This,riid,ppvObject))
+#define IAppxManifestReader5_AddRef(This) \
+    ((This)->lpVtbl->AddRef(This))
+#define IAppxManifestReader5_Release(This) \
+    ((This)->lpVtbl->Release(This))
+/*** IAppxManifestReader5 methods ***/
+#define IAppxManifestReader5_GetMainPackageDependencies(This,mainPackageDependencies) \
+    ((This)->lpVtbl->GetMainPackageDependencies(This,mainPackageDependencies))
+#endif /* COBJMACROS */
+
+#endif /* C */
+
+#endif /* __IAppxManifestReader5_INTERFACE_DEFINED__ */
+
+/*****************************************************************************
+ * IAppxManifestReader6 interface
+ */
+#ifndef __IAppxManifestReader6_INTERFACE_DEFINED__
+#define __IAppxManifestReader6_INTERFACE_DEFINED__
+
+EXTERN_C const IID IID_IAppxManifestReader6;
+
+#if defined(__cplusplus) && !defined(CINTERFACE)
+#error no support for C++
+#else /* C */
+typedef struct IAppxManifestReader6Vtbl {
+    BEGIN_INTERFACE
+
+    /*** IUnknown methods ***/
+    HRESULT (STDMETHODCALLTYPE *QueryInterface)(
+        IAppxManifestReader6 *This,
+        REFIID riid,
+        void **ppvObject);
+
+    ULONG (STDMETHODCALLTYPE *AddRef)(
+        IAppxManifestReader6 *This);
+
+    ULONG (STDMETHODCALLTYPE *Release)(
+        IAppxManifestReader6 *This);
+
+    /*** IAppxManifestReader6 methods ***/
+    HRESULT (STDMETHODCALLTYPE *GetIsNonQualifiedResourcePackage)(
+        IAppxManifestReader6 *This,
+        BOOL *isNonQualifiedResourcePackage);
+
+    END_INTERFACE
+} IAppxManifestReader6Vtbl;
+
+interface IAppxManifestReader6 {
+    CONST_VTBL IAppxManifestReader6Vtbl* lpVtbl;
+};
+
+#ifdef COBJMACROS
+/*** IUnknown methods ***/
+#define IAppxManifestReader6_QueryInterface(This,riid,ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This,riid,ppvObject))
+#define IAppxManifestReader6_AddRef(This) \
+    ((This)->lpVtbl->AddRef(This))
+#define IAppxManifestReader6_Release(This) \
+    ((This)->lpVtbl->Release(This))
+/*** IAppxManifestReader6 methods ***/
+#define IAppxManifestReader6_GetIsNonQualifiedResourcePackage(This,isNonQualifiedResourcePackage) \
+    ((This)->lpVtbl->GetIsNonQualifiedResourcePackage(This,isNonQualifiedResourcePackage))
+#endif /* COBJMACROS */
+
+#endif /* C */
+
+#endif /* __IAppxManifestReader6_INTERFACE_DEFINED__ */
+
+/*****************************************************************************
+ * IAppxManifestReader7 interface
+ */
+#ifndef __IAppxManifestReader7_INTERFACE_DEFINED__
+#define __IAppxManifestReader7_INTERFACE_DEFINED__
+
+EXTERN_C const IID IID_IAppxManifestReader7;
+
+#if defined(__cplusplus) && !defined(CINTERFACE)
+#error no support for C++
+#else /* C */
+typedef struct IAppxManifestReader7Vtbl {
+    BEGIN_INTERFACE
+
+    /*** IUnknown methods ***/
+    HRESULT (STDMETHODCALLTYPE *QueryInterface)(
+        IAppxManifestReader7 *This,
+        REFIID riid,
+        void **ppvObject);
+
+    ULONG (STDMETHODCALLTYPE *AddRef)(
+        IAppxManifestReader7 *This);
+
+    ULONG (STDMETHODCALLTYPE *Release)(
+        IAppxManifestReader7 *This);
+
+    /*** IAppxManifestReader7 methods ***/
+    HRESULT (STDMETHODCALLTYPE *GetDriverDependencies)(
+        IAppxManifestReader7 *This,
+        IAppxManifestDriverDependenciesEnumerator **driverDependencies);
+
+    HRESULT (STDMETHODCALLTYPE *GetOSPackageDependencies)(
+        IAppxManifestReader7 *This,
+        IAppxManifestOSPackageDependenciesEnumerator **osPackageDependencies);
+
+    HRESULT (STDMETHODCALLTYPE *GetHostRuntimeDependencies)(
+        IAppxManifestReader7 *This,
+        IAppxManifestHostRuntimeDependenciesEnumerator **hostRuntimeDependencies);
+
+    END_INTERFACE
+} IAppxManifestReader7Vtbl;
+
+interface IAppxManifestReader7 {
+    CONST_VTBL IAppxManifestReader7Vtbl* lpVtbl;
+};
+
+#ifdef COBJMACROS
+/*** IUnknown methods ***/
+#define IAppxManifestReader7_QueryInterface(This,riid,ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This,riid,ppvObject))
+#define IAppxManifestReader7_AddRef(This) \
+    ((This)->lpVtbl->AddRef(This))
+#define IAppxManifestReader7_Release(This) \
+    ((This)->lpVtbl->Release(This))
+/*** IAppxManifestReader7 methods ***/
+#define IAppxManifestReader7_GetDriverDependencies(This,driverDependencies) \
+    ((This)->lpVtbl->GetDriverDependencies(This,driverDependencies))
+#define IAppxManifestReader7_GetOSPackageDependencies(This,osPackageDependencies) \
+    ((This)->lpVtbl->GetOSPackageDependencies(This,osPackageDependencies))
+#define IAppxManifestReader7_GetHostRuntimeDependencies(This,hostRuntimeDependencies) \
+    ((This)->lpVtbl->GetHostRuntimeDependencies(This,hostRuntimeDependencies))
+#endif /* COBJMACROS */
+
+#endif /* C */
+
+#endif /* __IAppxManifestReader7_INTERFACE_DEFINED__ */
+
+/*****************************************************************************
+ * IAppxManifestDriverDependenciesEnumerator interface
+ */
+#ifndef __IAppxManifestDriverDependenciesEnumerator_INTERFACE_DEFINED__
+#define __IAppxManifestDriverDependenciesEnumerator_INTERFACE_DEFINED__
+
+EXTERN_C const IID IID_IAppxManifestDriverDependenciesEnumerator;
+
+#if defined(__cplusplus) && !defined(CINTERFACE)
+#error no support for C++
+#else /* C */
+typedef struct IAppxManifestDriverDependenciesEnumeratorVtbl {
+    BEGIN_INTERFACE
+
+    /*** IUnknown methods ***/
+    HRESULT (STDMETHODCALLTYPE *QueryInterface)(
+        IAppxManifestDriverDependenciesEnumerator *This,
+        REFIID riid,
+        void **ppvObject);
+
+    ULONG (STDMETHODCALLTYPE *AddRef)(
+        IAppxManifestDriverDependenciesEnumerator *This);
+
+    ULONG (STDMETHODCALLTYPE *Release)(
+        IAppxManifestDriverDependenciesEnumerator *This);
+
+    /*** IAppxManifestDriverDependenciesEnumerator methods ***/
+    HRESULT (STDMETHODCALLTYPE *GetCurrent)(
+        IAppxManifestDriverDependenciesEnumerator *This,
+        IAppxManifestDriverDependency **driverDependency);
+
+    HRESULT (STDMETHODCALLTYPE *GetHasCurrent)(
+        IAppxManifestDriverDependenciesEnumerator *This,
+        BOOL *hasCurrent);
+
+    HRESULT (STDMETHODCALLTYPE *MoveNext)(
+        IAppxManifestDriverDependenciesEnumerator *This,
+        BOOL *hasNext);
+
+    END_INTERFACE
+} IAppxManifestDriverDependenciesEnumeratorVtbl;
+
+interface IAppxManifestDriverDependenciesEnumerator {
+    CONST_VTBL IAppxManifestDriverDependenciesEnumeratorVtbl* lpVtbl;
+};
+
+#ifdef COBJMACROS
+/*** IUnknown methods ***/
+#define IAppxManifestDriverDependenciesEnumerator_QueryInterface(This,riid,ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This,riid,ppvObject))
+#define IAppxManifestDriverDependenciesEnumerator_AddRef(This) \
+    ((This)->lpVtbl->AddRef(This))
+#define IAppxManifestDriverDependenciesEnumerator_Release(This) \
+    ((This)->lpVtbl->Release(This))
+/*** IAppxManifestDriverDependenciesEnumerator methods ***/
+#define IAppxManifestDriverDependenciesEnumerator_GetCurrent(This,driverDependency) \
+    ((This)->lpVtbl->GetCurrent(This,driverDependency))
+#define IAppxManifestDriverDependenciesEnumerator_GetHasCurrent(This,hasCurrent) \
+    ((This)->lpVtbl->GetHasCurrent(This,hasCurrent))
+#define IAppxManifestDriverDependenciesEnumerator_MoveNext(This,hasNext) \
+    ((This)->lpVtbl->MoveNext(This,hasNext))
+#endif /* COBJMACROS */
+
+#endif /* C */
+
+#endif /* __IAppxManifestDriverDependenciesEnumerator_INTERFACE_DEFINED__ */
+
+/*****************************************************************************
+ * IAppxManifestDriverDependency interface
+ */
+#ifndef __IAppxManifestDriverDependency_INTERFACE_DEFINED__
+#define __IAppxManifestDriverDependency_INTERFACE_DEFINED__
+
+EXTERN_C const IID IID_IAppxManifestDriverDependency;
+
+#if defined(__cplusplus) && !defined(CINTERFACE)
+#error no support for C++
+#else /* C */
+typedef struct IAppxManifestDriverDependencyVtbl {
+    BEGIN_INTERFACE
+
+    /*** IUnknown methods ***/
+    HRESULT (STDMETHODCALLTYPE *QueryInterface)(
+        IAppxManifestDriverDependency *This,
+        REFIID riid,
+        void **ppvObject);
+
+    ULONG (STDMETHODCALLTYPE *AddRef)(
+        IAppxManifestDriverDependency *This);
+
+    ULONG (STDMETHODCALLTYPE *Release)(
+        IAppxManifestDriverDependency *This);
+
+    /*** IAppxManifestDriverDependency methods ***/
+    HRESULT (STDMETHODCALLTYPE *GetDriverConstraints)(
+        IAppxManifestDriverDependency *This,
+        IAppxManifestDriverConstraintsEnumerator **driverConstraints);
+
+    END_INTERFACE
+} IAppxManifestDriverDependencyVtbl;
+
+interface IAppxManifestDriverDependency {
+    CONST_VTBL IAppxManifestDriverDependencyVtbl* lpVtbl;
+};
+
+#ifdef COBJMACROS
+/*** IUnknown methods ***/
+#define IAppxManifestDriverDependency_QueryInterface(This,riid,ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This,riid,ppvObject))
+#define IAppxManifestDriverDependency_AddRef(This) \
+    ((This)->lpVtbl->AddRef(This))
+#define IAppxManifestDriverDependency_Release(This) \
+    ((This)->lpVtbl->Release(This))
+/*** IAppxManifestDriverDependency methods ***/
+#define IAppxManifestDriverDependency_GetDriverConstraints(This,driverConstraints) \
+    ((This)->lpVtbl->GetDriverConstraints(This,driverConstraints))
+#endif /* COBJMACROS */
+
+#endif /* C */
+
+#endif /* __IAppxManifestDriverDependency_INTERFACE_DEFINED__ */
+
+/*****************************************************************************
+ * IAppxManifestDriverConstraintsEnumerator interface
+ */
+#ifndef __IAppxManifestDriverConstraintsEnumerator_INTERFACE_DEFINED__
+#define __IAppxManifestDriverConstraintsEnumerator_INTERFACE_DEFINED__
+
+EXTERN_C const IID IID_IAppxManifestDriverConstraintsEnumerator;
+
+#if defined(__cplusplus) && !defined(CINTERFACE)
+#error no support for C++
+#else /* C */
+typedef struct IAppxManifestDriverConstraintsEnumeratorVtbl {
+    BEGIN_INTERFACE
+
+    /*** IUnknown methods ***/
+    HRESULT (STDMETHODCALLTYPE *QueryInterface)(
+        IAppxManifestDriverConstraintsEnumerator *This,
+        REFIID riid,
+        void **ppvObject);
+
+    ULONG (STDMETHODCALLTYPE *AddRef)(
+        IAppxManifestDriverConstraintsEnumerator *This);
+
+    ULONG (STDMETHODCALLTYPE *Release)(
+        IAppxManifestDriverConstraintsEnumerator *This);
+
+    /*** IAppxManifestDriverConstraintsEnumerator methods ***/
+    HRESULT (STDMETHODCALLTYPE *GetCurrent)(
+        IAppxManifestDriverConstraintsEnumerator *This,
+        IAppxManifestDriverConstraint **driverConstraint);
+
+    HRESULT (STDMETHODCALLTYPE *GetHasCurrent)(
+        IAppxManifestDriverConstraintsEnumerator *This,
+        BOOL *hasCurrent);
+
+    HRESULT (STDMETHODCALLTYPE *MoveNext)(
+        IAppxManifestDriverConstraintsEnumerator *This,
+        BOOL *hasNext);
+
+    END_INTERFACE
+} IAppxManifestDriverConstraintsEnumeratorVtbl;
+
+interface IAppxManifestDriverConstraintsEnumerator {
+    CONST_VTBL IAppxManifestDriverConstraintsEnumeratorVtbl* lpVtbl;
+};
+
+#ifdef COBJMACROS
+/*** IUnknown methods ***/
+#define IAppxManifestDriverConstraintsEnumerator_QueryInterface(This,riid,ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This,riid,ppvObject))
+#define IAppxManifestDriverConstraintsEnumerator_AddRef(This) \
+    ((This)->lpVtbl->AddRef(This))
+#define IAppxManifestDriverConstraintsEnumerator_Release(This) \
+    ((This)->lpVtbl->Release(This))
+/*** IAppxManifestDriverConstraintsEnumerator methods ***/
+#define IAppxManifestDriverConstraintsEnumerator_GetCurrent(This,driverConstraint) \
+    ((This)->lpVtbl->GetCurrent(This,driverConstraint))
+#define IAppxManifestDriverConstraintsEnumerator_GetHasCurrent(This,hasCurrent) \
+    ((This)->lpVtbl->GetHasCurrent(This,hasCurrent))
+#define IAppxManifestDriverConstraintsEnumerator_MoveNext(This,hasNext) \
+    ((This)->lpVtbl->MoveNext(This,hasNext))
+#endif /* COBJMACROS */
+
+#endif /* C */
+
+#endif /* __IAppxManifestDriverConstraintsEnumerator_INTERFACE_DEFINED__ */
+
+/*****************************************************************************
+ * IAppxManifestDriverConstraint interface
+ */
+#ifndef __IAppxManifestDriverConstraint_INTERFACE_DEFINED__
+#define __IAppxManifestDriverConstraint_INTERFACE_DEFINED__
+
+EXTERN_C const IID IID_IAppxManifestDriverConstraint;
+
+#if defined(__cplusplus) && !defined(CINTERFACE)
+#error no support for C++
+#else /* C */
+typedef struct IAppxManifestDriverConstraintVtbl {
+    BEGIN_INTERFACE
+
+    /*** IUnknown methods ***/
+    HRESULT (STDMETHODCALLTYPE *QueryInterface)(
+        IAppxManifestDriverConstraint *This,
+        REFIID riid,
+        void **ppvObject);
+
+    ULONG (STDMETHODCALLTYPE *AddRef)(
+        IAppxManifestDriverConstraint *This);
+
+    ULONG (STDMETHODCALLTYPE *Release)(
+        IAppxManifestDriverConstraint *This);
+
+    /*** IAppxManifestDriverConstraint methods ***/
+    HRESULT (STDMETHODCALLTYPE *GetName)(
+        IAppxManifestDriverConstraint *This,
+        LPWSTR *name);
+
+    HRESULT (STDMETHODCALLTYPE *GetMinVersion)(
+        IAppxManifestDriverConstraint *This,
+        UINT64 *minVersion);
+
+    HRESULT (STDMETHODCALLTYPE *GetMinDate)(
+        IAppxManifestDriverConstraint *This,
+        LPWSTR *minDate);
+
+    END_INTERFACE
+} IAppxManifestDriverConstraintVtbl;
+
+interface IAppxManifestDriverConstraint {
+    CONST_VTBL IAppxManifestDriverConstraintVtbl* lpVtbl;
+};
+
+#ifdef COBJMACROS
+/*** IUnknown methods ***/
+#define IAppxManifestDriverConstraint_QueryInterface(This,riid,ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This,riid,ppvObject))
+#define IAppxManifestDriverConstraint_AddRef(This) \
+    ((This)->lpVtbl->AddRef(This))
+#define IAppxManifestDriverConstraint_Release(This) \
+    ((This)->lpVtbl->Release(This))
+/*** IAppxManifestDriverConstraint methods ***/
+#define IAppxManifestDriverConstraint_GetName(This,name) \
+    ((This)->lpVtbl->GetName(This,name))
+#define IAppxManifestDriverConstraint_GetMinVersion(This,minVersion) \
+    ((This)->lpVtbl->GetMinVersion(This,minVersion))
+#define IAppxManifestDriverConstraint_GetMinDate(This,minDate) \
+    ((This)->lpVtbl->GetMinDate(This,minDate))
+#endif /* COBJMACROS */
+
+#endif /* C */
+
+#endif /* __IAppxManifestDriverConstraint_INTERFACE_DEFINED__ */
+
+/*****************************************************************************
+ * IAppxManifestOSPackageDependenciesEnumerator interface
+ */
+#ifndef __IAppxManifestOSPackageDependenciesEnumerator_INTERFACE_DEFINED__
+#define __IAppxManifestOSPackageDependenciesEnumerator_INTERFACE_DEFINED__
+
+EXTERN_C const IID IID_IAppxManifestOSPackageDependenciesEnumerator;
+
+#if defined(__cplusplus) && !defined(CINTERFACE)
+#error no support for C++
+#else /* C */
+typedef struct IAppxManifestOSPackageDependenciesEnumeratorVtbl {
+    BEGIN_INTERFACE
+
+    /*** IUnknown methods ***/
+    HRESULT (STDMETHODCALLTYPE *QueryInterface)(
+        IAppxManifestOSPackageDependenciesEnumerator *This,
+        REFIID riid,
+        void **ppvObject);
+
+    ULONG (STDMETHODCALLTYPE *AddRef)(
+        IAppxManifestOSPackageDependenciesEnumerator *This);
+
+    ULONG (STDMETHODCALLTYPE *Release)(
+        IAppxManifestOSPackageDependenciesEnumerator *This);
+
+    /*** IAppxManifestOSPackageDependenciesEnumerator methods ***/
+    HRESULT (STDMETHODCALLTYPE *GetCurrent)(
+        IAppxManifestOSPackageDependenciesEnumerator *This,
+        IAppxManifestOSPackageDependency **osPackageDependency);
+
+    HRESULT (STDMETHODCALLTYPE *GetHasCurrent)(
+        IAppxManifestOSPackageDependenciesEnumerator *This,
+        BOOL *hasCurrent);
+
+    HRESULT (STDMETHODCALLTYPE *MoveNext)(
+        IAppxManifestOSPackageDependenciesEnumerator *This,
+        BOOL *hasNext);
+
+    END_INTERFACE
+} IAppxManifestOSPackageDependenciesEnumeratorVtbl;
+
+interface IAppxManifestOSPackageDependenciesEnumerator {
+    CONST_VTBL IAppxManifestOSPackageDependenciesEnumeratorVtbl* lpVtbl;
+};
+
+#ifdef COBJMACROS
+/*** IUnknown methods ***/
+#define IAppxManifestOSPackageDependenciesEnumerator_QueryInterface(This,riid,ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This,riid,ppvObject))
+#define IAppxManifestOSPackageDependenciesEnumerator_AddRef(This) \
+    ((This)->lpVtbl->AddRef(This))
+#define IAppxManifestOSPackageDependenciesEnumerator_Release(This) \
+    ((This)->lpVtbl->Release(This))
+/*** IAppxManifestOSPackageDependenciesEnumerator methods ***/
+#define IAppxManifestOSPackageDependenciesEnumerator_GetCurrent(This,osPackageDependency) \
+    ((This)->lpVtbl->GetCurrent(This,osPackageDependency))
+#define IAppxManifestOSPackageDependenciesEnumerator_GetHasCurrent(This,hasCurrent) \
+    ((This)->lpVtbl->GetHasCurrent(This,hasCurrent))
+#define IAppxManifestOSPackageDependenciesEnumerator_MoveNext(This,hasNext) \
+    ((This)->lpVtbl->MoveNext(This,hasNext))
+#endif /* COBJMACROS */
+
+#endif /* C */
+
+#endif /* __IAppxManifestOSPackageDependenciesEnumerator_INTERFACE_DEFINED__ */
+
+/*****************************************************************************
+ * IAppxManifestOSPackageDependency interface
+ */
+#ifndef __IAppxManifestOSPackageDependency_INTERFACE_DEFINED__
+#define __IAppxManifestOSPackageDependency_INTERFACE_DEFINED__
+
+EXTERN_C const IID IID_IAppxManifestOSPackageDependency;
+
+#if defined(__cplusplus) && !defined(CINTERFACE)
+#error no support for C++
+#else /* C */
+typedef struct IAppxManifestOSPackageDependencyVtbl {
+    BEGIN_INTERFACE
+
+    /*** IUnknown methods ***/
+    HRESULT (STDMETHODCALLTYPE *QueryInterface)(
+        IAppxManifestOSPackageDependency *This,
+        REFIID riid,
+        void **ppvObject);
+
+    ULONG (STDMETHODCALLTYPE *AddRef)(
+        IAppxManifestOSPackageDependency *This);
+
+    ULONG (STDMETHODCALLTYPE *Release)(
+        IAppxManifestOSPackageDependency *This);
+
+    /*** IAppxManifestOSPackageDependency methods ***/
+    HRESULT (STDMETHODCALLTYPE *GetName)(
+        IAppxManifestOSPackageDependency *This,
+        LPWSTR *name);
+
+    HRESULT (STDMETHODCALLTYPE *GetVersion)(
+        IAppxManifestOSPackageDependency *This,
+        UINT64 *version);
+
+    END_INTERFACE
+} IAppxManifestOSPackageDependencyVtbl;
+
+interface IAppxManifestOSPackageDependency {
+    CONST_VTBL IAppxManifestOSPackageDependencyVtbl* lpVtbl;
+};
+
+#ifdef COBJMACROS
+/*** IUnknown methods ***/
+#define IAppxManifestOSPackageDependency_QueryInterface(This,riid,ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This,riid,ppvObject))
+#define IAppxManifestOSPackageDependency_AddRef(This) \
+    ((This)->lpVtbl->AddRef(This))
+#define IAppxManifestOSPackageDependency_Release(This) \
+    ((This)->lpVtbl->Release(This))
+/*** IAppxManifestOSPackageDependency methods ***/
+#define IAppxManifestOSPackageDependency_GetName(This,name) \
+    ((This)->lpVtbl->GetName(This,name))
+#define IAppxManifestOSPackageDependency_GetVersion(This,version) \
+    ((This)->lpVtbl->GetVersion(This,version))
+#endif /* COBJMACROS */
+
+#endif /* C */
+
+#endif /* __IAppxManifestOSPackageDependency_INTERFACE_DEFINED__ */
+
+/*****************************************************************************
+ * IAppxManifestHostRuntimeDependenciesEnumerator interface
+ */
+#ifndef __IAppxManifestHostRuntimeDependenciesEnumerator_INTERFACE_DEFINED__
+#define __IAppxManifestHostRuntimeDependenciesEnumerator_INTERFACE_DEFINED__
+
+EXTERN_C const IID IID_IAppxManifestHostRuntimeDependenciesEnumerator;
+
+#if defined(__cplusplus) && !defined(CINTERFACE)
+#error no support for C++
+#else /* C */
+typedef struct IAppxManifestHostRuntimeDependenciesEnumeratorVtbl {
+    BEGIN_INTERFACE
+
+    /*** IUnknown methods ***/
+    HRESULT (STDMETHODCALLTYPE *QueryInterface)(
+        IAppxManifestHostRuntimeDependenciesEnumerator *This,
+        REFIID riid,
+        void **ppvObject);
+
+    ULONG (STDMETHODCALLTYPE *AddRef)(
+        IAppxManifestHostRuntimeDependenciesEnumerator *This);
+
+    ULONG (STDMETHODCALLTYPE *Release)(
+        IAppxManifestHostRuntimeDependenciesEnumerator *This);
+
+    /*** IAppxManifestHostRuntimeDependenciesEnumerator methods ***/
+    HRESULT (STDMETHODCALLTYPE *GetCurrent)(
+        IAppxManifestHostRuntimeDependenciesEnumerator *This,
+        IAppxManifestHostRuntimeDependency **hostRuntimeDependency);
+
+    HRESULT (STDMETHODCALLTYPE *GetHasCurrent)(
+        IAppxManifestHostRuntimeDependenciesEnumerator *This,
+        BOOL *hasCurrent);
+
+    HRESULT (STDMETHODCALLTYPE *MoveNext)(
+        IAppxManifestHostRuntimeDependenciesEnumerator *This,
+        BOOL *hasNext);
+
+    END_INTERFACE
+} IAppxManifestHostRuntimeDependenciesEnumeratorVtbl;
+
+interface IAppxManifestHostRuntimeDependenciesEnumerator {
+    CONST_VTBL IAppxManifestHostRuntimeDependenciesEnumeratorVtbl* lpVtbl;
+};
+
+#ifdef COBJMACROS
+/*** IUnknown methods ***/
+#define IAppxManifestHostRuntimeDependenciesEnumerator_QueryInterface(This,riid,ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This,riid,ppvObject))
+#define IAppxManifestHostRuntimeDependenciesEnumerator_AddRef(This) \
+    ((This)->lpVtbl->AddRef(This))
+#define IAppxManifestHostRuntimeDependenciesEnumerator_Release(This) \
+    ((This)->lpVtbl->Release(This))
+/*** IAppxManifestHostRuntimeDependenciesEnumerator methods ***/
+#define IAppxManifestHostRuntimeDependenciesEnumerator_GetCurrent(This,hostRuntimeDependency) \
+    ((This)->lpVtbl->GetCurrent(This,hostRuntimeDependency))
+#define IAppxManifestHostRuntimeDependenciesEnumerator_GetHasCurrent(This,hasCurrent) \
+    ((This)->lpVtbl->GetHasCurrent(This,hasCurrent))
+#define IAppxManifestHostRuntimeDependenciesEnumerator_MoveNext(This,hasNext) \
+    ((This)->lpVtbl->MoveNext(This,hasNext))
+#endif /* COBJMACROS */
+
+#endif /* C */
+
+#endif /* __IAppxManifestHostRuntimeDependenciesEnumerator_INTERFACE_DEFINED__ */
+
+/*****************************************************************************
+ * IAppxManifestHostRuntimeDependency interface
+ */
+#ifndef __IAppxManifestHostRuntimeDependency_INTERFACE_DEFINED__
+#define __IAppxManifestHostRuntimeDependency_INTERFACE_DEFINED__
+
+EXTERN_C const IID IID_IAppxManifestHostRuntimeDependency;
+
+#if defined(__cplusplus) && !defined(CINTERFACE)
+#error no support for C++
+#else /* C */
+typedef struct IAppxManifestHostRuntimeDependencyVtbl {
+    BEGIN_INTERFACE
+
+    /*** IUnknown methods ***/
+    HRESULT (STDMETHODCALLTYPE *QueryInterface)(
+        IAppxManifestHostRuntimeDependency *This,
+        REFIID riid,
+        void **ppvObject);
+
+    ULONG (STDMETHODCALLTYPE *AddRef)(
+        IAppxManifestHostRuntimeDependency *This);
+
+    ULONG (STDMETHODCALLTYPE *Release)(
+        IAppxManifestHostRuntimeDependency *This);
+
+    /*** IAppxManifestHostRuntimeDependency methods ***/
+    HRESULT (STDMETHODCALLTYPE *GetName)(
+        IAppxManifestHostRuntimeDependency *This,
+        LPWSTR *name);
+
+    HRESULT (STDMETHODCALLTYPE *GetPublisher)(
+        IAppxManifestHostRuntimeDependency *This,
+        LPWSTR *publisher);
+
+    HRESULT (STDMETHODCALLTYPE *GetMinVersion)(
+        IAppxManifestHostRuntimeDependency *This,
+        UINT64 *minVersion);
+
+    END_INTERFACE
+} IAppxManifestHostRuntimeDependencyVtbl;
+
+interface IAppxManifestHostRuntimeDependency {
+    CONST_VTBL IAppxManifestHostRuntimeDependencyVtbl* lpVtbl;
+};
+
+#ifdef COBJMACROS
+/*** IUnknown methods ***/
+#define IAppxManifestHostRuntimeDependency_QueryInterface(This,riid,ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This,riid,ppvObject))
+#define IAppxManifestHostRuntimeDependency_AddRef(This) \
+    ((This)->lpVtbl->AddRef(This))
+#define IAppxManifestHostRuntimeDependency_Release(This) \
+    ((This)->lpVtbl->Release(This))
+/*** IAppxManifestHostRuntimeDependency methods ***/
+#define IAppxManifestHostRuntimeDependency_GetName(This,name) \
+    ((This)->lpVtbl->GetName(This,name))
+#define IAppxManifestHostRuntimeDependency_GetPublisher(This,publisher) \
+    ((This)->lpVtbl->GetPublisher(This,publisher))
+#define IAppxManifestHostRuntimeDependency_GetMinVersion(This,minVersion) \
+    ((This)->lpVtbl->GetMinVersion(This,minVersion))
+#endif /* COBJMACROS */
+
+#endif /* C */
+
+#endif /* __IAppxManifestHostRuntimeDependency_INTERFACE_DEFINED__ */
+
+/*****************************************************************************
+ * IAppxManifestHostRuntimeDependency2 interface
+ */
+#ifndef __IAppxManifestHostRuntimeDependency2_INTERFACE_DEFINED__
+#define __IAppxManifestHostRuntimeDependency2_INTERFACE_DEFINED__
+
+EXTERN_C const IID IID_IAppxManifestHostRuntimeDependency2;
+
+#if defined(__cplusplus) && !defined(CINTERFACE)
+#error no support for C++
+#else /* C */
+typedef struct IAppxManifestHostRuntimeDependency2Vtbl {
+    BEGIN_INTERFACE
+
+    /*** IUnknown methods ***/
+    HRESULT (STDMETHODCALLTYPE *QueryInterface)(
+        IAppxManifestHostRuntimeDependency2 *This,
+        REFIID riid,
+        void **ppvObject);
+
+    ULONG (STDMETHODCALLTYPE *AddRef)(
+        IAppxManifestHostRuntimeDependency2 *This);
+
+    ULONG (STDMETHODCALLTYPE *Release)(
+        IAppxManifestHostRuntimeDependency2 *This);
+
+    /*** IAppxManifestHostRuntimeDependency2 methods ***/
+    HRESULT (STDMETHODCALLTYPE *GetPackageFamilyName)(
+        IAppxManifestHostRuntimeDependency2 *This,
+        LPWSTR *packageFamilyName);
+
+    END_INTERFACE
+} IAppxManifestHostRuntimeDependency2Vtbl;
+
+interface IAppxManifestHostRuntimeDependency2 {
+    CONST_VTBL IAppxManifestHostRuntimeDependency2Vtbl* lpVtbl;
+};
+
+#ifdef COBJMACROS
+/*** IUnknown methods ***/
+#define IAppxManifestHostRuntimeDependency2_QueryInterface(This,riid,ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This,riid,ppvObject))
+#define IAppxManifestHostRuntimeDependency2_AddRef(This) \
+    ((This)->lpVtbl->AddRef(This))
+#define IAppxManifestHostRuntimeDependency2_Release(This) \
+    ((This)->lpVtbl->Release(This))
+/*** IAppxManifestHostRuntimeDependency2 methods ***/
+#define IAppxManifestHostRuntimeDependency2_GetPackageFamilyName(This,packageFamilyName) \
+    ((This)->lpVtbl->GetPackageFamilyName(This,packageFamilyName))
+#endif /* COBJMACROS */
+
+#endif /* C */
+
+#endif /* __IAppxManifestHostRuntimeDependency2_INTERFACE_DEFINED__ */
+
+/*****************************************************************************
+ * IAppxManifestOptionalPackageInfo interface
+ */
+#ifndef __IAppxManifestOptionalPackageInfo_INTERFACE_DEFINED__
+#define __IAppxManifestOptionalPackageInfo_INTERFACE_DEFINED__
+
+EXTERN_C const IID IID_IAppxManifestOptionalPackageInfo;
+
+#if defined(__cplusplus) && !defined(CINTERFACE)
+#error no support for C++
+#else /* C */
+typedef struct IAppxManifestOptionalPackageInfoVtbl {
+    BEGIN_INTERFACE
+
+    /*** IUnknown methods ***/
+    HRESULT (STDMETHODCALLTYPE *QueryInterface)(
+        IAppxManifestOptionalPackageInfo *This,
+        REFIID riid,
+        void **ppvObject);
+
+    ULONG (STDMETHODCALLTYPE *AddRef)(
+        IAppxManifestOptionalPackageInfo *This);
+
+    ULONG (STDMETHODCALLTYPE *Release)(
+        IAppxManifestOptionalPackageInfo *This);
+
+    /*** IAppxManifestOptionalPackageInfo methods ***/
+    HRESULT (STDMETHODCALLTYPE *GetIsOptionalPackage)(
+        IAppxManifestOptionalPackageInfo *This,
+        BOOL *isOptionalPackage);
+
+    HRESULT (STDMETHODCALLTYPE *GetMainPackageName)(
+        IAppxManifestOptionalPackageInfo *This,
+        LPWSTR *mainPackageName);
+
+    END_INTERFACE
+} IAppxManifestOptionalPackageInfoVtbl;
+
+interface IAppxManifestOptionalPackageInfo {
+    CONST_VTBL IAppxManifestOptionalPackageInfoVtbl* lpVtbl;
+};
+
+#ifdef COBJMACROS
+/*** IUnknown methods ***/
+#define IAppxManifestOptionalPackageInfo_QueryInterface(This,riid,ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This,riid,ppvObject))
+#define IAppxManifestOptionalPackageInfo_AddRef(This) \
+    ((This)->lpVtbl->AddRef(This))
+#define IAppxManifestOptionalPackageInfo_Release(This) \
+    ((This)->lpVtbl->Release(This))
+/*** IAppxManifestOptionalPackageInfo methods ***/
+#define IAppxManifestOptionalPackageInfo_GetIsOptionalPackage(This,isOptionalPackage) \
+    ((This)->lpVtbl->GetIsOptionalPackage(This,isOptionalPackage))
+#define IAppxManifestOptionalPackageInfo_GetMainPackageName(This,mainPackageName) \
+    ((This)->lpVtbl->GetMainPackageName(This,mainPackageName))
+#endif /* COBJMACROS */
+
+#endif /* C */
+
+#endif /* __IAppxManifestOptionalPackageInfo_INTERFACE_DEFINED__ */
+
+/*****************************************************************************
+ * IAppxManifestMainPackageDependenciesEnumerator interface
+ */
+#ifndef __IAppxManifestMainPackageDependenciesEnumerator_INTERFACE_DEFINED__
+#define __IAppxManifestMainPackageDependenciesEnumerator_INTERFACE_DEFINED__
+
+EXTERN_C const IID IID_IAppxManifestMainPackageDependenciesEnumerator;
+
+#if defined(__cplusplus) && !defined(CINTERFACE)
+#error no support for C++
+#else /* C */
+typedef struct IAppxManifestMainPackageDependenciesEnumeratorVtbl {
+    BEGIN_INTERFACE
+
+    /*** IUnknown methods ***/
+    HRESULT (STDMETHODCALLTYPE *QueryInterface)(
+        IAppxManifestMainPackageDependenciesEnumerator *This,
+        REFIID riid,
+        void **ppvObject);
+
+    ULONG (STDMETHODCALLTYPE *AddRef)(
+        IAppxManifestMainPackageDependenciesEnumerator *This);
+
+    ULONG (STDMETHODCALLTYPE *Release)(
+        IAppxManifestMainPackageDependenciesEnumerator *This);
+
+    /*** IAppxManifestMainPackageDependenciesEnumerator methods ***/
+    HRESULT (STDMETHODCALLTYPE *GetCurrent)(
+        IAppxManifestMainPackageDependenciesEnumerator *This,
+        IAppxManifestMainPackageDependency **mainPackageDependency);
+
+    HRESULT (STDMETHODCALLTYPE *GetHasCurrent)(
+        IAppxManifestMainPackageDependenciesEnumerator *This,
+        BOOL *hasCurrent);
+
+    HRESULT (STDMETHODCALLTYPE *MoveNext)(
+        IAppxManifestMainPackageDependenciesEnumerator *This,
+        BOOL *hasNext);
+
+    END_INTERFACE
+} IAppxManifestMainPackageDependenciesEnumeratorVtbl;
+
+interface IAppxManifestMainPackageDependenciesEnumerator {
+    CONST_VTBL IAppxManifestMainPackageDependenciesEnumeratorVtbl* lpVtbl;
+};
+
+#ifdef COBJMACROS
+/*** IUnknown methods ***/
+#define IAppxManifestMainPackageDependenciesEnumerator_QueryInterface(This,riid,ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This,riid,ppvObject))
+#define IAppxManifestMainPackageDependenciesEnumerator_AddRef(This) \
+    ((This)->lpVtbl->AddRef(This))
+#define IAppxManifestMainPackageDependenciesEnumerator_Release(This) \
+    ((This)->lpVtbl->Release(This))
+/*** IAppxManifestMainPackageDependenciesEnumerator methods ***/
+#define IAppxManifestMainPackageDependenciesEnumerator_GetCurrent(This,mainPackageDependency) \
+    ((This)->lpVtbl->GetCurrent(This,mainPackageDependency))
+#define IAppxManifestMainPackageDependenciesEnumerator_GetHasCurrent(This,hasCurrent) \
+    ((This)->lpVtbl->GetHasCurrent(This,hasCurrent))
+#define IAppxManifestMainPackageDependenciesEnumerator_MoveNext(This,hasNext) \
+    ((This)->lpVtbl->MoveNext(This,hasNext))
+#endif /* COBJMACROS */
+
+#endif /* C */
+
+#endif /* __IAppxManifestMainPackageDependenciesEnumerator_INTERFACE_DEFINED__ */
+/*****************************************************************************
+ * IAppxManifestMainPackageDependency interface
+ */
+#ifndef __IAppxManifestMainPackageDependency_INTERFACE_DEFINED__
+#define __IAppxManifestMainPackageDependency_INTERFACE_DEFINED__
+
+EXTERN_C const IID IID_IAppxManifestMainPackageDependency;
+
+#if defined(__cplusplus) && !defined(CINTERFACE)
+#error no support for C++
+#else /* C */
+typedef struct IAppxManifestMainPackageDependencyVtbl {
+    BEGIN_INTERFACE
+
+    /*** IUnknown methods ***/
+    HRESULT (STDMETHODCALLTYPE *QueryInterface)(
+        IAppxManifestMainPackageDependency *This,
+        REFIID riid,
+        void **ppvObject);
+
+    ULONG (STDMETHODCALLTYPE *AddRef)(
+        IAppxManifestMainPackageDependency *This);
+
+    ULONG (STDMETHODCALLTYPE *Release)(
+        IAppxManifestMainPackageDependency *This);
+
+    /*** IAppxManifestMainPackageDependency methods ***/
+    HRESULT (STDMETHODCALLTYPE *GetName)(
+        IAppxManifestMainPackageDependency *This,
+        LPWSTR *name);
+
+    HRESULT (STDMETHODCALLTYPE *GetPublisher)(
+        IAppxManifestMainPackageDependency *This,
+        LPWSTR *publisher);
+
+    HRESULT (STDMETHODCALLTYPE *GetPackageFamilyName)(
+        IAppxManifestMainPackageDependency *This,
+        LPWSTR *packageFamilyName);
+
+    END_INTERFACE
+} IAppxManifestMainPackageDependencyVtbl;
+
+interface IAppxManifestMainPackageDependency {
+    CONST_VTBL IAppxManifestMainPackageDependencyVtbl* lpVtbl;
+};
+
+#ifdef COBJMACROS
+/*** IUnknown methods ***/
+#define IAppxManifestMainPackageDependency_QueryInterface(This,riid,ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This,riid,ppvObject))
+#define IAppxManifestMainPackageDependency_AddRef(This) \
+    ((This)->lpVtbl->AddRef(This))
+#define IAppxManifestMainPackageDependency_Release(This) \
+    ((This)->lpVtbl->Release(This))
+/*** IAppxManifestMainPackageDependency methods ***/
+#define IAppxManifestMainPackageDependency_GetName(This,name) \
+    ((This)->lpVtbl->GetName(This,name))
+#define IAppxManifestMainPackageDependency_GetPublisher(This,publisher) \
+    ((This)->lpVtbl->GetPublisher(This,publisher))
+#define IAppxManifestMainPackageDependency_GetPackageFamilyName(This,packageFamilyName) \
+    ((This)->lpVtbl->GetPackageFamilyName(This,packageFamilyName))
+#endif /* COBJMACROS */
+
+#endif /* C */
+
+#endif /* __IAppxManifestMainPackageDependency_INTERFACE_DEFINED__ */
+
+/*****************************************************************************
+ * IAppxManifestPackageId interface
+ */
+#ifndef __IAppxManifestPackageId_INTERFACE_DEFINED__
+#define __IAppxManifestPackageId_INTERFACE_DEFINED__
+
+EXTERN_C const IID IID_IAppxManifestPackageId;
+
+#if defined(__cplusplus) && !defined(CINTERFACE)
+#error no support for C++
+#else /* C */
+typedef struct IAppxManifestPackageIdVtbl {
+    BEGIN_INTERFACE
+
+    /*** IUnknown methods ***/
+    HRESULT (STDMETHODCALLTYPE *QueryInterface)(
+        IAppxManifestPackageId *This,
+        REFIID riid,
+        void **ppvObject);
+
+    ULONG (STDMETHODCALLTYPE *AddRef)(
+        IAppxManifestPackageId *This);
+
+    ULONG (STDMETHODCALLTYPE *Release)(
+        IAppxManifestPackageId *This);
+
+    /*** IAppxManifestPackageId methods ***/
+    HRESULT (STDMETHODCALLTYPE *GetName)(
+        IAppxManifestPackageId *This,
+        LPWSTR *name);
+
+    HRESULT (STDMETHODCALLTYPE *GetArchitecture)(
+        IAppxManifestPackageId *This,
+        APPX_PACKAGE_ARCHITECTURE *architecture);
+
+    HRESULT (STDMETHODCALLTYPE *GetPublisher)(
+        IAppxManifestPackageId *This,
+        LPWSTR *publisher);
+
+    HRESULT (STDMETHODCALLTYPE *GetVersion)(
+        IAppxManifestPackageId *This,
+        UINT64 *packageVersion);
+
+    HRESULT (STDMETHODCALLTYPE *GetResourceId)(
+        IAppxManifestPackageId *This,
+        LPWSTR *resourceId);
+
+    HRESULT (STDMETHODCALLTYPE *ComparePublisher)(
+        IAppxManifestPackageId *This,
+        LPCWSTR other,
+        BOOL *isSame);
+
+    HRESULT (STDMETHODCALLTYPE *GetPackageFullName)(
+        IAppxManifestPackageId *This,
+        LPWSTR *packageFullName);
+
+    HRESULT (STDMETHODCALLTYPE *GetPackageFamilyName)(
+        IAppxManifestPackageId *This,
+        LPWSTR *packageFamilyName);
+
+    END_INTERFACE
+} IAppxManifestPackageIdVtbl;
+
+interface IAppxManifestPackageId {
+    CONST_VTBL IAppxManifestPackageIdVtbl* lpVtbl;
+};
+
+#ifdef COBJMACROS
+/*** IUnknown methods ***/
+#define IAppxManifestPackageId_QueryInterface(This,riid,ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This,riid,ppvObject))
+#define IAppxManifestPackageId_AddRef(This) \
+    ((This)->lpVtbl->AddRef(This))
+#define IAppxManifestPackageId_Release(This) \
+    ((This)->lpVtbl->Release(This))
+/*** IAppxManifestPackageId methods ***/
+#define IAppxManifestPackageId_GetName(This,name) \
+    ((This)->lpVtbl->GetName(This,name))
+#define IAppxManifestPackageId_GetArchitecture(This,architecture) \
+    ((This)->lpVtbl->GetArchitecture(This,architecture))
+#define IAppxManifestPackageId_GetPublisher(This,publisher) \
+    ((This)->lpVtbl->GetPublisher(This,publisher))
+#define IAppxManifestPackageId_GetVersion(This,packageVersion) \
+    ((This)->lpVtbl->GetVersion(This,packageVersion))
+#define IAppxManifestPackageId_GetResourceId(This,resourceId) \
+    ((This)->lpVtbl->GetResourceId(This,resourceId))
+#define IAppxManifestPackageId_ComparePublisher(This,other,isSame) \
+    ((This)->lpVtbl->ComparePublisher(This,other,isSame))
+#define IAppxManifestPackageId_GetPackageFullName(This,packageFullName) \
+    ((This)->lpVtbl->GetPackageFullName(This,packageFullName))
+#define IAppxManifestPackageId_GetPackageFamilyName(This,packageFamilyName) \
+    ((This)->lpVtbl->GetPackageFamilyName(This,packageFamilyName))
+#endif /* COBJMACROS */
+
+#endif /* C */
+
+#endif /* __IAppxManifestPackageId_INTERFACE_DEFINED__ */
+/*****************************************************************************
+ * IAppxManifestPackageId2 interface
+ */
+#ifndef __IAppxManifestPackageId2_INTERFACE_DEFINED__
+#define __IAppxManifestPackageId2_INTERFACE_DEFINED__
+
+EXTERN_C const IID IID_IAppxManifestPackageId2;
+
+#if defined(__cplusplus) && !defined(CINTERFACE)
+#error no support for C++
+#else /* C */
+typedef struct IAppxManifestPackageId2Vtbl {
+    BEGIN_INTERFACE
+
+    /*** IUnknown methods ***/
+    HRESULT (STDMETHODCALLTYPE *QueryInterface)(
+        IAppxManifestPackageId2 *This,
+        REFIID riid,
+        void **ppvObject);
+
+    ULONG (STDMETHODCALLTYPE *AddRef)(
+        IAppxManifestPackageId2 *This);
+
+    ULONG (STDMETHODCALLTYPE *Release)(
+        IAppxManifestPackageId2 *This);
+
+    /*** IAppxManifestPackageId methods ***/
+    HRESULT (STDMETHODCALLTYPE *GetName)(
+        IAppxManifestPackageId2 *This,
+        LPWSTR *name);
+
+    HRESULT (STDMETHODCALLTYPE *GetArchitecture)(
+        IAppxManifestPackageId2 *This,
+        APPX_PACKAGE_ARCHITECTURE *architecture);
+
+    HRESULT (STDMETHODCALLTYPE *GetPublisher)(
+        IAppxManifestPackageId2 *This,
+        LPWSTR *publisher);
+
+    HRESULT (STDMETHODCALLTYPE *GetVersion)(
+        IAppxManifestPackageId2 *This,
+        UINT64 *packageVersion);
+
+    HRESULT (STDMETHODCALLTYPE *GetResourceId)(
+        IAppxManifestPackageId2 *This,
+        LPWSTR *resourceId);
+
+    HRESULT (STDMETHODCALLTYPE *ComparePublisher)(
+        IAppxManifestPackageId2 *This,
+        LPCWSTR other,
+        BOOL *isSame);
+
+    HRESULT (STDMETHODCALLTYPE *GetPackageFullName)(
+        IAppxManifestPackageId2 *This,
+        LPWSTR *packageFullName);
+
+    HRESULT (STDMETHODCALLTYPE *GetPackageFamilyName)(
+        IAppxManifestPackageId2 *This,
+        LPWSTR *packageFamilyName);
+
+    /*** IAppxManifestPackageId2 methods ***/
+    HRESULT (STDMETHODCALLTYPE *GetArchitecture2)(
+        IAppxManifestPackageId2 *This,
+        APPX_PACKAGE_ARCHITECTURE2 *architecture);
+
+    END_INTERFACE
+} IAppxManifestPackageId2Vtbl;
+
+interface IAppxManifestPackageId2 {
+    CONST_VTBL IAppxManifestPackageId2Vtbl* lpVtbl;
+};
+
+#ifdef COBJMACROS
+/*** IUnknown methods ***/
+#define IAppxManifestPackageId2_QueryInterface(This,riid,ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This,riid,ppvObject))
+#define IAppxManifestPackageId2_AddRef(This) \
+    ((This)->lpVtbl->AddRef(This))
+#define IAppxManifestPackageId2_Release(This) \
+    ((This)->lpVtbl->Release(This))
+/*** IAppxManifestPackageId methods ***/
+#define IAppxManifestPackageId2_GetName(This,name) \
+    ((This)->lpVtbl->GetName(This,name))
+#define IAppxManifestPackageId2_GetArchitecture(This,architecture) \
+    ((This)->lpVtbl->GetArchitecture(This,architecture))
+#define IAppxManifestPackageId2_GetPublisher(This,publisher) \
+    ((This)->lpVtbl->GetPublisher(This,publisher))
+#define IAppxManifestPackageId2_GetVersion(This,packageVersion) \
+    ((This)->lpVtbl->GetVersion(This,packageVersion))
+#define IAppxManifestPackageId2_GetResourceId(This,resourceId) \
+    ((This)->lpVtbl->GetResourceId(This,resourceId))
+#define IAppxManifestPackageId2_ComparePublisher(This,other,isSame) \
+    ((This)->lpVtbl->ComparePublisher(This,other,isSame))
+#define IAppxManifestPackageId2_GetPackageFullName(This,packageFullName) \
+    ((This)->lpVtbl->GetPackageFullName(This,packageFullName))
+#define IAppxManifestPackageId2_GetPackageFamilyName(This,packageFamilyName) \
+    ((This)->lpVtbl->GetPackageFamilyName(This,packageFamilyName))
+/*** IAppxManifestPackageId2 methods ***/
+#define IAppxManifestPackageId2_GetArchitecture2(This,architecture) \
+    ((This)->lpVtbl->GetArchitecture2(This,architecture))
+#endif /* COBJMACROS */
+
+#endif /* C */
+
+#endif /* __IAppxManifestPackageId2_INTERFACE_DEFINED__ */
+
+/*****************************************************************************
+ * IAppxManifestProperties interface
+ */
+#ifndef __IAppxManifestProperties_INTERFACE_DEFINED__
+#define __IAppxManifestProperties_INTERFACE_DEFINED__
+
+EXTERN_C const IID IID_IAppxManifestProperties;
+
+#if defined(__cplusplus) && !defined(CINTERFACE)
+#error no support for C++
+#else /* C */
+typedef struct IAppxManifestPropertiesVtbl {
+    BEGIN_INTERFACE
+
+    /*** IUnknown methods ***/
+    HRESULT (STDMETHODCALLTYPE *QueryInterface)(
+        IAppxManifestProperties *This,
+        REFIID riid,
+        void **ppvObject);
+
+    ULONG (STDMETHODCALLTYPE *AddRef)(
+        IAppxManifestProperties *This);
+
+    ULONG (STDMETHODCALLTYPE *Release)(
+        IAppxManifestProperties *This);
+
+    /*** IAppxManifestProperties methods ***/
+    HRESULT (STDMETHODCALLTYPE *GetBoolValue)(
+        IAppxManifestProperties *This,
+        LPCWSTR name,
+        BOOL *value);
+
+    HRESULT (STDMETHODCALLTYPE *GetStringValue)(
+        IAppxManifestProperties *This,
+        LPCWSTR name,
+        LPWSTR *value);
+
+    END_INTERFACE
+} IAppxManifestPropertiesVtbl;
+
+interface IAppxManifestProperties {
+    CONST_VTBL IAppxManifestPropertiesVtbl* lpVtbl;
+};
+
+#ifdef COBJMACROS
+/*** IUnknown methods ***/
+#define IAppxManifestProperties_QueryInterface(This,riid,ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This,riid,ppvObject))
+#define IAppxManifestProperties_AddRef(This) \
+    ((This)->lpVtbl->AddRef(This))
+#define IAppxManifestProperties_Release(This) \
+    ((This)->lpVtbl->Release(This))
+/*** IAppxManifestProperties methods ***/
+#define IAppxManifestProperties_GetBoolValue(This,name,value) \
+    ((This)->lpVtbl->GetBoolValue(This,name,value))
+#define IAppxManifestProperties_GetStringValue(This,name,value) \
+    ((This)->lpVtbl->GetStringValue(This,name,value))
+#endif /* COBJMACROS */
+
+#endif /* C */
+
+#endif /* __IAppxManifestProperties_INTERFACE_DEFINED__ */
+
+/*****************************************************************************
+ * IAppxManifestTargetDeviceFamiliesEnumerator interface
+ */
+#ifndef __IAppxManifestTargetDeviceFamiliesEnumerator_INTERFACE_DEFINED__
+#define __IAppxManifestTargetDeviceFamiliesEnumerator_INTERFACE_DEFINED__
+
+EXTERN_C const IID IID_IAppxManifestTargetDeviceFamiliesEnumerator;
+
+#if defined(__cplusplus) && !defined(CINTERFACE)
+#error no support for C++
+#else /* C */
+typedef struct IAppxManifestTargetDeviceFamiliesEnumeratorVtbl {
+    BEGIN_INTERFACE
+
+    /*** IUnknown methods ***/
+    HRESULT (STDMETHODCALLTYPE *QueryInterface)(
+        IAppxManifestTargetDeviceFamiliesEnumerator *This,
+        REFIID riid,
+        void **ppvObject);
+
+    ULONG (STDMETHODCALLTYPE *AddRef)(
+        IAppxManifestTargetDeviceFamiliesEnumerator *This);
+
+    ULONG (STDMETHODCALLTYPE *Release)(
+        IAppxManifestTargetDeviceFamiliesEnumerator *This);
+
+    /*** IAppxManifestTargetDeviceFamiliesEnumerator methods ***/
+    HRESULT (STDMETHODCALLTYPE *GetCurrent)(
+        IAppxManifestTargetDeviceFamiliesEnumerator *This,
+        IAppxManifestTargetDeviceFamily **targetDeviceFamily);
+
+    HRESULT (STDMETHODCALLTYPE *GetHasCurrent)(
+        IAppxManifestTargetDeviceFamiliesEnumerator *This,
+        BOOL *hasCurrent);
+
+    HRESULT (STDMETHODCALLTYPE *MoveNext)(
+        IAppxManifestTargetDeviceFamiliesEnumerator *This,
+        BOOL *hasNext);
+
+    END_INTERFACE
+} IAppxManifestTargetDeviceFamiliesEnumeratorVtbl;
+
+interface IAppxManifestTargetDeviceFamiliesEnumerator {
+    CONST_VTBL IAppxManifestTargetDeviceFamiliesEnumeratorVtbl* lpVtbl;
+};
+
+#ifdef COBJMACROS
+/*** IUnknown methods ***/
+#define IAppxManifestTargetDeviceFamiliesEnumerator_QueryInterface(This,riid,ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This,riid,ppvObject))
+#define IAppxManifestTargetDeviceFamiliesEnumerator_AddRef(This) \
+    ((This)->lpVtbl->AddRef(This))
+#define IAppxManifestTargetDeviceFamiliesEnumerator_Release(This) \
+    ((This)->lpVtbl->Release(This))
+/*** IAppxManifestTargetDeviceFamiliesEnumerator methods ***/
+#define IAppxManifestTargetDeviceFamiliesEnumerator_GetCurrent(This,targetDeviceFamily) \
+    ((This)->lpVtbl->GetCurrent(This,targetDeviceFamily))
+#define IAppxManifestTargetDeviceFamiliesEnumerator_GetHasCurrent(This,hasCurrent) \
+    ((This)->lpVtbl->GetHasCurrent(This,hasCurrent))
+#define IAppxManifestTargetDeviceFamiliesEnumerator_MoveNext(This,hasNext) \
+    ((This)->lpVtbl->MoveNext(This,hasNext))
+#endif /* COBJMACROS */
+
+#endif /* C */
+
+#endif /* __IAppxManifestTargetDeviceFamiliesEnumerator_INTERFACE_DEFINED__ */
+
+/*****************************************************************************
+ * IAppxManifestTargetDeviceFamily interface
+ */
+#ifndef __IAppxManifestTargetDeviceFamily_INTERFACE_DEFINED__
+#define __IAppxManifestTargetDeviceFamily_INTERFACE_DEFINED__
+
+EXTERN_C const IID IID_IAppxManifestTargetDeviceFamily;
+
+#if defined(__cplusplus) && !defined(CINTERFACE)
+#error no support for C++
+#else /* C */
+typedef struct IAppxManifestTargetDeviceFamilyVtbl {
+    BEGIN_INTERFACE
+
+    /*** IUnknown methods ***/
+    HRESULT (STDMETHODCALLTYPE *QueryInterface)(
+        IAppxManifestTargetDeviceFamily *This,
+        REFIID riid,
+        void **ppvObject);
+
+    ULONG (STDMETHODCALLTYPE *AddRef)(
+        IAppxManifestTargetDeviceFamily *This);
+
+    ULONG (STDMETHODCALLTYPE *Release)(
+        IAppxManifestTargetDeviceFamily *This);
+
+    /*** IAppxManifestTargetDeviceFamily methods ***/
+    HRESULT (STDMETHODCALLTYPE *GetName)(
+        IAppxManifestTargetDeviceFamily *This,
+        LPWSTR *name);
+
+    HRESULT (STDMETHODCALLTYPE *GetMinVersion)(
+        IAppxManifestTargetDeviceFamily *This,
+        UINT64 *minVersion);
+
+    HRESULT (STDMETHODCALLTYPE *GetMaxVersionTested)(
+        IAppxManifestTargetDeviceFamily *This,
+        UINT64 *maxVersionTested);
+
+    END_INTERFACE
+} IAppxManifestTargetDeviceFamilyVtbl;
+
+interface IAppxManifestTargetDeviceFamily {
+    CONST_VTBL IAppxManifestTargetDeviceFamilyVtbl* lpVtbl;
+};
+
+#ifdef COBJMACROS
+/*** IUnknown methods ***/
+#define IAppxManifestTargetDeviceFamily_QueryInterface(This,riid,ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This,riid,ppvObject))
+#define IAppxManifestTargetDeviceFamily_AddRef(This) \
+    ((This)->lpVtbl->AddRef(This))
+#define IAppxManifestTargetDeviceFamily_Release(This) \
+    ((This)->lpVtbl->Release(This))
+/*** IAppxManifestTargetDeviceFamily methods ***/
+#define IAppxManifestTargetDeviceFamily_GetName(This,name) \
+    ((This)->lpVtbl->GetName(This,name))
+#define IAppxManifestTargetDeviceFamily_GetMinVersion(This,minVersion) \
+    ((This)->lpVtbl->GetMinVersion(This,minVersion))
+#define IAppxManifestTargetDeviceFamily_GetMaxVersionTested(This,maxVersionTested) \
+    ((This)->lpVtbl->GetMaxVersionTested(This,maxVersionTested))
+#endif /* COBJMACROS */
+
+#endif /* C */
+
+#endif /* __IAppxManifestTargetDeviceFamily_INTERFACE_DEFINED__ */
+
+/*****************************************************************************
+ * IAppxManifestPackageDependenciesEnumerator interface
+ */
+#ifndef __IAppxManifestPackageDependenciesEnumerator_INTERFACE_DEFINED__
+#define __IAppxManifestPackageDependenciesEnumerator_INTERFACE_DEFINED__
+
+EXTERN_C const IID IID_IAppxManifestPackageDependenciesEnumerator;
+
+#if defined(__cplusplus) && !defined(CINTERFACE)
+#error no support for C++
+#else /* C */
+typedef struct IAppxManifestPackageDependenciesEnumeratorVtbl {
+    BEGIN_INTERFACE
+
+    /*** IUnknown methods ***/
+    HRESULT (STDMETHODCALLTYPE *QueryInterface)(
+        IAppxManifestPackageDependenciesEnumerator *This,
+        REFIID riid,
+        void **ppvObject);
+
+    ULONG (STDMETHODCALLTYPE *AddRef)(
+        IAppxManifestPackageDependenciesEnumerator *This);
+
+    ULONG (STDMETHODCALLTYPE *Release)(
+        IAppxManifestPackageDependenciesEnumerator *This);
+
+    /*** IAppxManifestPackageDependenciesEnumerator methods ***/
+    HRESULT (STDMETHODCALLTYPE *GetCurrent)(
+        IAppxManifestPackageDependenciesEnumerator *This,
+        IAppxManifestPackageDependency **dependency);
+
+    HRESULT (STDMETHODCALLTYPE *GetHasCurrent)(
+        IAppxManifestPackageDependenciesEnumerator *This,
+        BOOL *hasCurrent);
+
+    HRESULT (STDMETHODCALLTYPE *MoveNext)(
+        IAppxManifestPackageDependenciesEnumerator *This,
+        BOOL *hasNext);
+
+    END_INTERFACE
+} IAppxManifestPackageDependenciesEnumeratorVtbl;
+
+interface IAppxManifestPackageDependenciesEnumerator {
+    CONST_VTBL IAppxManifestPackageDependenciesEnumeratorVtbl* lpVtbl;
+};
+
+#ifdef COBJMACROS
+/*** IUnknown methods ***/
+#define IAppxManifestPackageDependenciesEnumerator_QueryInterface(This,riid,ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This,riid,ppvObject))
+#define IAppxManifestPackageDependenciesEnumerator_AddRef(This) \
+    ((This)->lpVtbl->AddRef(This))
+#define IAppxManifestPackageDependenciesEnumerator_Release(This) \
+    ((This)->lpVtbl->Release(This))
+/*** IAppxManifestPackageDependenciesEnumerator methods ***/
+#define IAppxManifestPackageDependenciesEnumerator_GetCurrent(This,dependency) \
+    ((This)->lpVtbl->GetCurrent(This,dependency))
+#define IAppxManifestPackageDependenciesEnumerator_GetHasCurrent(This,hasCurrent) \
+    ((This)->lpVtbl->GetHasCurrent(This,hasCurrent))
+#define IAppxManifestPackageDependenciesEnumerator_MoveNext(This,hasNext) \
+    ((This)->lpVtbl->MoveNext(This,hasNext))
+#endif /* COBJMACROS */
+
+#endif /* C */
+
+#endif /* __IAppxManifestPackageDependenciesEnumerator_INTERFACE_DEFINED__ */
+
+/*****************************************************************************
+ * IAppxManifestPackageDependency interface
+ */
+#ifndef __IAppxManifestPackageDependency_INTERFACE_DEFINED__
+#define __IAppxManifestPackageDependency_INTERFACE_DEFINED__
+
+EXTERN_C const IID IID_IAppxManifestPackageDependency;
+
+#if defined(__cplusplus) && !defined(CINTERFACE)
+#error no support for C++
+#else /* C */
+typedef struct IAppxManifestPackageDependencyVtbl {
+    BEGIN_INTERFACE
+
+    /*** IUnknown methods ***/
+    HRESULT (STDMETHODCALLTYPE *QueryInterface)(
+        IAppxManifestPackageDependency *This,
+        REFIID riid,
+        void **ppvObject);
+
+    ULONG (STDMETHODCALLTYPE *AddRef)(
+        IAppxManifestPackageDependency *This);
+
+    ULONG (STDMETHODCALLTYPE *Release)(
+        IAppxManifestPackageDependency *This);
+
+    /*** IAppxManifestPackageDependency methods ***/
+    HRESULT (STDMETHODCALLTYPE *GetName)(
+        IAppxManifestPackageDependency *This,
+        LPWSTR *name);
+
+    HRESULT (STDMETHODCALLTYPE *GetPublisher)(
+        IAppxManifestPackageDependency *This,
+        LPWSTR *publisher);
+
+    HRESULT (STDMETHODCALLTYPE *GetMinVersion)(
+        IAppxManifestPackageDependency *This,
+        UINT64 *minVersion);
+
+    END_INTERFACE
+} IAppxManifestPackageDependencyVtbl;
+
+interface IAppxManifestPackageDependency {
+    CONST_VTBL IAppxManifestPackageDependencyVtbl* lpVtbl;
+};
+
+#ifdef COBJMACROS
+/*** IUnknown methods ***/
+#define IAppxManifestPackageDependency_QueryInterface(This,riid,ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This,riid,ppvObject))
+#define IAppxManifestPackageDependency_AddRef(This) \
+    ((This)->lpVtbl->AddRef(This))
+#define IAppxManifestPackageDependency_Release(This) \
+    ((This)->lpVtbl->Release(This))
+/*** IAppxManifestPackageDependency methods ***/
+#define IAppxManifestPackageDependency_GetName(This,name) \
+    ((This)->lpVtbl->GetName(This,name))
+#define IAppxManifestPackageDependency_GetPublisher(This,publisher) \
+    ((This)->lpVtbl->GetPublisher(This,publisher))
+#define IAppxManifestPackageDependency_GetMinVersion(This,minVersion) \
+    ((This)->lpVtbl->GetMinVersion(This,minVersion))
+#endif /* COBJMACROS */
+
+#endif /* C */
+
+#endif /* __IAppxManifestPackageDependency_INTERFACE_DEFINED__ */
+
+/*****************************************************************************
+ * IAppxManifestPackageDependency2 interface
+ */
+#ifndef __IAppxManifestPackageDependency2_INTERFACE_DEFINED__
+#define __IAppxManifestPackageDependency2_INTERFACE_DEFINED__
+
+EXTERN_C const IID IID_IAppxManifestPackageDependency2;
+
+#if defined(__cplusplus) && !defined(CINTERFACE)
+#error no support for C++
+#else /* C */
+typedef struct IAppxManifestPackageDependency2Vtbl {
+    BEGIN_INTERFACE
+
+    /*** IUnknown methods ***/
+    HRESULT (STDMETHODCALLTYPE *QueryInterface)(
+        IAppxManifestPackageDependency2 *This,
+        REFIID riid,
+        void **ppvObject);
+
+    ULONG (STDMETHODCALLTYPE *AddRef)(
+        IAppxManifestPackageDependency2 *This);
+
+    ULONG (STDMETHODCALLTYPE *Release)(
+        IAppxManifestPackageDependency2 *This);
+
+    /*** IAppxManifestPackageDependency methods ***/
+    HRESULT (STDMETHODCALLTYPE *GetName)(
+        IAppxManifestPackageDependency2 *This,
+        LPWSTR *name);
+
+    HRESULT (STDMETHODCALLTYPE *GetPublisher)(
+        IAppxManifestPackageDependency2 *This,
+        LPWSTR *publisher);
+
+    HRESULT (STDMETHODCALLTYPE *GetMinVersion)(
+        IAppxManifestPackageDependency2 *This,
+        UINT64 *minVersion);
+
+    /*** IAppxManifestPackageDependency2 methods ***/
+    HRESULT (STDMETHODCALLTYPE *GetMaxMajorVersionTested)(
+        IAppxManifestPackageDependency2 *This,
+        UINT16 *maxMajorVersionTested);
+
+    END_INTERFACE
+} IAppxManifestPackageDependency2Vtbl;
+
+interface IAppxManifestPackageDependency2 {
+    CONST_VTBL IAppxManifestPackageDependency2Vtbl* lpVtbl;
+};
+
+#ifdef COBJMACROS
+/*** IUnknown methods ***/
+#define IAppxManifestPackageDependency2_QueryInterface(This,riid,ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This,riid,ppvObject))
+#define IAppxManifestPackageDependency2_AddRef(This) \
+    ((This)->lpVtbl->AddRef(This))
+#define IAppxManifestPackageDependency2_Release(This) \
+    ((This)->lpVtbl->Release(This))
+/*** IAppxManifestPackageDependency methods ***/
+#define IAppxManifestPackageDependency2_GetName(This,name) \
+    ((This)->lpVtbl->GetName(This,name))
+#define IAppxManifestPackageDependency2_GetPublisher(This,publisher) \
+    ((This)->lpVtbl->GetPublisher(This,publisher))
+#define IAppxManifestPackageDependency2_GetMinVersion(This,minVersion) \
+    ((This)->lpVtbl->GetMinVersion(This,minVersion))
+/*** IAppxManifestPackageDependency2 methods ***/
+#define IAppxManifestPackageDependency2_GetMaxMajorVersionTested(This,maxMajorVersionTested) \
+    ((This)->lpVtbl->GetMaxMajorVersionTested(This,maxMajorVersionTested))
+#endif /* COBJMACROS */
+
+#endif /* C */
+
+#endif /* __IAppxManifestPackageDependency2_INTERFACE_DEFINED__ */
+/*****************************************************************************
+ * IAppxManifestPackageDependency3 interface
+ */
+#ifndef __IAppxManifestPackageDependency3_INTERFACE_DEFINED__
+#define __IAppxManifestPackageDependency3_INTERFACE_DEFINED__
+
+EXTERN_C const IID IID_IAppxManifestPackageDependency3;
+
+#if defined(__cplusplus) && !defined(CINTERFACE)
+#error no support for C++
+#else /* C */
+typedef struct IAppxManifestPackageDependency3Vtbl {
+    BEGIN_INTERFACE
+
+    /*** IUnknown methods ***/
+    HRESULT (STDMETHODCALLTYPE *QueryInterface)(
+        IAppxManifestPackageDependency3 *This,
+        REFIID riid,
+        void **ppvObject);
+
+    ULONG (STDMETHODCALLTYPE *AddRef)(
+        IAppxManifestPackageDependency3 *This);
+
+    ULONG (STDMETHODCALLTYPE *Release)(
+        IAppxManifestPackageDependency3 *This);
+
+    /*** IAppxManifestPackageDependency3 methods ***/
+    HRESULT (STDMETHODCALLTYPE *GetIsOptional)(
+        IAppxManifestPackageDependency3 *This,
+        BOOL *isOptional);
+
+    END_INTERFACE
+} IAppxManifestPackageDependency3Vtbl;
+
+interface IAppxManifestPackageDependency3 {
+    CONST_VTBL IAppxManifestPackageDependency3Vtbl* lpVtbl;
+};
+
+#ifdef COBJMACROS
+/*** IUnknown methods ***/
+#define IAppxManifestPackageDependency3_QueryInterface(This,riid,ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This,riid,ppvObject))
+#define IAppxManifestPackageDependency3_AddRef(This) \
+    ((This)->lpVtbl->AddRef(This))
+#define IAppxManifestPackageDependency3_Release(This) \
+    ((This)->lpVtbl->Release(This))
+/*** IAppxManifestPackageDependency3 methods ***/
+#define IAppxManifestPackageDependency3_GetIsOptional(This,isOptional) \
+    ((This)->lpVtbl->GetIsOptional(This,isOptional))
+#endif /* COBJMACROS */
+
+#endif /* C */
+
+#endif /* __IAppxManifestPackageDependency3_INTERFACE_DEFINED__ */
+/*****************************************************************************
+ * IAppxManifestResourcesEnumerator interface
+ */
+#ifndef __IAppxManifestResourcesEnumerator_INTERFACE_DEFINED__
+#define __IAppxManifestResourcesEnumerator_INTERFACE_DEFINED__
+
+EXTERN_C const IID IID_IAppxManifestResourcesEnumerator;
+
+#if defined(__cplusplus) && !defined(CINTERFACE)
+#error no support for C++
+#else /* C */
+typedef struct IAppxManifestResourcesEnumeratorVtbl {
+    BEGIN_INTERFACE
+
+    /*** IUnknown methods ***/
+    HRESULT (STDMETHODCALLTYPE *QueryInterface)(
+        IAppxManifestResourcesEnumerator *This,
+        REFIID riid,
+        void **ppvObject);
+
+    ULONG (STDMETHODCALLTYPE *AddRef)(
+        IAppxManifestResourcesEnumerator *This);
+
+    ULONG (STDMETHODCALLTYPE *Release)(
+        IAppxManifestResourcesEnumerator *This);
+
+    /*** IAppxManifestResourcesEnumerator methods ***/
+    HRESULT (STDMETHODCALLTYPE *GetCurrent)(
+        IAppxManifestResourcesEnumerator *This,
+        LPWSTR *resource);
+
+    HRESULT (STDMETHODCALLTYPE *GetHasCurrent)(
+        IAppxManifestResourcesEnumerator *This,
+        BOOL *hasCurrent);
+
+    HRESULT (STDMETHODCALLTYPE *MoveNext)(
+        IAppxManifestResourcesEnumerator *This,
+        BOOL *hasNext);
+
+    END_INTERFACE
+} IAppxManifestResourcesEnumeratorVtbl;
+
+interface IAppxManifestResourcesEnumerator {
+    CONST_VTBL IAppxManifestResourcesEnumeratorVtbl* lpVtbl;
+};
+
+#ifdef COBJMACROS
+/*** IUnknown methods ***/
+#define IAppxManifestResourcesEnumerator_QueryInterface(This,riid,ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This,riid,ppvObject))
+#define IAppxManifestResourcesEnumerator_AddRef(This) \
+    ((This)->lpVtbl->AddRef(This))
+#define IAppxManifestResourcesEnumerator_Release(This) \
+    ((This)->lpVtbl->Release(This))
+/*** IAppxManifestResourcesEnumerator methods ***/
+#define IAppxManifestResourcesEnumerator_GetCurrent(This,resource) \
+    ((This)->lpVtbl->GetCurrent(This,resource))
+#define IAppxManifestResourcesEnumerator_GetHasCurrent(This,hasCurrent) \
+    ((This)->lpVtbl->GetHasCurrent(This,hasCurrent))
+#define IAppxManifestResourcesEnumerator_MoveNext(This,hasNext) \
+    ((This)->lpVtbl->MoveNext(This,hasNext))
+#endif /* COBJMACROS */
+
+#endif /* C */
+
+#endif /* __IAppxManifestResourcesEnumerator_INTERFACE_DEFINED__ */
+
+/*****************************************************************************
+ * IAppxManifestDeviceCapabilitiesEnumerator interface
+ */
+#ifndef __IAppxManifestDeviceCapabilitiesEnumerator_INTERFACE_DEFINED__
+#define __IAppxManifestDeviceCapabilitiesEnumerator_INTERFACE_DEFINED__
+
+EXTERN_C const IID IID_IAppxManifestDeviceCapabilitiesEnumerator;
+
+#if defined(__cplusplus) && !defined(CINTERFACE)
+#error no support for C++
+#else /* C */
+typedef struct IAppxManifestDeviceCapabilitiesEnumeratorVtbl {
+    BEGIN_INTERFACE
+
+    /*** IUnknown methods ***/
+    HRESULT (STDMETHODCALLTYPE *QueryInterface)(
+        IAppxManifestDeviceCapabilitiesEnumerator *This,
+        REFIID riid,
+        void **ppvObject);
+
+    ULONG (STDMETHODCALLTYPE *AddRef)(
+        IAppxManifestDeviceCapabilitiesEnumerator *This);
+
+    ULONG (STDMETHODCALLTYPE *Release)(
+        IAppxManifestDeviceCapabilitiesEnumerator *This);
+
+    /*** IAppxManifestDeviceCapabilitiesEnumerator methods ***/
+    HRESULT (STDMETHODCALLTYPE *GetCurrent)(
+        IAppxManifestDeviceCapabilitiesEnumerator *This,
+        LPWSTR *deviceCapability);
+
+    HRESULT (STDMETHODCALLTYPE *GetHasCurrent)(
+        IAppxManifestDeviceCapabilitiesEnumerator *This,
+        BOOL *hasCurrent);
+
+    HRESULT (STDMETHODCALLTYPE *MoveNext)(
+        IAppxManifestDeviceCapabilitiesEnumerator *This,
+        BOOL *hasNext);
+
+    END_INTERFACE
+} IAppxManifestDeviceCapabilitiesEnumeratorVtbl;
+
+interface IAppxManifestDeviceCapabilitiesEnumerator {
+    CONST_VTBL IAppxManifestDeviceCapabilitiesEnumeratorVtbl* lpVtbl;
+};
+
+#ifdef COBJMACROS
+/*** IUnknown methods ***/
+#define IAppxManifestDeviceCapabilitiesEnumerator_QueryInterface(This,riid,ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This,riid,ppvObject))
+#define IAppxManifestDeviceCapabilitiesEnumerator_AddRef(This) \
+    ((This)->lpVtbl->AddRef(This))
+#define IAppxManifestDeviceCapabilitiesEnumerator_Release(This) \
+    ((This)->lpVtbl->Release(This))
+/*** IAppxManifestDeviceCapabilitiesEnumerator methods ***/
+#define IAppxManifestDeviceCapabilitiesEnumerator_GetCurrent(This,deviceCapability) \
+    ((This)->lpVtbl->GetCurrent(This,deviceCapability))
+#define IAppxManifestDeviceCapabilitiesEnumerator_GetHasCurrent(This,hasCurrent) \
+    ((This)->lpVtbl->GetHasCurrent(This,hasCurrent))
+#define IAppxManifestDeviceCapabilitiesEnumerator_MoveNext(This,hasNext) \
+    ((This)->lpVtbl->MoveNext(This,hasNext))
+#endif /* COBJMACROS */
+
+#endif /* C */
+
+#endif /* __IAppxManifestDeviceCapabilitiesEnumerator_INTERFACE_DEFINED__ */
+
+/*****************************************************************************
+ * IAppxManifestCapabilitiesEnumerator interface
+ */
+#ifndef __IAppxManifestCapabilitiesEnumerator_INTERFACE_DEFINED__
+#define __IAppxManifestCapabilitiesEnumerator_INTERFACE_DEFINED__
+
+EXTERN_C const IID IID_IAppxManifestCapabilitiesEnumerator;
+
+#if defined(__cplusplus) && !defined(CINTERFACE)
+#error no support for C++
+#else /* C */
+typedef struct IAppxManifestCapabilitiesEnumeratorVtbl {
+    BEGIN_INTERFACE
+
+    /*** IUnknown methods ***/
+    HRESULT (STDMETHODCALLTYPE *QueryInterface)(
+        IAppxManifestCapabilitiesEnumerator *This,
+        REFIID riid,
+        void **ppvObject);
+
+    ULONG (STDMETHODCALLTYPE *AddRef)(
+        IAppxManifestCapabilitiesEnumerator *This);
+
+    ULONG (STDMETHODCALLTYPE *Release)(
+        IAppxManifestCapabilitiesEnumerator *This);
+
+    /*** IAppxManifestCapabilitiesEnumerator methods ***/
+    HRESULT (STDMETHODCALLTYPE *GetCurrent)(
+        IAppxManifestCapabilitiesEnumerator *This,
+        LPWSTR *capability);
+
+    HRESULT (STDMETHODCALLTYPE *GetHasCurrent)(
+        IAppxManifestCapabilitiesEnumerator *This,
+        BOOL *hasCurrent);
+
+    HRESULT (STDMETHODCALLTYPE *MoveNext)(
+        IAppxManifestCapabilitiesEnumerator *This,
+        BOOL *hasNext);
+
+    END_INTERFACE
+} IAppxManifestCapabilitiesEnumeratorVtbl;
+
+interface IAppxManifestCapabilitiesEnumerator {
+    CONST_VTBL IAppxManifestCapabilitiesEnumeratorVtbl* lpVtbl;
+};
+
+#ifdef COBJMACROS
+/*** IUnknown methods ***/
+#define IAppxManifestCapabilitiesEnumerator_QueryInterface(This,riid,ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This,riid,ppvObject))
+#define IAppxManifestCapabilitiesEnumerator_AddRef(This) \
+    ((This)->lpVtbl->AddRef(This))
+#define IAppxManifestCapabilitiesEnumerator_Release(This) \
+    ((This)->lpVtbl->Release(This))
+/*** IAppxManifestCapabilitiesEnumerator methods ***/
+#define IAppxManifestCapabilitiesEnumerator_GetCurrent(This,capability) \
+    ((This)->lpVtbl->GetCurrent(This,capability))
+#define IAppxManifestCapabilitiesEnumerator_GetHasCurrent(This,hasCurrent) \
+    ((This)->lpVtbl->GetHasCurrent(This,hasCurrent))
+#define IAppxManifestCapabilitiesEnumerator_MoveNext(This,hasNext) \
+    ((This)->lpVtbl->MoveNext(This,hasNext))
+#endif /* COBJMACROS */
+
+#endif /* C */
+
+#endif /* __IAppxManifestCapabilitiesEnumerator_INTERFACE_DEFINED__ */
+
+/*****************************************************************************
+ * IAppxManifestApplicationsEnumerator interface
+ */
+#ifndef __IAppxManifestApplicationsEnumerator_INTERFACE_DEFINED__
+#define __IAppxManifestApplicationsEnumerator_INTERFACE_DEFINED__
+
+EXTERN_C const IID IID_IAppxManifestApplicationsEnumerator;
+
+#if defined(__cplusplus) && !defined(CINTERFACE)
+#error no support for C++
+#else /* C */
+typedef struct IAppxManifestApplicationsEnumeratorVtbl {
+    BEGIN_INTERFACE
+
+    /*** IUnknown methods ***/
+    HRESULT (STDMETHODCALLTYPE *QueryInterface)(
+        IAppxManifestApplicationsEnumerator *This,
+        REFIID riid,
+        void **ppvObject);
+
+    ULONG (STDMETHODCALLTYPE *AddRef)(
+        IAppxManifestApplicationsEnumerator *This);
+
+    ULONG (STDMETHODCALLTYPE *Release)(
+        IAppxManifestApplicationsEnumerator *This);
+
+    /*** IAppxManifestApplicationsEnumerator methods ***/
+    HRESULT (STDMETHODCALLTYPE *GetCurrent)(
+        IAppxManifestApplicationsEnumerator *This,
+        IAppxManifestApplication **application);
+
+    HRESULT (STDMETHODCALLTYPE *GetHasCurrent)(
+        IAppxManifestApplicationsEnumerator *This,
+        BOOL *hasCurrent);
+
+    HRESULT (STDMETHODCALLTYPE *MoveNext)(
+        IAppxManifestApplicationsEnumerator *This,
+        BOOL *hasNext);
+
+    END_INTERFACE
+} IAppxManifestApplicationsEnumeratorVtbl;
+
+interface IAppxManifestApplicationsEnumerator {
+    CONST_VTBL IAppxManifestApplicationsEnumeratorVtbl* lpVtbl;
+};
+
+#ifdef COBJMACROS
+/*** IUnknown methods ***/
+#define IAppxManifestApplicationsEnumerator_QueryInterface(This,riid,ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This,riid,ppvObject))
+#define IAppxManifestApplicationsEnumerator_AddRef(This) \
+    ((This)->lpVtbl->AddRef(This))
+#define IAppxManifestApplicationsEnumerator_Release(This) \
+    ((This)->lpVtbl->Release(This))
+/*** IAppxManifestApplicationsEnumerator methods ***/
+#define IAppxManifestApplicationsEnumerator_GetCurrent(This,application) \
+    ((This)->lpVtbl->GetCurrent(This,application))
+#define IAppxManifestApplicationsEnumerator_GetHasCurrent(This,hasCurrent) \
+    ((This)->lpVtbl->GetHasCurrent(This,hasCurrent))
+#define IAppxManifestApplicationsEnumerator_MoveNext(This,hasNext) \
+    ((This)->lpVtbl->MoveNext(This,hasNext))
+#endif /* COBJMACROS */
+
+#endif /* C */
+
+#endif /* __IAppxManifestApplicationsEnumerator_INTERFACE_DEFINED__ */
+/*****************************************************************************
+ * IAppxManifestApplication interface
+ */
+#ifndef __IAppxManifestApplication_INTERFACE_DEFINED__
+#define __IAppxManifestApplication_INTERFACE_DEFINED__
+
+EXTERN_C const IID IID_IAppxManifestApplication;
+
+#if defined(__cplusplus) && !defined(CINTERFACE)
+#error no support for C++
+#else /* C */
+typedef struct IAppxManifestApplicationVtbl {
+    BEGIN_INTERFACE
+
+    /*** IUnknown methods ***/
+    HRESULT (STDMETHODCALLTYPE *QueryInterface)(
+        IAppxManifestApplication *This,
+        REFIID riid,
+        void **ppvObject);
+
+    ULONG (STDMETHODCALLTYPE *AddRef)(
+        IAppxManifestApplication *This);
+
+    ULONG (STDMETHODCALLTYPE *Release)(
+        IAppxManifestApplication *This);
+
+    /*** IAppxManifestApplication methods ***/
+    HRESULT (STDMETHODCALLTYPE *GetStringValue)(
+        IAppxManifestApplication *This,
+        LPCWSTR name,
+        LPWSTR *value);
+
+    HRESULT (STDMETHODCALLTYPE *GetAppUserModelId)(
+        IAppxManifestApplication *This,
+        LPWSTR *appUserModelId);
+
+    END_INTERFACE
+} IAppxManifestApplicationVtbl;
+
+interface IAppxManifestApplication {
+    CONST_VTBL IAppxManifestApplicationVtbl* lpVtbl;
+};
+
+#ifdef COBJMACROS
+/*** IUnknown methods ***/
+#define IAppxManifestApplication_QueryInterface(This,riid,ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This,riid,ppvObject))
+#define IAppxManifestApplication_AddRef(This) \
+    ((This)->lpVtbl->AddRef(This))
+#define IAppxManifestApplication_Release(This) \
+    ((This)->lpVtbl->Release(This))
+/*** IAppxManifestApplication methods ***/
+#define IAppxManifestApplication_GetStringValue(This,name,value) \
+    ((This)->lpVtbl->GetStringValue(This,name,value))
+#define IAppxManifestApplication_GetAppUserModelId(This,appUserModelId) \
+    ((This)->lpVtbl->GetAppUserModelId(This,appUserModelId))
+#endif /* COBJMACROS */
+
+#endif /* C */
+
+#endif /* __IAppxManifestApplication_INTERFACE_DEFINED__ */
+
+/*****************************************************************************
+ * IAppxManifestQualifiedResourcesEnumerator interface
+ */
+#ifndef __IAppxManifestQualifiedResourcesEnumerator_INTERFACE_DEFINED__
+#define __IAppxManifestQualifiedResourcesEnumerator_INTERFACE_DEFINED__
+
+EXTERN_C const IID IID_IAppxManifestQualifiedResourcesEnumerator;
+
+#if defined(__cplusplus) && !defined(CINTERFACE)
+#error no support for C++
+#else /* C */
+typedef struct IAppxManifestQualifiedResourcesEnumeratorVtbl {
+    BEGIN_INTERFACE
+
+    /*** IUnknown methods ***/
+    HRESULT (STDMETHODCALLTYPE *QueryInterface)(
+        IAppxManifestQualifiedResourcesEnumerator *This,
+        REFIID riid,
+        void **ppvObject);
+
+    ULONG (STDMETHODCALLTYPE *AddRef)(
+        IAppxManifestQualifiedResourcesEnumerator *This);
+
+    ULONG (STDMETHODCALLTYPE *Release)(
+        IAppxManifestQualifiedResourcesEnumerator *This);
+
+    /*** IAppxManifestQualifiedResourcesEnumerator methods ***/
+    HRESULT (STDMETHODCALLTYPE *GetCurrent)(
+        IAppxManifestQualifiedResourcesEnumerator *This,
+        IAppxManifestQualifiedResource **resource);
+
+    HRESULT (STDMETHODCALLTYPE *GetHasCurrent)(
+        IAppxManifestQualifiedResourcesEnumerator *This,
+        BOOL *hasCurrent);
+
+    HRESULT (STDMETHODCALLTYPE *MoveNext)(
+        IAppxManifestQualifiedResourcesEnumerator *This,
+        BOOL *hasNext);
+
+    END_INTERFACE
+} IAppxManifestQualifiedResourcesEnumeratorVtbl;
+
+interface IAppxManifestQualifiedResourcesEnumerator {
+    CONST_VTBL IAppxManifestQualifiedResourcesEnumeratorVtbl* lpVtbl;
+};
+
+#ifdef COBJMACROS
+/*** IUnknown methods ***/
+#define IAppxManifestQualifiedResourcesEnumerator_QueryInterface(This,riid,ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This,riid,ppvObject))
+#define IAppxManifestQualifiedResourcesEnumerator_AddRef(This) \
+    ((This)->lpVtbl->AddRef(This))
+#define IAppxManifestQualifiedResourcesEnumerator_Release(This) \
+    ((This)->lpVtbl->Release(This))
+/*** IAppxManifestQualifiedResourcesEnumerator methods ***/
+#define IAppxManifestQualifiedResourcesEnumerator_GetCurrent(This,resource) \
+    ((This)->lpVtbl->GetCurrent(This,resource))
+#define IAppxManifestQualifiedResourcesEnumerator_GetHasCurrent(This,hasCurrent) \
+    ((This)->lpVtbl->GetHasCurrent(This,hasCurrent))
+#define IAppxManifestQualifiedResourcesEnumerator_MoveNext(This,hasNext) \
+    ((This)->lpVtbl->MoveNext(This,hasNext))
+#endif /* COBJMACROS */
+
+#endif /* C */
+
+#endif /* __IAppxManifestQualifiedResourcesEnumerator_INTERFACE_DEFINED__ */
+/*****************************************************************************
+ * IAppxManifestQualifiedResource interface
+ */
+#ifndef __IAppxManifestQualifiedResource_INTERFACE_DEFINED__
+#define __IAppxManifestQualifiedResource_INTERFACE_DEFINED__
+
+EXTERN_C const IID IID_IAppxManifestQualifiedResource;
+
+#if defined(__cplusplus) && !defined(CINTERFACE)
+#error no support for C++
+#else /* C */
+typedef struct IAppxManifestQualifiedResourceVtbl {
+    BEGIN_INTERFACE
+
+    /*** IUnknown methods ***/
+    HRESULT (STDMETHODCALLTYPE *QueryInterface)(
+        IAppxManifestQualifiedResource *This,
+        REFIID riid,
+        void **ppvObject);
+
+    ULONG (STDMETHODCALLTYPE *AddRef)(
+        IAppxManifestQualifiedResource *This);
+
+    ULONG (STDMETHODCALLTYPE *Release)(
+        IAppxManifestQualifiedResource *This);
+
+    /*** IAppxManifestQualifiedResource methods ***/
+    HRESULT (STDMETHODCALLTYPE *GetLanguage)(
+        IAppxManifestQualifiedResource *This,
+        LPWSTR *language);
+
+    HRESULT (STDMETHODCALLTYPE *GetScale)(
+        IAppxManifestQualifiedResource *This,
+        UINT32 *scale);
+
+    HRESULT (STDMETHODCALLTYPE *GetDXFeatureLevel)(
+        IAppxManifestQualifiedResource *This,
+        DX_FEATURE_LEVEL *dxFeatureLevel);
+
+    END_INTERFACE
+} IAppxManifestQualifiedResourceVtbl;
+
+interface IAppxManifestQualifiedResource {
+    CONST_VTBL IAppxManifestQualifiedResourceVtbl* lpVtbl;
+};
+
+#ifdef COBJMACROS
+/*** IUnknown methods ***/
+#define IAppxManifestQualifiedResource_QueryInterface(This,riid,ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This,riid,ppvObject))
+#define IAppxManifestQualifiedResource_AddRef(This) \
+    ((This)->lpVtbl->AddRef(This))
+#define IAppxManifestQualifiedResource_Release(This) \
+    ((This)->lpVtbl->Release(This))
+/*** IAppxManifestQualifiedResource methods ***/
+#define IAppxManifestQualifiedResource_GetLanguage(This,language) \
+    ((This)->lpVtbl->GetLanguage(This,language))
+#define IAppxManifestQualifiedResource_GetScale(This,scale) \
+    ((This)->lpVtbl->GetScale(This,scale))
+#define IAppxManifestQualifiedResource_GetDXFeatureLevel(This,dxFeatureLevel) \
+    ((This)->lpVtbl->GetDXFeatureLevel(This,dxFeatureLevel))
+#endif /* COBJMACROS */
+
+#endif /* C */
+
+#endif /* __IAppxManifestQualifiedResource_INTERFACE_DEFINED__ */
+
+/*****************************************************************************
+ * IAppxBundleFactory interface
+ */
+#ifndef __IAppxBundleFactory_INTERFACE_DEFINED__
+#define __IAppxBundleFactory_INTERFACE_DEFINED__
+
+EXTERN_C const IID IID_IAppxBundleFactory;
+
+#if defined(__cplusplus) && !defined(CINTERFACE)
+#error no support for C++
+#else /* C */
+typedef struct IAppxBundleFactoryVtbl {
+    BEGIN_INTERFACE
+
+    /*** IUnknown methods ***/
+    HRESULT (STDMETHODCALLTYPE *QueryInterface)(
+        IAppxBundleFactory *This,
+        REFIID riid,
+        void **ppvObject);
+
+    ULONG (STDMETHODCALLTYPE *AddRef)(
+        IAppxBundleFactory *This);
+
+    ULONG (STDMETHODCALLTYPE *Release)(
+        IAppxBundleFactory *This);
+
+    /*** IAppxBundleFactory methods ***/
+    HRESULT (STDMETHODCALLTYPE *CreateBundleWriter)(
+        IAppxBundleFactory *This,
+        IStream *outputStream,
+        UINT64 bundleVersion,
+        IAppxBundleWriter **bundleWriter);
+
+    HRESULT (STDMETHODCALLTYPE *CreateBundleReader)(
+        IAppxBundleFactory *This,
+        IStream *inputStream,
+        IAppxBundleReader **bundleReader);
+
+    HRESULT (STDMETHODCALLTYPE *CreateBundleManifestReader)(
+        IAppxBundleFactory *This,
+        IStream *inputStream,
+        IAppxBundleManifestReader **manifestReader);
+
+    END_INTERFACE
+} IAppxBundleFactoryVtbl;
+
+interface IAppxBundleFactory {
+    CONST_VTBL IAppxBundleFactoryVtbl* lpVtbl;
+};
+
+#ifdef COBJMACROS
+/*** IUnknown methods ***/
+#define IAppxBundleFactory_QueryInterface(This,riid,ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This,riid,ppvObject))
+#define IAppxBundleFactory_AddRef(This) \
+    ((This)->lpVtbl->AddRef(This))
+#define IAppxBundleFactory_Release(This) \
+    ((This)->lpVtbl->Release(This))
+/*** IAppxBundleFactory methods ***/
+#define IAppxBundleFactory_CreateBundleWriter(This,outputStream,bundleVersion,bundleWriter) \
+    ((This)->lpVtbl->CreateBundleWriter(This,outputStream,bundleVersion,bundleWriter))
+#define IAppxBundleFactory_CreateBundleReader(This,inputStream,bundleReader) \
+    ((This)->lpVtbl->CreateBundleReader(This,inputStream,bundleReader))
+#define IAppxBundleFactory_CreateBundleManifestReader(This,inputStream,manifestReader) \
+    ((This)->lpVtbl->CreateBundleManifestReader(This,inputStream,manifestReader))
+#endif /* COBJMACROS */
+
+#endif /* C */
+
+#endif /* __IAppxBundleFactory_INTERFACE_DEFINED__ */
+/*****************************************************************************
+ * IAppxBundleFactory2 interface
+ */
+#ifndef __IAppxBundleFactory2_INTERFACE_DEFINED__
+#define __IAppxBundleFactory2_INTERFACE_DEFINED__
+
+EXTERN_C const IID IID_IAppxBundleFactory2;
+
+#if defined(__cplusplus) && !defined(CINTERFACE)
+#error no support for C++
+#else /* C */
+typedef struct IAppxBundleFactory2Vtbl {
+    BEGIN_INTERFACE
+
+    /*** IUnknown methods ***/
+    HRESULT (STDMETHODCALLTYPE *QueryInterface)(
+        IAppxBundleFactory2 *This,
+        REFIID riid,
+        void **ppvObject);
+
+    ULONG (STDMETHODCALLTYPE *AddRef)(
+        IAppxBundleFactory2 *This);
+
+    ULONG (STDMETHODCALLTYPE *Release)(
+        IAppxBundleFactory2 *This);
+
+    /*** IAppxBundleFactory2 methods ***/
+    HRESULT (STDMETHODCALLTYPE *CreateBundleReader2)(
+        IAppxBundleFactory2 *This,
+        IStream *inputStream,
+        LPCWSTR expectedDigest,
+        IAppxBundleReader **bundleReader);
+
+    END_INTERFACE
+} IAppxBundleFactory2Vtbl;
+
+interface IAppxBundleFactory2 {
+    CONST_VTBL IAppxBundleFactory2Vtbl* lpVtbl;
+};
+
+#ifdef COBJMACROS
+/*** IUnknown methods ***/
+#define IAppxBundleFactory2_QueryInterface(This,riid,ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This,riid,ppvObject))
+#define IAppxBundleFactory2_AddRef(This) \
+    ((This)->lpVtbl->AddRef(This))
+#define IAppxBundleFactory2_Release(This) \
+    ((This)->lpVtbl->Release(This))
+/*** IAppxBundleFactory2 methods ***/
+#define IAppxBundleFactory2_CreateBundleReader2(This,inputStream,expectedDigest,bundleReader) \
+    ((This)->lpVtbl->CreateBundleReader2(This,inputStream,expectedDigest,bundleReader))
+#endif /* COBJMACROS */
+
+#endif /* C */
+
+#endif /* __IAppxBundleFactory2_INTERFACE_DEFINED__ */
+/*****************************************************************************
+ * IAppxBundleWriter interface
+ */
+#ifndef __IAppxBundleWriter_INTERFACE_DEFINED__
+#define __IAppxBundleWriter_INTERFACE_DEFINED__
+
+EXTERN_C const IID IID_IAppxBundleWriter;
+
+#if defined(__cplusplus) && !defined(CINTERFACE)
+#error no support for C++
+#else /* C */
+typedef struct IAppxBundleWriterVtbl {
+    BEGIN_INTERFACE
+
+    /*** IUnknown methods ***/
+    HRESULT (STDMETHODCALLTYPE *QueryInterface)(
+        IAppxBundleWriter *This,
+        REFIID riid,
+        void **ppvObject);
+
+    ULONG (STDMETHODCALLTYPE *AddRef)(
+        IAppxBundleWriter *This);
+
+    ULONG (STDMETHODCALLTYPE *Release)(
+        IAppxBundleWriter *This);
+
+    /*** IAppxBundleWriter methods ***/
+    HRESULT (STDMETHODCALLTYPE *AddPayloadPackage)(
+        IAppxBundleWriter *This,
+        LPCWSTR fileName,
+        IStream *packageStream);
+
+    HRESULT (STDMETHODCALLTYPE *Close)(
+        IAppxBundleWriter *This);
+
+    END_INTERFACE
+} IAppxBundleWriterVtbl;
+
+interface IAppxBundleWriter {
+    CONST_VTBL IAppxBundleWriterVtbl* lpVtbl;
+};
+
+#ifdef COBJMACROS
+/*** IUnknown methods ***/
+#define IAppxBundleWriter_QueryInterface(This,riid,ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This,riid,ppvObject))
+#define IAppxBundleWriter_AddRef(This) \
+    ((This)->lpVtbl->AddRef(This))
+#define IAppxBundleWriter_Release(This) \
+    ((This)->lpVtbl->Release(This))
+/*** IAppxBundleWriter methods ***/
+#define IAppxBundleWriter_AddPayloadPackage(This,fileName,packageStream) \
+    ((This)->lpVtbl->AddPayloadPackage(This,fileName,packageStream))
+#define IAppxBundleWriter_Close(This) \
+    ((This)->lpVtbl->Close(This))
+#endif /* COBJMACROS */
+
+#endif /* C */
+
+#endif /* __IAppxBundleWriter_INTERFACE_DEFINED__ */
+/*****************************************************************************
+ * IAppxBundleWriter2 interface
+ */
+#ifndef __IAppxBundleWriter2_INTERFACE_DEFINED__
+#define __IAppxBundleWriter2_INTERFACE_DEFINED__
+
+EXTERN_C const IID IID_IAppxBundleWriter2;
+
+#if defined(__cplusplus) && !defined(CINTERFACE)
+#error no support for C++
+#else /* C */
+typedef struct IAppxBundleWriter2Vtbl {
+    BEGIN_INTERFACE
+
+    /*** IUnknown methods ***/
+    HRESULT (STDMETHODCALLTYPE *QueryInterface)(
+        IAppxBundleWriter2 *This,
+        REFIID riid,
+        void **ppvObject);
+
+    ULONG (STDMETHODCALLTYPE *AddRef)(
+        IAppxBundleWriter2 *This);
+
+    ULONG (STDMETHODCALLTYPE *Release)(
+        IAppxBundleWriter2 *This);
+
+    /*** IAppxBundleWriter2 methods ***/
+    HRESULT (STDMETHODCALLTYPE *AddExternalPackageReference)(
+        IAppxBundleWriter2 *This,
+        LPCWSTR fileName,
+        IStream *inputStream);
+
+    END_INTERFACE
+} IAppxBundleWriter2Vtbl;
+
+interface IAppxBundleWriter2 {
+    CONST_VTBL IAppxBundleWriter2Vtbl* lpVtbl;
+};
+
+#ifdef COBJMACROS
+/*** IUnknown methods ***/
+#define IAppxBundleWriter2_QueryInterface(This,riid,ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This,riid,ppvObject))
+#define IAppxBundleWriter2_AddRef(This) \
+    ((This)->lpVtbl->AddRef(This))
+#define IAppxBundleWriter2_Release(This) \
+    ((This)->lpVtbl->Release(This))
+/*** IAppxBundleWriter2 methods ***/
+#define IAppxBundleWriter2_AddExternalPackageReference(This,fileName,inputStream) \
+    ((This)->lpVtbl->AddExternalPackageReference(This,fileName,inputStream))
+#endif /* COBJMACROS */
+
+#endif /* C */
+
+#endif /* __IAppxBundleWriter2_INTERFACE_DEFINED__ */
+/*****************************************************************************
+ * IAppxBundleWriter3 interface
+ */
+#ifndef __IAppxBundleWriter3_INTERFACE_DEFINED__
+#define __IAppxBundleWriter3_INTERFACE_DEFINED__
+
+EXTERN_C const IID IID_IAppxBundleWriter3;
+
+#if defined(__cplusplus) && !defined(CINTERFACE)
+#error no support for C++
+#else /* C */
+typedef struct IAppxBundleWriter3Vtbl {
+    BEGIN_INTERFACE
+
+    /*** IUnknown methods ***/
+    HRESULT (STDMETHODCALLTYPE *QueryInterface)(
+        IAppxBundleWriter3 *This,
+        REFIID riid,
+        void **ppvObject);
+
+    ULONG (STDMETHODCALLTYPE *AddRef)(
+        IAppxBundleWriter3 *This);
+
+    ULONG (STDMETHODCALLTYPE *Release)(
+        IAppxBundleWriter3 *This);
+
+    /*** IAppxBundleWriter3 methods ***/
+    HRESULT (STDMETHODCALLTYPE *AddPackageReference)(
+        IAppxBundleWriter3 *This,
+        LPCWSTR fileName,
+        IStream *inputStream);
+
+    HRESULT (STDMETHODCALLTYPE *Close)(
+        IAppxBundleWriter3 *This,
+        LPCWSTR hashMethodString);
+
+    END_INTERFACE
+} IAppxBundleWriter3Vtbl;
+
+interface IAppxBundleWriter3 {
+    CONST_VTBL IAppxBundleWriter3Vtbl* lpVtbl;
+};
+
+#ifdef COBJMACROS
+/*** IUnknown methods ***/
+#define IAppxBundleWriter3_QueryInterface(This,riid,ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This,riid,ppvObject))
+#define IAppxBundleWriter3_AddRef(This) \
+    ((This)->lpVtbl->AddRef(This))
+#define IAppxBundleWriter3_Release(This) \
+    ((This)->lpVtbl->Release(This))
+/*** IAppxBundleWriter3 methods ***/
+#define IAppxBundleWriter3_AddPackageReference(This,fileName,inputStream) \
+    ((This)->lpVtbl->AddPackageReference(This,fileName,inputStream))
+#define IAppxBundleWriter3_Close(This,hashMethodString) \
+    ((This)->lpVtbl->Close(This,hashMethodString))
+#endif /* COBJMACROS */
+
+#endif /* C */
+
+#endif /* __IAppxBundleWriter3_INTERFACE_DEFINED__ */
+/*****************************************************************************
+ * IAppxBundleWriter4 interface
+ */
+#ifndef __IAppxBundleWriter4_INTERFACE_DEFINED__
+#define __IAppxBundleWriter4_INTERFACE_DEFINED__
+
+EXTERN_C const IID IID_IAppxBundleWriter4;
+
+#if defined(__cplusplus) && !defined(CINTERFACE)
+#error no support for C++
+#else /* C */
+typedef struct IAppxBundleWriter4Vtbl {
+    BEGIN_INTERFACE
+
+    /*** IUnknown methods ***/
+    HRESULT (STDMETHODCALLTYPE *QueryInterface)(
+        IAppxBundleWriter4 *This,
+        REFIID riid,
+        void **ppvObject);
+
+    ULONG (STDMETHODCALLTYPE *AddRef)(
+        IAppxBundleWriter4 *This);
+
+    ULONG (STDMETHODCALLTYPE *Release)(
+        IAppxBundleWriter4 *This);
+
+    /*** IAppxBundleWriter4 methods ***/
+    HRESULT (STDMETHODCALLTYPE *AddPayloadPackage)(
+        IAppxBundleWriter4 *This,
+        LPCWSTR fileName,
+        IStream *packageStream,
+        BOOL isDefaultApplicablePackage);
+
+    HRESULT (STDMETHODCALLTYPE *AddPackageReference)(
+        IAppxBundleWriter4 *This,
+        LPCWSTR fileName,
+        IStream *inputStream,
+        BOOL isDefaultApplicablePackage);
+
+    HRESULT (STDMETHODCALLTYPE *AddExternalPackageReference)(
+        IAppxBundleWriter4 *This,
+        LPCWSTR fileName,
+        IStream *inputStream,
+        BOOL isDefaultApplicablePackage);
+
+    END_INTERFACE
+} IAppxBundleWriter4Vtbl;
+
+interface IAppxBundleWriter4 {
+    CONST_VTBL IAppxBundleWriter4Vtbl* lpVtbl;
+};
+
+#ifdef COBJMACROS
+/*** IUnknown methods ***/
+#define IAppxBundleWriter4_QueryInterface(This,riid,ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This,riid,ppvObject))
+#define IAppxBundleWriter4_AddRef(This) \
+    ((This)->lpVtbl->AddRef(This))
+#define IAppxBundleWriter4_Release(This) \
+    ((This)->lpVtbl->Release(This))
+/*** IAppxBundleWriter4 methods ***/
+#define IAppxBundleWriter4_AddPayloadPackage(This,fileName,packageStream,isDefaultApplicablePackage) \
+    ((This)->lpVtbl->AddPayloadPackage(This,fileName,packageStream,isDefaultApplicablePackage))
+#define IAppxBundleWriter4_AddPackageReference(This,fileName,inputStream,isDefaultApplicablePackage) \
+    ((This)->lpVtbl->AddPackageReference(This,fileName,inputStream,isDefaultApplicablePackage))
+#define IAppxBundleWriter4_AddExternalPackageReference(This,fileName,inputStream,isDefaultApplicablePackage) \
+    ((This)->lpVtbl->AddExternalPackageReference(This,fileName,inputStream,isDefaultApplicablePackage))
+#endif /* COBJMACROS */
+
+#endif /* C */
+
+#endif /* __IAppxBundleWriter4_INTERFACE_DEFINED__ */
+/*****************************************************************************
+ * IAppxBundleReader interface
+ */
+#ifndef __IAppxBundleReader_INTERFACE_DEFINED__
+#define __IAppxBundleReader_INTERFACE_DEFINED__
+
+EXTERN_C const IID IID_IAppxBundleReader;
+
+#if defined(__cplusplus) && !defined(CINTERFACE)
+#error no support for C++
+#else /* C */
+typedef struct IAppxBundleReaderVtbl {
+    BEGIN_INTERFACE
+
+    /*** IUnknown methods ***/
+    HRESULT (STDMETHODCALLTYPE *QueryInterface)(
+        IAppxBundleReader *This,
+        REFIID riid,
+        void **ppvObject);
+
+    ULONG (STDMETHODCALLTYPE *AddRef)(
+        IAppxBundleReader *This);
+
+    ULONG (STDMETHODCALLTYPE *Release)(
+        IAppxBundleReader *This);
+
+    /*** IAppxBundleReader methods ***/
+    HRESULT (STDMETHODCALLTYPE *GetFootprintFile)(
+        IAppxBundleReader *This,
+        APPX_BUNDLE_FOOTPRINT_FILE_TYPE fileType,
+        IAppxFile **footprintFile);
+
+    HRESULT (STDMETHODCALLTYPE *GetBlockMap)(
+        IAppxBundleReader *This,
+        IAppxBlockMapReader **blockMapReader);
+
+    HRESULT (STDMETHODCALLTYPE *GetManifest)(
+        IAppxBundleReader *This,
+        IAppxBundleManifestReader **manifestReader);
+
+    HRESULT (STDMETHODCALLTYPE *GetPayloadPackages)(
+        IAppxBundleReader *This,
+        IAppxFilesEnumerator **payloadPackages);
+
+    HRESULT (STDMETHODCALLTYPE *GetPayloadPackage)(
+        IAppxBundleReader *This,
+        LPCWSTR fileName,
+        IAppxFile **payloadPackage);
+
+    END_INTERFACE
+} IAppxBundleReaderVtbl;
+
+interface IAppxBundleReader {
+    CONST_VTBL IAppxBundleReaderVtbl* lpVtbl;
+};
+
+#ifdef COBJMACROS
+/*** IUnknown methods ***/
+#define IAppxBundleReader_QueryInterface(This,riid,ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This,riid,ppvObject))
+#define IAppxBundleReader_AddRef(This) \
+    ((This)->lpVtbl->AddRef(This))
+#define IAppxBundleReader_Release(This) \
+    ((This)->lpVtbl->Release(This))
+/*** IAppxBundleReader methods ***/
+#define IAppxBundleReader_GetFootprintFile(This,fileType,footprintFile) \
+    ((This)->lpVtbl->GetFootprintFile(This,fileType,footprintFile))
+#define IAppxBundleReader_GetBlockMap(This,blockMapReader) \
+    ((This)->lpVtbl->GetBlockMap(This,blockMapReader))
+#define IAppxBundleReader_GetManifest(This,manifestReader) \
+    ((This)->lpVtbl->GetManifest(This,manifestReader))
+#define IAppxBundleReader_GetPayloadPackages(This,payloadPackages) \
+    ((This)->lpVtbl->GetPayloadPackages(This,payloadPackages))
+#define IAppxBundleReader_GetPayloadPackage(This,fileName,payloadPackage) \
+    ((This)->lpVtbl->GetPayloadPackage(This,fileName,payloadPackage))
+#endif /* COBJMACROS */
+
+#endif /* C */
+
+#endif /* __IAppxBundleReader_INTERFACE_DEFINED__ */
+/*****************************************************************************
+ * IAppxBundleManifestReader interface
+ */
+#ifndef __IAppxBundleManifestReader_INTERFACE_DEFINED__
+#define __IAppxBundleManifestReader_INTERFACE_DEFINED__
+
+EXTERN_C const IID IID_IAppxBundleManifestReader;
+
+#if defined(__cplusplus) && !defined(CINTERFACE)
+#error no support for C++
+#else /* C */
+typedef struct IAppxBundleManifestReaderVtbl {
+    BEGIN_INTERFACE
+
+    /*** IUnknown methods ***/
+    HRESULT (STDMETHODCALLTYPE *QueryInterface)(
+        IAppxBundleManifestReader *This,
+        REFIID riid,
+        void **ppvObject);
+
+    ULONG (STDMETHODCALLTYPE *AddRef)(
+        IAppxBundleManifestReader *This);
+
+    ULONG (STDMETHODCALLTYPE *Release)(
+        IAppxBundleManifestReader *This);
+
+    /*** IAppxBundleManifestReader methods ***/
+    HRESULT (STDMETHODCALLTYPE *GetPackageId)(
+        IAppxBundleManifestReader *This,
+        IAppxManifestPackageId **packageId);
+
+    HRESULT (STDMETHODCALLTYPE *GetPackageInfoItems)(
+        IAppxBundleManifestReader *This,
+        IAppxBundleManifestPackageInfoEnumerator **packageInfoItems);
+
+    HRESULT (STDMETHODCALLTYPE *GetStream)(
+        IAppxBundleManifestReader *This,
+        IStream **manifestStream);
+
+    END_INTERFACE
+} IAppxBundleManifestReaderVtbl;
+
+interface IAppxBundleManifestReader {
+    CONST_VTBL IAppxBundleManifestReaderVtbl* lpVtbl;
+};
+
+#ifdef COBJMACROS
+/*** IUnknown methods ***/
+#define IAppxBundleManifestReader_QueryInterface(This,riid,ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This,riid,ppvObject))
+#define IAppxBundleManifestReader_AddRef(This) \
+    ((This)->lpVtbl->AddRef(This))
+#define IAppxBundleManifestReader_Release(This) \
+    ((This)->lpVtbl->Release(This))
+/*** IAppxBundleManifestReader methods ***/
+#define IAppxBundleManifestReader_GetPackageId(This,packageId) \
+    ((This)->lpVtbl->GetPackageId(This,packageId))
+#define IAppxBundleManifestReader_GetPackageInfoItems(This,packageInfoItems) \
+    ((This)->lpVtbl->GetPackageInfoItems(This,packageInfoItems))
+#define IAppxBundleManifestReader_GetStream(This,manifestStream) \
+    ((This)->lpVtbl->GetStream(This,manifestStream))
+#endif /* COBJMACROS */
+
+#endif /* C */
+
+#endif /* __IAppxBundleManifestReader_INTERFACE_DEFINED__ */
+/*****************************************************************************
+ * IAppxBundleManifestReader2 interface
+ */
+#ifndef __IAppxBundleManifestReader2_INTERFACE_DEFINED__
+#define __IAppxBundleManifestReader2_INTERFACE_DEFINED__
+
+EXTERN_C const IID IID_IAppxBundleManifestReader2;
+
+#if defined(__cplusplus) && !defined(CINTERFACE)
+#error no support for C++
+#else /* C */
+typedef struct IAppxBundleManifestReader2Vtbl {
+    BEGIN_INTERFACE
+
+    /*** IUnknown methods ***/
+    HRESULT (STDMETHODCALLTYPE *QueryInterface)(
+        IAppxBundleManifestReader2 *This,
+        REFIID riid,
+        void **ppvObject);
+
+    ULONG (STDMETHODCALLTYPE *AddRef)(
+        IAppxBundleManifestReader2 *This);
+
+    ULONG (STDMETHODCALLTYPE *Release)(
+        IAppxBundleManifestReader2 *This);
+
+    /*** IAppxBundleManifestReader2 methods ***/
+    HRESULT (STDMETHODCALLTYPE *GetOptionalBundles)(
+        IAppxBundleManifestReader2 *This,
+        IAppxBundleManifestOptionalBundleInfoEnumerator **optionalBundles);
+
+    END_INTERFACE
+} IAppxBundleManifestReader2Vtbl;
+
+interface IAppxBundleManifestReader2 {
+    CONST_VTBL IAppxBundleManifestReader2Vtbl* lpVtbl;
+};
+
+#ifdef COBJMACROS
+/*** IUnknown methods ***/
+#define IAppxBundleManifestReader2_QueryInterface(This,riid,ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This,riid,ppvObject))
+#define IAppxBundleManifestReader2_AddRef(This) \
+    ((This)->lpVtbl->AddRef(This))
+#define IAppxBundleManifestReader2_Release(This) \
+    ((This)->lpVtbl->Release(This))
+/*** IAppxBundleManifestReader2 methods ***/
+#define IAppxBundleManifestReader2_GetOptionalBundles(This,optionalBundles) \
+    ((This)->lpVtbl->GetOptionalBundles(This,optionalBundles))
+#endif /* COBJMACROS */
+
+#endif /* C */
+
+#endif /* __IAppxBundleManifestReader2_INTERFACE_DEFINED__ */
+/*****************************************************************************
+ * IAppxBundleManifestPackageInfoEnumerator interface
+ */
+#ifndef __IAppxBundleManifestPackageInfoEnumerator_INTERFACE_DEFINED__
+#define __IAppxBundleManifestPackageInfoEnumerator_INTERFACE_DEFINED__
+
+EXTERN_C const IID IID_IAppxBundleManifestPackageInfoEnumerator;
+
+#if defined(__cplusplus) && !defined(CINTERFACE)
+#error no support for C++
+#else /* C */
+typedef struct IAppxBundleManifestPackageInfoEnumeratorVtbl {
+    BEGIN_INTERFACE
+
+    /*** IUnknown methods ***/
+    HRESULT (STDMETHODCALLTYPE *QueryInterface)(
+        IAppxBundleManifestPackageInfoEnumerator *This,
+        REFIID riid,
+        void **ppvObject);
+
+    ULONG (STDMETHODCALLTYPE *AddRef)(
+        IAppxBundleManifestPackageInfoEnumerator *This);
+
+    ULONG (STDMETHODCALLTYPE *Release)(
+        IAppxBundleManifestPackageInfoEnumerator *This);
+
+    /*** IAppxBundleManifestPackageInfoEnumerator methods ***/
+    HRESULT (STDMETHODCALLTYPE *GetCurrent)(
+        IAppxBundleManifestPackageInfoEnumerator *This,
+        IAppxBundleManifestPackageInfo **packageInfo);
+
+    HRESULT (STDMETHODCALLTYPE *GetHasCurrent)(
+        IAppxBundleManifestPackageInfoEnumerator *This,
+        BOOL *hasCurrent);
+
+    HRESULT (STDMETHODCALLTYPE *MoveNext)(
+        IAppxBundleManifestPackageInfoEnumerator *This,
+        BOOL *hasNext);
+
+    END_INTERFACE
+} IAppxBundleManifestPackageInfoEnumeratorVtbl;
+
+interface IAppxBundleManifestPackageInfoEnumerator {
+    CONST_VTBL IAppxBundleManifestPackageInfoEnumeratorVtbl* lpVtbl;
+};
+
+#ifdef COBJMACROS
+/*** IUnknown methods ***/
+#define IAppxBundleManifestPackageInfoEnumerator_QueryInterface(This,riid,ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This,riid,ppvObject))
+#define IAppxBundleManifestPackageInfoEnumerator_AddRef(This) \
+    ((This)->lpVtbl->AddRef(This))
+#define IAppxBundleManifestPackageInfoEnumerator_Release(This) \
+    ((This)->lpVtbl->Release(This))
+/*** IAppxBundleManifestPackageInfoEnumerator methods ***/
+#define IAppxBundleManifestPackageInfoEnumerator_GetCurrent(This,packageInfo) \
+    ((This)->lpVtbl->GetCurrent(This,packageInfo))
+#define IAppxBundleManifestPackageInfoEnumerator_GetHasCurrent(This,hasCurrent) \
+    ((This)->lpVtbl->GetHasCurrent(This,hasCurrent))
+#define IAppxBundleManifestPackageInfoEnumerator_MoveNext(This,hasNext) \
+    ((This)->lpVtbl->MoveNext(This,hasNext))
+#endif /* COBJMACROS */
+
+#endif /* C */
+
+#endif /* __IAppxBundleManifestPackageInfoEnumerator_INTERFACE_DEFINED__ */
+/*****************************************************************************
+ * IAppxBundleManifestPackageInfo interface
+ */
+#ifndef __IAppxBundleManifestPackageInfo_INTERFACE_DEFINED__
+#define __IAppxBundleManifestPackageInfo_INTERFACE_DEFINED__
+
+EXTERN_C const IID IID_IAppxBundleManifestPackageInfo;
+
+#if defined(__cplusplus) && !defined(CINTERFACE)
+#error no support for C++
+#else /* C */
+typedef struct IAppxBundleManifestPackageInfoVtbl {
+    BEGIN_INTERFACE
+
+    /*** IUnknown methods ***/
+    HRESULT (STDMETHODCALLTYPE *QueryInterface)(
+        IAppxBundleManifestPackageInfo *This,
+        REFIID riid,
+        void **ppvObject);
+
+    ULONG (STDMETHODCALLTYPE *AddRef)(
+        IAppxBundleManifestPackageInfo *This);
+
+    ULONG (STDMETHODCALLTYPE *Release)(
+        IAppxBundleManifestPackageInfo *This);
+
+    /*** IAppxBundleManifestPackageInfo methods ***/
+    HRESULT (STDMETHODCALLTYPE *GetPackageType)(
+        IAppxBundleManifestPackageInfo *This,
+        APPX_BUNDLE_PAYLOAD_PACKAGE_TYPE *packageType);
+
+    HRESULT (STDMETHODCALLTYPE *GetPackageId)(
+        IAppxBundleManifestPackageInfo *This,
+        IAppxManifestPackageId **packageId);
+
+    HRESULT (STDMETHODCALLTYPE *GetFileName)(
+        IAppxBundleManifestPackageInfo *This,
+        LPWSTR *fileName);
+
+    HRESULT (STDMETHODCALLTYPE *GetOffset)(
+        IAppxBundleManifestPackageInfo *This,
+        UINT64 *offset);
+
+    HRESULT (STDMETHODCALLTYPE *GetSize)(
+        IAppxBundleManifestPackageInfo *This,
+        UINT64 *size);
+
+    HRESULT (STDMETHODCALLTYPE *GetResources)(
+        IAppxBundleManifestPackageInfo *This,
+        IAppxManifestQualifiedResourcesEnumerator **resources);
+
+    END_INTERFACE
+} IAppxBundleManifestPackageInfoVtbl;
+
+interface IAppxBundleManifestPackageInfo {
+    CONST_VTBL IAppxBundleManifestPackageInfoVtbl* lpVtbl;
+};
+
+#ifdef COBJMACROS
+/*** IUnknown methods ***/
+#define IAppxBundleManifestPackageInfo_QueryInterface(This,riid,ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This,riid,ppvObject))
+#define IAppxBundleManifestPackageInfo_AddRef(This) \
+    ((This)->lpVtbl->AddRef(This))
+#define IAppxBundleManifestPackageInfo_Release(This) \
+    ((This)->lpVtbl->Release(This))
+/*** IAppxBundleManifestPackageInfo methods ***/
+#define IAppxBundleManifestPackageInfo_GetPackageType(This,packageType) \
+    ((This)->lpVtbl->GetPackageType(This,packageType))
+#define IAppxBundleManifestPackageInfo_GetPackageId(This,packageId) \
+    ((This)->lpVtbl->GetPackageId(This,packageId))
+#define IAppxBundleManifestPackageInfo_GetFileName(This,fileName) \
+    ((This)->lpVtbl->GetFileName(This,fileName))
+#define IAppxBundleManifestPackageInfo_GetOffset(This,offset) \
+    ((This)->lpVtbl->GetOffset(This,offset))
+#define IAppxBundleManifestPackageInfo_GetSize(This,size) \
+    ((This)->lpVtbl->GetSize(This,size))
+#define IAppxBundleManifestPackageInfo_GetResources(This,resources) \
+    ((This)->lpVtbl->GetResources(This,resources))
+#endif /* COBJMACROS */
+
+#endif /* C */
+
+#endif /* __IAppxBundleManifestPackageInfo_INTERFACE_DEFINED__ */
+/*****************************************************************************
+ * IAppxBundleManifestPackageInfo2 interface
+ */
+#ifndef __IAppxBundleManifestPackageInfo2_INTERFACE_DEFINED__
+#define __IAppxBundleManifestPackageInfo2_INTERFACE_DEFINED__
+
+EXTERN_C const IID IID_IAppxBundleManifestPackageInfo2;
+
+#if defined(__cplusplus) && !defined(CINTERFACE)
+#error no support for C++
+#else /* C */
+typedef struct IAppxBundleManifestPackageInfo2Vtbl {
+    BEGIN_INTERFACE
+
+    /*** IUnknown methods ***/
+    HRESULT (STDMETHODCALLTYPE *QueryInterface)(
+        IAppxBundleManifestPackageInfo2 *This,
+        REFIID riid,
+        void **ppvObject);
+
+    ULONG (STDMETHODCALLTYPE *AddRef)(
+        IAppxBundleManifestPackageInfo2 *This);
+
+    ULONG (STDMETHODCALLTYPE *Release)(
+        IAppxBundleManifestPackageInfo2 *This);
+
+    /*** IAppxBundleManifestPackageInfo2 methods ***/
+    HRESULT (STDMETHODCALLTYPE *GetIsPackageReference)(
+        IAppxBundleManifestPackageInfo2 *This,
+        BOOL *isPackageReference);
+
+    HRESULT (STDMETHODCALLTYPE *GetIsNonQualifiedResourcePackage)(
+        IAppxBundleManifestPackageInfo2 *This,
+        BOOL *isNonQualifiedResourcePackage);
+
+    HRESULT (STDMETHODCALLTYPE *GetIsDefaultApplicablePackage)(
+        IAppxBundleManifestPackageInfo2 *This,
+        BOOL *isDefaultApplicablePackage);
+
+    END_INTERFACE
+} IAppxBundleManifestPackageInfo2Vtbl;
+
+interface IAppxBundleManifestPackageInfo2 {
+    CONST_VTBL IAppxBundleManifestPackageInfo2Vtbl* lpVtbl;
+};
+
+#ifdef COBJMACROS
+/*** IUnknown methods ***/
+#define IAppxBundleManifestPackageInfo2_QueryInterface(This,riid,ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This,riid,ppvObject))
+#define IAppxBundleManifestPackageInfo2_AddRef(This) \
+    ((This)->lpVtbl->AddRef(This))
+#define IAppxBundleManifestPackageInfo2_Release(This) \
+    ((This)->lpVtbl->Release(This))
+/*** IAppxBundleManifestPackageInfo2 methods ***/
+#define IAppxBundleManifestPackageInfo2_GetIsPackageReference(This,isPackageReference) \
+    ((This)->lpVtbl->GetIsPackageReference(This,isPackageReference))
+#define IAppxBundleManifestPackageInfo2_GetIsNonQualifiedResourcePackage(This,isNonQualifiedResourcePackage) \
+    ((This)->lpVtbl->GetIsNonQualifiedResourcePackage(This,isNonQualifiedResourcePackage))
+#define IAppxBundleManifestPackageInfo2_GetIsDefaultApplicablePackage(This,isDefaultApplicablePackage) \
+    ((This)->lpVtbl->GetIsDefaultApplicablePackage(This,isDefaultApplicablePackage))
+#endif /* COBJMACROS */
+
+#endif /* C */
+
+#endif /* __IAppxBundleManifestPackageInfo2_INTERFACE_DEFINED__ */
+/*****************************************************************************
+ * IAppxBundleManifestPackageInfo3 interface
+ */
+#ifndef __IAppxBundleManifestPackageInfo3_INTERFACE_DEFINED__
+#define __IAppxBundleManifestPackageInfo3_INTERFACE_DEFINED__
+
+EXTERN_C const IID IID_IAppxBundleManifestPackageInfo3;
+
+#if defined(__cplusplus) && !defined(CINTERFACE)
+#error no support for C++
+#else /* C */
+typedef struct IAppxBundleManifestPackageInfo3Vtbl {
+    BEGIN_INTERFACE
+
+    /*** IUnknown methods ***/
+    HRESULT (STDMETHODCALLTYPE *QueryInterface)(
+        IAppxBundleManifestPackageInfo3 *This,
+        REFIID riid,
+        void **ppvObject);
+
+    ULONG (STDMETHODCALLTYPE *AddRef)(
+        IAppxBundleManifestPackageInfo3 *This);
+
+    ULONG (STDMETHODCALLTYPE *Release)(
+        IAppxBundleManifestPackageInfo3 *This);
+
+    /*** IAppxBundleManifestPackageInfo3 methods ***/
+    HRESULT (STDMETHODCALLTYPE *GetTargetDeviceFamilies)(
+        IAppxBundleManifestPackageInfo3 *This,
+        IAppxManifestTargetDeviceFamiliesEnumerator **targetDeviceFamilies);
+
+    END_INTERFACE
+} IAppxBundleManifestPackageInfo3Vtbl;
+
+interface IAppxBundleManifestPackageInfo3 {
+    CONST_VTBL IAppxBundleManifestPackageInfo3Vtbl* lpVtbl;
+};
+
+#ifdef COBJMACROS
+/*** IUnknown methods ***/
+#define IAppxBundleManifestPackageInfo3_QueryInterface(This,riid,ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This,riid,ppvObject))
+#define IAppxBundleManifestPackageInfo3_AddRef(This) \
+    ((This)->lpVtbl->AddRef(This))
+#define IAppxBundleManifestPackageInfo3_Release(This) \
+    ((This)->lpVtbl->Release(This))
+/*** IAppxBundleManifestPackageInfo3 methods ***/
+#define IAppxBundleManifestPackageInfo3_GetTargetDeviceFamilies(This,targetDeviceFamilies) \
+    ((This)->lpVtbl->GetTargetDeviceFamilies(This,targetDeviceFamilies))
+#endif /* COBJMACROS */
+
+#endif /* C */
+
+#endif /* __IAppxBundleManifestPackageInfo3_INTERFACE_DEFINED__ */
+
+/*****************************************************************************
+ * IAppxBundleManifestPackageInfo4 interface
+ */
+#ifndef __IAppxBundleManifestPackageInfo4_INTERFACE_DEFINED__
+#define __IAppxBundleManifestPackageInfo4_INTERFACE_DEFINED__
+
+EXTERN_C const IID IID_IAppxBundleManifestPackageInfo4;
+
+#if defined(__cplusplus) && !defined(CINTERFACE)
+#error no support for C++
+#else /* C */
+typedef struct IAppxBundleManifestPackageInfo4Vtbl {
+    BEGIN_INTERFACE
+
+    /*** IUnknown methods ***/
+    HRESULT (STDMETHODCALLTYPE *QueryInterface)(
+        IAppxBundleManifestPackageInfo4 *This,
+        REFIID riid,
+        void **ppvObject);
+
+    ULONG (STDMETHODCALLTYPE *AddRef)(
+        IAppxBundleManifestPackageInfo4 *This);
+
+    ULONG (STDMETHODCALLTYPE *Release)(
+        IAppxBundleManifestPackageInfo4 *This);
+
+    /*** IAppxBundleManifestPackageInfo4 methods ***/
+    HRESULT (STDMETHODCALLTYPE *GetIsStub)(
+        IAppxBundleManifestPackageInfo4 *This,
+        BOOL *isStub);
+
+    END_INTERFACE
+} IAppxBundleManifestPackageInfo4Vtbl;
+
+interface IAppxBundleManifestPackageInfo4 {
+    CONST_VTBL IAppxBundleManifestPackageInfo4Vtbl* lpVtbl;
+};
+
+#ifdef COBJMACROS
+/*** IUnknown methods ***/
+#define IAppxBundleManifestPackageInfo4_QueryInterface(This,riid,ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This,riid,ppvObject))
+#define IAppxBundleManifestPackageInfo4_AddRef(This) \
+    ((This)->lpVtbl->AddRef(This))
+#define IAppxBundleManifestPackageInfo4_Release(This) \
+    ((This)->lpVtbl->Release(This))
+/*** IAppxBundleManifestPackageInfo4 methods ***/
+#define IAppxBundleManifestPackageInfo4_GetIsStub(This,isStub) \
+    ((This)->lpVtbl->GetIsStub(This,isStub))
+#endif /* COBJMACROS */
+
+#endif /* C */
+
+#endif /* __IAppxBundleManifestPackageInfo4_INTERFACE_DEFINED__ */
+
+/*****************************************************************************
+ * IAppxBundleManifestOptionalBundleInfoEnumerator interface
+ */
+#ifndef __IAppxBundleManifestOptionalBundleInfoEnumerator_INTERFACE_DEFINED__
+#define __IAppxBundleManifestOptionalBundleInfoEnumerator_INTERFACE_DEFINED__
+
+EXTERN_C const IID IID_IAppxBundleManifestOptionalBundleInfoEnumerator;
+
+#if defined(__cplusplus) && !defined(CINTERFACE)
+#error no support for C++
+#else /* C */
+typedef struct IAppxBundleManifestOptionalBundleInfoEnumeratorVtbl {
+    BEGIN_INTERFACE
+
+    /*** IUnknown methods ***/
+    HRESULT (STDMETHODCALLTYPE *QueryInterface)(
+        IAppxBundleManifestOptionalBundleInfoEnumerator *This,
+        REFIID riid,
+        void **ppvObject);
+
+    ULONG (STDMETHODCALLTYPE *AddRef)(
+        IAppxBundleManifestOptionalBundleInfoEnumerator *This);
+
+    ULONG (STDMETHODCALLTYPE *Release)(
+        IAppxBundleManifestOptionalBundleInfoEnumerator *This);
+
+    /*** IAppxBundleManifestOptionalBundleInfoEnumerator methods ***/
+    HRESULT (STDMETHODCALLTYPE *GetCurrent)(
+        IAppxBundleManifestOptionalBundleInfoEnumerator *This,
+        IAppxBundleManifestOptionalBundleInfo **optionalBundle);
+
+    HRESULT (STDMETHODCALLTYPE *GetHasCurrent)(
+        IAppxBundleManifestOptionalBundleInfoEnumerator *This,
+        BOOL *hasCurrent);
+
+    HRESULT (STDMETHODCALLTYPE *MoveNext)(
+        IAppxBundleManifestOptionalBundleInfoEnumerator *This,
+        BOOL *hasNext);
+
+    END_INTERFACE
+} IAppxBundleManifestOptionalBundleInfoEnumeratorVtbl;
+
+interface IAppxBundleManifestOptionalBundleInfoEnumerator {
+    CONST_VTBL IAppxBundleManifestOptionalBundleInfoEnumeratorVtbl* lpVtbl;
+};
+
+#ifdef COBJMACROS
+/*** IUnknown methods ***/
+#define IAppxBundleManifestOptionalBundleInfoEnumerator_QueryInterface(This,riid,ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This,riid,ppvObject))
+#define IAppxBundleManifestOptionalBundleInfoEnumerator_AddRef(This) \
+    ((This)->lpVtbl->AddRef(This))
+#define IAppxBundleManifestOptionalBundleInfoEnumerator_Release(This) \
+    ((This)->lpVtbl->Release(This))
+/*** IAppxBundleManifestOptionalBundleInfoEnumerator methods ***/
+#define IAppxBundleManifestOptionalBundleInfoEnumerator_GetCurrent(This,optionalBundle) \
+    ((This)->lpVtbl->GetCurrent(This,optionalBundle))
+#define IAppxBundleManifestOptionalBundleInfoEnumerator_GetHasCurrent(This,hasCurrent) \
+    ((This)->lpVtbl->GetHasCurrent(This,hasCurrent))
+#define IAppxBundleManifestOptionalBundleInfoEnumerator_MoveNext(This,hasNext) \
+    ((This)->lpVtbl->MoveNext(This,hasNext))
+#endif /* COBJMACROS */
+
+#endif /* C */
+
+#endif /* __IAppxBundleManifestOptionalBundleInfoEnumerator_INTERFACE_DEFINED__ */
+/*****************************************************************************
+ * IAppxBundleManifestOptionalBundleInfo interface
+ */
+#ifndef __IAppxBundleManifestOptionalBundleInfo_INTERFACE_DEFINED__
+#define __IAppxBundleManifestOptionalBundleInfo_INTERFACE_DEFINED__
+
+EXTERN_C const IID IID_IAppxBundleManifestOptionalBundleInfo;
+
+#if defined(__cplusplus) && !defined(CINTERFACE)
+#error no support for C++
+#else /* C */
+typedef struct IAppxBundleManifestOptionalBundleInfoVtbl {
+    BEGIN_INTERFACE
+
+    /*** IUnknown methods ***/
+    HRESULT (STDMETHODCALLTYPE *QueryInterface)(
+        IAppxBundleManifestOptionalBundleInfo *This,
+        REFIID riid,
+        void **ppvObject);
+
+    ULONG (STDMETHODCALLTYPE *AddRef)(
+        IAppxBundleManifestOptionalBundleInfo *This);
+
+    ULONG (STDMETHODCALLTYPE *Release)(
+        IAppxBundleManifestOptionalBundleInfo *This);
+
+    /*** IAppxBundleManifestOptionalBundleInfo methods ***/
+    HRESULT (STDMETHODCALLTYPE *GetPackageId)(
+        IAppxBundleManifestOptionalBundleInfo *This,
+        IAppxManifestPackageId **packageId);
+
+    HRESULT (STDMETHODCALLTYPE *GetFileName)(
+        IAppxBundleManifestOptionalBundleInfo *This,
+        LPWSTR *fileName);
+
+    HRESULT (STDMETHODCALLTYPE *GetPackageInfoItems)(
+        IAppxBundleManifestOptionalBundleInfo *This,
+        IAppxBundleManifestPackageInfoEnumerator **packageInfoItems);
+
+    END_INTERFACE
+} IAppxBundleManifestOptionalBundleInfoVtbl;
+
+interface IAppxBundleManifestOptionalBundleInfo {
+    CONST_VTBL IAppxBundleManifestOptionalBundleInfoVtbl* lpVtbl;
+};
+
+#ifdef COBJMACROS
+/*** IUnknown methods ***/
+#define IAppxBundleManifestOptionalBundleInfo_QueryInterface(This,riid,ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This,riid,ppvObject))
+#define IAppxBundleManifestOptionalBundleInfo_AddRef(This) \
+    ((This)->lpVtbl->AddRef(This))
+#define IAppxBundleManifestOptionalBundleInfo_Release(This) \
+    ((This)->lpVtbl->Release(This))
+/*** IAppxBundleManifestOptionalBundleInfo methods ***/
+#define IAppxBundleManifestOptionalBundleInfo_GetPackageId(This,packageId) \
+    ((This)->lpVtbl->GetPackageId(This,packageId))
+#define IAppxBundleManifestOptionalBundleInfo_GetFileName(This,fileName) \
+    ((This)->lpVtbl->GetFileName(This,fileName))
+#define IAppxBundleManifestOptionalBundleInfo_GetPackageInfoItems(This,packageInfoItems) \
+    ((This)->lpVtbl->GetPackageInfoItems(This,packageInfoItems))
+#endif /* COBJMACROS */
+
+#endif /* C */
+
+#endif /* __IAppxBundleManifestOptionalBundleInfo_INTERFACE_DEFINED__ */
+
+/*****************************************************************************
+ * IAppxContentGroupFilesEnumerator interface
+ */
+#ifndef __IAppxContentGroupFilesEnumerator_INTERFACE_DEFINED__
+#define __IAppxContentGroupFilesEnumerator_INTERFACE_DEFINED__
+
+EXTERN_C const IID IID_IAppxContentGroupFilesEnumerator;
+
+#if defined(__cplusplus) && !defined(CINTERFACE)
+#error no support for C++
+#else /* C */
+typedef struct IAppxContentGroupFilesEnumeratorVtbl {
+    BEGIN_INTERFACE
+
+    /*** IUnknown methods ***/
+    HRESULT (STDMETHODCALLTYPE *QueryInterface)(
+        IAppxContentGroupFilesEnumerator *This,
+        REFIID riid,
+        void **ppvObject);
+
+    ULONG (STDMETHODCALLTYPE *AddRef)(
+        IAppxContentGroupFilesEnumerator *This);
+
+    ULONG (STDMETHODCALLTYPE *Release)(
+        IAppxContentGroupFilesEnumerator *This);
+
+    /*** IAppxContentGroupFilesEnumerator methods ***/
+    HRESULT (STDMETHODCALLTYPE *GetCurrent)(
+        IAppxContentGroupFilesEnumerator *This,
+        LPWSTR *file);
+
+    HRESULT (STDMETHODCALLTYPE *GetHasCurrent)(
+        IAppxContentGroupFilesEnumerator *This,
+        BOOL *hasCurrent);
+
+    HRESULT (STDMETHODCALLTYPE *MoveNext)(
+        IAppxContentGroupFilesEnumerator *This,
+        BOOL *hasNext);
+
+    END_INTERFACE
+} IAppxContentGroupFilesEnumeratorVtbl;
+
+interface IAppxContentGroupFilesEnumerator {
+    CONST_VTBL IAppxContentGroupFilesEnumeratorVtbl* lpVtbl;
+};
+
+#ifdef COBJMACROS
+/*** IUnknown methods ***/
+#define IAppxContentGroupFilesEnumerator_QueryInterface(This,riid,ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This,riid,ppvObject))
+#define IAppxContentGroupFilesEnumerator_AddRef(This) \
+    ((This)->lpVtbl->AddRef(This))
+#define IAppxContentGroupFilesEnumerator_Release(This) \
+    ((This)->lpVtbl->Release(This))
+/*** IAppxContentGroupFilesEnumerator methods ***/
+#define IAppxContentGroupFilesEnumerator_GetCurrent(This,file) \
+    ((This)->lpVtbl->GetCurrent(This,file))
+#define IAppxContentGroupFilesEnumerator_GetHasCurrent(This,hasCurrent) \
+    ((This)->lpVtbl->GetHasCurrent(This,hasCurrent))
+#define IAppxContentGroupFilesEnumerator_MoveNext(This,hasNext) \
+    ((This)->lpVtbl->MoveNext(This,hasNext))
+#endif /* COBJMACROS */
+
+#endif /* C */
+
+#endif /* __IAppxContentGroupFilesEnumerator_INTERFACE_DEFINED__ */
+
+/*****************************************************************************
+ * IAppxContentGroup interface
+ */
+#ifndef __IAppxContentGroup_INTERFACE_DEFINED__
+#define __IAppxContentGroup_INTERFACE_DEFINED__
+
+EXTERN_C const IID IID_IAppxContentGroup;
+
+#if defined(__cplusplus) && !defined(CINTERFACE)
+#error no support for C++
+#else /* C */
+typedef struct IAppxContentGroupVtbl {
+    BEGIN_INTERFACE
+
+    /*** IUnknown methods ***/
+    HRESULT (STDMETHODCALLTYPE *QueryInterface)(
+        IAppxContentGroup *This,
+        REFIID riid,
+        void **ppvObject);
+
+    ULONG (STDMETHODCALLTYPE *AddRef)(
+        IAppxContentGroup *This);
+
+    ULONG (STDMETHODCALLTYPE *Release)(
+        IAppxContentGroup *This);
+
+    /*** IAppxContentGroup methods ***/
+    HRESULT (STDMETHODCALLTYPE *GetName)(
+        IAppxContentGroup *This,
+        LPWSTR *groupName);
+
+    HRESULT (STDMETHODCALLTYPE *GetFiles)(
+        IAppxContentGroup *This,
+        IAppxContentGroupFilesEnumerator **enumerator);
+
+    END_INTERFACE
+} IAppxContentGroupVtbl;
+
+interface IAppxContentGroup {
+    CONST_VTBL IAppxContentGroupVtbl* lpVtbl;
+};
+
+#ifdef COBJMACROS
+/*** IUnknown methods ***/
+#define IAppxContentGroup_QueryInterface(This,riid,ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This,riid,ppvObject))
+#define IAppxContentGroup_AddRef(This) \
+    ((This)->lpVtbl->AddRef(This))
+#define IAppxContentGroup_Release(This) \
+    ((This)->lpVtbl->Release(This))
+/*** IAppxContentGroup methods ***/
+#define IAppxContentGroup_GetName(This,groupName) \
+    ((This)->lpVtbl->GetName(This,groupName))
+#define IAppxContentGroup_GetFiles(This,enumerator) \
+    ((This)->lpVtbl->GetFiles(This,enumerator))
+#endif /* COBJMACROS */
+
+#endif /* C */
+
+#endif /* __IAppxContentGroup_INTERFACE_DEFINED__ */
+
+/*****************************************************************************
+ * IAppxContentGroupsEnumerator interface
+ */
+#ifndef __IAppxContentGroupsEnumerator_INTERFACE_DEFINED__
+#define __IAppxContentGroupsEnumerator_INTERFACE_DEFINED__
+
+EXTERN_C const IID IID_IAppxContentGroupsEnumerator;
+
+#if defined(__cplusplus) && !defined(CINTERFACE)
+#error no support for C++
+#else /* C */
+typedef struct IAppxContentGroupsEnumeratorVtbl {
+    BEGIN_INTERFACE
+
+    /*** IUnknown methods ***/
+    HRESULT (STDMETHODCALLTYPE *QueryInterface)(
+        IAppxContentGroupsEnumerator *This,
+        REFIID riid,
+        void **ppvObject);
+
+    ULONG (STDMETHODCALLTYPE *AddRef)(
+        IAppxContentGroupsEnumerator *This);
+
+    ULONG (STDMETHODCALLTYPE *Release)(
+        IAppxContentGroupsEnumerator *This);
+
+    /*** IAppxContentGroupsEnumerator methods ***/
+    HRESULT (STDMETHODCALLTYPE *GetCurrent)(
+        IAppxContentGroupsEnumerator *This,
+        IAppxContentGroup **stream);
+
+    HRESULT (STDMETHODCALLTYPE *GetHasCurrent)(
+        IAppxContentGroupsEnumerator *This,
+        BOOL *hasCurrent);
+
+    HRESULT (STDMETHODCALLTYPE *MoveNext)(
+        IAppxContentGroupsEnumerator *This,
+        BOOL *hasNext);
+
+    END_INTERFACE
+} IAppxContentGroupsEnumeratorVtbl;
+
+interface IAppxContentGroupsEnumerator {
+    CONST_VTBL IAppxContentGroupsEnumeratorVtbl* lpVtbl;
+};
+
+#ifdef COBJMACROS
+/*** IUnknown methods ***/
+#define IAppxContentGroupsEnumerator_QueryInterface(This,riid,ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This,riid,ppvObject))
+#define IAppxContentGroupsEnumerator_AddRef(This) \
+    ((This)->lpVtbl->AddRef(This))
+#define IAppxContentGroupsEnumerator_Release(This) \
+    ((This)->lpVtbl->Release(This))
+/*** IAppxContentGroupsEnumerator methods ***/
+#define IAppxContentGroupsEnumerator_GetCurrent(This,stream) \
+    ((This)->lpVtbl->GetCurrent(This,stream))
+#define IAppxContentGroupsEnumerator_GetHasCurrent(This,hasCurrent) \
+    ((This)->lpVtbl->GetHasCurrent(This,hasCurrent))
+#define IAppxContentGroupsEnumerator_MoveNext(This,hasNext) \
+    ((This)->lpVtbl->MoveNext(This,hasNext))
+#endif /* COBJMACROS */
+
+#endif /* C */
+
+#endif /* __IAppxContentGroupsEnumerator_INTERFACE_DEFINED__ */
+
+/*****************************************************************************
+ * IAppxContentGroupMapReader interface
+ */
+#ifndef __IAppxContentGroupMapReader_INTERFACE_DEFINED__
+#define __IAppxContentGroupMapReader_INTERFACE_DEFINED__
+
+EXTERN_C const IID IID_IAppxContentGroupMapReader;
+
+#if defined(__cplusplus) && !defined(CINTERFACE)
+#error no support for C++
+#else /* C */
+typedef struct IAppxContentGroupMapReaderVtbl {
+    BEGIN_INTERFACE
+
+    /*** IUnknown methods ***/
+    HRESULT (STDMETHODCALLTYPE *QueryInterface)(
+        IAppxContentGroupMapReader *This,
+        REFIID riid,
+        void **ppvObject);
+
+    ULONG (STDMETHODCALLTYPE *AddRef)(
+        IAppxContentGroupMapReader *This);
+
+    ULONG (STDMETHODCALLTYPE *Release)(
+        IAppxContentGroupMapReader *This);
+
+    /*** IAppxContentGroupMapReader methods ***/
+    HRESULT (STDMETHODCALLTYPE *GetRequiredGroup)(
+        IAppxContentGroupMapReader *This,
+        IAppxContentGroup **requiredGroup);
+
+    HRESULT (STDMETHODCALLTYPE *GetAutomaticGroups)(
+        IAppxContentGroupMapReader *This,
+        IAppxContentGroupsEnumerator **automaticGroupsEnumerator);
+
+    END_INTERFACE
+} IAppxContentGroupMapReaderVtbl;
+
+interface IAppxContentGroupMapReader {
+    CONST_VTBL IAppxContentGroupMapReaderVtbl* lpVtbl;
+};
+
+#ifdef COBJMACROS
+/*** IUnknown methods ***/
+#define IAppxContentGroupMapReader_QueryInterface(This,riid,ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This,riid,ppvObject))
+#define IAppxContentGroupMapReader_AddRef(This) \
+    ((This)->lpVtbl->AddRef(This))
+#define IAppxContentGroupMapReader_Release(This) \
+    ((This)->lpVtbl->Release(This))
+/*** IAppxContentGroupMapReader methods ***/
+#define IAppxContentGroupMapReader_GetRequiredGroup(This,requiredGroup) \
+    ((This)->lpVtbl->GetRequiredGroup(This,requiredGroup))
+#define IAppxContentGroupMapReader_GetAutomaticGroups(This,automaticGroupsEnumerator) \
+    ((This)->lpVtbl->GetAutomaticGroups(This,automaticGroupsEnumerator))
+#endif /* COBJMACROS */
+
+#endif /* C */
+
+#endif /* __IAppxContentGroupMapReader_INTERFACE_DEFINED__ */
+/*****************************************************************************
+ * IAppxSourceContentGroupMapReader interface
+ */
+#ifndef __IAppxSourceContentGroupMapReader_INTERFACE_DEFINED__
+#define __IAppxSourceContentGroupMapReader_INTERFACE_DEFINED__
+
+EXTERN_C const IID IID_IAppxSourceContentGroupMapReader;
+
+#if defined(__cplusplus) && !defined(CINTERFACE)
+#error no support for C++
+#else /* C */
+typedef struct IAppxSourceContentGroupMapReaderVtbl {
+    BEGIN_INTERFACE
+
+    /*** IUnknown methods ***/
+    HRESULT (STDMETHODCALLTYPE *QueryInterface)(
+        IAppxSourceContentGroupMapReader *This,
+        REFIID riid,
+        void **ppvObject);
+
+    ULONG (STDMETHODCALLTYPE *AddRef)(
+        IAppxSourceContentGroupMapReader *This);
+
+    ULONG (STDMETHODCALLTYPE *Release)(
+        IAppxSourceContentGroupMapReader *This);
+
+    /*** IAppxSourceContentGroupMapReader methods ***/
+    HRESULT (STDMETHODCALLTYPE *GetRequiredGroup)(
+        IAppxSourceContentGroupMapReader *This,
+        IAppxContentGroup **requiredGroup);
+
+    HRESULT (STDMETHODCALLTYPE *GetAutomaticGroups)(
+        IAppxSourceContentGroupMapReader *This,
+        IAppxContentGroupsEnumerator **automaticGroupsEnumerator);
+
+    END_INTERFACE
+} IAppxSourceContentGroupMapReaderVtbl;
+
+interface IAppxSourceContentGroupMapReader {
+    CONST_VTBL IAppxSourceContentGroupMapReaderVtbl* lpVtbl;
+};
+
+#ifdef COBJMACROS
+/*** IUnknown methods ***/
+#define IAppxSourceContentGroupMapReader_QueryInterface(This,riid,ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This,riid,ppvObject))
+#define IAppxSourceContentGroupMapReader_AddRef(This) \
+    ((This)->lpVtbl->AddRef(This))
+#define IAppxSourceContentGroupMapReader_Release(This) \
+    ((This)->lpVtbl->Release(This))
+/*** IAppxSourceContentGroupMapReader methods ***/
+#define IAppxSourceContentGroupMapReader_GetRequiredGroup(This,requiredGroup) \
+    ((This)->lpVtbl->GetRequiredGroup(This,requiredGroup))
+#define IAppxSourceContentGroupMapReader_GetAutomaticGroups(This,automaticGroupsEnumerator) \
+    ((This)->lpVtbl->GetAutomaticGroups(This,automaticGroupsEnumerator))
+#endif /* COBJMACROS */
+
+#endif /* C */
+
+#endif /* __IAppxSourceContentGroupMapReader_INTERFACE_DEFINED__ */
+/*****************************************************************************
+ * IAppxContentGroupMapWriter interface
+ */
+#ifndef __IAppxContentGroupMapWriter_INTERFACE_DEFINED__
+#define __IAppxContentGroupMapWriter_INTERFACE_DEFINED__
+
+EXTERN_C const IID IID_IAppxContentGroupMapWriter;
+
+#if defined(__cplusplus) && !defined(CINTERFACE)
+#error no support for C++
+#else /* C */
+typedef struct IAppxContentGroupMapWriterVtbl {
+    BEGIN_INTERFACE
+
+    /*** IUnknown methods ***/
+    HRESULT (STDMETHODCALLTYPE *QueryInterface)(
+        IAppxContentGroupMapWriter *This,
+        REFIID riid,
+        void **ppvObject);
+
+    ULONG (STDMETHODCALLTYPE *AddRef)(
+        IAppxContentGroupMapWriter *This);
+
+    ULONG (STDMETHODCALLTYPE *Release)(
+        IAppxContentGroupMapWriter *This);
+
+    /*** IAppxContentGroupMapWriter methods ***/
+    HRESULT (STDMETHODCALLTYPE *AddAutomaticGroup)(
+        IAppxContentGroupMapWriter *This,
+        LPCWSTR groupName);
+
+    HRESULT (STDMETHODCALLTYPE *AddAutomaticFile)(
+        IAppxContentGroupMapWriter *This,
+        LPCWSTR fileName);
+
+    HRESULT (STDMETHODCALLTYPE *Close)(
+        IAppxContentGroupMapWriter *This);
+
+    END_INTERFACE
+} IAppxContentGroupMapWriterVtbl;
+
+interface IAppxContentGroupMapWriter {
+    CONST_VTBL IAppxContentGroupMapWriterVtbl* lpVtbl;
+};
+
+#ifdef COBJMACROS
+/*** IUnknown methods ***/
+#define IAppxContentGroupMapWriter_QueryInterface(This,riid,ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This,riid,ppvObject))
+#define IAppxContentGroupMapWriter_AddRef(This) \
+    ((This)->lpVtbl->AddRef(This))
+#define IAppxContentGroupMapWriter_Release(This) \
+    ((This)->lpVtbl->Release(This))
+/*** IAppxContentGroupMapWriter methods ***/
+#define IAppxContentGroupMapWriter_AddAutomaticGroup(This,groupName) \
+    ((This)->lpVtbl->AddAutomaticGroup(This,groupName))
+#define IAppxContentGroupMapWriter_AddAutomaticFile(This,fileName) \
+    ((This)->lpVtbl->AddAutomaticFile(This,fileName))
+#define IAppxContentGroupMapWriter_Close(This) \
+    ((This)->lpVtbl->Close(This))
+#endif /* COBJMACROS */
+
+#endif /* C */
+
+#endif /* __IAppxContentGroupMapWriter_INTERFACE_DEFINED__ */
+
+/*****************************************************************************
+ * IAppxPackagingDiagnosticEventSink interface
+ */
+#ifndef __IAppxPackagingDiagnosticEventSink_INTERFACE_DEFINED__
+#define __IAppxPackagingDiagnosticEventSink_INTERFACE_DEFINED__
+
+EXTERN_C const IID IID_IAppxPackagingDiagnosticEventSink;
+
+#if defined(__cplusplus) && !defined(CINTERFACE)
+#error no support for C++
+#else /* C */
+typedef struct IAppxPackagingDiagnosticEventSinkVtbl {
+    BEGIN_INTERFACE
+
+    /*** IUnknown methods ***/
+    HRESULT (STDMETHODCALLTYPE *QueryInterface)(
+        IAppxPackagingDiagnosticEventSink *This,
+        REFIID riid,
+        void **ppvObject);
+
+    ULONG (STDMETHODCALLTYPE *AddRef)(
+        IAppxPackagingDiagnosticEventSink *This);
+
+    ULONG (STDMETHODCALLTYPE *Release)(
+        IAppxPackagingDiagnosticEventSink *This);
+
+    /*** IAppxPackagingDiagnosticEventSink methods ***/
+    HRESULT (STDMETHODCALLTYPE *ReportContextChange)(
+        IAppxPackagingDiagnosticEventSink *This,
+        APPX_PACKAGING_CONTEXT_CHANGE_TYPE changeType,
+        LONG contextId,
+        LPCSTR contextName,
+        LPCWSTR contextMessage,
+        LPCWSTR detailsMessage);
+
+    HRESULT (STDMETHODCALLTYPE *ReportError)(
+        IAppxPackagingDiagnosticEventSink *This,
+        LPCWSTR errorMessage);
+
+    END_INTERFACE
+} IAppxPackagingDiagnosticEventSinkVtbl;
+
+interface IAppxPackagingDiagnosticEventSink {
+    CONST_VTBL IAppxPackagingDiagnosticEventSinkVtbl* lpVtbl;
+};
+
+#ifdef COBJMACROS
+/*** IUnknown methods ***/
+#define IAppxPackagingDiagnosticEventSink_QueryInterface(This,riid,ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This,riid,ppvObject))
+#define IAppxPackagingDiagnosticEventSink_AddRef(This) \
+    ((This)->lpVtbl->AddRef(This))
+#define IAppxPackagingDiagnosticEventSink_Release(This) \
+    ((This)->lpVtbl->Release(This))
+/*** IAppxPackagingDiagnosticEventSink methods ***/
+#define IAppxPackagingDiagnosticEventSink_ReportContextChange(This,changeType,contextId,contextName,contextMessage,detailsMessage) \
+    ((This)->lpVtbl->ReportContextChange(This,changeType,contextId,contextName,contextMessage,detailsMessage))
+#define IAppxPackagingDiagnosticEventSink_ReportError(This,errorMessage) \
+    ((This)->lpVtbl->ReportError(This,errorMessage))
+#endif /* COBJMACROS */
+
+#endif /* C */
+
+#endif /* __IAppxPackagingDiagnosticEventSink_INTERFACE_DEFINED__ */
+
+/*****************************************************************************
+ * IAppxPackagingDiagnosticEventSinkManager interface
+ */
+#ifndef __IAppxPackagingDiagnosticEventSinkManager_INTERFACE_DEFINED__
+#define __IAppxPackagingDiagnosticEventSinkManager_INTERFACE_DEFINED__
+
+EXTERN_C const IID IID_IAppxPackagingDiagnosticEventSinkManager;
+
+#if defined(__cplusplus) && !defined(CINTERFACE)
+#error no support for C++
+#else /* C */
+typedef struct IAppxPackagingDiagnosticEventSinkManagerVtbl {
+    BEGIN_INTERFACE
+
+    /*** IUnknown methods ***/
+    HRESULT (STDMETHODCALLTYPE *QueryInterface)(
+        IAppxPackagingDiagnosticEventSinkManager *This,
+        REFIID riid,
+        void **ppvObject);
+
+    ULONG (STDMETHODCALLTYPE *AddRef)(
+        IAppxPackagingDiagnosticEventSinkManager *This);
+
+    ULONG (STDMETHODCALLTYPE *Release)(
+        IAppxPackagingDiagnosticEventSinkManager *This);
+
+    /*** IAppxPackagingDiagnosticEventSinkManager methods ***/
+    HRESULT (STDMETHODCALLTYPE *SetSinkForProcess)(
+        IAppxPackagingDiagnosticEventSinkManager *This,
+        IAppxPackagingDiagnosticEventSink *sink);
+
+    END_INTERFACE
+} IAppxPackagingDiagnosticEventSinkManagerVtbl;
+
+interface IAppxPackagingDiagnosticEventSinkManager {
+    CONST_VTBL IAppxPackagingDiagnosticEventSinkManagerVtbl* lpVtbl;
+};
+
+#ifdef COBJMACROS
+/*** IUnknown methods ***/
+#define IAppxPackagingDiagnosticEventSinkManager_QueryInterface(This,riid,ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This,riid,ppvObject))
+#define IAppxPackagingDiagnosticEventSinkManager_AddRef(This) \
+    ((This)->lpVtbl->AddRef(This))
+#define IAppxPackagingDiagnosticEventSinkManager_Release(This) \
+    ((This)->lpVtbl->Release(This))
+/*** IAppxPackagingDiagnosticEventSinkManager methods ***/
+#define IAppxPackagingDiagnosticEventSinkManager_SetSinkForProcess(This,sink) \
+    ((This)->lpVtbl->SetSinkForProcess(This,sink))
+#endif /* COBJMACROS */
+
+#endif /* C */
+
+#endif /* __IAppxPackagingDiagnosticEventSinkManager_INTERFACE_DEFINED__ */
+
+/*****************************************************************************
+ * IAppxAppInstallerReader interface
+ */
+#ifndef __IAppxAppInstallerReader_INTERFACE_DEFINED__
+#define __IAppxAppInstallerReader_INTERFACE_DEFINED__
+
+EXTERN_C const IID IID_IAppxAppInstallerReader;
+
+#if defined(__cplusplus) && !defined(CINTERFACE)
+#error no support for C++
+#else /* C */
+typedef struct IAppxAppInstallerReaderVtbl {
+    BEGIN_INTERFACE
+
+    /*** IUnknown methods ***/
+    HRESULT (STDMETHODCALLTYPE *QueryInterface)(
+        IAppxAppInstallerReader *This,
+        REFIID riid,
+        void **ppvObject);
+
+    ULONG (STDMETHODCALLTYPE *AddRef)(
+        IAppxAppInstallerReader *This);
+
+    ULONG (STDMETHODCALLTYPE *Release)(
+        IAppxAppInstallerReader *This);
+
+    /*** IAppxAppInstallerReader methods ***/
+    HRESULT (STDMETHODCALLTYPE *GetXmlDom)(
+        IAppxAppInstallerReader *This,
+        IXMLDOMDocument **dom);
+
+    END_INTERFACE
+} IAppxAppInstallerReaderVtbl;
+
+interface IAppxAppInstallerReader {
+    CONST_VTBL IAppxAppInstallerReaderVtbl* lpVtbl;
+};
+
+#ifdef COBJMACROS
+/*** IUnknown methods ***/
+#define IAppxAppInstallerReader_QueryInterface(This,riid,ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This,riid,ppvObject))
+#define IAppxAppInstallerReader_AddRef(This) \
+    ((This)->lpVtbl->AddRef(This))
+#define IAppxAppInstallerReader_Release(This) \
+    ((This)->lpVtbl->Release(This))
+/*** IAppxAppInstallerReader methods ***/
+#define IAppxAppInstallerReader_GetXmlDom(This,dom) \
+    ((This)->lpVtbl->GetXmlDom(This,dom))
+#endif /* COBJMACROS */
+
+#endif /* C */
+
+#endif /* __IAppxAppInstallerReader_INTERFACE_DEFINED__ */
+/*****************************************************************************
+ * IAppxDigestProvider interface
+ */
+#ifndef __IAppxDigestProvider_INTERFACE_DEFINED__
+#define __IAppxDigestProvider_INTERFACE_DEFINED__
+
+EXTERN_C const IID IID_IAppxDigestProvider;
+
+#if defined(__cplusplus) && !defined(CINTERFACE)
+#error no support for C++
+#else /* C */
+typedef struct IAppxDigestProviderVtbl {
+    BEGIN_INTERFACE
+
+    /*** IUnknown methods ***/
+    HRESULT (STDMETHODCALLTYPE *QueryInterface)(
+        IAppxDigestProvider *This,
+        REFIID riid,
+        void **ppvObject);
+
+    ULONG (STDMETHODCALLTYPE *AddRef)(
+        IAppxDigestProvider *This);
+
+    ULONG (STDMETHODCALLTYPE *Release)(
+        IAppxDigestProvider *This);
+
+    /*** IAppxDigestProvider methods ***/
+    HRESULT (STDMETHODCALLTYPE *GetDigest)(
+        IAppxDigestProvider *This,
+        LPWSTR *digest);
+
+    END_INTERFACE
+} IAppxDigestProviderVtbl;
+
+interface IAppxDigestProvider {
+    CONST_VTBL IAppxDigestProviderVtbl* lpVtbl;
+};
+
+#ifdef COBJMACROS
+/*** IUnknown methods ***/
+#define IAppxDigestProvider_QueryInterface(This,riid,ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This,riid,ppvObject))
+#define IAppxDigestProvider_AddRef(This) \
+    ((This)->lpVtbl->AddRef(This))
+#define IAppxDigestProvider_Release(This) \
+    ((This)->lpVtbl->Release(This))
+/*** IAppxDigestProvider methods ***/
+#define IAppxDigestProvider_GetDigest(This,digest) \
+    ((This)->lpVtbl->GetDigest(This,digest))
+#endif /* COBJMACROS */
+
+#endif /* C */
+
+#endif /* __IAppxDigestProvider_INTERFACE_DEFINED__ */
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)
+
+typedef struct APPX_ENCRYPTED_PACKAGE_SETTINGS {
+    UINT32 keyLength;
+    LPCWSTR encryptionAlgorithm;
+    BOOL useDiffusion;
+    IUri *blockMapHashAlgorithm;
+} APPX_ENCRYPTED_PACKAGE_SETTINGS;
+
+typedef enum APPX_ENCRYPTED_PACKAGE_OPTIONS {
+    APPX_ENCRYPTED_PACKAGE_OPTION_NONE = 0,
+    APPX_ENCRYPTED_PACKAGE_OPTION_DIFFUSION = 0x1,
+    APPX_ENCRYPTED_PACKAGE_OPTION_PAGE_HASHING = 0x2
+} APPX_ENCRYPTED_PACKAGE_OPTIONS;
+
+typedef struct APPX_ENCRYPTED_PACKAGE_SETTINGS2 {
+    UINT32 keyLength;
+    LPCWSTR encryptionAlgorithm;
+    IUri *blockMapHashAlgorithm;
+    DWORD options;
+} APPX_ENCRYPTED_PACKAGE_SETTINGS2;
+
+typedef struct APPX_KEY_INFO {
+    UINT32 keyLength;
+    UINT32 keyIdLength;
+    BYTE *key;
+    BYTE *keyId;
+} APPX_KEY_INFO;
+
+typedef struct APPX_ENCRYPTED_EXEMPTIONS {
+    UINT32 count;
+    LPCWSTR *plainTextFiles;
+} APPX_ENCRYPTED_EXEMPTIONS;
+
+/*****************************************************************************
+ * IAppxEncryptionFactory interface
+ */
+#ifndef __IAppxEncryptionFactory_INTERFACE_DEFINED__
+#define __IAppxEncryptionFactory_INTERFACE_DEFINED__
+
+EXTERN_C const IID IID_IAppxEncryptionFactory;
+
+#if defined(__cplusplus) && !defined(CINTERFACE)
+#error no support for C++
+#else /* C */
+typedef struct IAppxEncryptionFactoryVtbl {
+    BEGIN_INTERFACE
+
+    /*** IUnknown methods ***/
+    HRESULT (STDMETHODCALLTYPE *QueryInterface)(
+        IAppxEncryptionFactory *This,
+        REFIID riid,
+        void **ppvObject);
+
+    ULONG (STDMETHODCALLTYPE *AddRef)(
+        IAppxEncryptionFactory *This);
+
+    ULONG (STDMETHODCALLTYPE *Release)(
+        IAppxEncryptionFactory *This);
+
+    /*** IAppxEncryptionFactory methods ***/
+    HRESULT (STDMETHODCALLTYPE *EncryptPackage)(
+        IAppxEncryptionFactory *This,
+        IStream *inputStream,
+        IStream *outputStream,
+        const APPX_ENCRYPTED_PACKAGE_SETTINGS *settings,
+        const APPX_KEY_INFO *keyInfo,
+        const APPX_ENCRYPTED_EXEMPTIONS *exemptedFiles);
+
+    HRESULT (STDMETHODCALLTYPE *DecryptPackage)(
+        IAppxEncryptionFactory *This,
+        IStream *inputStream,
+        IStream *outputStream,
+        const APPX_KEY_INFO *keyInfo);
+
+    HRESULT (STDMETHODCALLTYPE *CreateEncryptedPackageWriter)(
+        IAppxEncryptionFactory *This,
+        IStream *outputStream,
+        IStream *manifestStream,
+        const APPX_ENCRYPTED_PACKAGE_SETTINGS *settings,
+        const APPX_KEY_INFO *keyInfo,
+        const APPX_ENCRYPTED_EXEMPTIONS *exemptedFiles,
+        IAppxEncryptedPackageWriter **packageWriter);
+
+    HRESULT (STDMETHODCALLTYPE *CreateEncryptedPackageReader)(
+        IAppxEncryptionFactory *This,
+        IStream *inputStream,
+        const APPX_KEY_INFO *keyInfo,
+        IAppxPackageReader **packageReader);
+
+    HRESULT (STDMETHODCALLTYPE *EncryptBundle)(
+        IAppxEncryptionFactory *This,
+        IStream *inputStream,
+        IStream *outputStream,
+        const APPX_ENCRYPTED_PACKAGE_SETTINGS *settings,
+        const APPX_KEY_INFO *keyInfo,
+        const APPX_ENCRYPTED_EXEMPTIONS *exemptedFiles);
+
+    HRESULT (STDMETHODCALLTYPE *DecryptBundle)(
+        IAppxEncryptionFactory *This,
+        IStream *inputStream,
+        IStream *outputStream,
+        const APPX_KEY_INFO *keyInfo);
+
+    HRESULT (STDMETHODCALLTYPE *CreateEncryptedBundleWriter)(
+        IAppxEncryptionFactory *This,
+        IStream *outputStream,
+        UINT64 bundleVersion,
+        const APPX_ENCRYPTED_PACKAGE_SETTINGS *settings,
+        const APPX_KEY_INFO *keyInfo,
+        const APPX_ENCRYPTED_EXEMPTIONS *exemptedFiles,
+        IAppxEncryptedBundleWriter **bundleWriter);
+
+    HRESULT (STDMETHODCALLTYPE *CreateEncryptedBundleReader)(
+        IAppxEncryptionFactory *This,
+        IStream *inputStream,
+        const APPX_KEY_INFO *keyInfo,
+        IAppxBundleReader **bundleReader);
+
+    END_INTERFACE
+} IAppxEncryptionFactoryVtbl;
+
+interface IAppxEncryptionFactory {
+    CONST_VTBL IAppxEncryptionFactoryVtbl* lpVtbl;
+};
+
+#ifdef COBJMACROS
+/*** IUnknown methods ***/
+#define IAppxEncryptionFactory_QueryInterface(This,riid,ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This,riid,ppvObject))
+#define IAppxEncryptionFactory_AddRef(This) \
+    ((This)->lpVtbl->AddRef(This))
+#define IAppxEncryptionFactory_Release(This) \
+    ((This)->lpVtbl->Release(This))
+/*** IAppxEncryptionFactory methods ***/
+#define IAppxEncryptionFactory_EncryptPackage(This,inputStream,outputStream,settings,keyInfo,exemptedFiles) \
+    ((This)->lpVtbl->EncryptPackage(This,inputStream,outputStream,settings,keyInfo,exemptedFiles))
+#define IAppxEncryptionFactory_DecryptPackage(This,inputStream,outputStream,keyInfo) \
+    ((This)->lpVtbl->DecryptPackage(This,inputStream,outputStream,keyInfo))
+#define IAppxEncryptionFactory_CreateEncryptedPackageWriter(This,outputStream,manifestStream,settings,keyInfo,exemptedFiles,packageWriter) \
+    ((This)->lpVtbl->CreateEncryptedPackageWriter(This,outputStream,manifestStream,settings,keyInfo,exemptedFiles,packageWriter))
+#define IAppxEncryptionFactory_CreateEncryptedPackageReader(This,inputStream,keyInfo,packageReader) \
+    ((This)->lpVtbl->CreateEncryptedPackageReader(This,inputStream,keyInfo,packageReader))
+#define IAppxEncryptionFactory_EncryptBundle(This,inputStream,outputStream,settings,keyInfo,exemptedFiles) \
+    ((This)->lpVtbl->EncryptBundle(This,inputStream,outputStream,settings,keyInfo,exemptedFiles))
+#define IAppxEncryptionFactory_DecryptBundle(This,inputStream,outputStream,keyInfo) \
+    ((This)->lpVtbl->DecryptBundle(This,inputStream,outputStream,keyInfo))
+#define IAppxEncryptionFactory_CreateEncryptedBundleWriter(This,outputStream,bundleVersion,settings,keyInfo,exemptedFiles,bundleWriter) \
+    ((This)->lpVtbl->CreateEncryptedBundleWriter(This,outputStream,bundleVersion,settings,keyInfo,exemptedFiles,bundleWriter))
+#define IAppxEncryptionFactory_CreateEncryptedBundleReader(This,inputStream,keyInfo,bundleReader) \
+    ((This)->lpVtbl->CreateEncryptedBundleReader(This,inputStream,keyInfo,bundleReader))
+#endif /* COBJMACROS */
+
+#endif /* C */
+
+#endif /* __IAppxEncryptionFactory_INTERFACE_DEFINED__ */
+
+/*****************************************************************************
+ * IAppxEncryptionFactory2 interface
+ */
+#ifndef __IAppxEncryptionFactory2_INTERFACE_DEFINED__
+#define __IAppxEncryptionFactory2_INTERFACE_DEFINED__
+
+EXTERN_C const IID IID_IAppxEncryptionFactory2;
+
+#if defined(__cplusplus) && !defined(CINTERFACE)
+#error no support for C++
+#else /* C */
+typedef struct IAppxEncryptionFactory2Vtbl {
+    BEGIN_INTERFACE
+
+    /*** IUnknown methods ***/
+    HRESULT (STDMETHODCALLTYPE *QueryInterface)(
+        IAppxEncryptionFactory2 *This,
+        REFIID riid,
+        void **ppvObject);
+
+    ULONG (STDMETHODCALLTYPE *AddRef)(
+        IAppxEncryptionFactory2 *This);
+
+    ULONG (STDMETHODCALLTYPE *Release)(
+        IAppxEncryptionFactory2 *This);
+
+    /*** IAppxEncryptionFactory2 methods ***/
+    HRESULT (STDMETHODCALLTYPE *CreateEncryptedPackageWriter)(
+        IAppxEncryptionFactory2 *This,
+        IStream *outputStream,
+        IStream *manifestStream,
+        IStream *contentGroupMapStream,
+        const APPX_ENCRYPTED_PACKAGE_SETTINGS *settings,
+        const APPX_KEY_INFO *keyInfo,
+        const APPX_ENCRYPTED_EXEMPTIONS *exemptedFiles,
+        IAppxEncryptedPackageWriter **packageWriter);
+
+    END_INTERFACE
+} IAppxEncryptionFactory2Vtbl;
+
+interface IAppxEncryptionFactory2 {
+    CONST_VTBL IAppxEncryptionFactory2Vtbl* lpVtbl;
+};
+
+#ifdef COBJMACROS
+/*** IUnknown methods ***/
+#define IAppxEncryptionFactory2_QueryInterface(This,riid,ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This,riid,ppvObject))
+#define IAppxEncryptionFactory2_AddRef(This) \
+    ((This)->lpVtbl->AddRef(This))
+#define IAppxEncryptionFactory2_Release(This) \
+    ((This)->lpVtbl->Release(This))
+/*** IAppxEncryptionFactory2 methods ***/
+#define IAppxEncryptionFactory2_CreateEncryptedPackageWriter(This,outputStream,manifestStream,contentGroupMapStream,settings,keyInfo,exemptedFiles,packageWriter) \
+    ((This)->lpVtbl->CreateEncryptedPackageWriter(This,outputStream,manifestStream,contentGroupMapStream,settings,keyInfo,exemptedFiles,packageWriter))
+#endif /* COBJMACROS */
+
+#endif /* C */
+
+#endif /* __IAppxEncryptionFactory2_INTERFACE_DEFINED__ */
+
+/*****************************************************************************
+ * IAppxEncryptionFactory3 interface
+ */
+#ifndef __IAppxEncryptionFactory3_INTERFACE_DEFINED__
+#define __IAppxEncryptionFactory3_INTERFACE_DEFINED__
+
+EXTERN_C const IID IID_IAppxEncryptionFactory3;
+
+#if defined(__cplusplus) && !defined(CINTERFACE)
+#error no support for C++
+#else /* C */
+typedef struct IAppxEncryptionFactory3Vtbl {
+    BEGIN_INTERFACE
+
+    /*** IUnknown methods ***/
+    HRESULT (STDMETHODCALLTYPE *QueryInterface)(
+        IAppxEncryptionFactory3 *This,
+        REFIID riid,
+        void **ppvObject);
+
+    ULONG (STDMETHODCALLTYPE *AddRef)(
+        IAppxEncryptionFactory3 *This);
+
+    ULONG (STDMETHODCALLTYPE *Release)(
+        IAppxEncryptionFactory3 *This);
+
+    /*** IAppxEncryptionFactory3 methods ***/
+    HRESULT (STDMETHODCALLTYPE *EncryptPackage)(
+        IAppxEncryptionFactory3 *This,
+        IStream *inputStream,
+        IStream *outputStream,
+        const APPX_ENCRYPTED_PACKAGE_SETTINGS2 *settings,
+        const APPX_KEY_INFO *keyInfo,
+        const APPX_ENCRYPTED_EXEMPTIONS *exemptedFiles);
+
+    HRESULT (STDMETHODCALLTYPE *CreateEncryptedPackageWriter)(
+        IAppxEncryptionFactory3 *This,
+        IStream *outputStream,
+        IStream *manifestStream,
+        IStream *contentGroupMapStream,
+        const APPX_ENCRYPTED_PACKAGE_SETTINGS2 *settings,
+        const APPX_KEY_INFO *keyInfo,
+        const APPX_ENCRYPTED_EXEMPTIONS *exemptedFiles,
+        IAppxEncryptedPackageWriter **packageWriter);
+
+    HRESULT (STDMETHODCALLTYPE *EncryptBundle)(
+        IAppxEncryptionFactory3 *This,
+        IStream *inputStream,
+        IStream *outputStream,
+        const APPX_ENCRYPTED_PACKAGE_SETTINGS2 *settings,
+        const APPX_KEY_INFO *keyInfo,
+        const APPX_ENCRYPTED_EXEMPTIONS *exemptedFiles);
+
+    HRESULT (STDMETHODCALLTYPE *CreateEncryptedBundleWriter)(
+        IAppxEncryptionFactory3 *This,
+        IStream *outputStream,
+        UINT64 bundleVersion,
+        const APPX_ENCRYPTED_PACKAGE_SETTINGS2 *settings,
+        const APPX_KEY_INFO *keyInfo,
+        const APPX_ENCRYPTED_EXEMPTIONS *exemptedFiles,
+        IAppxEncryptedBundleWriter **bundleWriter);
+
+    END_INTERFACE
+} IAppxEncryptionFactory3Vtbl;
+
+interface IAppxEncryptionFactory3 {
+    CONST_VTBL IAppxEncryptionFactory3Vtbl* lpVtbl;
+};
+
+#ifdef COBJMACROS
+/*** IUnknown methods ***/
+#define IAppxEncryptionFactory3_QueryInterface(This,riid,ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This,riid,ppvObject))
+#define IAppxEncryptionFactory3_AddRef(This) \
+    ((This)->lpVtbl->AddRef(This))
+#define IAppxEncryptionFactory3_Release(This) \
+    ((This)->lpVtbl->Release(This))
+/*** IAppxEncryptionFactory3 methods ***/
+#define IAppxEncryptionFactory3_EncryptPackage(This,inputStream,outputStream,settings,keyInfo,exemptedFiles) \
+    ((This)->lpVtbl->EncryptPackage(This,inputStream,outputStream,settings,keyInfo,exemptedFiles))
+#define IAppxEncryptionFactory3_CreateEncryptedPackageWriter(This,outputStream,manifestStream,contentGroupMapStream,settings,keyInfo,exemptedFiles,packageWriter) \
+    ((This)->lpVtbl->CreateEncryptedPackageWriter(This,outputStream,manifestStream,contentGroupMapStream,settings,keyInfo,exemptedFiles,packageWriter))
+#define IAppxEncryptionFactory3_EncryptBundle(This,inputStream,outputStream,settings,keyInfo,exemptedFiles) \
+    ((This)->lpVtbl->EncryptBundle(This,inputStream,outputStream,settings,keyInfo,exemptedFiles))
+#define IAppxEncryptionFactory3_CreateEncryptedBundleWriter(This,outputStream,bundleVersion,settings,keyInfo,exemptedFiles,bundleWriter) \
+    ((This)->lpVtbl->CreateEncryptedBundleWriter(This,outputStream,bundleVersion,settings,keyInfo,exemptedFiles,bundleWriter))
+#endif /* COBJMACROS */
+
+#endif /* C */
+
+#endif /* __IAppxEncryptionFactory3_INTERFACE_DEFINED__ */
+
+/*****************************************************************************
+ * IAppxEncryptionFactory4 interface
+ */
+#ifndef __IAppxEncryptionFactory4_INTERFACE_DEFINED__
+#define __IAppxEncryptionFactory4_INTERFACE_DEFINED__
+
+EXTERN_C const IID IID_IAppxEncryptionFactory4;
+
+#if defined(__cplusplus) && !defined(CINTERFACE)
+#error no support for C++
+#else /* C */
+typedef struct IAppxEncryptionFactory4Vtbl {
+    BEGIN_INTERFACE
+
+    /*** IUnknown methods ***/
+    HRESULT (STDMETHODCALLTYPE *QueryInterface)(
+        IAppxEncryptionFactory4 *This,
+        REFIID riid,
+        void **ppvObject);
+
+    ULONG (STDMETHODCALLTYPE *AddRef)(
+        IAppxEncryptionFactory4 *This);
+
+    ULONG (STDMETHODCALLTYPE *Release)(
+        IAppxEncryptionFactory4 *This);
+
+    /*** IAppxEncryptionFactory4 methods ***/
+    HRESULT (STDMETHODCALLTYPE *EncryptPackage)(
+        IAppxEncryptionFactory4 *This,
+        IStream *inputStream,
+        IStream *outputStream,
+        const APPX_ENCRYPTED_PACKAGE_SETTINGS2 *settings,
+        const APPX_KEY_INFO *keyInfo,
+        const APPX_ENCRYPTED_EXEMPTIONS *exemptedFiles,
+        UINT64 memoryLimit);
+
+    END_INTERFACE
+} IAppxEncryptionFactory4Vtbl;
+
+interface IAppxEncryptionFactory4 {
+    CONST_VTBL IAppxEncryptionFactory4Vtbl* lpVtbl;
+};
+
+#ifdef COBJMACROS
+/*** IUnknown methods ***/
+#define IAppxEncryptionFactory4_QueryInterface(This,riid,ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This,riid,ppvObject))
+#define IAppxEncryptionFactory4_AddRef(This) \
+    ((This)->lpVtbl->AddRef(This))
+#define IAppxEncryptionFactory4_Release(This) \
+    ((This)->lpVtbl->Release(This))
+/*** IAppxEncryptionFactory4 methods ***/
+#define IAppxEncryptionFactory4_EncryptPackage(This,inputStream,outputStream,settings,keyInfo,exemptedFiles,memoryLimit) \
+    ((This)->lpVtbl->EncryptPackage(This,inputStream,outputStream,settings,keyInfo,exemptedFiles,memoryLimit))
+#endif /* COBJMACROS */
+
+#endif /* C */
+
+#endif /* __IAppxEncryptionFactory4_INTERFACE_DEFINED__ */
+
+/*****************************************************************************
+ * IAppxEncryptionFactory5 interface
+ */
+#ifndef __IAppxEncryptionFactory5_INTERFACE_DEFINED__
+#define __IAppxEncryptionFactory5_INTERFACE_DEFINED__
+
+EXTERN_C const IID IID_IAppxEncryptionFactory5;
+
+#if defined(__cplusplus) && !defined(CINTERFACE)
+#error no support for C++
+#else /* C */
+typedef struct IAppxEncryptionFactory5Vtbl {
+    BEGIN_INTERFACE
+
+    /*** IUnknown methods ***/
+    HRESULT (STDMETHODCALLTYPE *QueryInterface)(
+        IAppxEncryptionFactory5 *This,
+        REFIID riid,
+        void **ppvObject);
+
+    ULONG (STDMETHODCALLTYPE *AddRef)(
+        IAppxEncryptionFactory5 *This);
+
+    ULONG (STDMETHODCALLTYPE *Release)(
+        IAppxEncryptionFactory5 *This);
+
+    /*** IAppxEncryptionFactory5 methods ***/
+    HRESULT (STDMETHODCALLTYPE *CreateEncryptedPackageReader2)(
+        IAppxEncryptionFactory5 *This,
+        IStream *inputStream,
+        const APPX_KEY_INFO *keyInfo,
+        LPCWSTR expectedDigest,
+        IAppxPackageReader **packageReader);
+
+    HRESULT (STDMETHODCALLTYPE *CreateEncryptedBundleReader2)(
+        IAppxEncryptionFactory5 *This,
+        IStream *inputStream,
+        const APPX_KEY_INFO *keyInfo,
+        LPCWSTR expectedDigest,
+        IAppxBundleReader **bundleReader);
+
+    END_INTERFACE
+} IAppxEncryptionFactory5Vtbl;
+
+interface IAppxEncryptionFactory5 {
+    CONST_VTBL IAppxEncryptionFactory5Vtbl* lpVtbl;
+};
+
+#ifdef COBJMACROS
+/*** IUnknown methods ***/
+#define IAppxEncryptionFactory5_QueryInterface(This,riid,ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This,riid,ppvObject))
+#define IAppxEncryptionFactory5_AddRef(This) \
+    ((This)->lpVtbl->AddRef(This))
+#define IAppxEncryptionFactory5_Release(This) \
+    ((This)->lpVtbl->Release(This))
+/*** IAppxEncryptionFactory5 methods ***/
+#define IAppxEncryptionFactory5_CreateEncryptedPackageReader2(This,inputStream,keyInfo,expectedDigest,packageReader) \
+    ((This)->lpVtbl->CreateEncryptedPackageReader2(This,inputStream,keyInfo,expectedDigest,packageReader))
+#define IAppxEncryptionFactory5_CreateEncryptedBundleReader2(This,inputStream,keyInfo,expectedDigest,bundleReader) \
+    ((This)->lpVtbl->CreateEncryptedBundleReader2(This,inputStream,keyInfo,expectedDigest,bundleReader))
+#endif /* COBJMACROS */
+
+#endif /* C */
+
+#endif /* __IAppxEncryptionFactory5_INTERFACE_DEFINED__ */
+
+/*****************************************************************************
+ * IAppxEncryptedPackageWriter interface
+ */
+#ifndef __IAppxEncryptedPackageWriter_INTERFACE_DEFINED__
+#define __IAppxEncryptedPackageWriter_INTERFACE_DEFINED__
+
+EXTERN_C const IID IID_IAppxEncryptedPackageWriter;
+
+#if defined(__cplusplus) && !defined(CINTERFACE)
+#error no support for C++
+#else /* C */
+typedef struct IAppxEncryptedPackageWriterVtbl {
+    BEGIN_INTERFACE
+
+    /*** IUnknown methods ***/
+    HRESULT (STDMETHODCALLTYPE *QueryInterface)(
+        IAppxEncryptedPackageWriter *This,
+        REFIID riid,
+        void **ppvObject);
+
+    ULONG (STDMETHODCALLTYPE *AddRef)(
+        IAppxEncryptedPackageWriter *This);
+
+    ULONG (STDMETHODCALLTYPE *Release)(
+        IAppxEncryptedPackageWriter *This);
+
+    /*** IAppxEncryptedPackageWriter methods ***/
+    HRESULT (STDMETHODCALLTYPE *AddPayloadFileEncrypted)(
+        IAppxEncryptedPackageWriter *This,
+        LPCWSTR fileName,
+        APPX_COMPRESSION_OPTION compressionOption,
+        IStream *inputStream);
+
+    HRESULT (STDMETHODCALLTYPE *Close)(
+        IAppxEncryptedPackageWriter *This);
+
+    END_INTERFACE
+} IAppxEncryptedPackageWriterVtbl;
+
+interface IAppxEncryptedPackageWriter {
+    CONST_VTBL IAppxEncryptedPackageWriterVtbl* lpVtbl;
+};
+
+#ifdef COBJMACROS
+/*** IUnknown methods ***/
+#define IAppxEncryptedPackageWriter_QueryInterface(This,riid,ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This,riid,ppvObject))
+#define IAppxEncryptedPackageWriter_AddRef(This) \
+    ((This)->lpVtbl->AddRef(This))
+#define IAppxEncryptedPackageWriter_Release(This) \
+    ((This)->lpVtbl->Release(This))
+/*** IAppxEncryptedPackageWriter methods ***/
+#define IAppxEncryptedPackageWriter_AddPayloadFileEncrypted(This,fileName,compressionOption,inputStream) \
+    ((This)->lpVtbl->AddPayloadFileEncrypted(This,fileName,compressionOption,inputStream))
+#define IAppxEncryptedPackageWriter_Close(This) \
+    ((This)->lpVtbl->Close(This))
+#endif /* COBJMACROS */
+
+#endif /* C */
+
+#endif /* __IAppxEncryptedPackageWriter_INTERFACE_DEFINED__ */
+
+/*****************************************************************************
+ * IAppxEncryptedPackageWriter2 interface
+ */
+#ifndef __IAppxEncryptedPackageWriter2_INTERFACE_DEFINED__
+#define __IAppxEncryptedPackageWriter2_INTERFACE_DEFINED__
+
+EXTERN_C const IID IID_IAppxEncryptedPackageWriter2;
+
+#if defined(__cplusplus) && !defined(CINTERFACE)
+#error no support for C++
+#else /* C */
+typedef struct IAppxEncryptedPackageWriter2Vtbl {
+    BEGIN_INTERFACE
+
+    /*** IUnknown methods ***/
+    HRESULT (STDMETHODCALLTYPE *QueryInterface)(
+        IAppxEncryptedPackageWriter2 *This,
+        REFIID riid,
+        void **ppvObject);
+
+    ULONG (STDMETHODCALLTYPE *AddRef)(
+        IAppxEncryptedPackageWriter2 *This);
+
+    ULONG (STDMETHODCALLTYPE *Release)(
+        IAppxEncryptedPackageWriter2 *This);
+
+    /*** IAppxEncryptedPackageWriter2 methods ***/
+    HRESULT (STDMETHODCALLTYPE *AddPayloadFilesEncrypted)(
+        IAppxEncryptedPackageWriter2 *This,
+        UINT32 fileCount,
+        APPX_PACKAGE_WRITER_PAYLOAD_STREAM *payloadFiles,
+        UINT64 memoryLimit);
+
+    END_INTERFACE
+} IAppxEncryptedPackageWriter2Vtbl;
+
+interface IAppxEncryptedPackageWriter2 {
+    CONST_VTBL IAppxEncryptedPackageWriter2Vtbl* lpVtbl;
+};
+
+#ifdef COBJMACROS
+/*** IUnknown methods ***/
+#define IAppxEncryptedPackageWriter2_QueryInterface(This,riid,ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This,riid,ppvObject))
+#define IAppxEncryptedPackageWriter2_AddRef(This) \
+    ((This)->lpVtbl->AddRef(This))
+#define IAppxEncryptedPackageWriter2_Release(This) \
+    ((This)->lpVtbl->Release(This))
+/*** IAppxEncryptedPackageWriter2 methods ***/
+#define IAppxEncryptedPackageWriter2_AddPayloadFilesEncrypted(This,fileCount,payloadFiles,memoryLimit) \
+    ((This)->lpVtbl->AddPayloadFilesEncrypted(This,fileCount,payloadFiles,memoryLimit))
+#endif /* COBJMACROS */
+
+#endif /* C */
+
+#endif /* __IAppxEncryptedPackageWriter2_INTERFACE_DEFINED__ */
+
+/*****************************************************************************
+ * IAppxEncryptedBundleWriter interface
+ */
+#ifndef __IAppxEncryptedBundleWriter_INTERFACE_DEFINED__
+#define __IAppxEncryptedBundleWriter_INTERFACE_DEFINED__
+
+EXTERN_C const IID IID_IAppxEncryptedBundleWriter;
+
+#if defined(__cplusplus) && !defined(CINTERFACE)
+#error no support for C++
+#else /* C */
+typedef struct IAppxEncryptedBundleWriterVtbl {
+    BEGIN_INTERFACE
+
+    /*** IUnknown methods ***/
+    HRESULT (STDMETHODCALLTYPE *QueryInterface)(
+        IAppxEncryptedBundleWriter *This,
+        REFIID riid,
+        void **ppvObject);
+
+    ULONG (STDMETHODCALLTYPE *AddRef)(
+        IAppxEncryptedBundleWriter *This);
+
+    ULONG (STDMETHODCALLTYPE *Release)(
+        IAppxEncryptedBundleWriter *This);
+
+    /*** IAppxEncryptedBundleWriter methods ***/
+    HRESULT (STDMETHODCALLTYPE *AddPayloadPackageEncrypted)(
+        IAppxEncryptedBundleWriter *This,
+        LPCWSTR fileName,
+        IStream *packageStream);
+
+    HRESULT (STDMETHODCALLTYPE *Close)(
+        IAppxEncryptedBundleWriter *This);
+
+    END_INTERFACE
+} IAppxEncryptedBundleWriterVtbl;
+
+interface IAppxEncryptedBundleWriter {
+    CONST_VTBL IAppxEncryptedBundleWriterVtbl* lpVtbl;
+};
+
+#ifdef COBJMACROS
+/*** IUnknown methods ***/
+#define IAppxEncryptedBundleWriter_QueryInterface(This,riid,ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This,riid,ppvObject))
+#define IAppxEncryptedBundleWriter_AddRef(This) \
+    ((This)->lpVtbl->AddRef(This))
+#define IAppxEncryptedBundleWriter_Release(This) \
+    ((This)->lpVtbl->Release(This))
+/*** IAppxEncryptedBundleWriter methods ***/
+#define IAppxEncryptedBundleWriter_AddPayloadPackageEncrypted(This,fileName,packageStream) \
+    ((This)->lpVtbl->AddPayloadPackageEncrypted(This,fileName,packageStream))
+#define IAppxEncryptedBundleWriter_Close(This) \
+    ((This)->lpVtbl->Close(This))
+#endif /* COBJMACROS */
+
+#endif /* C */
+
+#endif /* __IAppxEncryptedBundleWriter_INTERFACE_DEFINED__ */
+/*****************************************************************************
+ * IAppxEncryptedBundleWriter2 interface
+ */
+#ifndef __IAppxEncryptedBundleWriter2_INTERFACE_DEFINED__
+#define __IAppxEncryptedBundleWriter2_INTERFACE_DEFINED__
+
+EXTERN_C const IID IID_IAppxEncryptedBundleWriter2;
+
+#if defined(__cplusplus) && !defined(CINTERFACE)
+#error no support for C++
+#else /* C */
+typedef struct IAppxEncryptedBundleWriter2Vtbl {
+    BEGIN_INTERFACE
+
+    /*** IUnknown methods ***/
+    HRESULT (STDMETHODCALLTYPE *QueryInterface)(
+        IAppxEncryptedBundleWriter2 *This,
+        REFIID riid,
+        void **ppvObject);
+
+    ULONG (STDMETHODCALLTYPE *AddRef)(
+        IAppxEncryptedBundleWriter2 *This);
+
+    ULONG (STDMETHODCALLTYPE *Release)(
+        IAppxEncryptedBundleWriter2 *This);
+
+    /*** IAppxEncryptedBundleWriter2 methods ***/
+    HRESULT (STDMETHODCALLTYPE *AddExternalPackageReference)(
+        IAppxEncryptedBundleWriter2 *This,
+        LPCWSTR fileName,
+        IStream *inputStream);
+
+    END_INTERFACE
+} IAppxEncryptedBundleWriter2Vtbl;
+
+interface IAppxEncryptedBundleWriter2 {
+    CONST_VTBL IAppxEncryptedBundleWriter2Vtbl* lpVtbl;
+};
+
+#ifdef COBJMACROS
+/*** IUnknown methods ***/
+#define IAppxEncryptedBundleWriter2_QueryInterface(This,riid,ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This,riid,ppvObject))
+#define IAppxEncryptedBundleWriter2_AddRef(This) \
+    ((This)->lpVtbl->AddRef(This))
+#define IAppxEncryptedBundleWriter2_Release(This) \
+    ((This)->lpVtbl->Release(This))
+/*** IAppxEncryptedBundleWriter2 methods ***/
+#define IAppxEncryptedBundleWriter2_AddExternalPackageReference(This,fileName,inputStream) \
+    ((This)->lpVtbl->AddExternalPackageReference(This,fileName,inputStream))
+#endif /* COBJMACROS */
+
+#endif /* C */
+
+#endif /* __IAppxEncryptedBundleWriter2_INTERFACE_DEFINED__ */
+
+typedef enum APPX_PACKAGE_EDITOR_UPDATE_PACKAGE_OPTION {
+    APPX_PACKAGE_EDITOR_UPDATE_PACKAGE_OPTION_APPEND_DELTA = 0x0
+} APPX_PACKAGE_EDITOR_UPDATE_PACKAGE_OPTION;
+
+typedef enum APPX_PACKAGE_EDITOR_UPDATE_PACKAGE_MANIFEST_OPTIONS {
+    APPX_PACKAGE_EDITOR_UPDATE_PACKAGE_MANIFEST_OPTION_NONE = 0x0,
+    APPX_PACKAGE_EDITOR_UPDATE_PACKAGE_MANIFEST_OPTION_SKIP_VALIDATION = 0x1,
+    APPX_PACKAGE_EDITOR_UPDATE_PACKAGE_MANIFEST_OPTION_LOCALIZED = 0x2
+} APPX_PACKAGE_EDITOR_UPDATE_PACKAGE_MANIFEST_OPTIONS;
+
+/*****************************************************************************
+ * IAppxEncryptedBundleWriter3 interface
+ */
+#ifndef __IAppxEncryptedBundleWriter3_INTERFACE_DEFINED__
+#define __IAppxEncryptedBundleWriter3_INTERFACE_DEFINED__
+
+EXTERN_C const IID IID_IAppxEncryptedBundleWriter3;
+
+#if defined(__cplusplus) && !defined(CINTERFACE)
+#error no support for C++
+#else /* C */
+typedef struct IAppxEncryptedBundleWriter3Vtbl {
+    BEGIN_INTERFACE
+
+    /*** IUnknown methods ***/
+    HRESULT (STDMETHODCALLTYPE *QueryInterface)(
+        IAppxEncryptedBundleWriter3 *This,
+        REFIID riid,
+        void **ppvObject);
+
+    ULONG (STDMETHODCALLTYPE *AddRef)(
+        IAppxEncryptedBundleWriter3 *This);
+
+    ULONG (STDMETHODCALLTYPE *Release)(
+        IAppxEncryptedBundleWriter3 *This);
+
+    /*** IAppxEncryptedBundleWriter3 methods ***/
+    HRESULT (STDMETHODCALLTYPE *AddPayloadPackageEncrypted)(
+        IAppxEncryptedBundleWriter3 *This,
+        LPCWSTR fileName,
+        IStream *packageStream,
+        BOOL isDefaultApplicablePackage);
+
+    HRESULT (STDMETHODCALLTYPE *AddExternalPackageReference)(
+        IAppxEncryptedBundleWriter3 *This,
+        LPCWSTR fileName,
+        IStream *inputStream,
+        BOOL isDefaultApplicablePackage);
+
+    END_INTERFACE
+} IAppxEncryptedBundleWriter3Vtbl;
+
+interface IAppxEncryptedBundleWriter3 {
+    CONST_VTBL IAppxEncryptedBundleWriter3Vtbl* lpVtbl;
+};
+
+#ifdef COBJMACROS
+/*** IUnknown methods ***/
+#define IAppxEncryptedBundleWriter3_QueryInterface(This,riid,ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This,riid,ppvObject))
+#define IAppxEncryptedBundleWriter3_AddRef(This) \
+    ((This)->lpVtbl->AddRef(This))
+#define IAppxEncryptedBundleWriter3_Release(This) \
+    ((This)->lpVtbl->Release(This))
+/*** IAppxEncryptedBundleWriter3 methods ***/
+#define IAppxEncryptedBundleWriter3_AddPayloadPackageEncrypted(This,fileName,packageStream,isDefaultApplicablePackage) \
+    ((This)->lpVtbl->AddPayloadPackageEncrypted(This,fileName,packageStream,isDefaultApplicablePackage))
+#define IAppxEncryptedBundleWriter3_AddExternalPackageReference(This,fileName,inputStream,isDefaultApplicablePackage) \
+    ((This)->lpVtbl->AddExternalPackageReference(This,fileName,inputStream,isDefaultApplicablePackage))
+#endif /* COBJMACROS */
+
+#endif /* C */
+
+#endif /* __IAppxEncryptedBundleWriter3_INTERFACE_DEFINED__ */
+
+/*****************************************************************************
+ * IAppxPackageEditor interface
+ */
+#ifndef __IAppxPackageEditor_INTERFACE_DEFINED__
+#define __IAppxPackageEditor_INTERFACE_DEFINED__
+
+EXTERN_C const IID IID_IAppxPackageEditor;
+
+#if defined(__cplusplus) && !defined(CINTERFACE)
+#error no support for C++
+#else /* C */
+typedef struct IAppxPackageEditorVtbl {
+    BEGIN_INTERFACE
+
+    /*** IUnknown methods ***/
+    HRESULT (STDMETHODCALLTYPE *QueryInterface)(
+        IAppxPackageEditor *This,
+        REFIID riid,
+        void **ppvObject);
+
+    ULONG (STDMETHODCALLTYPE *AddRef)(
+        IAppxPackageEditor *This);
+
+    ULONG (STDMETHODCALLTYPE *Release)(
+        IAppxPackageEditor *This);
+
+    /*** IAppxPackageEditor methods ***/
+    HRESULT (STDMETHODCALLTYPE *SetWorkingDirectory)(
+        IAppxPackageEditor *This,
+        LPCWSTR workingDirectory);
+
+    HRESULT (STDMETHODCALLTYPE *CreateDeltaPackage)(
+        IAppxPackageEditor *This,
+        IStream *updatedPackageStream,
+        IStream *baselinePackageStream,
+        IStream *deltaPackageStream);
+
+    HRESULT (STDMETHODCALLTYPE *CreateDeltaPackageUsingBaselineBlockMap)(
+        IAppxPackageEditor *This,
+        IStream *updatedPackageStream,
+        IStream *baselineBlockMapStream,
+        LPCWSTR baselinePackageFullName,
+        IStream *deltaPackageStream);
+
+    HRESULT (STDMETHODCALLTYPE *UpdatePackage)(
+        IAppxPackageEditor *This,
+        IStream *baselinePackageStream,
+        IStream *deltaPackageStream,
+        APPX_PACKAGE_EDITOR_UPDATE_PACKAGE_OPTION updateOption);
+
+    HRESULT (STDMETHODCALLTYPE *UpdateEncryptedPackage)(
+        IAppxPackageEditor *This,
+        IStream *baselineEncryptedPackageStream,
+        IStream *deltaPackageStream,
+        APPX_PACKAGE_EDITOR_UPDATE_PACKAGE_OPTION updateOption,
+        const APPX_ENCRYPTED_PACKAGE_SETTINGS2 *settings,
+        const APPX_KEY_INFO *keyInfo);
+
+    HRESULT (STDMETHODCALLTYPE *UpdatePackageManifest)(
+        IAppxPackageEditor *This,
+        IStream *packageStream,
+        IStream *updatedManifestStream,
+        BOOL isPackageEncrypted,
+        APPX_PACKAGE_EDITOR_UPDATE_PACKAGE_MANIFEST_OPTIONS options);
+
+    END_INTERFACE
+} IAppxPackageEditorVtbl;
+
+interface IAppxPackageEditor {
+    CONST_VTBL IAppxPackageEditorVtbl* lpVtbl;
+};
+
+#ifdef COBJMACROS
+/*** IUnknown methods ***/
+#define IAppxPackageEditor_QueryInterface(This,riid,ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This,riid,ppvObject))
+#define IAppxPackageEditor_AddRef(This) \
+    ((This)->lpVtbl->AddRef(This))
+#define IAppxPackageEditor_Release(This) \
+    ((This)->lpVtbl->Release(This))
+/*** IAppxPackageEditor methods ***/
+#define IAppxPackageEditor_SetWorkingDirectory(This,workingDirectory) \
+    ((This)->lpVtbl->SetWorkingDirectory(This,workingDirectory))
+#define IAppxPackageEditor_CreateDeltaPackage(This,updatedPackageStream,baselinePackageStream,deltaPackageStream) \
+    ((This)->lpVtbl->CreateDeltaPackage(This,updatedPackageStream,baselinePackageStream,deltaPackageStream))
+#define IAppxPackageEditor_CreateDeltaPackageUsingBaselineBlockMap(This,updatedPackageStream,baselineBlockMapStream,baselinePackageFullName,deltaPackageStream) \
+    ((This)->lpVtbl->CreateDeltaPackageUsingBaselineBlockMap(This,updatedPackageStream,baselineBlockMapStream,baselinePackageFullName,deltaPackageStream))
+#define IAppxPackageEditor_UpdatePackage(This,baselinePackageStream,deltaPackageStream,updateOption) \
+    ((This)->lpVtbl->UpdatePackage(This,baselinePackageStream,deltaPackageStream,updateOption))
+#define IAppxPackageEditor_UpdateEncryptedPackage(This,baselineEncryptedPackageStream,deltaPackageStream,updateOption,settings,keyInfo) \
+    ((This)->lpVtbl->UpdateEncryptedPackage(This,baselineEncryptedPackageStream,deltaPackageStream,updateOption,settings,keyInfo))
+#define IAppxPackageEditor_UpdatePackageManifest(This,packageStream,updatedManifestStream,isPackageEncrypted,options) \
+    ((This)->lpVtbl->UpdatePackageManifest(This,packageStream,updatedManifestStream,isPackageEncrypted,options))
+#endif /* COBJMACROS */
+
+#endif /* C */
+
+#endif /* __IAppxPackageEditor_INTERFACE_DEFINED__ */
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP) */
+
+#ifndef __APPXPACKAGING_LIBRARY_DEFINED__
+#define __APPXPACKAGING_LIBRARY_DEFINED__
+
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP)
+
+/*****************************************************************************
+ * AppxFactory coclass
+ */
+
+EXTERN_C const CLSID CLSID_AppxFactory;
+
+/*****************************************************************************
+ * AppxBundleFactory coclass
+ */
+
+EXTERN_C const CLSID CLSID_AppxBundleFactory;
+
+/*****************************************************************************
+ * AppxPackagingDiagnosticEventSinkManager coclass
+ */
+
+EXTERN_C const CLSID CLSID_AppxPackagingDiagnosticEventSinkManager;
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP) */
+
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)
+
+/*****************************************************************************
+ * AppxEncryptionFactory coclass
+ */
+
+EXTERN_C const CLSID CLSID_AppxEncryptionFactory;
+
+/*****************************************************************************
+ * AppxPackageEditor coclass
+ */
+
+EXTERN_C const CLSID CLSID_AppxPackageEditor;
+
+#endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP) */
+
+#endif /* __APPXPACKAGING_LIBRARY_DEFINED__ */
+
+#endif /* (NTDDI >= NTDDI_WIN7) */
+/* Begin additional prototypes for all interfaces */
+
+
+/* End additional prototypes for all interfaces */
+
+#endif /* __appxpackaging_h__ */
