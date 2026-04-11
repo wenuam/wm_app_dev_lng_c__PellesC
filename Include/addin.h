@@ -20,6 +20,7 @@
  *           18-04-26  Added definitions for version 9.00                   *
  *           20-05-09  Removed previously deprecated ANSI (A) stuff.        *
  *           23-03-17  Added definitions for version 12.00                  *
+ *           25-09-27  Added ARM64 project types (for version 14.00).       *
  *                                                                          *
  ****************************************************************************/
 
@@ -944,25 +945,37 @@ typedef struct tagADDIN_FILE_DIFFERENCE_W {  /* (7.00) */
 
 // Project types.
 typedef enum tagADDIN_PROJECT_TYPE {
-    ADDIN_PROJTYPE_WIN32_GUI = 0,
-    ADDIN_PROJTYPE_WIN32_DLL = 1,
-    ADDIN_PROJTYPE_WIN32_LIBRARY = 2,
-    ADDIN_PROJTYPE_WIN32_CONSOLE = 3,
-#ifdef _WIN64
-    ADDIN_PROJTYPE_WIN64_GUI = 10,
-    ADDIN_PROJTYPE_WIN64_DLL = 11,
-    ADDIN_PROJTYPE_WIN64_LIBRARY = 12,
-    ADDIN_PROJTYPE_WIN64_CONSOLE = 13,
-#endif /* _WIN64 */
+    ADDIN_PROJTYPE_X86_GUI = 0,
+    ADDIN_PROJTYPE_X86_DLL = 1,
+    ADDIN_PROJTYPE_X86_LIBRARY = 2,
+    ADDIN_PROJTYPE_X86_CONSOLE = 3,
+    ADDIN_PROJTYPE_WIN32_GUI = ADDIN_PROJTYPE_X86_GUI,  // Compatibility
+    ADDIN_PROJTYPE_WIN32_DLL = ADDIN_PROJTYPE_X86_DLL,  // Compatibility
+    ADDIN_PROJTYPE_WIN32_LIBRARY = ADDIN_PROJTYPE_X86_LIBRARY,  // Compatibility
+    ADDIN_PROJTYPE_WIN32_CONSOLE = ADDIN_PROJTYPE_X86_CONSOLE,  // Compatibility
     /* ADDIN_PROJTYPE_WINCE_POCKET_PC_GUI = 4, */
     /* ADDIN_PROJTYPE_WINCE_POCKET_PC_DLL = 5, */
     /* ADDIN_PROJTYPE_WINCE_POCKET_PC_LIBRARY = 6, */
     /* ADDIN_PROJTYPE_WINCE_SMARTPHONE_GUI = 7, */
     /* ADDIN_PROJTYPE_WINCE_SMARTPHONE_DLL = 8, */
     /* ADDIN_PROJTYPE_WINCE_SMARTPHONE_LIBRARY = 9, */
-    ADDIN_PROJTYPE_WIN32_INSTALLER = 50,
+    ADDIN_PROJTYPE_X64_GUI = 10,
+    ADDIN_PROJTYPE_X64_DLL = 11,
+    ADDIN_PROJTYPE_X64_LIBRARY = 12,
+    ADDIN_PROJTYPE_X64_CONSOLE = 13,
+    ADDIN_PROJTYPE_WIN64_GUI = ADDIN_PROJTYPE_X64_GUI,  // Compatibility
+    ADDIN_PROJTYPE_WIN64_DLL = ADDIN_PROJTYPE_X64_DLL,  // Compatibility
+    ADDIN_PROJTYPE_WIN64_LIBRARY = ADDIN_PROJTYPE_X64_LIBRARY,  // Compatibility
+    ADDIN_PROJTYPE_WIN64_CONSOLE = ADDIN_PROJTYPE_X64_CONSOLE,  // Compatibility
+    ADDIN_PROJTYPE_ARM64_GUI = 14,
+    ADDIN_PROJTYPE_ARM64_DLL = 15,
+    ADDIN_PROJTYPE_ARM64_LIBRARY = 16,
+    ADDIN_PROJTYPE_ARM64_CONSOLE = 17,
+    ADDIN_PROJTYPE_X86_INSTALLER = 50,
+    ADDIN_PROJTYPE_WIN32_INSTALLER = ADDIN_PROJTYPE_X86_INSTALLER,  // Compatibility
     /* ADDIN_PROJTYPE_WINCE_POCKET_PC_INSTALLER = 51, */
     /* ADDIN_PROJTYPE_WINCE_SMARTPHONE_INSTALLER = 52, */
+    ADDIN_PROJTYPE_ARM64_INSTALLER = 54,
 } ADDIN_PROJECT_TYPE;
 typedef int *PADDIN_PROJECT_TYPE;
 
@@ -971,6 +984,7 @@ enum ADDIN_MACHINE_TYPE {  /* (8.00) */
     ADDIN_MACHINE_X86 = 1,
     /* ADDIN_MACHINE_ARM = 2, */
     ADDIN_MACHINE_X64 = 3,
+    ADDIN_MACHINE_ARM64 = 4,
 };
 
 typedef struct ADDIN_REAL10 { BYTE b[10]; } ADDIN_REAL10;  /* x87 */
@@ -1345,7 +1359,7 @@ typedef struct tagADDIN_DEBUG_SOURCE_W {  /* (8.00) */
 
 typedef struct tagADDIN_DEBUG_BREAKPOINT_W {  /* (8.00) */
     UINT cbSize;                        // Size of this structure (version control).
-    DWORD Opcode;                       // Original opcode (a BYTE for ADDIN_MACHINE_X86/ADDIN_MACHINE_X64).
+    DWORD Opcode;                       // Original opcode (a BYTE for ADDIN_MACHINE_X86/ADDIN_MACHINE_X64, a DWORD for ADDIN_MACHINE_ARM64).
     LPCVOID pvAddress;                  // Code address.
     const ADDIN_PROJECT_BREAKPOINT_W *pBrkpnt; // Extended breakpoint info, or NULL.
     UINT cHitCount;                     // Current number of hits, if pBrkpnt is non-NULL; break when equals pBrkpnt->cHitCount.

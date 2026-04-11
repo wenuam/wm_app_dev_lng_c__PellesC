@@ -39,6 +39,20 @@ typedef struct __declspec(align(16)) {
 extern _CRTJMP int __cdecl _setjmp(jmp_buf, int);
 extern _CRTEND void __cdecl longjmp(jmp_buf, int);
 
+#elif __POCC_TARGET__ == 4
+
+/* macros */
+#define setjmp(env)  _setjmp((env),0)
+
+/* type definitions */
+typedef struct __declspec(align(16)) {
+    unsigned long long data[2];
+} jmp_buf[16];
+
+/* declarations */
+extern _CRTJMP int __cdecl _setjmp(jmp_buf, int);
+extern _CRTEND void __cdecl longjmp(jmp_buf, int);
+
 #else /* __POCC_TARGET__ == WTF */
 
 #error Unknown target machine in <setjmp.h>

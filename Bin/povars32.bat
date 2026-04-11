@@ -1,5 +1,5 @@
 @echo off
-set PellesCDir=C:\PellesC
+set PellesCDir=f:\_TST\PellesC
 rem
 echo Setting 32-bit environment for Pelles C...
 rem

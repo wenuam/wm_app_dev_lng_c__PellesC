@@ -207,4 +207,25 @@ extern unsigned __int64 __cdecl __readeflags(void);
 #endif /* _MSC_EXTENSIONS */
 #endif /* __POCC_TARGET__ */
 
+#if (__POCC_TARGET__ == 3)
+extern unsigned __int8 __cdecl __sat_add_u8(unsigned __int8, unsigned __int8);
+extern unsigned __int16 __cdecl __sat_add_u16(unsigned __int16, unsigned __int16);
+extern unsigned __int32 __cdecl __sat_add_u32(unsigned __int32, unsigned __int32);
+extern unsigned __int64 __cdecl __sat_add_u64(unsigned __int64, unsigned __int64);
+extern unsigned __int8 __cdecl __sat_sub_u8(unsigned __int8, unsigned __int8);
+extern unsigned __int16 __cdecl __sat_sub_u16(unsigned __int16, unsigned __int16);
+extern unsigned __int32 __cdecl __sat_sub_u32(unsigned __int32, unsigned __int32);
+extern unsigned __int64 __cdecl __sat_sub_u64(unsigned __int64, unsigned __int64);
+#ifdef _MSC_EXTENSIONS
+extern unsigned __int8 __cdecl _sat_add_u8(unsigned __int8, unsigned __int8);
+extern unsigned __int16 __cdecl _sat_add_u16(unsigned __int16, unsigned __int16);
+extern unsigned __int32 __cdecl _sat_add_u32(unsigned __int32, unsigned __int32);
+extern unsigned __int64 __cdecl _sat_add_u64(unsigned __int64, unsigned __int64);
+extern unsigned __int8 __cdecl _sat_sub_u8(unsigned __int8, unsigned __int8);
+extern unsigned __int16 __cdecl _sat_sub_u16(unsigned __int16, unsigned __int16);
+extern unsigned __int32 __cdecl _sat_sub_u32(unsigned __int32, unsigned __int32);
+extern unsigned __int64 __cdecl _sat_sub_u64(unsigned __int64, unsigned __int64);
+#endif /* _MSC_EXTENSIONS */
+#endif /* (__POCC_TARGET__ == 3) */
+
 #endif /* _X86INTRIN_H */

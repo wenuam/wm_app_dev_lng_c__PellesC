@@ -14,6 +14,7 @@
  *           18-05-25  Added interface functions WizGetProjectModeW(),      *
  *                     WizSetProjectModeW() and WizAddProjectModeW().       *
  *           20-05-09  Removed previously deprecated ANSI (A) stuff.        *
+ *           25-09-27  Added ARM64 project types.                           *
  *                                                                          *
  ****************************************************************************/
 
@@ -24,20 +25,34 @@
 #define WIZAPI __declspec(dllexport)
 #else /* !_IDE_ */
 #define WIZAPI __declspec(dllimport)
-#pragma comment(lib, "wizard64.lib")
 #endif /* !_IDE_ */
 
 /* Project types */
 enum WizProjType {
-    Project_Win32_GUI = 0,
-    Project_Win32_DLL = 1,
-    Project_Win32_Library = 2,
-    Project_Win32_Console = 3,
-    Project_Win64_GUI = 10,
-    Project_Win64_DLL = 11,
-    Project_Win64_Library = 12,
-    Project_Win64_Console = 13,
-    Project_Win32_Installer = 50,
+    Project_X86_GUI = 0,
+    Project_X86_DLL = 1,
+    Project_X86_Library = 2,
+    Project_X86_Console = 3,
+    Project_X64_GUI = 10,
+    Project_X64_DLL = 11,
+    Project_X64_Library = 12,
+    Project_X64_Console = 13,
+    Project_ARM64_GUI = 14,
+    Project_ARM64_DLL = 15,
+    Project_ARM64_Library = 16,
+    Project_ARM64_Console = 17,
+    Project_X86_Installer = 50,
+    Project_ARM64_Installer = 54,
+    /* Compatibility */
+    Project_Win32_GUI = Project_X86_GUI,
+    Project_Win32_DLL = Project_X86_DLL,
+    Project_Win32_Library = Project_X86_Library,
+    Project_Win32_Console = Project_X86_Console,
+    Project_Win64_GUI = Project_X64_GUI,
+    Project_Win64_DLL = Project_X64_DLL,
+    Project_Win64_Library = Project_X64_Library,
+    Project_Win64_Console = Project_X64_Console,
+    Project_Win32_Installer = Project_X86_Installer,
 };
 
 /* Step page notifications */

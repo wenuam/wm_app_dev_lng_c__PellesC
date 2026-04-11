@@ -28,11 +28,11 @@
 #define PRIdFAST32   "ld"
 #define PRIdFAST64   "lld"
 #define PRIdMAX      "lld"
-#if __POCC_TARGET__ == 3
+#if __POCC_POINTER_SIZE__ == 8
 #define PRIdPTR      "lld"
-#elif __POCC_TARGET__ == 1
+#elif __POCC_POINTER_SIZE__ == 4
 #define PRIdPTR      "ld"
-#endif /* __POCC_TARGET__ */
+#endif /* __POCC_POINTER_SIZE__ */
 
 #define PRIi8        "hhi"
 #define PRIi16       "hi"
@@ -47,11 +47,11 @@
 #define PRIiFAST32   "li"
 #define PRIiFAST64   "lli"
 #define PRIiMAX      "lli"
-#if __POCC_TARGET__ == 3
+#if __POCC_POINTER_SIZE__ == 8
 #define PRIiPTR      "lli"
-#elif __POCC_TARGET__ == 1
+#elif __POCC_POINTER_SIZE__ == 4
 #define PRIiPTR      "li"
-#endif /* __POCC_TARGET__ */
+#endif /* __POCC_POINTER_SIZE__ */
 
 /* fprintf formats for unsigned integers */
 #if __POCC_STDC_VERSION__ >= 202311L
@@ -68,11 +68,11 @@
 #define PRIbFAST32   "lb"
 #define PRIbFAST64   "llb"
 #define PRIbMAX      "llb"
-#if __POCC_TARGET__ == 3
+#if __POCC_POINTER_SIZE__ == 8
 #define PRIbPTR      "llb"
-#elif __POCC_TARGET__ == 1
+#elif __POCC_POINTER_SIZE__ == 4
 #define PRIbPTR      "lb"
-#endif /* __POCC_TARGET__ */
+#endif /* __POCC_POINTER_SIZE__ */
 #endif /* __POCC_STDC_VERSION__ >= 202311L */
 
 #if __POCC_STDC_VERSION__ >= 202311L
@@ -89,11 +89,11 @@
 #define PRIBFAST32   "lB"
 #define PRIBFAST64   "llB"
 #define PRIBMAX      "llB"
-#if __POCC_TARGET__ == 3
+#if __POCC_POINTER_SIZE__ == 8
 #define PRIBPTR      "llB"
-#elif __POCC_TARGET__ == 1
+#elif __POCC_POINTER_SIZE__ == 4
 #define PRIBPTR      "lB"
-#endif /* __POCC_TARGET__ */
+#endif /* __POCC_POINTER_SIZE__ */
 #endif /* __POCC_STDC_VERSION__ >= 202311L */
 
 #define PRIo8        "hho"
@@ -109,11 +109,11 @@
 #define PRIoFAST32   "lo"
 #define PRIoFAST64   "llo"
 #define PRIoMAX      "llo"
-#if __POCC_TARGET__ == 3
+#if __POCC_POINTER_SIZE__ == 8
 #define PRIoPTR      "llo"
-#elif __POCC_TARGET__ == 1
+#elif __POCC_POINTER_SIZE__ == 4
 #define PRIoPTR      "lo"
-#endif /* __POCC_TARGET__ */
+#endif /* __POCC_POINTER_SIZE__ */
 
 #define PRIu8        "hhu"
 #define PRIu16       "hu"
@@ -128,11 +128,11 @@
 #define PRIuFAST32   "lu"
 #define PRIuFAST64   "llu"
 #define PRIuMAX      "llu"
-#if __POCC_TARGET__ == 3
+#if __POCC_POINTER_SIZE__ == 8
 #define PRIuPTR      "llu"
-#elif __POCC_TARGET__ == 1
+#elif __POCC_POINTER_SIZE__ == 4
 #define PRIuPTR      "lu"
-#endif /* __POCC_TARGET__ */
+#endif /* __POCC_POINTER_SIZE__ */
 
 #define PRIx8        "hhx"
 #define PRIx16       "hx"
@@ -147,11 +147,11 @@
 #define PRIxFAST32   "lx"
 #define PRIxFAST64   "llx"
 #define PRIxMAX      "llx"
-#if __POCC_TARGET__ == 3
+#if __POCC_POINTER_SIZE__ == 8
 #define PRIxPTR      "llx"
-#elif __POCC_TARGET__ == 1
+#elif __POCC_POINTER_SIZE__ == 4
 #define PRIxPTR      "lx"
-#endif /* __POCC_TARGET__ */
+#endif /* __POCC_POINTER_SIZE__ */
 
 #define PRIX8        "hhX"
 #define PRIX16       "hX"
@@ -166,11 +166,11 @@
 #define PRIXFAST32   "lX"
 #define PRIXFAST64   "llX"
 #define PRIXMAX      "llX"
-#if __POCC_TARGET__ == 3
+#if __POCC_POINTER_SIZE__ == 8
 #define PRIXPTR      "llX"
-#elif __POCC_TARGET__ == 1
+#elif __POCC_POINTER_SIZE__ == 4
 #define PRIXPTR      "lX"
-#endif /* __POCC_TARGET__ */
+#endif /* __POCC_POINTER_SIZE__ */
 
 /* fscanf formats for signed integers */
 #define SCNd8        "hhd"
@@ -186,11 +186,11 @@
 #define SCNdFAST32   "ld"
 #define SCNdFAST64   "lld"
 #define SCNdMAX      "lld"
-#if __POCC_TARGET__ == 3
+#if __POCC_POINTER_SIZE__ == 8
 #define SCNdPTR      "lld"
-#elif __POCC_TARGET__ == 1
+#elif __POCC_POINTER_SIZE__ == 4
 #define SCNdPTR      "ld"
-#endif /* __POCC_TARGET__ */
+#endif /* __POCC_POINTER_SIZE__ */
 
 #define SCNi8        "hhi"
 #define SCNi16       "hi"
@@ -205,11 +205,11 @@
 #define SCNiFAST32   "li"
 #define SCNiFAST64   "lli"
 #define SCNiMAX      "lli"
-#if __POCC_TARGET__ == 3
+#if __POCC_POINTER_SIZE__ == 8
 #define SCNiPTR      "lli"
-#elif __POCC_TARGET__ == 1
+#elif __POCC_POINTER_SIZE__ == 4
 #define SCNiPTR      "li"
-#endif /* __POCC_TARGET__ */
+#endif /* __POCC_POINTER_SIZE__ */
 
 /* fscanf formats for unsigned integers */
 #if __POCC_STDC_VERSION__ >= 202311L
@@ -226,11 +226,11 @@
 #define SCNbFAST32   "lb"
 #define SCNbFAST64   "llb"
 #define SCNbMAX      "llb"
-#if __POCC_TARGET__ == 3
+#if __POCC_POINTER_SIZE__ == 8
 #define SCNbPTR      "llb"
-#elif __POCC_TARGET__ == 1
+#elif __POCC_POINTER_SIZE__ == 4
 #define SCNbPTR      "lb"
-#endif /* __POCC_TARGET__ */
+#endif /* __POCC_POINTER_SIZE__ */
 #endif /* __POCC_STDC_VERSION__ >= 202311L */
 
 #define SCNo8        "hho"
@@ -246,11 +246,11 @@
 #define SCNoFAST32   "lo"
 #define SCNoFAST64   "llo"
 #define SCNoMAX      "llo"
-#if __POCC_TARGET__ == 3
+#if __POCC_POINTER_SIZE__ == 8
 #define SCNoPTR      "llo"
-#elif __POCC_TARGET__ == 1
+#elif __POCC_POINTER_SIZE__ == 4
 #define SCNoPTR      "lo"
-#endif /* __POCC_TARGET__ */
+#endif /* __POCC_POINTER_SIZE__ */
 
 #define SCNu8        "hhu"
 #define SCNu16       "hu"
@@ -265,11 +265,11 @@
 #define SCNuFAST32   "lu"
 #define SCNuFAST64   "llu"
 #define SCNuMAX      "llu"
-#if __POCC_TARGET__ == 3
+#if __POCC_POINTER_SIZE__ == 8
 #define SCNuPTR      "llu"
-#elif __POCC_TARGET__ == 1
+#elif __POCC_POINTER_SIZE__ == 4
 #define SCNuPTR      "lu"
-#endif /* __POCC_TARGET__ */
+#endif /* __POCC_POINTER_SIZE__ */
 
 #define SCNx8        "hhx"
 #define SCNx16       "hx"
@@ -284,11 +284,11 @@
 #define SCNxFAST32   "lx"
 #define SCNxFAST64   "llx"
 #define SCNxMAX      "llx"
-#if __POCC_TARGET__ == 3
+#if __POCC_POINTER_SIZE__ == 8
 #define SCNxPTR      "llx"
-#elif __POCC_TARGET__ == 1
+#elif __POCC_POINTER_SIZE__ == 4
 #define SCNxPTR      "lx"
-#endif /* __POCC_TARGET__ */
+#endif /* __POCC_POINTER_SIZE__ */
 
 typedef struct {
     intmax_t quot;

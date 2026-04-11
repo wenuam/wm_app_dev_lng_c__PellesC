@@ -22,7 +22,7 @@
 
 #ifdef __MT__
 
-#if __POCC_TARGET__ == 1 || __POCC_TARGET__ == 3
+#if __POCC_TARGET__ == 1 || __POCC_TARGET__ == 3 || __POCC_TARGET__ == 4
 
 /* macros */
 #if __POCC_STDC_VERSION__ < 202311L

@@ -160,7 +160,7 @@ void APIENTRY gluSphere(
 void APIENTRY gluQuadricCallback(
     GLUquadric *qobj,
     GLenum which,
-    void (CALLBACK * fn)());
+    void (CALLBACK * fn)(void));
 
 GLUtesselator * APIENTRY gluNewTess(
     void);
@@ -200,7 +200,7 @@ void APIENTRY gluTessNormal(
 void APIENTRY gluTessCallback(
     GLUtesselator *tess,
     GLenum which,
-    void (CALLBACK *fn)());
+    void (CALLBACK *fn)(void));
 
 void APIENTRY gluGetTessProperty(
     GLUtesselator *tess,
@@ -278,7 +278,7 @@ void APIENTRY gluGetNurbsProperty(
 void APIENTRY gluNurbsCallback(
     GLUnurbs *nobj,
     GLenum which,
-    void (CALLBACK *fn)());
+    void (CALLBACK *fn)(void));
 
 typedef void (CALLBACK * GLUquadricErrorProc)(GLenum);
 

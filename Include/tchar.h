@@ -55,6 +55,7 @@ typedef wint_t _TINT;
 #define _gettchar  getwchar
 #define _puttc  putwc
 #define _puttchar  putwchar
+#define _putts  _putws  /* 26-02-01 */
 #define _ungettc  ungetwc
 
 /* string handling */
@@ -238,6 +239,7 @@ typedef int _TINT;
 #define _gettchar  getchar
 #define _puttc  putc
 #define _puttchar  putchar
+#define _putts  puts  /* 26-02-01 */
 #define _ungettc  ungetc
 
 /* string handling */

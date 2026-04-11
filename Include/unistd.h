@@ -79,13 +79,13 @@ extern int __cdecl close(int);
 /* size_t confstr(int, char *, size_t); */
 extern _CRTUSE int __cdecl dup(int);
 extern int __cdecl dup2(int, int);
+/* void _exit(int); */
 extern intptr_t __cdecl execl(const char *, const char *, ...);
 extern intptr_t __cdecl execle(const char *, const char *, ...);
 extern intptr_t __cdecl execlp(const char *, const char *, ...);
 extern intptr_t __cdecl execv(const char *, const char * const []);
 extern intptr_t __cdecl execve(const char *, const char * const [], const char * const []);
 extern intptr_t __cdecl execvp(const char *, const char * const []);
-/* void _exit(int); */
 /* int faccessat(int, const char *, int, int); */
 /* int fchdir(int); */
 /* int fchown(int, uid_t, gid_t); */

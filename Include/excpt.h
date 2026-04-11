@@ -30,9 +30,9 @@ struct _CONTEXT;
 
 #if __POCC_TARGET__ == 1
 EXCEPTION_DISPOSITION __cdecl _except_handler(struct _EXCEPTION_RECORD *, void *, struct _CONTEXT *, void *);
-#elif __POCC_TARGET__ == 3
-struct _MY_DISPATCHER_CONTEXT;  /* keep smiling */
-EXCEPTION_DISPOSITION __C_specific_handler(struct _EXCEPTION_RECORD *, void *, struct _CONTEXT *, struct _MY_DISPATCHER_CONTEXT *);
+#elif __POCC_TARGET__ == 3 || __POCC_TARGET__ == 4
+struct _DISPATCHER_CONTEXT;
+EXCEPTION_DISPOSITION __C_specific_handler(struct _EXCEPTION_RECORD *, void *, struct _CONTEXT *, struct _DISPATCHER_CONTEXT *);
 #endif /* __POCC_TARGET__ */
 
 /* declarations */

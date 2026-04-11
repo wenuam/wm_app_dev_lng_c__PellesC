@@ -59,14 +59,6 @@ extern _CRTIMP struct lconv * __cdecl localeconv(void);
 /* data declarations */
 extern _CRTIMP struct lconv __locale;
 
-#if defined(_CHAR_UNSIGNED) && !defined(__CRTBUILD__)
-#if __POCC_TARGET__ == 1
-#pragma comment(linker, "/include:___localeinit")
-#elif __POCC_TARGET__ == 3
-#pragma comment(linker, "/include:__localeinit")
-#endif /* __POCC_TARGET__ */
-#endif /* _CHAR_UNSIGNED */
-
 /* macro overrides */
 #define localeconv()  (&__locale)
 

@@ -2008,7 +2008,7 @@ void _mm_clflush(VOID const *Address);
 
 #ifndef _M_ARM64EC
 
-void _ReadWriteBarrier(void);
+void __cdecl _ReadWriteBarrier(void);
 
 #if __POCC__ >= 99999
 #pragma intrinsic(_ReadWriteBarrier)
@@ -2765,14 +2765,14 @@ typedef struct _SCOPE_TABLE_ARM64 {
 #if defined(_M_ARM64) || defined(_M_HYBRID_X86_ARM64) || defined(_M_ARM64EC)
 
 #pragma intrinsic(__getReg)
-#pragma intrinsic(__getCallerReg)
+/*#pragma intrinsic(__getCallerReg)*/
 #pragma intrinsic(__getRegFp)
-#pragma intrinsic(__getCallerRegFp)
+/*#pragma intrinsic(__getCallerRegFp)*/
 
 #pragma intrinsic(__setReg)
-#pragma intrinsic(__setCallerReg)
+/*#pragma intrinsic(__setCallerReg)*/
 #pragma intrinsic(__setRegFp)
-#pragma intrinsic(__setCallerRegFp)
+/*#pragma intrinsic(__setCallerRegFp)*/
 
 #pragma intrinsic(__yield)
 #pragma intrinsic(__prefetch)
@@ -2795,8 +2795,10 @@ typedef struct _SCOPE_TABLE_ARM64 {
 #pragma intrinsic(__dsb)
 #pragma intrinsic(__isb)
 
+#if __POCC__ >= 99999
 #pragma intrinsic(_ReadWriteBarrier)
 #pragma intrinsic(_WriteBarrier)
+#endif
 
 #define MemoryBarrier()             __dmb(_ARM64_BARRIER_SY)
 #define PreFetchCacheLine(l,a)      __prefetch2((const void *) (a), ARM64_PREFETCH(PLD, L1, KEEP))
@@ -2944,17 +2946,17 @@ FORCEINLINE void BarrierAfterRead(void)
 #endif /* WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP) */
 
 #define ARM64_SYSREG(op0, op1, crn, crm, op2) \
-        ( ((op0 & 1) << 14) | \
-          ((op1 & 7) << 11) | \
-          ((crn & 15) << 7) | \
-          ((crm & 15) << 3) | \
-          ((op2 & 7) << 0) )
+        (((op0 &  1) << 14) | \
+         ((op1 &  7) << 11) | \
+         ((crn & 15) << 7) | \
+         ((crm & 15) << 3) | \
+         ((op2 &  7) << 0))
 
 #define ARM64_SYSINSTR(op0, op1, crn, crm, op2) \
-        ( ((op1 & 7) << 11) | \
-          ((crn & 15) << 7) | \
-          ((crm & 15) << 3) | \
-          ((op2 & 7) << 0) )
+        (((op1 &  7) << 11) | \
+         ((crn & 15) << 7) | \
+         ((crm & 15) << 3) | \
+         ((op2 &  7) << 0))
 
 #define ARM64_SYSREG_OP1(_Reg_) (((_Reg_) >> 11) & 7)
 #define ARM64_SYSREG_CRN(_Reg_) (((_Reg_) >> 7) & 15)
@@ -9650,7 +9652,6 @@ typedef struct _IMAGE_DOS_HEADER {
     WORD e_res2[10];
     LONG e_lfanew;
 } IMAGE_DOS_HEADER, *PIMAGE_DOS_HEADER;
-#define _IMAGE_DOS_HEADER_DEFINED  1
 
 typedef struct _IMAGE_OS2_HEADER {
     WORD ne_magic;

@@ -13,7 +13,11 @@
 #define _RESIZER_H
 
 #if defined(_WIN64)
+#if __aarch64__
+#pragma comment(lib, "resizer64a.lib")
+#else /* !__aarch64__ */
 #pragma comment(lib, "resizer64.lib")
+#endif /* !__aarch64__ */
 #else /* !_WIN64 */
 #pragma comment(lib, "resizer.lib")
 #endif /* !_WIN64 */

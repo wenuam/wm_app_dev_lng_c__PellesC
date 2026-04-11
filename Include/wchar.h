@@ -167,6 +167,7 @@ extern _CRTIMP wchar_t * __cdecl _wcstok_ms(wchar_t * restrict, const wchar_t * 
 extern _CRTIMP wchar_t * __cdecl _wmemichr(const wchar_t *, wchar_t, size_t);
 extern _CRTIMP int __cdecl _wmemicmp(const wchar_t *, const wchar_t *, size_t);
 extern _CRTIMP int __cdecl _wtoi(const wchar_t *);
+extern _CRTIMP int __cdecl _putws(const wchar_t *);
 
 /* compatibility names */
 #ifdef __POCC__OLDNAMES

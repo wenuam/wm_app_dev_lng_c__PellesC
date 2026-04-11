@@ -107,6 +107,36 @@ VERSIONHELPERAPI IsWindows10OrGreater(void)
     return IsWindowsVersionOrGreater(HIBYTE(_WIN32_WINNT_WINTHRESHOLD), LOBYTE(_WIN32_WINNT_WINTHRESHOLD), 0);
 }
 
+/* Chuck Walbourn - Oct 04, 2021:
+ * "Windows 11 version checking: The Windows 11 version
+ * is reported as “10.0” with a build number >= 22000.
+ * The Windows SDK (22000) VersionHelpers.h header is
+ * missing a IsWindows11OrGreater function. This will
+ * be fixed in a future Windows SDK, but in the meantime
+ * here’s some code:"
+ */
+
+/* Well, Mr Walbourn... October 2025... where is the fix?! */
+
+VERSIONHELPERAPI IsWindows11OrGreater(void)
+{
+    OSVERSIONINFOEXW osvi = { sizeof(osvi), 0, 0, 0, 0, {0}, 0, 0 };
+    DWORDLONG const dwlConditionMask = VerSetConditionMask(
+        VerSetConditionMask(
+        VerSetConditionMask(
+            0, VER_MAJORVERSION, VER_GREATER_EQUAL),
+               VER_MINORVERSION, VER_GREATER_EQUAL),
+               VER_BUILDNUMBER, VER_GREATER_EQUAL);
+
+    osvi.dwMajorVersion = HIBYTE(_WIN32_WINNT_WIN10);
+    osvi.dwMinorVersion = LOBYTE(_WIN32_WINNT_WIN10);
+    osvi.dwBuildNumber = 22000;
+
+    return VerifyVersionInfoW(&osvi,
+        (VER_MAJORVERSION | VER_MINORVERSION | VER_BUILDNUMBER),
+        dwlConditionMask) != FALSE;
+}
+
 VERSIONHELPERAPI IsWindowsServer(void)
 {
     OSVERSIONINFOEXW osvi = { sizeof(osvi), 0, 0, 0, 0, {0}, 0, 0, 0, VER_NT_WORKSTATION };
