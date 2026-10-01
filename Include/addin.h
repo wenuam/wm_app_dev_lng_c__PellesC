@@ -21,6 +21,7 @@
  *           20-05-09  Removed previously deprecated ANSI (A) stuff.        *
  *           23-03-17  Added definitions for version 12.00                  *
  *           25-09-27  Added ARM64 project types (for version 14.00).       *
+ *           26-04-15  Added ARM64 debugger registers (for version 14.x).   *
  *                                                                          *
  ****************************************************************************/
 
@@ -1247,6 +1248,76 @@ enum ADDIN_DEBUG_REGISTER_IDENTIFIERS {  /* (8.00) */
     ADDIN_REG_X64_ZMM30 = 347,  /* u.Reg512 (10.0) */
     ADDIN_REG_X64_ZMM31 = 348,  /* u.Reg512 (10.0) */
     ADDIN_REG_X64_LAST = 348,
+    /* ARM64 */
+    ADDIN_REG_A64_FIRST = 601,
+    ADDIN_REG_A64_X0 = 601,  /* u.Reg64 */
+    ADDIN_REG_A64_X1 = 602,  /* u.Reg64 */
+    ADDIN_REG_A64_X2 = 603,  /* u.Reg64 */
+    ADDIN_REG_A64_X3 = 604,  /* u.Reg64 */
+    ADDIN_REG_A64_X4 = 605,  /* u.Reg64 */
+    ADDIN_REG_A64_X5 = 606,  /* u.Reg64 */
+    ADDIN_REG_A64_X6 = 607,  /* u.Reg64 */
+    ADDIN_REG_A64_X7 = 608,  /* u.Reg64 */
+    ADDIN_REG_A64_X8 = 609,  /* u.Reg64 */
+    ADDIN_REG_A64_X9 = 610,  /* u.Reg64 */
+    ADDIN_REG_A64_X10 = 611,  /* u.Reg64 */
+    ADDIN_REG_A64_X11 = 612,  /* u.Reg64 */
+    ADDIN_REG_A64_X12 = 613,  /* u.Reg64 */
+    ADDIN_REG_A64_X13 = 614,  /* u.Reg64 */
+    ADDIN_REG_A64_X14 = 615,  /* u.Reg64 */
+    ADDIN_REG_A64_X15 = 616,  /* u.Reg64 */
+    ADDIN_REG_A64_X16 = 617,  /* u.Reg64 */
+    ADDIN_REG_A64_X17 = 618,  /* u.Reg64 */
+    ADDIN_REG_A64_X18 = 619,  /* u.Reg64 */
+    ADDIN_REG_A64_X19 = 620,  /* u.Reg64 */
+    ADDIN_REG_A64_X20 = 621,  /* u.Reg64 */
+    ADDIN_REG_A64_X21 = 622,  /* u.Reg64 */
+    ADDIN_REG_A64_X22 = 623,  /* u.Reg64 */
+    ADDIN_REG_A64_X23 = 624,  /* u.Reg64 */
+    ADDIN_REG_A64_X24 = 625,  /* u.Reg64 */
+    ADDIN_REG_A64_X25 = 626,  /* u.Reg64 */
+    ADDIN_REG_A64_X26 = 627,  /* u.Reg64 */
+    ADDIN_REG_A64_X27 = 628,  /* u.Reg64 */
+    ADDIN_REG_A64_X28 = 629,  /* u.Reg64 */
+    ADDIN_REG_A64_FP = 630,  /* u.Reg64 */
+    ADDIN_REG_A64_LR = 631,  /* u.Reg64 */
+    ADDIN_REG_A64_SP = 632,  /* u.Reg64 */
+    ADDIN_REG_A64_CPSR = 633,  /* u.Reg32 */
+    ADDIN_REG_A64_FPSR = 634,  /* u.Reg32 */
+    /* room for improvement */
+    ADDIN_REG_A64_V0 = 641,  /* u.Reg128 */
+    ADDIN_REG_A64_V1 = 642,  /* u.Reg128 */
+    ADDIN_REG_A64_V2 = 643,  /* u.Reg128 */
+    ADDIN_REG_A64_V3 = 644,  /* u.Reg128 */
+    ADDIN_REG_A64_V4 = 645,  /* u.Reg128 */
+    ADDIN_REG_A64_V5 = 646,  /* u.Reg128 */
+    ADDIN_REG_A64_V6 = 647,  /* u.Reg128 */
+    ADDIN_REG_A64_V7 = 648,  /* u.Reg128 */
+    ADDIN_REG_A64_V8 = 649,  /* u.Reg128 */
+    ADDIN_REG_A64_V9 = 650,  /* u.Reg128 */
+    ADDIN_REG_A64_V10 = 651,  /* u.Reg128 */
+    ADDIN_REG_A64_V11 = 652,  /* u.Reg128 */
+    ADDIN_REG_A64_V12 = 653,  /* u.Reg128 */
+    ADDIN_REG_A64_V13 = 654,  /* u.Reg128 */
+    ADDIN_REG_A64_V14 = 655,  /* u.Reg128 */
+    ADDIN_REG_A64_V15 = 656,  /* u.Reg128 */
+    ADDIN_REG_A64_V16 = 657,  /* u.Reg128 */
+    ADDIN_REG_A64_V17 = 658,  /* u.Reg128 */
+    ADDIN_REG_A64_V18 = 659,  /* u.Reg128 */
+    ADDIN_REG_A64_V19 = 660,  /* u.Reg128 */
+    ADDIN_REG_A64_V20 = 661,  /* u.Reg128 */
+    ADDIN_REG_A64_V21 = 662,  /* u.Reg128 */
+    ADDIN_REG_A64_V22 = 663,  /* u.Reg128 */
+    ADDIN_REG_A64_V23 = 664,  /* u.Reg128 */
+    ADDIN_REG_A64_V24 = 665,  /* u.Reg128 */
+    ADDIN_REG_A64_V25 = 666,  /* u.Reg128 */
+    ADDIN_REG_A64_V26 = 667,  /* u.Reg128 */
+    ADDIN_REG_A64_V27 = 668,  /* u.Reg128 */
+    ADDIN_REG_A64_V28 = 669,  /* u.Reg128 */
+    ADDIN_REG_A64_V29 = 670,  /* u.Reg128 */
+    ADDIN_REG_A64_V30 = 671,  /* u.Reg128 */
+    ADDIN_REG_A64_V31 = 672,  /* u.Reg128 */
+    ADDIN_REG_A64_LAST = 672,
 };
 
 enum ADDIN_DEBUG_SYMBOL_KIND {  /* (8.00) */
@@ -1507,7 +1578,11 @@ typedef struct tagADDIN_DEBUG_EXCEPTION_W {  /* (9.00) */
 #define AddIn_WriteOutputW(hwnd,pszText)  (BOOL)SNDMSG((hwnd),AIM_WRITE_OUTPUT_W,0,(LPARAM)(const WCHAR *)(pszText))
 #define AddIn_AddFileTypeW(hwnd,pAddFile)  (BOOL)SNDMSG((hwnd),AIM_ADD_FILE_TYPE_W,0,(LPARAM)(PADDIN_ADD_FILE_TYPE_W)(pAddFile))
 #define AddIn_FindInFilesW(hwnd,pFind)  (BOOL)SNDMSG((hwnd),AIM_FIND_IN_FILES_W,0,(LPARAM)(PADDIN_FIND_IN_FILES_W)(pFind))
-#define AddIn_GetIDEFolderW(hwnd,eFolder,pch,cchMax)  ((*((int *)(pch))=(cchMax)), ((int)SNDMSG((hwnd),AIM_GET_FOLDER_W,(WPARAM)(eFolder),(LPARAM)(WCHAR *)(pch))))
+/* #define AddIn_GetIDEFolderW(hwnd,eFolder,pch,cchMax)  ((*((int *)(pch))=(cchMax)), ((int)SNDMSG((hwnd),AIM_GET_FOLDER_W,(WPARAM)(eFolder),(LPARAM)(WCHAR *)(pch)))) */
+static __forceinline int AddIn_GetIDEFolderW(HWND hwnd, int eFolder, void *pch, int cchMax) {
+    int *pchMax = pch; *pchMax = cchMax;
+    return (int)SNDMSG(hwnd, AIM_GET_FOLDER_W, (WPARAM)(eFolder), (LPARAM)(pch));
+}
 #define AddIn_FileDifferenceW(hwnd,pFileDiff)  (BOOL)SNDMSG((hwnd),AIM_FILE_DIFFERENCE_W,0,(LPARAM)(PADDIN_FILE_DIFFERENCE_W)(pFileDiff))
 /**/
 #define AddIn_AddCommandW(hwnd,pAddCmd)  (BOOL)SNDMSG((hwnd),AIM_ADD_COMMAND_W,0,(LPARAM)(PADDIN_ADD_COMMAND_W)(pAddCmd))
@@ -1519,9 +1594,17 @@ typedef struct tagADDIN_DEBUG_EXCEPTION_W {  /* (9.00) */
 #define AddIn_RenameProjectFileW(hwnd,pszOldFile,pszNewFile)  (BOOL)SNDMSG((hwnd),AIM_RENAME_PROJECT_FILE_W,(WPARAM)(const WCHAR *)(pszOldFile),(LPARAM)(const WCHAR *)(pszNewFile))
 #define AddIn_ExcludeProjectFileW(hwnd,pszFile)  (BOOL)SNDMSG((hwnd),AIM_EXCLUDE_PROJECT_FILE_W,(WPARAM)(1),(LPARAM)(const WCHAR *)(pszFile))
 #define AddIn_IncludeProjectFileW(hwnd,pszFile)  (BOOL)SNDMSG((hwnd),AIM_EXCLUDE_PROJECT_FILE_W,(WPARAM)(0),(LPARAM)(const WCHAR *)(pszFile))
-#define AddIn_GetProjectSymbolW(hwnd,pszName,pch,cchMax)  ((*((int *)(pch))=(cchMax)), ((int)SNDMSG((hwnd),AIM_GET_PROJECT_SYMBOL_W,(WPARAM)(const WCHAR *)(pszName),(LPARAM)(WCHAR *)(pch))))
+/* #define AddIn_GetProjectSymbolW(hwnd,pszName,pch,cchMax)  ((*((int *)(pch))=(cchMax)), ((int)SNDMSG((hwnd),AIM_GET_PROJECT_SYMBOL_W,(WPARAM)(const WCHAR *)(pszName),(LPARAM)(WCHAR *)(pch)))) */
+static __forceinline int AddIn_GetProjectSymbolW(HWND hwnd, const WCHAR *pszName, void *pch, int cchMax) {
+    int *pchMax = pch; *pchMax = cchMax;
+    return (int)SNDMSG(hwnd, AIM_GET_PROJECT_SYMBOL_W, (WPARAM)(pszName), (LPARAM)(pch));
+}
 #define AddIn_SetProjectSymbolW(hwnd,pszName,psz)  (BOOL)SNDMSG((hwnd),AIM_SET_PROJECT_SYMBOL_W,(WPARAM)(const WCHAR *)(pszName),(LPARAM)(const WCHAR *)(psz))
-#define AddIn_GetProjectShellsW(hwnd,pszFile,pch,cchMax)  ((*((int *)(pch))=(cchMax)), ((int)SNDMSG((hwnd),AIM_GET_PROJECT_SHELLS_W,(WPARAM)(const WCHAR *)(pszFile),(LPARAM)(WCHAR *)(pch))))
+/* #define AddIn_GetProjectShellsW(hwnd,pszFile,pch,cchMax)  ((*((int *)(pch))=(cchMax)), ((int)SNDMSG((hwnd),AIM_GET_PROJECT_SHELLS_W,(WPARAM)(const WCHAR *)(pszFile),(LPARAM)(WCHAR *)(pch)))) */
+static __forceinline int AddIn_GetProjectShellsW(HWND hwnd, const WCHAR *pszFile, void *pch, int cchMax) {
+    int *pchMax = pch; *pchMax = cchMax;
+    return (int)SNDMSG(hwnd, AIM_GET_PROJECT_SHELLS_W, (WPARAM)(pszFile), (LPARAM)(pch));
+}
 #define AddIn_SetProjectShellsW(hwnd,pszFile,psz)  (BOOL)SNDMSG((hwnd),AIM_SET_PROJECT_SHELLS_W,(WPARAM)(const WCHAR *)(pszFile),(LPARAM)(const WCHAR *)(psz))
 #define AddIn_EnumProjectFilesW(hwnd,pEnum)  (BOOL)SNDMSG((hwnd),AIM_ENUM_PROJECT_FILES_W,0,(LPARAM)(PADDIN_ENUM_PROJECT_FILES_W)(pEnum))
 #define AddIn_DidProjectBuildFail(hwnd)  (BOOL)SNDMSG((hwnd),AIM_DID_PROJECT_BUILD_FAIL,0,0)
@@ -1549,7 +1632,11 @@ typedef struct tagADDIN_DEBUG_EXCEPTION_W {  /* (9.00) */
 #define AddIn_GetSourceTextW(hwnd,pch,cchMax)  (int)SNDMSG((hwnd),AIM_GET_SOURCE_TEXT_W,(WPARAM)(int)(cchMax),(LPARAM)(WCHAR *)(pch))
 #define AddIn_GetSourceTextLength(hwnd)  (int)SNDMSG((hwnd),AIM_GET_SOURCE_TEXT_LENGTH,0,0)
 #define AddIn_SetSourceTextW(hwnd,psz)  (BOOL)SNDMSG((hwnd),AIM_SET_SOURCE_TEXT_W,0,(LPARAM)(const WCHAR *)(psz))
-#define AddIn_GetSourceLineW(hwnd,line,pch,cchMax)  ((*((int *)(pch))=(cchMax)), ((int)SNDMSG((hwnd),AIM_GET_SOURCE_LINE_W,(WPARAM)(int)(line),(LPARAM)(WCHAR *)(pch))))
+/* #define AddIn_GetSourceLineW(hwnd,line,pch,cchMax)  ((*((int *)(pch))=(cchMax)), ((int)SNDMSG((hwnd),AIM_GET_SOURCE_LINE_W,(WPARAM)(int)(line),(LPARAM)(WCHAR *)(pch)))) */
+static __forceinline int AddIn_GetSourceLineW(HWND hwnd, int line, void *pch, int cchMax) {
+    int *pchMax = pch; *pchMax = cchMax;
+    return (int)(DWORD)SNDMSG(hwnd, AIM_GET_SOURCE_LINE_W, (WPARAM)(line), (LPARAM)(pch));
+}
 #define AddIn_GetSourceLineLength(hwnd,line)  (int)SNDMSG((hwnd),AIM_GET_SOURCE_LINE_LENGTH,(WPARAM)(int)(line),0)
 #define AddIn_SetSourceLineW(hwnd,line,psz)  (BOOL)SNDMSG((hwnd),AIM_SET_SOURCE_LINE_W,(WPARAM)(int)(line),(LPARAM)(const WCHAR *)(psz))
 #define AddIn_GetSourceWordW(hwnd,pch,cchMax)  (int)SNDMSG((hwnd),AIM_GET_SOURCE_WORD_W,(WPARAM)(int)(cchMax),(LPARAM)(WCHAR *)(pch))
