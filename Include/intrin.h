@@ -20,7 +20,7 @@
 
 #if __POCC_TARGET__ == 4
 #include <arm64_intr.h>
-/* TODO: #include <arm64_neon.h> */
+#include <arm64_neon.h>
 #endif /* __POCC_TARGET__ == 4 */
 
 /* type definitions */
